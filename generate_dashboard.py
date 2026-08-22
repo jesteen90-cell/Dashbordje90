@@ -13,7 +13,7 @@ POS={1:'GK',2:'DEF',3:'MID',4:'FWD'}
 
 def get(path, optional=False):
     try:
-        r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-dashboard-public/2.1'},timeout=30)
+        r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-dashboard-public/2.2'},timeout=30)
         r.raise_for_status(); return r.json()
     except Exception:
         if optional:return None
@@ -24,6 +24,10 @@ def num(v,d=0.0):
     except:return d
 
 def clamp(v,lo=0,hi=1):return max(lo,min(hi,v))
+def parse_deadline(v):
+    try:return datetime.fromisoformat(str(v).replace('Z','+00:00'))
+    except:return None
+
 def avail(p):
     if p.get('status') in ('u','s'):return 0.0
     c=p.get('chance_of_playing_next_round')
@@ -40,15 +44,10 @@ def conf(p):
 boot=get('bootstrap-static/'); fixtures=get('fixtures/')
 players=boot.get('elements') or []; events=boot.get('events') or []; teamrows=boot.get('teams') or []
 byid={int(p['id']):p for p in players}; teams={int(t['id']):t.get('name') for t in teamrows}
-next_event=next((e for e in events if e.get('is_next')),None)
-if not next_event:
-    now=datetime.now(timezone.utc); upcoming=[]
-    for e in events:
-        try:
-            d=datetime.fromisoformat(str(e.get('deadline_time')).replace('Z','+00:00'))
-            if d>now:upcoming.append((d,e))
-        except:pass
-    next_event=min(upcoming,key=lambda x:x[0])[1] if upcoming else events[-1]
+now=datetime.now(timezone.utc)
+upcoming=[e for e in events if parse_deadline(e.get('deadline_time')) and parse_deadline(e.get('deadline_time'))>now and not e.get('finished')]
+next_event=min(upcoming,key=lambda e:parse_deadline(e['deadline_time'])) if upcoming else next((e for e in events if e.get('is_next')),None)
+if not next_event:raise RuntimeError('No upcoming FPL deadline available')
 TARGET=int(next_event.get('id') or 1); deadline=next_event.get('deadline_time')
 GWS=list(range(TARGET,min(38,TARGET+HORIZON-1)+1)); weights={g:WEIGHTS[i] for i,g in enumerate(GWS)}
 fm={g:{} for g in GWS}
@@ -111,23 +110,10 @@ def legal(sq):
     for p in sq:c[int(p['team'])]=c.get(int(p['team']),0)+1
     return max(c.values())<=3
 
-def row(p,g):
-    team_id=int(p['team'])
-    fs=fm.get(g,{}).get(team_id,[])
+def row(p,g,change=None):
+    team_id=int(p['team']); fs=fm.get(g,{}).get(team_id,[])
     fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs)
-    return {
-        'id':int(p['id']),
-        'name':p.get('web_name'),
-        'team_id':team_id,
-        'team':teams.get(team_id,'?'),
-        'position':POS[int(p['element_type'])],
-        'price':round(num(p.get('now_cost'))/10,1),
-        'xp':round(p['_x'][g],2),
-        'fixture':fixture,
-        'availability':round(avail(p),3),
-        'confidence':round(p['_c'],3),
-        'news':p.get('news') or ''
-    }
+    return {'id':int(p['id']),'name':p.get('web_name'),'team_id':team_id,'team':teams.get(team_id,'?'),'position':POS[int(p['element_type'])],'price':round(num(p.get('now_cost'))/10,1),'xp':round(p['_x'][g],2),'fixture':fixture,'availability':round(avail(p),3),'confidence':round(p['_c'],3),'news':p.get('news') or '','change':change}
 
 baseh=score(squad); base3=score(squad,3); ids={int(p['id']) for p in squad}; pools={}
 for pos in (1,2,3,4):
@@ -143,7 +129,7 @@ for out in squad:
         h=score(ns); s3=score(ns,3); edge=h-baseh; short=s3-base3; cur=inn['_x'][TARGET]-out['_x'][TARGET]
         if edge<-.5:continue
         robust=(inn['_c']-out['_c'])*3+(avail(inn)-avail(out))*2
-        plans.append({'out':out,'in':inn,'edge':edge,'short':short,'current':cur,'robust':robust})
+        plans.append({'out':out,'in':inn,'squad':ns,'edge':edge,'short':short,'current':cur,'robust':robust})
 plans.sort(key=lambda x:(x['edge']+.35*x['short']+.2*x['robust'],x['current']),reverse=True); plans=plans[:8]
 cands=[]
 for p in plans:
@@ -155,12 +141,18 @@ for p in plans:
     else:status='SVAK'; misses=['Fordelen er foreløpig for liten']
     cands.append({'status':status,'edge':round(p['edge'],2),'short_gain':round(p['short'],2),'horizon_gain':round(p['edge'],2),'gate_misses':misses,'pairs':[{'out':row(p['out'],TARGET),'in':row(p['in'],TARGET)}]})
 best=plans[0] if plans else None; go=bool(best and best['edge']>=4 and best['short']>=1.5 and best['current']>=-.25)
-rec_squad=squad
-if go:rec_squad=[p for p in squad if int(p['id'])!=int(best['out']['id'])]+[best['in']]
-cur=lineup(rec_squad,TARGET); xi={int(p['id']) for p in cur['xi']}; bench=[p for p in rec_squad if int(p['id']) not in xi]
+current_o=lineup(squad,TARGET)
+transfer_squad=best['squad'] if best else squad
+transfer_o=lineup(transfer_squad,TARGET)
+out_id=int(best['out']['id']) if best else None; in_id=int(best['in']['id']) if best else None
+
+def xi_rows(o,change_id=None,change=None):
+    return [row(p,TARGET,change if change_id is not None and int(p['id'])==change_id else None)|{'captain':int(p['id'])==int(o['captain']['id']),'vice':int(p['id'])==int(o['vice']['id'])} for p in o['xi']]
+
+rec_squad=transfer_squad if go else squad; rec_o=transfer_o if go else current_o; xi={int(p['id']) for p in rec_o['xi']}; bench=[p for p in rec_squad if int(p['id']) not in xi]
 future=[]
 for g in GWS:
     o=lineup(rec_squad,g); future.append({'gw':g,'captain':o['captain'].get('web_name'),'captain_xp':round(o['captain']['_x'][g],2),'xi_xp':round(o['raw'],2)})
-data={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':'GJØR BYTTET' if go else 'VENT / BANK','summary':'Toppforslaget gir positiv forventet gevinst både nå og over de neste rundene.' if go else 'Ingen kandidat er god nok akkurat nå. Behold laget og spar byttet.','source_snapshot_gw':snapshot_gw,'recommendation':{'edge':round(best['edge'],2) if best else 0,'transfers':[{'out':row(best['out'],TARGET),'in':row(best['in'],TARGET)}] if go else []},'lineup':[row(p,TARGET)|{'captain':int(p['id'])==int(cur['captain']['id']),'vice':int(p['id'])==int(cur['vice']['id'])} for p in cur['xi']],'bench':[row(p,TARGET) for p in bench],'candidates':cands,'future':future}
+data={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':'GJØR BYTTET' if go else 'VENT / BANK','summary':'Toppforslaget gir positiv forventet gevinst både nå og over de neste rundene.' if go else 'Ingen kandidat er god nok akkurat nå. Behold laget og spar byttet.','source_snapshot_gw':snapshot_gw,'recommendation':{'edge':round(best['edge'],2) if best else 0,'transfers':[{'out':row(best['out'],TARGET),'in':row(best['in'],TARGET)}] if go else []},'comparison':{'status':cands[0]['status'] if cands else 'INGEN','out':row(best['out'],TARGET) if best else None,'in':row(best['in'],TARGET) if best else None,'current_xi':xi_rows(current_o,out_id,'out'),'transfer_xi':xi_rows(transfer_o,in_id,'in')},'lineup':xi_rows(rec_o),'bench':[row(p,TARGET) for p in bench],'candidates':cands,'future':future}
 OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
-print(f'Updated sanitized dashboard with club identity: GW{snapshot_gw} -> GW{TARGET}')
+print(f'Updated sanitized dashboard with lineup comparison: GW{snapshot_gw} -> GW{TARGET}')
