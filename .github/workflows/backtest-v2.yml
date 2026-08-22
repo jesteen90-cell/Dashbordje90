@@ -19,22 +19,30 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests
-      - name: Build leakage-aware historical dataset
+      - name: Build leakage-safe historical dataset
         run: python build_backtest_dataset.py --seasons 2023-24 2024-25 2025-26 --out backtest_dataset.json
       - name: Evaluate v2 against rolling baseline
         run: python backtest.py backtest_dataset.json --out backtest_results.json
       - name: Show quality gate
         run: |
           python - <<'PY'
-          import json
+          import json, math
           r=json.load(open('backtest_results.json'))
           print('Rows:',r['n'])
           print('V2 MAE:',round(r['mae'],4),'Baseline:',round(r.get('baseline_mae',999),4))
           print('Improvement %:',round(r.get('mae_improvement_pct',0),2))
-          print('Rank corr:',round(r['rank_corr'],4))
+          print('Within-GW rank corr:',round(r.get('within_gw_rank_corr',0),4))
           print('Captain:',r['captain_actual_total'],'Baseline captain:',r['baseline_captain_total'])
+          print('Top-5 sum:',round(r.get('top5_actual_avg_sum',0),2),'Baseline:',round(r.get('baseline_top5_actual_avg_sum',0),2))
+          print('By season:',r.get('by_season',{}))
+          print('By position:',r.get('by_position',{}))
           if r['n'] < 5000: raise SystemExit('FAIL: insufficient evaluation sample')
           if r['mae'] >= r.get('baseline_mae',999): raise SystemExit('FAIL: v2 does not beat baseline MAE')
+          if r.get('within_gw_rank_corr',0) <= 0: raise SystemExit('FAIL: no positive within-GW ranking skill')
+          bad=[]
+          for s,m in r.get('by_season',{}).items():
+            if m.get('mae_improvement_pct',0) < -2: bad.append((s,m.get('mae_improvement_pct')))
+          if bad: raise SystemExit(f'FAIL: material season regression {bad}')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
