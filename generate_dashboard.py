@@ -4,10 +4,11 @@ from datetime import datetime,timezone
 from pathlib import Path
 import requests
 from model_v2_core import project as core_project
-from transfer_optimizer_v2 import optimize as optimize_transfers, legal
+from transfer_optimizer_v2 import optimize as optimize_transfers,legal
+from team_strength_v2 import build_strength,fixture_factors
 BASE='https://fantasy.premierleague.com/api';TEAM_ID=int(os.environ['FPL_TEAM_ID']);OUT=Path('data.json');DEFAULT_WEIGHTS=[1,.9,.8,.7,.62,.55];POS={1:'GK',2:'DEF',3:'MID',4:'FWD'};Z80=1.2815515655446004
 def get(path,optional=False):
- try:r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-model-v2.4'},timeout=30);r.raise_for_status();return r.json()
+ try:r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-model-v2.5'},timeout=30);r.raise_for_status();return r.json()
  except Exception:
   if optional:return None
   raise
@@ -21,15 +22,17 @@ def strategy_weights():
  if p.exists():
   try:
    w=[float(v) for v in json.loads(p.read_text()).get('weights',[])];return w[:6] if len(w)>=3 else DEFAULT_WEIGHTS
-  except Exception:pass
+  except:pass
  return DEFAULT_WEIGHTS
-boot=get('bootstrap-static/');fixtures=get('fixtures/');players=boot['elements'];events=boot['events'];teams={int(t['id']):t['name'] for t in boot['teams']};byid={int(p['id']):p for p in players};now=datetime.now(timezone.utc);future=[e for e in events if dt(e.get('deadline_time')) and dt(e['deadline_time'])>now and not e.get('finished')];event=min(future,key=lambda e:dt(e['deadline_time'])) if future else next((e for e in events if e.get('is_next')),None)
+boot=get('bootstrap-static/');fixtures=get('fixtures/');players=boot['elements'];events=boot['events'];teams={int(t['id']):t['name'] for t in boot['teams']};byid={int(p['id']):p for p in players};ratings=build_strength(fixtures,teams)
+now=datetime.now(timezone.utc);future=[e for e in events if dt(e.get('deadline_time')) and dt(e['deadline_time'])>now and not e.get('finished')];event=min(future,key=lambda e:dt(e['deadline_time'])) if future else next((e for e in events if e.get('is_next')),None)
 if not event:raise RuntimeError('No upcoming FPL deadline')
 TARGET=int(event['id']);deadline=event['deadline_time'];W=strategy_weights();GWS=list(range(TARGET,min(38,TARGET+len(W)-1)+1));weights={g:W[i] for i,g in enumerate(GWS)};fm={g:{} for g in GWS}
 for f in fixtures:
  g=f.get('event')
  if g not in fm:continue
- fm[g].setdefault(int(f['team_h']),[]).append({'home':1,'opp':int(f['team_a']),'fdr':int(f.get('team_h_difficulty') or 3)});fm[g].setdefault(int(f['team_a']),[]).append({'home':0,'opp':int(f['team_h']),'fdr':int(f.get('team_a_difficulty') or 3)})
+ for team,opp,home in ((int(f['team_h']),int(f['team_a']),1),(int(f['team_a']),int(f['team_h']),0)):
+  atk,lam=fixture_factors(ratings,team,opp,bool(home));fm[g].setdefault(team,[]).append({'home':home,'opp':opp,'attack':atk,'opp_lambda':lam})
 finished=sorted((int(e['id']) for e in events if e.get('finished')),reverse=True);snapshot=snapshot_gw=None
 for g in finished+[x for x in range(TARGET-1,0,-1) if x not in finished]:
  s=get(f'entry/{TEAM_ID}/event/{g}/picks/',True)
@@ -40,7 +43,8 @@ def availability(p):
  if p.get('status') in ('u','s'):return 0
  c=p.get('chance_of_playing_next_round');return clamp(n(c)/100) if c is not None else (.55 if p.get('status') in ('i','d') else 1)
 def core_input(p,f):
- pos=int(p['element_type']);hist=n(p.get('minutes'));starts=n(p.get('starts'));rounds=max(TARGET-1,1);avg_start=78 if starts<=0 else clamp(hist/max(starts,1),55,88);res=max(0,hist-starts*avg_start);sub_apps=res/18 if res else 0;scale=90/max(hist,180);attack={1:1.22,2:1.11,3:1,4:.89,5:.78}[f['fdr']]*(1.035 if f['home'] else .97);opp_lambda={1:.72,2:1.00,3:1.32,4:1.70,5:2.15}[f['fdr']]*(.93 if f['home'] else 1.07);return {'position':pos,'availability':availability(p),'start_rate':clamp(starts/rounds),'avg_start_mins':avg_start,'sub_rate':clamp(sub_apps/rounds,0,.6),'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':opp_lambda,'attack_multiplier':attack}
+ pos=int(p['element_type']);hist=n(p.get('minutes'));starts=n(p.get('starts'));rounds=max(TARGET-1,1);avg_start=78 if starts<=0 else clamp(hist/max(starts,1),55,88);res=max(0,hist-starts*avg_start);sub_apps=res/18 if res else 0;scale=90/max(hist,180)
+ return {'position':pos,'availability':availability(p),'start_rate':clamp(starts/rounds),'avg_start_mins':avg_start,'sub_rate':clamp(sub_apps/rounds,0,.6),'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':f['opp_lambda'],'attack_multiplier':f['attack']}
 def project(p,g):
  cs=[core_project(core_input(p,f)) for f in fm.get(g,{}).get(int(p['team']),[])];keys=('total','xmins','appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards','cs_probability')
  if not cs:return {**{k:0 for k in keys},'variance':0,'sd':0,'p10':0,'p90':0,'volatility':0}
@@ -60,10 +64,10 @@ def lineup(sq,g):
        if best is None or v>best[0]:best=(v,xi)
  ordered=sorted(best[1],key=lambda p:p['_x'][g],reverse=True);return {'raw':best[0],'xi':best[1],'captain':ordered[0],'vice':ordered[1]}
 def risk_label(c):
- v=c.get('volatility',0)
- return 'lav' if v<.65 else ('middels' if v<1.05 else 'høy')
+ v=c.get('volatility',0);return 'lav' if v<.65 else ('middels' if v<1.05 else 'høy')
 def row(p,g,change=None):
- fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g];return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'xp_low':round(c['p10'],2),'xp_high':round(c['p90'],2),'risk':risk_label(c),'volatility':round(c['volatility'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
+ fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g]
+ return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'xp_low':round(c['p10'],2),'xp_high':round(c['p90'],2),'risk':risk_label(c),'volatility':round(c['volatility'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
 def apply_move(sq,m):
  if not m or m.get('action')!='transfer':return list(sq)
  out=list(sq)
@@ -87,6 +91,7 @@ for outp in squad:
   ns=[p for p in squad if p['id']!=outp['id']]+[inn]
   if not legal(ns):continue
   hg=sum((inn['_x'][g]-outp['_x'][g])*weights[g] for g in GWS);cands.append({'status':'VURDERES' if hg>.5 else 'SVAK','edge':round(hg-.45,2),'short_gain':round(sum(inn['_x'][g]-outp['_x'][g] for g in GWS[:3]),2),'horizon_gain':round(hg,2),'gate_misses':[] if hg>1 else ['Fordelen er liten sammenlignet med fleksibiliteten i å spare et gratisbytte'],'pairs':[{'out':row(outp,TARGET),'in':row(inn,TARGET)}]})
-cands.sort(key=lambda x:x['horizon_gain'],reverse=True);cands=cands[:10];headline='GJØR BYTTET' if go else ('SPAR BYTTET' if first.get('action')=='bank' else 'VENT / BANK');summary='Modell v2.4 kombinerer kalibrert xP, fler-GW-strategi og prediktive poengintervaller. Intervallene viser usikkerhet, ikke et garantert minimum eller maksimum.'
-data={'model_version':'2.4-risk','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':summary,'source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'optimizer':{'horizon_gws':GWS,'weights':[weights[g] for g in GWS],'weighted_gain':round(gain,2),'bank_after':round(opt['bank']/10,1),'free_transfers_after':opt['free_transfers'],'hit_points':opt.get('hit_points',0),'plan':[public_move(m) for m in plan]},'recommendation':{'edge':round(gain,2),'transfers':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs] if go else []},'comparison':{'status':'GJØR DET' if go else 'BANK','out':row(first_out,TARGET) if first_out else None,'in':row(first_in,TARGET) if first_in else None,'changes':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs],'current_xi':xi_rows(cur,outs=outs),'transfer_xi':xi_rows(aft,ins=ins)},'lineup':xi_rows(aft if go else cur,ins=ins if go else set()),'bench':[row(p,TARGET) for p in (after if go else squad) if p['id'] not in {x['id'] for x in (aft if go else cur)['xi']}],'candidates':cands,'future':future}
-OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model v2.4 risk-aware feed complete')
+cands.sort(key=lambda x:x['horizon_gain'],reverse=True);cands=cands[:10];headline='GJØR BYTTET' if go else ('SPAR BYTTET' if first.get('action')=='bank' else 'VENT / BANK')
+strength_public={str(t):{'team':teams[t],**{k:round(v,3) for k,v in r.items()}} for t,r in ratings.items()}
+data={'model_version':'2.5-team-strength','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell v2.5 bruker dynamisk lagstyrke fra faktiske PL-resultater i stedet for statisk FDR, sammen med kalibrert xP, fler-GW-planlegging og usikkerhetsintervaller.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'team_strength':strength_public,'optimizer':{'horizon_gws':GWS,'weights':[weights[g] for g in GWS],'weighted_gain':round(gain,2),'bank_after':round(opt['bank']/10,1),'free_transfers_after':opt['free_transfers'],'hit_points':opt.get('hit_points',0),'plan':[public_move(m) for m in plan]},'recommendation':{'edge':round(gain,2),'transfers':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs] if go else []},'comparison':{'status':'GJØR DET' if go else 'BANK','out':row(first_out,TARGET) if first_out else None,'in':row(first_in,TARGET) if first_in else None,'changes':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs],'current_xi':xi_rows(cur,outs=outs),'transfer_xi':xi_rows(aft,ins=ins)},'lineup':xi_rows(aft if go else cur,ins=ins if go else set()),'bench':[row(p,TARGET) for p in (after if go else squad) if p['id'] not in {x['id'] for x in (aft if go else cur)['xi']}],'candidates':cands,'future':future}
+OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model v2.5 dynamic-team-strength feed complete')
