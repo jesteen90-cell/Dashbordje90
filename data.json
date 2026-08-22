@@ -1,44 +1,611 @@
 {
-  "generated_at": "2026-08-22T06:10:03Z",
+  "generated_at": "2026-08-22T07:16:46.138003Z",
   "gw": 2,
-  "deadline_time": "2026-08-22T13:30:00Z",
+  "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
-  "summary": "Toppforslaget passerer modellens terskler og gir positiv forventet gevinst både kortsiktig og over planhorisonten.",
+  "summary": "Toppforslaget gir positiv forventet gevinst både nå og over de neste rundene.",
   "source_snapshot_gw": 1,
   "recommendation": {
     "edge": 6.96,
-    "transfers": [{
-      "out": {"name":"Tzolis","xp":3.57},
-      "in": {"name":"Ødegaard","xp":4.82}
-    }]
+    "transfers": [
+      {
+        "out": {
+          "id": 557,
+          "name": "Tzolis",
+          "team_id": 1,
+          "team": "Arsenal",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 3.57,
+          "fixture": "Aston Villa (A)",
+          "availability": 1.0,
+          "confidence": 0.812,
+          "news": ""
+        },
+        "in": {
+          "id": 15,
+          "name": "Ødegaard",
+          "team_id": 1,
+          "team": "Arsenal",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 4.82,
+          "fixture": "Aston Villa (A)",
+          "availability": 1.0,
+          "confidence": 0.767,
+          "news": ""
+        }
+      }
+    ]
   },
   "lineup": [
-    {"name":"Kinsky","position":"GK","xp":2.92,"fixture":"Newcastle (H)","captain":false,"vice":false},
-    {"name":"Gabriel","position":"DEF","xp":3.88,"fixture":"Aston Villa (A)","captain":false,"vice":false},
-    {"name":"Calafiori","position":"DEF","xp":4.27,"fixture":"Aston Villa (A)","captain":false,"vice":false},
-    {"name":"Maguire","position":"DEF","xp":3.26,"fixture":"Ipswich (H)","captain":false,"vice":false},
-    {"name":"Thomas","position":"DEF","xp":2.49,"fixture":"Hull (H)","captain":false,"vice":false},
-    {"name":"B.Fernandes","position":"MID","xp":5.88,"fixture":"Ipswich (H)","captain":true,"vice":false},
-    {"name":"Cunha","position":"MID","xp":4.23,"fixture":"Ipswich (H)","captain":false,"vice":false},
-    {"name":"Ødegaard","position":"MID","xp":4.82,"fixture":"Aston Villa (A)","captain":false,"vice":false},
-    {"name":"Osula","position":"FWD","xp":2.96,"fixture":"Spurs (A)","captain":false,"vice":false},
-    {"name":"Haaland","position":"FWD","xp":5.51,"fixture":"Crystal Palace (A)","captain":false,"vice":true},
-    {"name":"João Pedro","position":"FWD","xp":4.01,"fixture":"Brighton (H)","captain":false,"vice":false}
+    {
+      "id": 496,
+      "name": "Kinsky",
+      "team_id": 19,
+      "team": "Spurs",
+      "position": "GK",
+      "price": 4.5,
+      "xp": 2.92,
+      "fixture": "Newcastle (H)",
+      "availability": 1.0,
+      "confidence": 0.879,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 4,
+      "name": "Gabriel",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "DEF",
+      "price": 8.0,
+      "xp": 3.88,
+      "fixture": "Aston Villa (A)",
+      "availability": 1.0,
+      "confidence": 0.833,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 8,
+      "name": "Calafiori",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "DEF",
+      "price": 5.5,
+      "xp": 4.27,
+      "fixture": "Aston Villa (A)",
+      "availability": 1.0,
+      "confidence": 0.824,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 418,
+      "name": "Maguire",
+      "team_id": 16,
+      "team": "Man Utd",
+      "position": "DEF",
+      "price": 5.0,
+      "xp": 3.26,
+      "fixture": "Ipswich Town (H)",
+      "availability": 1.0,
+      "confidence": 0.867,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 173,
+      "name": "Thomas",
+      "team_id": 7,
+      "team": "Coventry City",
+      "position": "DEF",
+      "price": 4.0,
+      "xp": 2.49,
+      "fixture": "Hull City (H)",
+      "availability": 1.0,
+      "confidence": 0.78,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 426,
+      "name": "B.Fernandes",
+      "team_id": 16,
+      "team": "Man Utd",
+      "position": "MID",
+      "price": 12.0,
+      "xp": 5.88,
+      "fixture": "Ipswich Town (H)",
+      "availability": 1.0,
+      "confidence": 0.888,
+      "news": "",
+      "captain": true,
+      "vice": false
+    },
+    {
+      "id": 428,
+      "name": "Cunha",
+      "team_id": 16,
+      "team": "Man Utd",
+      "position": "MID",
+      "price": 8.0,
+      "xp": 4.23,
+      "fixture": "Ipswich Town (H)",
+      "availability": 1.0,
+      "confidence": 0.843,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 15,
+      "name": "Ødegaard",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "MID",
+      "price": 6.5,
+      "xp": 4.82,
+      "fixture": "Aston Villa (A)",
+      "availability": 1.0,
+      "confidence": 0.767,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 465,
+      "name": "Osula",
+      "team_id": 17,
+      "team": "Newcastle",
+      "position": "FWD",
+      "price": 6.0,
+      "xp": 2.96,
+      "fixture": "Spurs (A)",
+      "availability": 1.0,
+      "confidence": 0.766,
+      "news": "",
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 411,
+      "name": "Haaland",
+      "team_id": 15,
+      "team": "Man City",
+      "position": "FWD",
+      "price": 15.5,
+      "xp": 5.51,
+      "fixture": "Crystal Palace (A)",
+      "availability": 1.0,
+      "confidence": 0.888,
+      "news": "",
+      "captain": false,
+      "vice": true
+    },
+    {
+      "id": 165,
+      "name": "João Pedro",
+      "team_id": 6,
+      "team": "Chelsea",
+      "position": "FWD",
+      "price": 7.5,
+      "xp": 4.01,
+      "fixture": "Brighton (H)",
+      "availability": 1.0,
+      "confidence": 0.888,
+      "news": "",
+      "captain": false,
+      "vice": false
+    }
   ],
   "bench": [
-    {"name":"I. Sangaré","xp":2.20},
-    {"name":"Dubravka","xp":2.21},
-    {"name":"Egan","xp":2.09},
-    {"name":"Slater","xp":2.10}
+    {
+      "id": 488,
+      "name": "I.Sangaré",
+      "team_id": 18,
+      "team": "Nott'm Forest",
+      "position": "MID",
+      "price": 5.0,
+      "xp": 2.2,
+      "fixture": "Liverpool (A)",
+      "availability": 1.0,
+      "confidence": 0.77,
+      "news": ""
+    },
+    {
+      "id": 497,
+      "name": "Dubravka",
+      "team_id": 19,
+      "team": "Spurs",
+      "position": "GK",
+      "price": 4.0,
+      "xp": 2.21,
+      "fixture": "Newcastle (H)",
+      "availability": 1.0,
+      "confidence": 0.87,
+      "news": ""
+    },
+    {
+      "id": 277,
+      "name": "Egan",
+      "team_id": 11,
+      "team": "Hull City",
+      "position": "DEF",
+      "price": 4.0,
+      "xp": 2.09,
+      "fixture": "Coventry City (A)",
+      "availability": 1.0,
+      "confidence": 0.778,
+      "news": ""
+    },
+    {
+      "id": 290,
+      "name": "Slater",
+      "team_id": 11,
+      "team": "Hull City",
+      "position": "MID",
+      "price": 4.5,
+      "xp": 2.1,
+      "fixture": "Coventry City (A)",
+      "availability": 1.0,
+      "confidence": 0.799,
+      "news": ""
+    }
   ],
   "candidates": [
-    {"status":"GJØR DET","edge":6.96,"short_gain":3.82,"horizon_gain":6.96,"gate_misses":[],"pairs":[{"out":{"name":"Tzolis","xp":3.57},"in":{"name":"Ødegaard","xp":4.82}}]},
-    {"status":"GJØR DET","edge":4.74,"short_gain":2.58,"horizon_gain":4.74,"gate_misses":[],"pairs":[{"out":{"name":"Gabriel","xp":3.88},"in":{"name":"White","xp":4.71}}]},
-    {"status":"VURDERES","edge":2.81,"short_gain":1.48,"horizon_gain":2.81,"gate_misses":["Horisontfordel under +4.00","3-GW fordel under +1.50"],"pairs":[{"out":{"name":"Calafiori","xp":4.27},"in":{"name":"White","xp":4.71}}]}
+    {
+      "status": "GJØR DET",
+      "edge": 6.96,
+      "short_gain": 3.82,
+      "horizon_gain": 6.96,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 557,
+            "name": "Tzolis",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "MID",
+            "price": 6.5,
+            "xp": 3.57,
+            "fixture": "Aston Villa (A)",
+            "availability": 1.0,
+            "confidence": 0.812,
+            "news": ""
+          },
+          "in": {
+            "id": 15,
+            "name": "Ødegaard",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "MID",
+            "price": 6.5,
+            "xp": 4.82,
+            "fixture": "Aston Villa (A)",
+            "availability": 1.0,
+            "confidence": 0.767,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "GJØR DET",
+      "edge": 4.74,
+      "short_gain": 2.58,
+      "horizon_gain": 4.74,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 4,
+            "name": "Gabriel",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "DEF",
+            "price": 8.0,
+            "xp": 3.88,
+            "fixture": "Aston Villa (A)",
+            "availability": 1.0,
+            "confidence": 0.833,
+            "news": ""
+          },
+          "in": {
+            "id": 10,
+            "name": "White",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "DEF",
+            "price": 5.5,
+            "xp": 4.71,
+            "fixture": "Aston Villa (A)",
+            "availability": 1,
+            "confidence": 0.759,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 2.81,
+      "short_gain": 1.48,
+      "horizon_gain": 2.81,
+      "gate_misses": [
+        "Langsiktig gevinst under ønsket nivå",
+        "Gevinst de neste 3 rundene under ønsket nivå"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 8,
+            "name": "Calafiori",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "DEF",
+            "price": 5.5,
+            "xp": 4.27,
+            "fixture": "Aston Villa (A)",
+            "availability": 1.0,
+            "confidence": 0.824,
+            "news": ""
+          },
+          "in": {
+            "id": 10,
+            "name": "White",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "DEF",
+            "price": 5.5,
+            "xp": 4.71,
+            "fixture": "Aston Villa (A)",
+            "availability": 1,
+            "confidence": 0.759,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "SVAK",
+      "edge": 1.3,
+      "short_gain": 1.19,
+      "horizon_gain": 1.3,
+      "gate_misses": [
+        "Fordelen er foreløpig for liten"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.96,
+            "fixture": "Spurs (A)",
+            "availability": 1.0,
+            "confidence": 0.766,
+            "news": ""
+          },
+          "in": {
+            "id": 526,
+            "name": "Solanke",
+            "team_id": 19,
+            "team": "Spurs",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 3.69,
+            "fixture": "Newcastle (H)",
+            "availability": 1.0,
+            "confidence": 0.778,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "SVAK",
+      "edge": 1.32,
+      "short_gain": 0.76,
+      "horizon_gain": 1.32,
+      "gate_misses": [
+        "Fordelen er foreløpig for liten"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.96,
+            "fixture": "Spurs (A)",
+            "availability": 1.0,
+            "confidence": 0.766,
+            "news": ""
+          },
+          "in": {
+            "id": 463,
+            "name": "Woltemade",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 3.24,
+            "fixture": "Spurs (A)",
+            "availability": 1.0,
+            "confidence": 0.781,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "SVAK",
+      "edge": 1.04,
+      "short_gain": 1.35,
+      "horizon_gain": 1.04,
+      "gate_misses": [
+        "Fordelen er foreløpig for liten"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.96,
+            "fixture": "Spurs (A)",
+            "availability": 1.0,
+            "confidence": 0.766,
+            "news": ""
+          },
+          "in": {
+            "id": 346,
+            "name": "Calvert-Lewin",
+            "team_id": 13,
+            "team": "Leeds",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 3.44,
+            "fixture": "Brentford (H)",
+            "availability": 1.0,
+            "confidence": 0.888,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "SVAK",
+      "edge": 0.8,
+      "short_gain": 0.51,
+      "horizon_gain": 0.8,
+      "gate_misses": [
+        "Fordelen er foreløpig for liten"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.96,
+            "fixture": "Spurs (A)",
+            "availability": 1.0,
+            "confidence": 0.766,
+            "news": ""
+          },
+          "in": {
+            "id": 569,
+            "name": "Gonzalo",
+            "team_id": 10,
+            "team": "Fulham",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 3.25,
+            "fixture": "Sunderland (A)",
+            "availability": 1.0,
+            "confidence": 0.787,
+            "news": ""
+          }
+        }
+      ]
+    },
+    {
+      "status": "SVAK",
+      "edge": 0.36,
+      "short_gain": 0.18,
+      "horizon_gain": 0.36,
+      "gate_misses": [
+        "Fordelen er foreløpig for liten"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.96,
+            "fixture": "Spurs (A)",
+            "availability": 1.0,
+            "confidence": 0.766,
+            "news": ""
+          },
+          "in": {
+            "id": 490,
+            "name": "Wood",
+            "team_id": 18,
+            "team": "Nott'm Forest",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.92,
+            "fixture": "Liverpool (A)",
+            "availability": 1.0,
+            "confidence": 0.782,
+            "news": ""
+          }
+        }
+      ]
+    }
   ],
   "future": [
-    {"gw":2,"captain":"B.Fernandes","captain_xp":5.88,"xi_xp":44.23},
-    {"gw":3,"captain":"Haaland","captain_xp":5.62,"xi_xp":43.61},
-    {"gw":4,"captain":"Haaland","captain_xp":5.47,"xi_xp":42.95}
+    {
+      "gw": 2,
+      "captain": "B.Fernandes",
+      "captain_xp": 5.88,
+      "xi_xp": 44.24
+    },
+    {
+      "gw": 3,
+      "captain": "Haaland",
+      "captain_xp": 6.27,
+      "xi_xp": 42.42
+    },
+    {
+      "gw": 4,
+      "captain": "Ødegaard",
+      "captain_xp": 5.35,
+      "xi_xp": 42.43
+    },
+    {
+      "gw": 5,
+      "captain": "Haaland",
+      "captain_xp": 6.27,
+      "xi_xp": 44.76
+    },
+    {
+      "gw": 6,
+      "captain": "Ødegaard",
+      "captain_xp": 6.09,
+      "xi_xp": 45.22
+    },
+    {
+      "gw": 7,
+      "captain": "Haaland",
+      "captain_xp": 6.27,
+      "xi_xp": 44.21
+    }
   ]
 }
