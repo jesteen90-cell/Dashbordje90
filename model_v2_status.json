@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T10:03:25.578374Z",
+  "generated_at": "2026-08-22T10:24:35.262788Z",
   "dataset_sha256": "85ef1766d73db9fd6e1b7f0f878cd720f80abb03aba1dd8acb9abd4a8870b751",
   "rows": 81147,
   "gameweeks": 105,
@@ -129,5 +129,15 @@
     },
     "promote": false
   },
-  "transfer_optimizer": "multi-GW beam search smoke-tested"
+  "transfer_strategy": {
+    "holdout_season": "2025-26",
+    "tests": 34,
+    "multi_gw_actual": 0.0,
+    "greedy_actual": 0.0,
+    "delta": 0.0,
+    "wins": 0,
+    "ties": 34,
+    "losses": 0,
+    "promote": true
+  }
 }
