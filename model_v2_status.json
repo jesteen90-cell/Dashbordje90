@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-22T11:01:02.855097Z",
-  "model_version": "2.3",
-  "dataset_sha256": "85ef1766d73db9fd6e1b7f0f878cd720f80abb03aba1dd8acb9abd4a8870b751",
+  "generated_at": "2026-08-22T11:03:27.880964Z",
+  "model_version": "2.4-risk",
+  "dataset_sha256": "5f694e2009113ae0395ddfb0ecb81634bd5e8d01077b3929f3800044b56e5875",
   "rows": 81147,
   "gameweeks": 105,
   "holdout_season": "2025-26",
@@ -97,6 +97,63 @@
         "n": 6408
       }
     }
+  },
+  "uncertainty": {
+    "holdout_season": "2025-26",
+    "n": 27646,
+    "target_coverage": 0.8,
+    "coverage": 0.9264,
+    "mean_interval_width": 3.399,
+    "by_position": {
+      "1": {
+        "n": 3182,
+        "coverage": 0.9381,
+        "mean_width": 2.656
+      },
+      "2": {
+        "n": 9036,
+        "coverage": 0.9125,
+        "mean_width": 3.561
+      },
+      "3": {
+        "n": 12367,
+        "coverage": 0.9351,
+        "mean_width": 3.463
+      },
+      "4": {
+        "n": 3061,
+        "coverage": 0.9203,
+        "mean_width": 3.437
+      }
+    },
+    "valid": true
+  },
+  "upside_tuning": {
+    "holdout_season": "2025-26",
+    "train_seasons": [
+      "2023-24",
+      "2024-25"
+    ],
+    "upside_weight": 0.5,
+    "train": {
+      "gameweeks": 70,
+      "points": 454.0,
+      "baseline": 446.0,
+      "delta": 8.0,
+      "wins": 3,
+      "ties": 66,
+      "losses": 1
+    },
+    "holdout": {
+      "gameweeks": 35,
+      "points": 218.0,
+      "baseline": 218.0,
+      "delta": 0.0,
+      "wins": 0,
+      "ties": 35,
+      "losses": 0
+    },
+    "promote": false
   },
   "captain_model": {
     "holdout_season": "2025-26",
