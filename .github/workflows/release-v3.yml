@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: dashboard-refresh
-  cancel-in-progress: false
+  group: release-model-v3
+  cancel-in-progress: true
 
 jobs:
   release:
@@ -27,16 +27,16 @@ jobs:
       - name: Verify release inputs
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+          FPL_FREE_TRANSFERS: ${{ secrets.FPL_FREE_TRANSFERS }}
         run: |
-          test -n "$FPL_TEAM_ID" || { echo "Missing FPL_TEAM_ID"; exit 1; }
+          echo "Model 3.0 release preflight"
+          test -n "$FPL_TEAM_ID" || { echo "ERROR: Missing FPL_TEAM_ID"; exit 1; }
+          if [ -z "$FPL_FREE_TRANSFERS" ]; then echo "FPL_FREE_TRANSFERS unset; safe fallback=1"; fi
           python - <<'PY'
           import json
-          rf=json.load(open('recent_form_ab_status.json'))
-          cap=json.load(open('captain_v3_status.json'))
-          tr=json.load(open('transfer_strategy_params.json'))
-          assert rf.get('promote') is True
-          assert cap.get('promote') is True
-          assert tr.get('promote') is True
+          for path in ('recent_form_ab_status.json','captain_v3_status.json','transfer_strategy_params.json'):
+              d=json.load(open(path)); print(path,'promote=',d.get('promote'))
+              assert d.get('promote') is True, path
           print('All Model 3.0 promotion gates are green')
           PY
       - name: Generate Model 3.0 feed
@@ -51,13 +51,17 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('data.json'))
-          assert d['model_version']=='3.0-validated'
-          assert d['recent_form']['promoted'] is True
-          assert d['captain_model']['promoted'] is True
-          assert len(d['comparison']['current_xi'])==11
-          assert len(d['lineup'])==11
-          assert d['deadline_time']
-          print('RELEASE READY', d['generated_at'], 'GW', d['gw'])
+          checks={
+            'model_version': d.get('model_version')=='3.0-validated',
+            'recent_form': d.get('recent_form',{}).get('promoted') is True,
+            'captain_v3': d.get('captain_model',{}).get('promoted') is True,
+            'current_xi_11': len(d.get('comparison',{}).get('current_xi',[]))==11,
+            'lineup_11': len(d.get('lineup',[]))==11,
+            'deadline': bool(d.get('deadline_time')),
+          }
+          print('Release checks:',checks)
+          assert all(checks.values()), checks
+          print('RELEASE READY',d['generated_at'],'GW',d['gw'],'headline',d.get('headline'))
           PY
       - name: Publish Model 3.0 feed
         run: |
