@@ -28,25 +28,29 @@ jobs:
           python - <<'PY'
           import json
           r=json.load(open('backtest_results.json'))
+          h=r.get('holdout',{})
           print('Dataset SHA256:',r.get('dataset_sha256'))
           print('Rows:',r['n'],'Evaluated GWs:',r.get('evaluated_gameweeks'))
-          print('V2 MAE:',round(r['mae'],4),'Baseline:',round(r.get('baseline_mae',999),4))
-          print('MAE improvement %:',round(r.get('mae_improvement_pct',0),2))
-          print('Within-GW rank corr:',round(r.get('within_gw_rank_corr',0),4))
-          print('Captain delta:',r.get('captain_delta'),'W/T/L:',r.get('captain_vs_baseline_wins'),r.get('captain_vs_baseline_ties'),r.get('captain_vs_baseline_losses'))
-          print('Top-5 delta:',round(r.get('top5_delta',0),2))
-          print('By season:',r.get('by_season',{}))
-          print('By position:',r.get('by_position',{}))
+          print('Overall V2 MAE:',round(r['mae'],4),'Baseline:',round(r.get('baseline_mae',999),4))
+          print('Overall improvement %:',round(r.get('mae_improvement_pct',0),2))
+          print('Holdout season:',r.get('holdout_season'))
+          print('Holdout V2 MAE:',round(h.get('mae',999),4),'Baseline:',round(h.get('baseline_mae',999),4))
+          print('Holdout improvement %:',round(h.get('mae_improvement_pct',-999),2))
+          print('Holdout rank corr:',round(h.get('within_gw_rank_corr',0),4))
+          print('Holdout captain delta:',h.get('captain_delta'),'Top-5 delta:',round(h.get('top5_delta',0),2))
+          print('Holdout by position:',h.get('by_position',{}))
           if r['n'] < 5000: raise SystemExit('FAIL: insufficient evaluation sample')
           if r.get('evaluated_gameweeks',0) < 75: raise SystemExit('FAIL: insufficient walk-forward gameweeks')
-          if r['mae'] >= r.get('baseline_mae',999): raise SystemExit('FAIL: v2 does not beat baseline MAE')
-          if r.get('within_gw_rank_corr',0) <= 0: raise SystemExit('FAIL: no positive within-GW ranking skill')
-          if r.get('top5_delta',0) < 0: raise SystemExit('FAIL: v2 top-5 decisions trail baseline')
+          if r['mae'] >= r.get('baseline_mae',999): raise SystemExit('FAIL: v2 does not beat baseline overall MAE')
+          if h.get('n',0) < 1500: raise SystemExit('FAIL: holdout sample too small')
+          if h.get('mae',999) >= h.get('baseline_mae',999): raise SystemExit('FAIL: v2 does not beat baseline on holdout MAE')
+          if h.get('within_gw_rank_corr',0) <= 0: raise SystemExit('FAIL: no positive holdout ranking skill')
+          if h.get('top5_delta',0) < 0: raise SystemExit('FAIL: holdout top-5 decisions trail baseline')
           bad=[]
-          for s,m in r.get('by_season',{}).items():
-            if m.get('mae_improvement_pct',0) < -2: bad.append((s,m.get('mae_improvement_pct')))
-          if bad: raise SystemExit(f'FAIL: material season regression {bad}')
-          print('PASS: model clears promotion gate')
+          for pos,m in h.get('by_position',{}).items():
+            if m.get('mae_improvement_pct',0) < -3: bad.append((pos,m.get('mae_improvement_pct')))
+          if bad: raise SystemExit(f'FAIL: material holdout position regression {bad}')
+          print('PASS: model clears strict holdout promotion gate')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
