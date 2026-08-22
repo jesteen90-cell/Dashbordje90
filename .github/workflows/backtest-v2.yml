@@ -4,6 +4,7 @@ on:
   push:
     branches: [model-v2]
     paths:
+      - 'model_v2_core.py'
       - 'backtest.py'
       - 'build_backtest_dataset.py'
       - '.github/workflows/backtest-v2.yml'
