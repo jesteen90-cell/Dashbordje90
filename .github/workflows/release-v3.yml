@@ -1,0 +1,72 @@
+name: Release Model 3.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release-v3.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dashboard-refresh
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Verify release inputs
+        env:
+          FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+        run: |
+          test -n "$FPL_TEAM_ID" || { echo "Missing FPL_TEAM_ID"; exit 1; }
+          python - <<'PY'
+          import json
+          rf=json.load(open('recent_form_ab_status.json'))
+          cap=json.load(open('captain_v3_status.json'))
+          tr=json.load(open('transfer_strategy_params.json'))
+          assert rf.get('promote') is True
+          assert cap.get('promote') is True
+          assert tr.get('promote') is True
+          print('All Model 3.0 promotion gates are green')
+          PY
+      - name: Generate Model 3.0 feed
+        env:
+          FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+          FPL_FREE_TRANSFERS: ${{ secrets.FPL_FREE_TRANSFERS }}
+        run: |
+          if [ -z "$FPL_FREE_TRANSFERS" ]; then export FPL_FREE_TRANSFERS=1; fi
+          python generate_dashboard_v3.py
+      - name: Release gate
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data.json'))
+          assert d['model_version']=='3.0-validated'
+          assert d['recent_form']['promoted'] is True
+          assert d['captain_model']['promoted'] is True
+          assert len(d['comparison']['current_xi'])==11
+          assert len(d['lineup'])==11
+          assert d['deadline_time']
+          print('RELEASE READY', d['generated_at'], 'GW', d['gw'])
+          PY
+      - name: Publish Model 3.0 feed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          if git diff --cached --quiet; then
+            echo "Feed already current"
+          else
+            git commit -m "Release Model 3.0 live feed"
+            git push
+          fi
