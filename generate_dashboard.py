@@ -13,7 +13,7 @@ POS={1:'GK',2:'DEF',3:'MID',4:'FWD'}
 
 def get(path, optional=False):
     try:
-        r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-dashboard-public/2.0'},timeout=30)
+        r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-dashboard-public/2.1'},timeout=30)
         r.raise_for_status(); return r.json()
     except Exception:
         if optional:return None
@@ -75,8 +75,7 @@ def basexp(p):
     return clamp(raw,1.5,9)
 
 def project(p,g):
-    fs=fm.get(g,{}).get(int(p['team']),[])
-    total=0
+    fs=fm.get(g,{}).get(int(p['team']),[]); total=0
     for f in fs:
         mult={1:1.2,2:1.1,3:1,4:.9,5:.8}.get(f['fdr'],1)*(1.035 if f['home'] else 1)
         total+=basexp(p)*mult*(.78+.22*conf(p))*avail(p)
@@ -113,8 +112,22 @@ def legal(sq):
     return max(c.values())<=3
 
 def row(p,g):
-    fs=fm.get(g,{}).get(int(p['team']),[]); fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs)
-    return {'name':p.get('web_name'),'position':POS[int(p['element_type'])],'xp':round(p['_x'][g],2),'fixture':fixture}
+    team_id=int(p['team'])
+    fs=fm.get(g,{}).get(team_id,[])
+    fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs)
+    return {
+        'id':int(p['id']),
+        'name':p.get('web_name'),
+        'team_id':team_id,
+        'team':teams.get(team_id,'?'),
+        'position':POS[int(p['element_type'])],
+        'price':round(num(p.get('now_cost'))/10,1),
+        'xp':round(p['_x'][g],2),
+        'fixture':fixture,
+        'availability':round(avail(p),3),
+        'confidence':round(p['_c'],3),
+        'news':p.get('news') or ''
+    }
 
 baseh=score(squad); base3=score(squad,3); ids={int(p['id']) for p in squad}; pools={}
 for pos in (1,2,3,4):
@@ -137,8 +150,8 @@ for p in plans:
     if p['edge']>=4 and p['short']>=1.5 and p['current']>=-.25:status='GJØR DET'; misses=[]
     elif p['edge']>=1.5:
         status='VURDERES'; misses=[]
-        if p['edge']<4:misses.append('Horisontfordel under +4.00')
-        if p['short']<1.5:misses.append('3-GW fordel under +1.50')
+        if p['edge']<4:misses.append('Langsiktig gevinst under ønsket nivå')
+        if p['short']<1.5:misses.append('Gevinst de neste 3 rundene under ønsket nivå')
     else:status='SVAK'; misses=['Fordelen er foreløpig for liten']
     cands.append({'status':status,'edge':round(p['edge'],2),'short_gain':round(p['short'],2),'horizon_gain':round(p['edge'],2),'gate_misses':misses,'pairs':[{'out':row(p['out'],TARGET),'in':row(p['in'],TARGET)}]})
 best=plans[0] if plans else None; go=bool(best and best['edge']>=4 and best['short']>=1.5 and best['current']>=-.25)
@@ -148,6 +161,6 @@ cur=lineup(rec_squad,TARGET); xi={int(p['id']) for p in cur['xi']}; bench=[p for
 future=[]
 for g in GWS:
     o=lineup(rec_squad,g); future.append({'gw':g,'captain':o['captain'].get('web_name'),'captain_xp':round(o['captain']['_x'][g],2),'xi_xp':round(o['raw'],2)})
-data={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':'GJØR BYTTET' if go else 'VENT / BANK','summary':'Toppforslaget passerer modellens terskler og gir positiv forventet gevinst.' if go else 'Ingen kandidat har høy nok robust fordel akkurat nå.','source_snapshot_gw':snapshot_gw,'recommendation':{'edge':round(best['edge'],2) if best else 0,'transfers':[{'out':row(best['out'],TARGET),'in':row(best['in'],TARGET)}] if go else []},'lineup':[row(p,TARGET)|{'captain':int(p['id'])==int(cur['captain']['id']),'vice':int(p['id'])==int(cur['vice']['id'])} for p in cur['xi']],'bench':[row(p,TARGET) for p in bench],'candidates':cands,'future':future}
+data={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':'GJØR BYTTET' if go else 'VENT / BANK','summary':'Toppforslaget gir positiv forventet gevinst både nå og over de neste rundene.' if go else 'Ingen kandidat er god nok akkurat nå. Behold laget og spar byttet.','source_snapshot_gw':snapshot_gw,'recommendation':{'edge':round(best['edge'],2) if best else 0,'transfers':[{'out':row(best['out'],TARGET),'in':row(best['in'],TARGET)}] if go else []},'lineup':[row(p,TARGET)|{'captain':int(p['id'])==int(cur['captain']['id']),'vice':int(p['id'])==int(cur['vice']['id'])} for p in cur['xi']],'bench':[row(p,TARGET) for p in bench],'candidates':cands,'future':future}
 OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
-print(f'Updated sanitized dashboard: GW{snapshot_gw} -> GW{TARGET}')
+print(f'Updated sanitized dashboard with club identity: GW{snapshot_gw} -> GW{TARGET}')
