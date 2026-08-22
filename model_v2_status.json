@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T09:32:39.881204Z",
+  "generated_at": "2026-08-22T10:03:25.578374Z",
   "dataset_sha256": "85ef1766d73db9fd6e1b7f0f878cd720f80abb03aba1dd8acb9abd4a8870b751",
   "rows": 81147,
   "gameweeks": 105,
@@ -106,13 +106,13 @@
     "weights": {
       "xp": 0.8,
       "minutes": 0,
-      "attack": 0,
+      "attack_multiplier": 0,
       "mid_fwd": 0
     },
     "train": {
       "gameweeks": 70,
-      "points": 0.0,
-      "baseline_points": 0.0,
+      "points": 436.0,
+      "baseline_points": 436.0,
       "delta": 0.0,
       "wins": 0,
       "ties": 70,
@@ -120,13 +120,14 @@
     },
     "holdout": {
       "gameweeks": 35,
-      "points": 0.0,
-      "baseline_points": 0.0,
+      "points": 216.0,
+      "baseline_points": 216.0,
       "delta": 0.0,
       "wins": 0,
       "ties": 35,
       "losses": 0
     },
     "promote": false
-  }
+  },
+  "transfer_optimizer": "multi-GW beam search smoke-tested"
 }
