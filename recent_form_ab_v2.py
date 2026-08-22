@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Leakage-safe A/B test: base v2.6 signal vs recent-form overlay.
 Uses only prior-GW xG/xA/minutes to build the rolling six-match signal.
+This file is part of the strict v2.7 promotion gate.
 """
 import argparse,csv,io,json,math,requests
 from collections import defaultdict
@@ -29,15 +30,12 @@ def main():
   r=requests.get(RAW.format(season=season),timeout=60);r.raise_for_status();rows=list(csv.DictReader(io.StringIO(r.text)));rows.sort(key=lambda x:int(x.get('GW') or x.get('gw') or 0));hist=defaultdict(list)
   for row in rows:
    gw=int(row.get('GW') or row.get('gw') or 0);pid=str(row.get('element') or row.get('id') or row.get('name'));m,conf=signal(hist[pid]);mins=sum(n(x.get('minutes')) for x in hist[pid]);base=(sum(n(x.get('total_points')) for x in hist[pid][-6:])/max(len(hist[pid][-6:]),1)) if hist[pid] else 2.0
-   # Conservative A/B proxy: recent multiplier adjusts only the attacking share
-   # of a rolling player-points baseline rather than all expected points.
    attack_share=.55;pred_base=base;pred_recent=base*(1+attack_share*(m-1));actual=n(row.get('total_points'))
    if gw>=7:all_rows.append({'season':season,'gw':gw,'player':row.get('name'),'base':pred_base,'recent':pred_recent,'actual':actual,'mult':m,'confidence':conf,'history_minutes':mins})
    hist[pid].append(row)
  hold=sorted(a.seasons)[-1];train=[x for x in all_rows if x['season']!=hold];test=[x for x in all_rows if x['season']==hold]
  def ev(rows):
-  b=[(x['base'],x['actual']) for x in rows];r=[(x['recent'],x['actual']) for x in rows];
-  bygw=defaultdict(list)
+  b=[(x['base'],x['actual']) for x in rows];r=[(x['recent'],x['actual']) for x in rows];bygw=defaultdict(list)
   for x in rows:bygw[x['gw']].append(x)
   top_base=top_recent=0
   for g,xs in bygw.items():
