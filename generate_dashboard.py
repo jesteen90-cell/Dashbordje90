@@ -4,6 +4,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 import requests
 from model_v2_core import project as core_project
+from transfer_optimizer_v2 import optimize as optimize_transfers
 
 BASE='https://fantasy.premierleague.com/api'; TEAM_ID=int(os.environ['FPL_TEAM_ID']); OUT=Path('data.json')
 HORIZON=6; WEIGHTS=[1,.9,.8,.7,.62,.55]; POS={1:'GK',2:'DEF',3:'MID',4:'FWD'}
@@ -53,13 +54,10 @@ def live_core_input(p,f):
  pos=int(p['element_type']); hist=n(p.get('minutes')); starts=n(p.get('starts')); rounds=max(TARGET-1,1)
  avg_start=78.0 if starts<=0 else clamp(hist/max(starts,1),55,88)
  residual=max(0,hist-starts*avg_start); sub_apps=residual/18 if residual else 0
- start_rate=clamp(starts/rounds,0,1); sub_rate=clamp(sub_apps/rounds,0,.6)
- scale=90/max(hist,180)
+ start_rate=clamp(starts/rounds,0,1); sub_rate=clamp(sub_apps/rounds,0,.6); scale=90/max(hist,180)
  attack={1:1.22,2:1.11,3:1,4:.89,5:.78}[f['fdr']]*(1.035 if f['home'] else .97)
  opp_lambda={1:.72,2:1.00,3:1.32,4:1.70,5:2.15}[f['fdr']]*(.93 if f['home'] else 1.07)
- return {'position':pos,'availability':availability(p),'start_rate':start_rate,'avg_start_mins':avg_start,'sub_rate':sub_rate,'avg_sub_mins':18,'minutes_history':hist,
-         'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,
-         'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':opp_lambda,'attack_multiplier':attack}
+ return {'position':pos,'availability':availability(p),'start_rate':start_rate,'avg_start_mins':avg_start,'sub_rate':sub_rate,'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':opp_lambda,'attack_multiplier':attack}
 
 def components(p,f):return core_project(live_core_input(p,f))
 def project(p,g):
@@ -67,9 +65,7 @@ def project(p,g):
  if not comps:return {'total':0,'xmins':0,'appearance':0,'goals':0,'assists':0,'clean_sheet':0,'saves':0,'defensive':0,'bonus':0,'conceded':0,'cards':0,'cs_probability':0}
  keys=('total','xmins','appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards','cs_probability')
  return {k:sum(c.get(k,0) for c in comps) for k in keys}
-
-for p in players:
- p['_proj']={g:project(p,g) for g in GWS};p['_x']={g:p['_proj'][g]['total'] for g in GWS};p['_h']=sum(p['_x'][g]*weights[g] for g in GWS)
+for p in players:p['_proj']={g:project(p,g) for g in GWS};p['_x']={g:p['_proj'][g]['total'] for g in GWS};p['_h']=sum(p['_x'][g]*weights[g] for g in GWS)
 
 def lineup(sq,g):
  bp={x:[p for p in sq if int(p['element_type'])==x] for x in (1,2,3,4)};best=None
@@ -85,59 +81,55 @@ def lineup(sq,g):
        if best is None or v>best[0]:best=(v,xi)
  ordered=sorted(best[1],key=lambda p:p['_x'][g],reverse=True);return {'raw':best[0],'xi':best[1],'captain':ordered[0],'vice':ordered[1]}
 
-def score(sq,limit=None):
- total=0
- for g in (GWS[:limit] if limit else GWS):
-  o=lineup(sq,g);total+=(o['raw']+o['captain']['_x'][g])*weights[g]
- return total
-
-def legal(sq):
- if len(sq)!=15 or len({p['id'] for p in sq})!=15:return False
- if {x:sum(int(p['element_type'])==x for p in sq) for x in (1,2,3,4)}!={1:2,2:5,3:5,4:3}:return False
- counts={}
- for p in sq:counts[int(p['team'])]=counts.get(int(p['team']),0)+1
- return max(counts.values())<=3
-
 def row(p,g,change=None):
  fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g]
  return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
 
-base=score(squad);base3=score(squad,3);ids={int(p['id']) for p in squad};pools={}
-for pos in (1,2,3,4):
- x=[p for p in players if int(p['element_type'])==pos and int(p['id']) not in ids and availability(p)>=.5];x.sort(key=lambda p:p['_h'],reverse=True);pools[pos]=x[:35]
-plans=[]
+# Multi-GW optimizer is now the source of the primary transfer plan.
+opt_players=[p for p in players if availability(p)>=.5 or int(p['id']) in {int(x['id']) for x in squad}]
+opt=optimize_transfers(opt_players,squad,bank,GWS,weights,free_transfers=1,beam_width=60,per_pos=18,save_ft_value=.55)
+plan_moves=opt['moves']; first=plan_moves[0] if plan_moves else {'gw':TARGET,'action':'bank'}
+first_transfer=first if first.get('gw')==TARGET and first.get('action')=='transfer' else None
+outp=byid.get(int(first_transfer['out'])) if first_transfer else None; inp=byid.get(int(first_transfer['in'])) if first_transfer else None
+transfer_squad=([p for p in squad if int(p['id'])!=int(outp['id'])]+[inp]) if first_transfer else squad
+current_o=lineup(squad,TARGET); transfer_o=lineup(transfer_squad,TARGET)
+current_gain=(inp['_x'][TARGET]-outp['_x'][TARGET]) if first_transfer else 0
+plan_gain=float(opt.get('gain',0))
+go=bool(first_transfer and plan_gain>1.0)
+
+def xi_rows(o,change_id=None,change_label=None):return [row(p,TARGET,change_label if change_id is not None and p['id']==change_id else None)|{'captain':p['id']==o['captain']['id'],'vice':p['id']==o['vice']['id']} for p in o['xi']]
+
+def move_public(m):
+ if m.get('action')=='bank':return {'gw':m['gw'],'action':'bank','label':'Spar gratisbyttet'}
+ o=byid[int(m['out'])];i=byid[int(m['in'])]
+ return {'gw':m['gw'],'action':'transfer','out':{'id':int(o['id']),'name':o['web_name'],'team':teams[int(o['team'])]},'in':{'id':int(i['id']),'name':i['web_name'],'team':teams[int(i['team'])]},'label':f"{o['web_name']} → {i['web_name']}"}
+transfer_plan=[move_public(m) for m in plan_moves]
+
+# Keep a shortlist of simple current-GW alternatives for transparency.
+cands=[];ids={int(p['id']) for p in squad}
 for out in squad:
  budget=bank+int(out['now_cost'])
- for inn in pools[int(out['element_type'])]:
-  if int(inn['now_cost'])>budget:continue
+ choices=[p for p in players if int(p['element_type'])==int(out['element_type']) and int(p['id']) not in ids and int(p['now_cost'])<=budget and availability(p)>=.5]
+ choices.sort(key=lambda p:p['_h'],reverse=True)
+ for inn in choices[:8]:
   ns=[p for p in squad if p['id']!=out['id']]+[inn]
-  if not legal(ns):continue
-  h=score(ns);s3=score(ns,3);cur=inn['_x'][TARGET]-out['_x'][TARGET];edge=h-base;ft_value=1.35;decision=edge-ft_value
-  plans.append({'out':out,'in':inn,'squad':ns,'edge':edge,'decision':decision,'short':s3-base3,'current':cur})
-plans.sort(key=lambda z:(z['decision']+.3*z['short'],z['current']),reverse=True);plans=plans[:10]
+  if not __import__('transfer_optimizer_v2').legal(ns):continue
+  gain=sum((inn['_x'][g]-out['_x'][g])*weights[g] for g in GWS)
+  cands.append({'status':'VURDERES' if gain>.5 else 'SVAK','edge':round(gain-.55,2),'short_gain':round(sum(inn['_x'][g]-out['_x'][g] for g in GWS[:3]),2),'horizon_gain':round(gain,2),'gate_misses':[] if gain>1 else ['Fordelen er liten sammenlignet med fleksibiliteten i å spare et gratisbytte'],'pairs':[{'out':row(out,TARGET),'in':row(inn,TARGET)}]})
+cands.sort(key=lambda c:c['horizon_gain'],reverse=True);cands=cands[:10]
 
-cands=[]
-for z in plans:
- status='GJØR DET' if z['decision']>=3.0 and z['short']>=1.2 and z['current']>=-.3 else ('VURDERES' if z['decision']>=.5 else 'SVAK')
- cands.append({'status':status,'edge':round(z['decision'],2),'short_gain':round(z['short'],2),'horizon_gain':round(z['edge'],2),'gate_misses':[] if status=='GJØR DET' else ['Fordelen er ikke stor nok til å slå verdien av å spare et gratisbytte'],'pairs':[{'out':row(z['out'],TARGET),'in':row(z['in'],TARGET)}]})
-
-best=plans[0] if plans else None;go=bool(best and best['decision']>=3 and best['short']>=1.2 and best['current']>=-.3)
-current_o=lineup(squad,TARGET)
-transfer_squad=best['squad'] if best else squad; transfer_o=lineup(transfer_squad,TARGET)
-out_id=best['out']['id'] if best else None; in_id=best['in']['id'] if best else None
-
-def xi_rows(o,change_id=None,change_label=None):
- return [row(p,TARGET,change_label if change_id is not None and p['id']==change_id else None)|{'captain':p['id']==o['captain']['id'],'vice':p['id']==o['vice']['id']} for p in o['xi']]
-
-future=[]
-plan_squad=transfer_squad if go else squad
+future=[];sim_squad=list(squad)
 for g in GWS:
- o=lineup(plan_squad,g);future.append({'gw':g,'captain':o['captain']['web_name'],'captain_xp':round(o['captain']['_x'][g],2),'xi_xp':round(o['raw'],2)})
+ m=next((x for x in plan_moves if x.get('gw')==g),None)
+ if m and m.get('action')=='transfer':sim_squad=[p for p in sim_squad if int(p['id'])!=int(m['out'])]+[byid[int(m['in'])]]
+ o=lineup(sim_squad,g);future.append({'gw':g,'captain':o['captain']['web_name'],'captain_xp':round(o['captain']['_x'][g],2),'xi_xp':round(o['raw'],2),'action':move_public(m) if m else {'gw':g,'action':'bank','label':'Ingen planlagt handling'}})
 
-data={'model_version':'2.1-shared-core','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,
- 'headline':'GJØR BYTTET' if go else 'VENT / BANK','summary':'Modell v2.1 bruker samme poengkjerne live og i backtest, med eksplisitt spilletidsfordeling, angrep, clean sheet, saves, defensive bidrag, bonus, kort og verdien av å spare et gratisbytte.',
- 'source_snapshot_gw':snapshot_gw,'recommendation':{'edge':round(best['decision'],2) if best else 0,'transfers':[{'out':row(best['out'],TARGET),'in':row(best['in'],TARGET)}] if go else []},
- 'comparison':{'status':cands[0]['status'] if cands else 'INGEN','out':row(best['out'],TARGET) if best else None,'in':row(best['in'],TARGET) if best else None,'current_xi':xi_rows(current_o,out_id,'out'),'transfer_xi':xi_rows(transfer_o,in_id,'in')},
+headline='GJØR BYTTET' if go else ('SPAR BYTTET' if first.get('action')=='bank' else 'VENT / BANK')
+summary=('Multi-GW-optimalisatoren anbefaler et bytte nå og vurderer samtidig de neste rundene.' if go else 'Multi-GW-optimalisatoren mener fleksibiliteten i å spare gratisbyttet er mer verdifull akkurat nå.')
+data={'model_version':'2.2-multi-gw','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':summary,'source_snapshot_gw':snapshot_gw,
+ 'optimizer':{'horizon_gws':GWS,'weighted_gain':round(plan_gain,2),'bank_after':round(opt['bank']/10,1),'free_transfers_after':opt['free_transfers'],'plan':transfer_plan},
+ 'recommendation':{'edge':round(plan_gain,2),'transfers':[{'out':row(outp,TARGET),'in':row(inp,TARGET)}] if go else []},
+ 'comparison':{'status':'GJØR DET' if go else 'BANK','out':row(outp,TARGET) if outp else None,'in':row(inp,TARGET) if inp else None,'current_xi':xi_rows(current_o,outp['id'] if outp else None,'out'),'transfer_xi':xi_rows(transfer_o,inp['id'] if inp else None,'in')},
  'lineup':xi_rows(transfer_o if go else current_o),'bench':[row(p,TARGET) for p in (transfer_squad if go else squad) if p['id'] not in {x['id'] for x in (transfer_o if go else current_o)['xi']}],
  'candidates':cands,'future':future}
-OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model v2.1 shared-core projection complete')
+OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model v2.2 multi-GW projection complete')
