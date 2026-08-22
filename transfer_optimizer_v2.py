@@ -26,10 +26,10 @@ def best_xi(squad,gw):
     cap=max(best[1],key=lambda p:float(p['_x'].get(gw,0)))
     return {'raw':best[0],'captain':cap,'xi':best[1]}
 
-def gw_value(squad,gw,captain_multiplier=1.0):
-    o=best_xi(squad,gw);return o['raw']+(float(o['captain']['_x'].get(gw,0))*captain_multiplier if o['captain'] else 0)
+def gw_value(squad,gw):
+    o=best_xi(squad,gw);return o['raw']+(float(o['captain']['_x'].get(gw,0)) if o['captain'] else 0)
 
-def _incoming_pools(players,squad,gws,weights,per_pos=14):
+def _incoming_pools(players,squad,gws,weights,per_pos=12):
     owned={int(p['id']) for p in squad};pools={}
     for pos in POS_COUNTS:
         xs=[p for p in players if int(p['element_type'])==pos and int(p['id']) not in owned]
@@ -37,41 +37,58 @@ def _incoming_pools(players,squad,gws,weights,per_pos=14):
         pools[pos]=xs[:per_pos]
     return pools
 
-def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=45,per_pos=14,save_ft_value=.55,max_saved_ft=5):
-    """Beam-search 0/1-transfer sequences across gameweeks.
+def _one_transfer_states(st,players,pools,gw):
+    owned={int(p['id']) for p in st['squad']};out=[]
+    for sell in st['squad']:
+        budget=st['bank']+int(sell['now_cost'])
+        for buy in pools[int(sell['element_type'])]:
+            if int(buy['id']) in owned or int(buy['now_cost'])>budget:continue
+            ns=[p for p in st['squad'] if int(p['id'])!=int(sell['id'])]+[buy]
+            if not legal(ns):continue
+            out.append((ns,budget-int(buy['now_cost']),[(int(sell['id']),int(buy['id']))]))
+    return out
 
-    State explicitly values saved transfers, bank and future xP. Hits are not
-    generated yet; this first version only spends available free transfers.
-    Prices use current FPL now_cost units (tenths of a million).
+def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=70,per_pos=12,save_ft_value=.45,max_saved_ft=5,hit_cost=4.0,max_transfers_per_gw=2):
+    """Beam-search transfer sequences across GWs.
+
+    Correct FPL-style FT accounting: after k transfers, next week's FT is
+    min(5, max(0, current_ft-k)+1). Transfers beyond current FT cost 4 points.
+    Search includes bank, one-transfer and (optionally) two-transfer paths.
     """
     assert legal(squad)
     pools=_incoming_pools(players,squad,gws,weights,per_pos)
-    initial={'squad':list(squad),'bank':int(bank),'ft':max(1,min(max_saved_ft,int(free_transfers))),'score':0.0,'moves':[]}
-    beam=[initial]
-    for i,gw in enumerate(gws):
+    beam=[{'squad':list(squad),'bank':int(bank),'ft':max(1,min(max_saved_ft,int(free_transfers))),'score':0.0,'moves':[],'hits':0}]
+    for gw in gws:
         nxt=[]
         for st in beam:
-            # Bank transfer. Carry FT forward, capped at five.
-            banked=min(max_saved_ft,st['ft']+1)
-            val=gw_value(st['squad'],gw)*weights.get(gw,1)+save_ft_value*banked
-            nxt.append({**st,'ft':banked,'score':st['score']+val,'moves':st['moves']+[{'gw':gw,'action':'bank'}]})
-            if st['ft']<=0:continue
-            owned={int(p['id']) for p in st['squad']}
-            for out in st['squad']:
-                budget=st['bank']+int(out['now_cost'])
-                for inn in pools[int(out['element_type'])]:
-                    if int(inn['id']) in owned or int(inn['now_cost'])>budget:continue
-                    ns=[p for p in st['squad'] if int(p['id'])!=int(out['id'])]+[inn]
-                    if not legal(ns):continue
-                    nb=budget-int(inn['now_cost']);nft=min(max_saved_ft,st['ft']) # spend one, then earn next GW after this state
-                    val=gw_value(ns,gw)*weights.get(gw,1)+save_ft_value*nft
-                    nxt.append({'squad':ns,'bank':nb,'ft':nft,'score':st['score']+val,'moves':st['moves']+[{'gw':gw,'action':'transfer','out':int(out['id']),'in':int(inn['id'])}]})
-        # Deduplicate equivalent squad/bank/FT states, keep best path.
+            # 0 transfers
+            nft=min(max_saved_ft,st['ft']+1);val=gw_value(st['squad'],gw)*weights.get(gw,1)+save_ft_value*nft
+            nxt.append({**st,'ft':nft,'score':st['score']+val,'moves':st['moves']+[{'gw':gw,'action':'bank','transfers':0,'hit':0}]})
+            # 1 transfer
+            first=_one_transfer_states(st,players,pools,gw)
+            for ns,nb,pairs in first:
+                k=1;hit=max(0,k-st['ft'])*hit_cost;nft=min(max_saved_ft,max(0,st['ft']-k)+1)
+                val=gw_value(ns,gw)*weights.get(gw,1)-hit+save_ft_value*nft
+                nxt.append({'squad':ns,'bank':nb,'ft':nft,'score':st['score']+val,'hits':st['hits']+int(hit),'moves':st['moves']+[{'gw':gw,'action':'transfer','pairs':pairs,'transfers':1,'hit':int(hit)}]})
+            # 2 transfers: expand only the strongest first-step states to control combinatorics
+            if max_transfers_per_gw>=2:
+                ranked=sorted(first,key=lambda x:gw_value(x[0],gw),reverse=True)[:18]
+                for ns1,nb1,p1 in ranked:
+                    tmp={'squad':ns1,'bank':nb1};owned={int(p['id']) for p in ns1}
+                    for sell in ns1:
+                        if int(sell['id'])==p1[0][1]:continue
+                        budget=nb1+int(sell['now_cost'])
+                        for buy in pools[int(sell['element_type'])][:8]:
+                            if int(buy['id']) in owned or int(buy['now_cost'])>budget:continue
+                            ns2=[p for p in ns1 if int(p['id'])!=int(sell['id'])]+[buy]
+                            if not legal(ns2):continue
+                            k=2;hit=max(0,k-st['ft'])*hit_cost;nft=min(max_saved_ft,max(0,st['ft']-k)+1);nb=budget-int(buy['now_cost'])
+                            val=gw_value(ns2,gw)*weights.get(gw,1)-hit+save_ft_value*nft
+                            nxt.append({'squad':ns2,'bank':nb,'ft':nft,'score':st['score']+val,'hits':st['hits']+int(hit),'moves':st['moves']+[{'gw':gw,'action':'transfer','pairs':p1+[(int(sell['id']),int(buy['id']))],'transfers':2,'hit':int(hit)}]})
         dedup={}
         for st in nxt:
             key=(tuple(sorted(int(p['id']) for p in st['squad'])),st['bank'],st['ft'])
             if key not in dedup or st['score']>dedup[key]['score']:dedup[key]=st
         beam=sorted(dedup.values(),key=lambda s:s['score'],reverse=True)[:beam_width]
-    best=beam[0]
-    baseline=sum(gw_value(squad,g)*weights.get(g,1) for g in gws)
-    return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'moves':best['moves'],'squad':best['squad']}
+    best=beam[0];baseline=sum(gw_value(squad,g)*weights.get(g,1) for g in gws)
+    return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'hit_points':best['hits'],'moves':best['moves'],'squad':best['squad']}
