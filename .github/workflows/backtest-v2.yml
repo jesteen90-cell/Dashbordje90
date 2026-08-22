@@ -1,0 +1,44 @@
+name: Model v2 backtest
+on:
+  workflow_dispatch:
+  push:
+    branches: [model-v2]
+    paths:
+      - 'backtest.py'
+      - 'build_backtest_dataset.py'
+      - '.github/workflows/backtest-v2.yml'
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Build leakage-aware historical dataset
+        run: python build_backtest_dataset.py --seasons 2023-24 2024-25 2025-26 --out backtest_dataset.json
+      - name: Evaluate v2 against rolling baseline
+        run: python backtest.py backtest_dataset.json --out backtest_results.json
+      - name: Show quality gate
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('backtest_results.json'))
+          print('Rows:',r['n'])
+          print('V2 MAE:',round(r['mae'],4),'Baseline:',round(r.get('baseline_mae',999),4))
+          print('Improvement %:',round(r.get('mae_improvement_pct',0),2))
+          print('Rank corr:',round(r['rank_corr'],4))
+          print('Captain:',r['captain_actual_total'],'Baseline captain:',r['baseline_captain_total'])
+          if r['n'] < 5000: raise SystemExit('FAIL: insufficient evaluation sample')
+          if r['mae'] >= r.get('baseline_mae',999): raise SystemExit('FAIL: v2 does not beat baseline MAE')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: model-v2-backtest
+          path: |
+            backtest_results.json
+            backtest_dataset.json
