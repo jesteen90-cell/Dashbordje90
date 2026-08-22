@@ -28,7 +28,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,18 +36,28 @@ jobs:
           python-version: "3.12"
       - name: Install dependency
         run: pip install requests
+      - name: Preflight Model 3.0 inputs
+        env:
+          FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+        run: |
+          test -n "$FPL_TEAM_ID" || { echo "Missing FPL_TEAM_ID repository secret"; exit 1; }
+          test -f recent_form_ab_status.json
+          test -f captain_v3_status.json
+          test -f transfer_strategy_params.json
+          python - <<'PY'
+          import json
+          rf=json.load(open('recent_form_ab_status.json')); cap=json.load(open('captain_v3_status.json')); tr=json.load(open('transfer_strategy_params.json'))
+          assert rf.get('promote') is True, 'recent form not promoted'
+          assert cap.get('promote') is True, 'captain v3 not promoted'
+          assert tr.get('promote') is True, 'transfer strategy not promoted'
+          print('Validated Model 3.0 inputs present')
+          PY
       - name: Build validated Model 3.0 dashboard feed
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
           FPL_FREE_TRANSFERS: ${{ secrets.FPL_FREE_TRANSFERS }}
         run: |
-          if [ -z "$FPL_TEAM_ID" ]; then
-            echo "FPL_TEAM_ID secret is not configured; keeping current dashboard data."
-            exit 0
-          fi
-          if [ -z "$FPL_FREE_TRANSFERS" ]; then
-            export FPL_FREE_TRANSFERS=1
-          fi
+          if [ -z "$FPL_FREE_TRANSFERS" ]; then export FPL_FREE_TRANSFERS=1; fi
           python generate_dashboard_v3.py
       - name: Sanity-check generated feed
         run: |
@@ -60,7 +70,7 @@ jobs:
           assert len(d.get('lineup',[]))==11
           assert d.get('recent_form',{}).get('promoted') is True
           assert d.get('captain_model',{}).get('promoted') is True
-          print('Model 3.0 feed sanity check passed')
+          print('Model 3.0 feed sanity check passed:', d.get('generated_at'))
           PY
       - name: Publish updated feed
         run: |
