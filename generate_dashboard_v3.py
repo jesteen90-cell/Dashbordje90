@@ -1,5 +1,6 @@
 from __future__ import annotations
 import itertools,json,math,os
+from concurrent.futures import ThreadPoolExecutor,as_completed
 from datetime import datetime,timezone
 from pathlib import Path
 import requests
@@ -11,7 +12,7 @@ from recent_form_v2 import recent_signal,blend_rates,load_tuned_params
 BASE='https://fantasy.premierleague.com/api';TEAM_ID=int(os.environ['FPL_TEAM_ID']);OUT=Path('data.json');DEFAULT_WEIGHTS=[1,.9,.8,.7,.62,.55];POS={1:'GK',2:'DEF',3:'MID',4:'FWD'};Z80=1.2815515655446004
 
 def get(path,optional=False):
- try:r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-model-v3.0'},timeout=30);r.raise_for_status();return r.json()
+ try:r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-model-v3.0'},timeout=18);r.raise_for_status();return r.json()
  except Exception:
   if optional:return None
   raise
@@ -53,9 +54,17 @@ for g in finished+[x for x in range(TARGET-1,0,-1) if x not in finished]:
  if s and len(s.get('picks',[]))==15:snapshot,snapshot_gw=s,g;break
 if not snapshot:raise RuntimeError('No public squad snapshot')
 squad=[byid[int(x['element'])] for x in snapshot['picks']];bank=int(snapshot.get('entry_history',{}).get('bank') or 0);free_transfers=max(1,min(5,int(os.environ.get('FPL_FREE_TRANSFERS','1'))))
-squad_ids={int(p['id']) for p in squad};ranked=sorted(players,key=lambda p:n(p.get('total_points'))+2*n(p.get('form'))+n(p.get('selected_by_percent'))*.15,reverse=True);history_ids=squad_ids|{int(p['id']) for p in ranked[:180]};recent={}
-for pid in history_ids:
- s=get(f'element-summary/{pid}/',True);recent[pid]=recent_signal((s or {}).get('history',[]),params=recent_cfg)
+squad_ids={int(p['id']) for p in squad};ranked=sorted(players,key=lambda p:n(p.get('total_points'))+2*n(p.get('form'))+n(p.get('selected_by_percent'))*.15,reverse=True);history_ids=squad_ids|{int(p['id']) for p in ranked[:140]};recent={}
+
+def fetch_recent(pid):
+ s=get(f'element-summary/{pid}/',True)
+ return pid,recent_signal((s or {}).get('history',[]),params=recent_cfg)
+with ThreadPoolExecutor(max_workers=12) as ex:
+ futures=[ex.submit(fetch_recent,pid) for pid in history_ids]
+ for fut in as_completed(futures):
+  try:pid,val=fut.result();recent[pid]=val
+  except Exception:pass
+print(f'Loaded recent-form history for {len(recent)}/{len(history_ids)} players')
 
 def availability(p):
  if p.get('status') in ('u','s'):return 0
