@@ -1,10 +1,10 @@
 """Walk-forward evaluation harness for FPL Model v2.
 
-Measures raw accuracy, within-GW ranking, captaincy, season/position stability
-and top-pick decision quality. Season+GW is always the evaluation key.
+Measures raw accuracy, within-GW ranking, captaincy, season/position stability,
+top-pick decision quality, and emits a deterministic dataset fingerprint.
 """
 from __future__ import annotations
-import argparse,json,math
+import argparse,hashlib,json,math
 from pathlib import Path
 from statistics import mean
 
@@ -42,7 +42,7 @@ def evaluate(rows,pred_key='v2',baseline_key='baseline'):
  for season in sorted({str(r.get('season','?')) for r in rows}):out['by_season'][season]=enrich_vs_baseline([r for r in rows if str(r.get('season','?'))==season],pred_key,baseline_key)
  byg={}
  for r in rows:byg.setdefault((str(r.get('season','?')),int(r['gw'])),[]).append(r)
- cap_v2=cap_base=oracle=0;corrs=[];wins=0;top5_v2=top5_base=0;rounds=0
+ cap_v2=cap_base=oracle=0;corrs=[];wins=ties=losses=0;top5_v2=top5_base=0;rounds=0
  for _,g in sorted(byg.items()):
   elig=[r for r in g if float(r.get('expected_minutes',90))>=45]
   if not elig:continue
@@ -51,11 +51,11 @@ def evaluate(rows,pred_key='v2',baseline_key='baseline'):
   v=max(elig,key=lambda r:float(r[pred_key]));cap_v2+=float(v['actual'])
   vtop=sorted(elig,key=lambda r:float(r[pred_key]),reverse=True)[:5];top5_v2+=mean(float(r['actual']) for r in vtop)
   if all(r.get(baseline_key) is not None for r in elig):
-   bv=max(elig,key=lambda r:float(r[baseline_key]));cap_base+=float(bv['actual']);wins+=float(v['actual'])>float(bv['actual'])
+   bv=max(elig,key=lambda r:float(r[baseline_key]));cap_base+=float(bv['actual']);va,ba=float(v['actual']),float(bv['actual']);wins+=va>ba;ties+=va==ba;losses+=va<ba
    btop=sorted(elig,key=lambda r:float(r[baseline_key]),reverse=True)[:5];top5_base+=mean(float(r['actual']) for r in btop)
   oracle+=float(max(elig,key=lambda r:float(r['actual']))['actual'])
  out['within_gw_rank_corr']=mean(corrs) if corrs else math.nan
- out|={'captain_actual_total':cap_v2,'baseline_captain_total':cap_base,'captain_oracle_total':oracle,'captain_vs_baseline_wins':wins,'top5_actual_avg_sum':top5_v2,'baseline_top5_actual_avg_sum':top5_base,'gameweeks':len(byg),'evaluated_gameweeks':rounds}
+ out|={'captain_actual_total':cap_v2,'baseline_captain_total':cap_base,'captain_oracle_total':oracle,'captain_vs_baseline_wins':wins,'captain_vs_baseline_ties':ties,'captain_vs_baseline_losses':losses,'captain_delta':cap_v2-cap_base,'top5_actual_avg_sum':top5_v2,'baseline_top5_actual_avg_sum':top5_base,'top5_delta':top5_v2-top5_base,'gameweeks':len(byg),'evaluated_gameweeks':rounds}
  buckets=[];ordered=sorted(rows,key=lambda r:float(r[pred_key]));n=len(ordered)
  for i in range(5):
   chunk=ordered[i*n//5:(i+1)*n//5]
@@ -64,5 +64,5 @@ def evaluate(rows,pred_key='v2',baseline_key='baseline'):
  return out
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('input');ap.add_argument('--out',default='backtest_results.json');args=ap.parse_args();path=Path(args.input);rows=json.loads(path.read_text()) if path.suffix=='.json' else list(__import__('csv').DictReader(path.open()));result=evaluate(list(rows));Path(args.out).write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
+ ap=argparse.ArgumentParser();ap.add_argument('input');ap.add_argument('--out',default='backtest_results.json');args=ap.parse_args();path=Path(args.input);raw=path.read_bytes();rows=json.loads(raw) if path.suffix=='.json' else list(__import__('csv').DictReader(raw.decode().splitlines()));result=evaluate(list(rows));result['dataset_sha256']=hashlib.sha256(raw).hexdigest();Path(args.out).write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
 if __name__=='__main__':main()
