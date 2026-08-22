@@ -6,9 +6,10 @@ import requests
 from model_v2_core import project as core_project
 from transfer_optimizer_v2 import optimize as optimize_transfers,legal
 from team_strength_v2 import build_strength,fixture_factors
+from player_form_v2 import apply_to_rates,form_signal
 BASE='https://fantasy.premierleague.com/api';TEAM_ID=int(os.environ['FPL_TEAM_ID']);OUT=Path('data.json');DEFAULT_WEIGHTS=[1,.9,.8,.7,.62,.55];POS={1:'GK',2:'DEF',3:'MID',4:'FWD'};Z80=1.2815515655446004
 def get(path,optional=False):
- try:r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-model-v2.5'},timeout=30);r.raise_for_status();return r.json()
+ try:r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-model-v2.6'},timeout=30);r.raise_for_status();return r.json()
  except Exception:
   if optional:return None
   raise
@@ -44,12 +45,13 @@ def availability(p):
  c=p.get('chance_of_playing_next_round');return clamp(n(c)/100) if c is not None else (.55 if p.get('status') in ('i','d') else 1)
 def core_input(p,f):
  pos=int(p['element_type']);hist=n(p.get('minutes'));starts=n(p.get('starts'));rounds=max(TARGET-1,1);avg_start=78 if starts<=0 else clamp(hist/max(starts,1),55,88);res=max(0,hist-starts*avg_start);sub_apps=res/18 if res else 0;scale=90/max(hist,180)
- return {'position':pos,'availability':availability(p),'start_rate':clamp(starts/rounds),'avg_start_mins':avg_start,'sub_rate':clamp(sub_apps/rounds,0,.6),'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':f['opp_lambda'],'attack_multiplier':f['attack']}
+ base={'position':pos,'availability':availability(p),'start_rate':clamp(starts/rounds),'avg_start_mins':avg_start,'sub_rate':clamp(sub_apps/rounds,0,.6),'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':f['opp_lambda'],'attack_multiplier':f['attack']}
+ adjusted,_=apply_to_rates(base,p);return adjusted
 def project(p,g):
  cs=[core_project(core_input(p,f)) for f in fm.get(g,{}).get(int(p['team']),[])];keys=('total','xmins','appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards','cs_probability')
  if not cs:return {**{k:0 for k in keys},'variance':0,'sd':0,'p10':0,'p90':0,'volatility':0}
  out={k:sum(c.get(k,0) for c in cs) for k in keys};out['variance']=sum(c.get('variance',0) for c in cs);out['sd']=math.sqrt(max(0,out['variance']));out['p10']=max(0,out['total']-Z80*out['sd']);out['p90']=max(out['p10'],out['total']+Z80*out['sd']);out['volatility']=out['sd']/max(out['total'],1);return out
-for p in players:p['_proj']={g:project(p,g) for g in GWS};p['_x']={g:p['_proj'][g]['total'] for g in GWS};p['_h']=sum(p['_x'][g]*weights[g] for g in GWS)
+for p in players:p['_form']=form_signal(p);p['_proj']={g:project(p,g) for g in GWS};p['_x']={g:p['_proj'][g]['total'] for g in GWS};p['_h']=sum(p['_x'][g]*weights[g] for g in GWS)
 def lineup(sq,g):
  bp={x:[p for p in sq if int(p['element_type'])==x] for x in (1,2,3,4)};best=None
  for gk in itertools.combinations(bp[1],1):
@@ -66,8 +68,8 @@ def lineup(sq,g):
 def risk_label(c):
  v=c.get('volatility',0);return 'lav' if v<.65 else ('middels' if v<1.05 else 'høy')
 def row(p,g,change=None):
- fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g]
- return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'xp_low':round(c['p10'],2),'xp_high':round(c['p90'],2),'risk':risk_label(c),'volatility':round(c['volatility'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
+ fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g];f=p['_form']
+ return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'xp_low':round(c['p10'],2),'xp_high':round(c['p90'],2),'risk':risk_label(c),'volatility':round(c['volatility'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'form':{'multiplier':round(f['multiplier'],3),'xgi90':round(f['xgi90'],3),'threat90':round(f['threat90'],1),'creativity90':round(f['creativity90'],1),'confidence':round(f['confidence'],3)},'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
 def apply_move(sq,m):
  if not m or m.get('action')!='transfer':return list(sq)
  out=list(sq)
@@ -93,5 +95,5 @@ for outp in squad:
   hg=sum((inn['_x'][g]-outp['_x'][g])*weights[g] for g in GWS);cands.append({'status':'VURDERES' if hg>.5 else 'SVAK','edge':round(hg-.45,2),'short_gain':round(sum(inn['_x'][g]-outp['_x'][g] for g in GWS[:3]),2),'horizon_gain':round(hg,2),'gate_misses':[] if hg>1 else ['Fordelen er liten sammenlignet med fleksibiliteten i å spare et gratisbytte'],'pairs':[{'out':row(outp,TARGET),'in':row(inn,TARGET)}]})
 cands.sort(key=lambda x:x['horizon_gain'],reverse=True);cands=cands[:10];headline='GJØR BYTTET' if go else ('SPAR BYTTET' if first.get('action')=='bank' else 'VENT / BANK')
 strength_public={str(t):{'team':teams[t],**{k:round(v,3) for k,v in r.items()}} for t,r in ratings.items()}
-data={'model_version':'2.5-team-strength','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell v2.5 bruker dynamisk lagstyrke fra faktiske PL-resultater i stedet for statisk FDR, sammen med kalibrert xP, fler-GW-planlegging og usikkerhetsintervaller.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'team_strength':strength_public,'optimizer':{'horizon_gws':GWS,'weights':[weights[g] for g in GWS],'weighted_gain':round(gain,2),'bank_after':round(opt['bank']/10,1),'free_transfers_after':opt['free_transfers'],'hit_points':opt.get('hit_points',0),'plan':[public_move(m) for m in plan]},'recommendation':{'edge':round(gain,2),'transfers':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs] if go else []},'comparison':{'status':'GJØR DET' if go else 'BANK','out':row(first_out,TARGET) if first_out else None,'in':row(first_in,TARGET) if first_in else None,'changes':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs],'current_xi':xi_rows(cur,outs=outs),'transfer_xi':xi_rows(aft,ins=ins)},'lineup':xi_rows(aft if go else cur,ins=ins if go else set()),'bench':[row(p,TARGET) for p in (after if go else squad) if p['id'] not in {x['id'] for x in (aft if go else cur)['xi']}],'candidates':cands,'future':future}
-OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model v2.5 dynamic-team-strength feed complete')
+data={'model_version':'2.6-underlying-form','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell v2.6 kombinerer dynamisk lagstyrke med underliggende spillerform (xGI, Threat, Creativity og rolle/minutter), fler-GW-planlegging og usikkerhet.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'team_strength':strength_public,'optimizer':{'horizon_gws':GWS,'weights':[weights[g] for g in GWS],'weighted_gain':round(gain,2),'bank_after':round(opt['bank']/10,1),'free_transfers_after':opt['free_transfers'],'hit_points':opt.get('hit_points',0),'plan':[public_move(m) for m in plan]},'recommendation':{'edge':round(gain,2),'transfers':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs] if go else []},'comparison':{'status':'GJØR DET' if go else 'BANK','out':row(first_out,TARGET) if first_out else None,'in':row(first_in,TARGET) if first_in else None,'changes':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs],'current_xi':xi_rows(cur,outs=outs),'transfer_xi':xi_rows(aft,ins=ins)},'lineup':xi_rows(aft if go else cur,ins=ins if go else set()),'bench':[row(p,TARGET) for p in (after if go else squad) if p['id'] not in {x['id'] for x in (aft if go else cur)['xi']}],'candidates':cands,'future':future}
+OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model v2.6 underlying-form feed complete')
