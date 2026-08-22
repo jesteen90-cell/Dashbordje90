@@ -9,6 +9,8 @@ on:
       - 'build_backtest_dataset.py'
       - 'calibrate_v2.py'
       - 'captain_model_v2.py'
+      - 'transfer_optimizer_v2.py'
+      - 'test_transfer_optimizer_v2.py'
       - '.github/workflows/backtest-v2.yml'
 jobs:
   evaluate:
@@ -21,6 +23,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install requests
+      - name: Smoke-test multi-GW transfer optimizer
+        run: python test_transfer_optimizer_v2.py
       - name: Build leakage-safe historical dataset
         run: python build_backtest_dataset.py --seasons 2023-24 2024-25 2025-26 --out backtest_dataset.json
       - name: Evaluate raw v2
@@ -37,7 +41,7 @@ jobs:
           import json
           from datetime import datetime, timezone
           r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));cap=json.load(open('captain_model_status.json'));h=r.get('holdout',{});hr=raw.get('holdout',{})
-          report={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'dataset_sha256':r.get('dataset_sha256'),'rows':r.get('n'),'gameweeks':r.get('evaluated_gameweeks'),'holdout_season':r.get('holdout_season'),'raw_holdout':{k:hr.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},'calibrated_holdout':{k:h.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},'calibrated_holdout_by_position':h.get('by_position',{}),'calibration_params':json.load(open('calibration_params.json')),'captain_model':cap}
+          report={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'dataset_sha256':r.get('dataset_sha256'),'rows':r.get('n'),'gameweeks':r.get('evaluated_gameweeks'),'holdout_season':r.get('holdout_season'),'raw_holdout':{k:hr.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},'calibrated_holdout':{k:h.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},'calibrated_holdout_by_position':h.get('by_position',{}),'calibration_params':json.load(open('calibration_params.json')),'captain_model':cap,'transfer_optimizer':'multi-GW beam search smoke-tested'}
           json.dump(report,open('model_v2_status.json','w'),indent=2)
           PY
       - name: Persist latest results
