@@ -1,7 +1,7 @@
 """Walk-forward evaluation harness for FPL Model v2.
 
 Measures raw accuracy, within-GW ranking, captaincy, season/position stability,
-top-pick decision quality, and emits a deterministic dataset fingerprint.
+top-pick decision quality, calibration, and a strict final-season holdout.
 """
 from __future__ import annotations
 import argparse,hashlib,json,math
@@ -34,12 +34,7 @@ def enrich_vs_baseline(rows,pred_key,baseline_key):
   bm=metrics(br,baseline_key);out['baseline_mae']=bm['mae'];out['baseline_rmse']=bm['rmse'];out['baseline_rank_corr']=bm['rank_corr'];out['mae_improvement_pct']=100*(bm['mae']-out['mae'])/bm['mae'] if bm['mae'] else 0
  return out
 
-def evaluate(rows,pred_key='v2',baseline_key='baseline'):
- rows=[r for r in rows if r.get('actual') is not None and r.get(pred_key) is not None];out=enrich_vs_baseline(rows,pred_key,baseline_key)
- out['by_position']={}
- for pos in sorted({str(r.get('position')) for r in rows}):out['by_position'][pos]=enrich_vs_baseline([r for r in rows if str(r.get('position'))==pos],pred_key,baseline_key)
- out['by_season']={}
- for season in sorted({str(r.get('season','?')) for r in rows}):out['by_season'][season]=enrich_vs_baseline([r for r in rows if str(r.get('season','?'))==season],pred_key,baseline_key)
+def decision_metrics(rows,pred_key='v2',baseline_key='baseline'):
  byg={}
  for r in rows:byg.setdefault((str(r.get('season','?')),int(r['gw'])),[]).append(r)
  cap_v2=cap_base=oracle=0;corrs=[];wins=ties=losses=0;top5_v2=top5_base=0;rounds=0
@@ -54,13 +49,31 @@ def evaluate(rows,pred_key='v2',baseline_key='baseline'):
    bv=max(elig,key=lambda r:float(r[baseline_key]));cap_base+=float(bv['actual']);va,ba=float(v['actual']),float(bv['actual']);wins+=va>ba;ties+=va==ba;losses+=va<ba
    btop=sorted(elig,key=lambda r:float(r[baseline_key]),reverse=True)[:5];top5_base+=mean(float(r['actual']) for r in btop)
   oracle+=float(max(elig,key=lambda r:float(r['actual']))['actual'])
- out['within_gw_rank_corr']=mean(corrs) if corrs else math.nan
- out|={'captain_actual_total':cap_v2,'baseline_captain_total':cap_base,'captain_oracle_total':oracle,'captain_vs_baseline_wins':wins,'captain_vs_baseline_ties':ties,'captain_vs_baseline_losses':losses,'captain_delta':cap_v2-cap_base,'top5_actual_avg_sum':top5_v2,'baseline_top5_actual_avg_sum':top5_base,'top5_delta':top5_v2-top5_base,'gameweeks':len(byg),'evaluated_gameweeks':rounds}
+ return {'within_gw_rank_corr':mean(corrs) if corrs else math.nan,'captain_actual_total':cap_v2,'baseline_captain_total':cap_base,'captain_oracle_total':oracle,'captain_vs_baseline_wins':wins,'captain_vs_baseline_ties':ties,'captain_vs_baseline_losses':losses,'captain_delta':cap_v2-cap_base,'top5_actual_avg_sum':top5_v2,'baseline_top5_actual_avg_sum':top5_base,'top5_delta':top5_v2-top5_base,'gameweeks':len(byg),'evaluated_gameweeks':rounds}
+
+def evaluate(rows,pred_key='v2',baseline_key='baseline'):
+ rows=[r for r in rows if r.get('actual') is not None and r.get(pred_key) is not None];out=enrich_vs_baseline(rows,pred_key,baseline_key)
+ out['by_position']={}
+ for pos in sorted({str(r.get('position')) for r in rows}):out['by_position'][pos]=enrich_vs_baseline([r for r in rows if str(r.get('position'))==pos],pred_key,baseline_key)
+ out['by_season']={}
+ seasons=sorted({str(r.get('season','?')) for r in rows})
+ for season in seasons:out['by_season'][season]=enrich_vs_baseline([r for r in rows if str(r.get('season','?'))==season],pred_key,baseline_key)
+ out.update(decision_metrics(rows,pred_key,baseline_key))
  buckets=[];ordered=sorted(rows,key=lambda r:float(r[pred_key]));n=len(ordered)
  for i in range(5):
   chunk=ordered[i*n//5:(i+1)*n//5]
   if chunk:buckets.append({'bucket':i+1,'n':len(chunk),'predicted':round(mean(float(r[pred_key]) for r in chunk),3),'actual':round(mean(float(r['actual']) for r in chunk),3)})
  out['calibration_quintiles']=buckets
+ # Strict holdout: newest season is never blended into the headline deployment metric.
+ if seasons:
+  holdout=seasons[-1];hr=[r for r in rows if str(r.get('season','?'))==holdout]
+  dev=[r for r in rows if str(r.get('season','?'))!=holdout]
+  out['holdout_season']=holdout
+  out['development']=enrich_vs_baseline(dev,pred_key,baseline_key) if dev else {}
+  out['holdout']=enrich_vs_baseline(hr,pred_key,baseline_key)
+  out['holdout'].update(decision_metrics(hr,pred_key,baseline_key))
+  out['holdout']['by_position']={}
+  for pos in sorted({str(r.get('position')) for r in hr}):out['holdout']['by_position'][pos]=enrich_vs_baseline([r for r in hr if str(r.get('position'))==pos],pred_key,baseline_key)
  return out
 
 def main():
