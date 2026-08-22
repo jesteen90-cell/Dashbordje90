@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-08-22T09:15:34.504645Z",
+  "dataset_sha256": "9bf73113f2841ecec2cd3e4d55c0c0a9d0ebb9b44f8ab378e0064e8b80d1af0e",
+  "rows": 81147,
+  "gameweeks": 105,
+  "overall": {
+    "mae": 1.1823766793596806,
+    "baseline_mae": 3.430117775148804,
+    "mae_improvement_pct": 65.52956029889127,
+    "within_gw_rank_corr": 0.30317629906163485,
+    "captain_delta": 33.0,
+    "top5_delta": 68.99999999999977
+  },
+  "holdout_season": "2025-26",
+  "holdout": {
+    "n": 27646,
+    "mae": 1.176334272589163,
+    "baseline_mae": 3.62032761339796,
+    "mae_improvement_pct": 67.5075187053284,
+    "within_gw_rank_corr": 0.2681607198814007,
+    "captain_delta": -2.0,
+    "top5_delta": 18.599999999999966
+  },
+  "holdout_by_position": {
+    "1": {
+      "n": 3182,
+      "mae": 0.8412539283469516,
+      "rmse": 1.4855065641789438,
+      "bias": 0.25943852922690125,
+      "rank_corr": 0.6348956027361157,
+      "baseline_mae": 3.0981167504714016,
+      "baseline_rmse": 3.234932978888055,
+      "baseline_rank_corr": 0.07366783203915192,
+      "mae_improvement_pct": 72.84628062454559
+    },
+    "2": {
+      "n": 9036,
+      "mae": 1.3042892872952634,
+      "rmse": 2.1609353957220203,
+      "bias": 0.0742152943780432,
+      "rank_corr": 0.6051679908137163,
+      "baseline_mae": 3.3802599158919877,
+      "baseline_rmse": 3.621855042807026,
+      "baseline_rank_corr": 0.021966238812023316,
+      "mae_improvement_pct": 61.414526700646164
+    },
+    "3": {
+      "n": 12367,
+      "mae": 1.153355947279049,
+      "rmse": 1.9533472245537165,
+      "bias": 0.1721129457427022,
+      "rank_corr": 0.6687495871981863,
+      "baseline_mae": 3.7531835206598205,
+      "baseline_rmse": 3.9853341460378604,
+      "baseline_rank_corr": -0.048777845446408126,
+      "mae_improvement_pct": 69.26992935649771
+    },
+    "4": {
+      "n": 3061,
+      "mae": 1.2397766416203855,
+      "rmse": 2.145124980868153,
+      "bias": 0.04785811826200592,
+      "rank_corr": 0.6805185896751109,
+      "baseline_mae": 4.335093270173146,
+      "baseline_rmse": 4.553991500552622,
+      "baseline_rank_corr": -0.08588560802521233,
+      "mae_improvement_pct": 71.40138482946948
+    }
+  },
+  "holdout_calibration": []
+}
