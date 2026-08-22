@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [model-v2]
-    paths: ['model_v2_core.py','team_strength_v2.py','player_form_v2.py','recent_form_v2.py','recent_form_ab_v2.py','form_backtest_v2.py','generate_dashboard.py','backtest.py','build_backtest_dataset.py','calibrate_v2.py','captain_model_v2.py','uncertainty_backtest_v2.py','upside_tuning_v2.py','transfer_optimizer_v2.py','transfer_backtest_v2.py','tune_transfer_strategy_v2.py','test_transfer_optimizer_v2.py','.github/workflows/backtest-v2.yml']
+    paths: ['model_v2_core.py','team_strength_v2.py','player_form_v2.py','recent_form_v2.py','recent_form_ab_v2.py','form_backtest_v2.py','generate_dashboard.py','backtest.py','build_backtest_dataset.py','calibrate_v2.py','captain_model_v2.py','captain_model_v3.py','uncertainty_backtest_v2.py','upside_tuning_v2.py','transfer_optimizer_v2.py','transfer_backtest_v2.py','tune_transfer_strategy_v2.py','test_transfer_optimizer_v2.py','.github/workflows/backtest-v2.yml']
 jobs:
   evaluate:
     runs-on: ubuntu-latest
@@ -22,9 +22,12 @@ jobs:
       - run: python backtest.py backtest_dataset_calibrated.json --out backtest_results.json
       - name: Validate underlying season-form on untouched holdout
         run: python form_backtest_v2.py backtest_dataset_calibrated.json --out form_backtest_status.json
-      - name: A/B test six-match recent xGI overlay
+      - name: Tune and A/B test recent xGI overlay
         run: python recent_form_ab_v2.py --seasons 2023-24 2024-25 2025-26 --out recent_form_ab_status.json
-      - run: python captain_model_v2.py backtest_dataset_calibrated.json --out captain_model_status.json
+      - name: Legacy captain comparison
+        run: python captain_model_v2.py backtest_dataset_calibrated.json --out captain_model_status.json
+      - name: Tune ceiling-aware captain on train, test on untouched holdout
+        run: python captain_model_v3.py backtest_dataset_calibrated.json --out captain_v3_status.json
       - run: python tune_transfer_strategy_v2.py backtest_dataset_calibrated.json --out transfer_strategy_params.json
       - run: python transfer_backtest_v2.py backtest_dataset_calibrated.json --out transfer_backtest_status.json
       - name: Build model report
@@ -33,14 +36,14 @@ jobs:
           import json
           from datetime import datetime,timezone
           r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));h=r['holdout'];hr=raw['holdout']
-          report={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'model_version':'2.7-recent-form','dataset_sha256':r.get('dataset_sha256'),'rows':r.get('n'),'gameweeks':r.get('evaluated_gameweeks'),'holdout_season':r.get('holdout_season'),'raw_holdout':hr,'calibrated_holdout':h,'calibration_params':json.load(open('calibration_params.json')),'uncertainty':json.load(open('uncertainty_status.json')),'upside_tuning':json.load(open('upside_tuning_status.json')),'form_model':json.load(open('form_backtest_status.json')),'recent_form_ab':json.load(open('recent_form_ab_status.json')),'captain_model':json.load(open('captain_model_status.json')),'transfer_strategy':json.load(open('transfer_backtest_status.json')),'transfer_tuning':json.load(open('transfer_strategy_params.json')),'team_strength_engine':'dynamic recency-weighted home/away ratings','player_form_engine':'season underlying form + six-match leakage-safe xGI overlay'}
+          report={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'model_version':'2.8-captain-ceiling','dataset_sha256':r.get('dataset_sha256'),'rows':r.get('n'),'gameweeks':r.get('evaluated_gameweeks'),'holdout_season':r.get('holdout_season'),'raw_holdout':hr,'calibrated_holdout':h,'calibration_params':json.load(open('calibration_params.json')),'uncertainty':json.load(open('uncertainty_status.json')),'upside_tuning':json.load(open('upside_tuning_status.json')),'form_model':json.load(open('form_backtest_status.json')),'recent_form_ab':json.load(open('recent_form_ab_status.json')),'captain_model_legacy':json.load(open('captain_model_status.json')),'captain_model_v3':json.load(open('captain_v3_status.json')),'transfer_strategy':json.load(open('transfer_backtest_status.json')),'transfer_tuning':json.load(open('transfer_strategy_params.json')),'team_strength_engine':'dynamic recency-weighted home/away ratings','player_form_engine':'season underlying form + train-tuned recent xGI overlay'}
           json.dump(report,open('model_v2_status.json','w'),indent=2)
           PY
       - name: Persist latest results
         run: |
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add backtest_results.json backtest_results_raw.json calibration_params.json uncertainty_status.json upside_tuning_status.json form_backtest_status.json recent_form_ab_status.json captain_model_status.json transfer_backtest_status.json transfer_strategy_params.json model_v2_status.json
-          if git diff --cached --quiet; then echo "No result changes."; else git commit -m "Model v2.7: record recent-form A/B validation" && git push; fi
+          git add backtest_results.json backtest_results_raw.json calibration_params.json uncertainty_status.json upside_tuning_status.json form_backtest_status.json recent_form_ab_status.json captain_model_status.json captain_v3_status.json transfer_backtest_status.json transfer_strategy_params.json model_v2_status.json
+          if git diff --cached --quiet; then echo "No result changes."; else git commit -m "Model v2.8: record full validation suite" && git push; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -54,6 +57,7 @@ jobs:
             form_backtest_status.json
             recent_form_ab_status.json
             captain_model_status.json
+            captain_v3_status.json
             transfer_backtest_status.json
             transfer_strategy_params.json
             model_v2_status.json
@@ -61,13 +65,13 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));h=r['holdout'];hr=raw['holdout'];u=json.load(open('uncertainty_status.json'));f=json.load(open('form_backtest_status.json'));rf=json.load(open('recent_form_ab_status.json'));tr=json.load(open('transfer_backtest_status.json'));tp=json.load(open('transfer_strategy_params.json'))
+          r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));h=r['holdout'];hr=raw['holdout'];u=json.load(open('uncertainty_status.json'));f=json.load(open('form_backtest_status.json'));rf=json.load(open('recent_form_ab_status.json'));cv3=json.load(open('captain_v3_status.json'));tr=json.load(open('transfer_backtest_status.json'));tp=json.load(open('transfer_strategy_params.json'))
           if r['n']<5000 or r.get('evaluated_gameweeks',0)<75: raise SystemExit('FAIL sample')
           if h.get('mae',999)>=h.get('baseline_mae',999) or h.get('mae',999)>hr.get('mae',999)+.01: raise SystemExit('FAIL xP')
           if h.get('within_gw_rank_corr',0)<=0 or h.get('top5_delta',0)<0: raise SystemExit('FAIL ranking')
           if not u.get('valid'): raise SystemExit('FAIL uncertainty')
           if not f.get('valid') or not f.get('promote'): raise SystemExit('FAIL underlying form')
-          if not rf.get('promote'): raise SystemExit('FAIL recent-form overlay does not improve untouched holdout')
+          if not rf.get('promote'): raise SystemExit('FAIL recent-form overlay')
           if not tr.get('valid') or not tr.get('promote') or not tp.get('promote'): raise SystemExit('FAIL transfer strategy')
-          print('PASS v2.7 full validation suite')
+          print('PASS core v2.8 validation. Captain v3 promotion:',cv3.get('promote'))
           PY
