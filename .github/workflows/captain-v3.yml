@@ -1,0 +1,42 @@
+name: Captain v3 validation
+on:
+  workflow_dispatch:
+  push:
+    branches: [model-v2]
+    paths:
+      - 'captain_v3.py'
+      - 'build_backtest_dataset.py'
+      - 'calibrate_v2.py'
+      - 'model_v2_core.py'
+      - '.github/workflows/captain-v3.yml'
+jobs:
+  captain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Build historical dataset
+        run: python build_backtest_dataset.py --seasons 2023-24 2024-25 2025-26 --out backtest_dataset.json
+      - name: Calibrate xP without holdout leakage
+        run: python calibrate_v2.py backtest_dataset.json --out backtest_dataset_calibrated.json --params calibration_params.json
+      - name: Tune captain v3 and test holdout
+        run: python captain_v3.py backtest_dataset_calibrated.json --out captain_v3_status.json
+      - name: Print captain result
+        run: cat captain_v3_status.json
+      - name: Persist captain result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add captain_v3_status.json
+          if git diff --cached --quiet; then echo "No captain changes."; else git commit -m "Model v2.9: record captain v3 validation" && git push; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: captain-v3-validation
+          path: captain_v3_status.json
