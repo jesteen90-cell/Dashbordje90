@@ -1,12 +1,32 @@
 {
-  "model_version": "2.7-recent-form",
-  "generated_at": "2026-08-22T18:44:51.490678Z",
+  "model_version": "3.0-validated",
+  "generated_at": "2026-08-22T20:14:19.870661Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
-  "summary": "Modell v2.7 bruker per-kamp xG/xA fra de siste kampene som et konservativt recency-signal, sammen med dynamisk lagstyrke, fler-GW-planlegging og usikkerhet.",
+  "summary": "Modell 3.0 kombinerer holdout-validert xP, dynamisk lagstyrke, godkjent recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
   "source_snapshot_gw": 1,
   "free_transfers_assumed": 1,
+  "recent_form": {
+    "promoted": true,
+    "params": {
+      "last_n": 8,
+      "decay": 0.88,
+      "strength": 0.3,
+      "attack_share": 0.4,
+      "prior": 360.0
+    }
+  },
+  "captain_model": {
+    "promoted": true,
+    "weights": {
+      "xp": 0.7,
+      "ceiling": 0.2,
+      "minutes": 0,
+      "attack": 0,
+      "volatility_penalty": 0
+    }
+  },
   "recent_form_players_loaded": 182,
   "team_strength": {
     "1": {
@@ -792,9 +812,9 @@
         "news": "",
         "change": null,
         "form": {
-          "season_multiplier": 0.982,
-          "recent_multiplier": 0.986,
-          "recent_xgi90": 0.11,
+          "season_multiplier": 0.979,
+          "recent_multiplier": 0.981,
+          "recent_xgi90": 0.04,
           "recent_minutes": 90.0,
           "recent_matches": 1,
           "recent_confidence": 0.2
@@ -1223,9 +1243,9 @@
         "news": "",
         "change": null,
         "form": {
-          "season_multiplier": 0.982,
-          "recent_multiplier": 0.986,
-          "recent_xgi90": 0.11,
+          "season_multiplier": 0.979,
+          "recent_multiplier": 0.981,
+          "recent_xgi90": 0.04,
           "recent_minutes": 90.0,
           "recent_matches": 1,
           "recent_confidence": 0.2
@@ -1655,9 +1675,9 @@
       "news": "",
       "change": null,
       "form": {
-        "season_multiplier": 0.982,
-        "recent_multiplier": 0.986,
-        "recent_xgi90": 0.11,
+        "season_multiplier": 0.979,
+        "recent_multiplier": 0.981,
+        "recent_xgi90": 0.04,
         "recent_minutes": 90.0,
         "recent_matches": 1,
         "recent_confidence": 0.2
@@ -2565,8 +2585,8 @@
             "change": null,
             "form": {
               "season_multiplier": 0.987,
-              "recent_multiplier": 0.995,
-              "recent_xgi90": 0.26,
+              "recent_multiplier": 0.993,
+              "recent_xgi90": 0.24,
               "recent_minutes": 90.0,
               "recent_matches": 1,
               "recent_confidence": 0.2
@@ -2650,8 +2670,8 @@
             "change": null,
             "form": {
               "season_multiplier": 0.987,
-              "recent_multiplier": 0.995,
-              "recent_xgi90": 0.26,
+              "recent_multiplier": 0.993,
+              "recent_xgi90": 0.24,
               "recent_minutes": 90.0,
               "recent_matches": 1,
               "recent_confidence": 0.2
@@ -2735,8 +2755,8 @@
             "change": null,
             "form": {
               "season_multiplier": 0.987,
-              "recent_multiplier": 0.995,
-              "recent_xgi90": 0.26,
+              "recent_multiplier": 0.993,
+              "recent_xgi90": 0.24,
               "recent_minutes": 90.0,
               "recent_matches": 1,
               "recent_confidence": 0.2
