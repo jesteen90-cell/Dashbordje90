@@ -1,0 +1,38 @@
+name: Recent form validation
+on:
+  workflow_dispatch:
+  push:
+    branches: [model-v2]
+    paths:
+      - 'recent_form_ab_v2.py'
+      - '.github/workflows/recent-form-validation.yml'
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Run train-tuned untouched-holdout A/B test
+        run: python recent_form_ab_v2.py --seasons 2023-24 2024-25 2025-26 --out recent_form_ab_status.json
+      - name: Persist result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add recent_form_ab_status.json
+          if git diff --cached --quiet; then
+            echo "No result changes"
+          else
+            git commit -m "Model v2.8: record recent-form validation result"
+            git pull --rebase origin model-v2
+            git push origin HEAD:model-v2
+          fi
+      - name: Print result
+        if: always()
+        run: |
+          if [ -f recent_form_ab_status.json ]; then cat recent_form_ab_status.json; fi
