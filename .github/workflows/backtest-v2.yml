@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [model-v2]
-    paths: ['model_v2_core.py','team_strength_v2.py','player_form_v2.py','recent_form_v2.py','recent_form_ab_v2.py','form_backtest_v2.py','generate_dashboard.py','backtest.py','build_backtest_dataset.py','calibrate_v2.py','captain_model_v2.py','captain_model_v3.py','uncertainty_backtest_v2.py','upside_tuning_v2.py','transfer_optimizer_v2.py','transfer_backtest_v2.py','tune_transfer_strategy_v2.py','test_transfer_optimizer_v2.py','.github/workflows/backtest-v2.yml']
+    paths: ['model_v2_core.py','team_strength_v2.py','player_form_v2.py','recent_form_v2.py','recent_form_ab_v2.py','form_backtest_v2.py','generate_dashboard.py','backtest.py','build_backtest_dataset.py','calibrate_v2.py','captain_model_v2.py','captain_v3.py','uncertainty_backtest_v2.py','upside_tuning_v2.py','transfer_optimizer_v2.py','transfer_backtest_v2.py','tune_transfer_strategy_v2.py','test_transfer_optimizer_v2.py','.github/workflows/backtest-v2.yml']
 jobs:
   evaluate:
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
       - name: Legacy captain comparison
         run: python captain_model_v2.py backtest_dataset_calibrated.json --out captain_model_status.json
       - name: Tune ceiling-aware captain on train, test on untouched holdout
-        run: python captain_model_v3.py backtest_dataset_calibrated.json --out captain_v3_status.json
+        run: python captain_v3.py backtest_dataset_calibrated.json --out captain_v3_status.json
       - run: python tune_transfer_strategy_v2.py backtest_dataset_calibrated.json --out transfer_strategy_params.json
       - run: python transfer_backtest_v2.py backtest_dataset_calibrated.json --out transfer_backtest_status.json
       - name: Build model report
