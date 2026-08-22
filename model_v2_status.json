@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-22T09:18:36.538855Z",
+  "generated_at": "2026-08-22T09:32:39.881204Z",
   "dataset_sha256": "85ef1766d73db9fd6e1b7f0f878cd720f80abb03aba1dd8acb9abd4a8870b751",
   "rows": 81147,
   "gameweeks": 105,
@@ -68,7 +68,6 @@
       "mae_improvement_pct": 73.05877768864838
     }
   },
-  "calibrated_holdout_quintiles": [],
   "calibration_params": {
     "holdout_season": "2025-26",
     "train_seasons": [
@@ -104,23 +103,30 @@
       "2023-24",
       "2024-25"
     ],
-    "params": {
-      "fixture": 1.0,
+    "weights": {
+      "xp": 0.8,
       "minutes": 0,
-      "attacking": 0
+      "attack": 0,
+      "mid_fwd": 0
     },
     "train": {
       "gameweeks": 70,
-      "optimized_total": 443.0,
-      "plain_xp_total": 436.0,
-      "delta": 7.0
+      "points": 0.0,
+      "baseline_points": 0.0,
+      "delta": 0.0,
+      "wins": 0,
+      "ties": 70,
+      "losses": 0
     },
     "holdout": {
       "gameweeks": 35,
-      "optimized_total": 218.0,
-      "plain_xp_total": 216.0,
-      "delta": 2.0
+      "points": 0.0,
+      "baseline_points": 0.0,
+      "delta": 0.0,
+      "wins": 0,
+      "ties": 35,
+      "losses": 0
     },
-    "promote": true
+    "promote": false
   }
 }
