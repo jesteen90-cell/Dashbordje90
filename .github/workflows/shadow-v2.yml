@@ -1,0 +1,48 @@
+name: Model v2 shadow comparison
+on:
+  workflow_dispatch:
+  push:
+    branches: [model-v2]
+    paths:
+      - 'generate_dashboard.py'
+      - 'recent_form_v2.py'
+      - 'player_form_v2.py'
+      - 'team_strength_v2.py'
+      - 'transfer_optimizer_v2.py'
+      - 'compare_shadow_v2.py'
+      - '.github/workflows/shadow-v2.yml'
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install requests
+      - name: Capture current production feed from main
+        run: git show origin/main:data.json > production_data.json
+      - name: Generate v2 feed from current public FPL state
+        env:
+          FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+          FPL_FREE_TRANSFERS: ${{ vars.FPL_FREE_TRANSFERS || '1' }}
+        run: |
+          python generate_dashboard.py
+          mv data.json data_v2_shadow.json
+      - name: Compare production and v2 decisions
+        run: python compare_shadow_v2.py production_data.json data_v2_shadow.json --out shadow_v2_report.json
+      - name: Persist shadow report and feed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add shadow_v2_report.json data_v2_shadow.json
+          if git diff --cached --quiet; then echo "No shadow changes"; else git commit -m "Model v2.8: refresh shadow comparison" && git push; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: model-v2-shadow
+          path: |
+            production_data.json
+            data_v2_shadow.json
+            shadow_v2_report.json
