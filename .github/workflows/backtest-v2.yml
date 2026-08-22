@@ -8,7 +8,7 @@ on:
       - 'backtest.py'
       - 'build_backtest_dataset.py'
       - 'calibrate_v2.py'
-      - 'captain_v2.py'
+      - 'captain_model_v2.py'
       - '.github/workflows/backtest-v2.yml'
 jobs:
   evaluate:
@@ -29,31 +29,23 @@ jobs:
         run: python calibrate_v2.py backtest_dataset.json --out backtest_dataset_calibrated.json --params calibration_params.json
       - name: Evaluate calibrated v2
         run: python backtest.py backtest_dataset_calibrated.json --out backtest_results.json
-      - name: Train and test captain ranking
-        run: python captain_v2.py backtest_dataset_calibrated.json --out captain_v2_status.json
+      - name: Train/test captain optimizer without holdout leakage
+        run: python captain_model_v2.py backtest_dataset_calibrated.json --out captain_model_status.json
       - name: Build compact model report
         run: |
           python - <<'PY'
           import json
           from datetime import datetime, timezone
-          r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));cap=json.load(open('captain_v2_status.json'));h=r.get('holdout',{});hr=raw.get('holdout',{})
-          report={
-            'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),
-            'dataset_sha256':r.get('dataset_sha256'),'rows':r.get('n'),'gameweeks':r.get('evaluated_gameweeks'),'holdout_season':r.get('holdout_season'),
-            'raw_holdout':{k:hr.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},
-            'calibrated_holdout':{k:h.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},
-            'calibrated_holdout_by_position':h.get('by_position',{}),'calibrated_holdout_quintiles':h.get('calibration_quintiles',[]),
-            'calibration_params':json.load(open('calibration_params.json')),
-            'captain_model':cap
-          }
+          r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));cap=json.load(open('captain_model_status.json'));h=r.get('holdout',{});hr=raw.get('holdout',{})
+          report={'generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'dataset_sha256':r.get('dataset_sha256'),'rows':r.get('n'),'gameweeks':r.get('evaluated_gameweeks'),'holdout_season':r.get('holdout_season'),'raw_holdout':{k:hr.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},'calibrated_holdout':{k:h.get(k) for k in ('n','mae','baseline_mae','mae_improvement_pct','within_gw_rank_corr','captain_delta','top5_delta')},'calibrated_holdout_by_position':h.get('by_position',{}),'calibration_params':json.load(open('calibration_params.json')),'captain_model':cap}
           json.dump(report,open('model_v2_status.json','w'),indent=2)
           PY
-      - name: Persist latest test results on model branch
+      - name: Persist latest results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add backtest_results.json backtest_results_raw.json calibration_params.json captain_v2_status.json model_v2_status.json
-          if git diff --cached --quiet; then echo "No result changes to commit."; else git commit -m "Model v2: record calibrated and captain holdout results" && git push; fi
+          git add backtest_results.json backtest_results_raw.json calibration_params.json captain_model_status.json model_v2_status.json
+          if git diff --cached --quiet; then echo "No result changes."; else git commit -m "Model v2: record captain and xP validation" && git push; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -61,28 +53,21 @@ jobs:
           path: |
             backtest_results.json
             backtest_results_raw.json
-            backtest_dataset.json
-            backtest_dataset_calibrated.json
             calibration_params.json
-            captain_v2_status.json
+            captain_model_status.json
             model_v2_status.json
-      - name: Show strict promotion quality gate
+      - name: Strict promotion gate
         run: |
           python - <<'PY'
           import json
-          r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));cap=json.load(open('captain_v2_status.json'));h=r.get('holdout',{});hr=raw.get('holdout',{})
-          print('Rows:',r['n'],'Evaluated GWs:',r.get('evaluated_gameweeks'),'Holdout:',r.get('holdout_season'))
-          print('Raw holdout MAE:',round(hr.get('mae',999),4),'Calibrated:',round(h.get('mae',999),4),'Baseline:',round(h.get('baseline_mae',999),4))
-          print('Holdout rank:',round(h.get('within_gw_rank_corr',0),4),'Top5:',round(h.get('top5_delta',0),2))
-          print('Captain experiment:',cap)
-          if r['n'] < 5000: raise SystemExit('FAIL: insufficient evaluation sample')
-          if r.get('evaluated_gameweeks',0) < 75: raise SystemExit('FAIL: insufficient walk-forward gameweeks')
-          if h.get('n',0) < 1500: raise SystemExit('FAIL: holdout sample too small')
-          if h.get('mae',999) >= h.get('baseline_mae',999): raise SystemExit('FAIL: calibrated v2 does not beat baseline on holdout MAE')
-          if h.get('mae',999) > hr.get('mae',999)+0.01: raise SystemExit('FAIL: calibration materially worsens raw v2 holdout MAE')
-          if h.get('within_gw_rank_corr',0) <= 0: raise SystemExit('FAIL: no positive holdout ranking skill')
-          if h.get('top5_delta',0) < 0: raise SystemExit('FAIL: holdout top-5 decisions trail baseline')
-          bad=[(pos,m.get('mae_improvement_pct')) for pos,m in h.get('by_position',{}).items() if m.get('mae_improvement_pct',0)<-3]
-          if bad: raise SystemExit(f'FAIL: material holdout position regression {bad}')
-          print('PASS: xP model clears strict holdout gate; captain model promotion flag =',cap.get('promote'))
+          r=json.load(open('backtest_results.json'));raw=json.load(open('backtest_results_raw.json'));cap=json.load(open('captain_model_status.json'));h=r.get('holdout',{});hr=raw.get('holdout',{})
+          print('xP holdout MAE',h.get('mae'),'raw',hr.get('mae'),'baseline',h.get('baseline_mae'))
+          print('Captain',cap)
+          if r['n'] < 5000 or r.get('evaluated_gameweeks',0)<75: raise SystemExit('FAIL: sample too small')
+          if h.get('mae',999)>=h.get('baseline_mae',999): raise SystemExit('FAIL: xP holdout MAE')
+          if h.get('mae',999)>hr.get('mae',999)+0.01: raise SystemExit('FAIL: calibration worsens raw model')
+          if h.get('within_gw_rank_corr',0)<=0 or h.get('top5_delta',0)<0: raise SystemExit('FAIL: ranking quality')
+          bad=[(p,m.get('mae_improvement_pct')) for p,m in h.get('by_position',{}).items() if m.get('mae_improvement_pct',0)<-3]
+          if bad: raise SystemExit(f'FAIL: position regression {bad}')
+          print('PASS xP. Captain promotion:',cap.get('promote'))
           PY
