@@ -51,11 +51,12 @@ def _one_transfer_states(st,pools):
 def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=45,per_pos=10,save_ft_value=.45,max_saved_ft=5,hit_cost=4.0,max_transfers_per_gw=2):
     """Fast beam-search transfer planner across multiple GWs.
 
-    Semantics are unchanged from the validated planner: bank/one/two transfers,
-    FPL free-transfer carry (max 5), and -4 hits. Runtime is reduced through
-    cached XI values and aggressive-but-safe pruning of two-transfer branches.
+    Same decision semantics as the validated planner, but bounded search width,
+    cached XI values and pruned two-transfer branches make it suitable for a
+    live dashboard refresh.
     """
     assert legal(squad)
+    beam_width=max(20,min(int(beam_width),45));per_pos=max(7,min(int(per_pos),10))
     pools=_incoming_pools(players,squad,gws,weights,per_pos)
     cache={}
     def cv(sq,gw):
@@ -74,7 +75,6 @@ def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=45,per_p
                 val=cv(ns,gw)*weights.get(gw,1)-hit+save_ft_value*nft
                 nxt.append({'squad':ns,'bank':nb,'ft':nft,'score':st['score']+val,'hits':st['hits']+int(hit),'moves':st['moves']+[{'gw':gw,'action':'transfer','pairs':pairs,'transfers':1,'hit':int(hit)}]})
             if max_transfers_per_gw>=2 and first:
-                # Only expand the best first transfers and weakest sell candidates.
                 ranked=sorted(first,key=lambda x:cv(x[0],gw),reverse=True)[:5]
                 for ns1,nb1,p1 in ranked:
                     owned={int(p['id']) for p in ns1}
