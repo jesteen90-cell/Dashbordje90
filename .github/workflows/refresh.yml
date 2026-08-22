@@ -5,7 +5,15 @@ on:
   push:
     branches: [main]
     paths:
-      - "generate_dashboard.py"
+      - "generate_dashboard_v3.py"
+      - "model_v2_core.py"
+      - "team_strength_v2.py"
+      - "player_form_v2.py"
+      - "recent_form_v2.py"
+      - "transfer_optimizer_v2.py"
+      - "transfer_strategy_params.json"
+      - "recent_form_ab_status.json"
+      - "captain_v3_status.json"
       - ".github/workflows/refresh.yml"
   schedule:
     - cron: "7,22,37,52 * * * *"
@@ -20,7 +28,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -28,15 +36,32 @@ jobs:
           python-version: "3.12"
       - name: Install dependency
         run: pip install requests
-      - name: Build sanitized dashboard feed
+      - name: Build validated Model 3.0 dashboard feed
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+          FPL_FREE_TRANSFERS: ${{ secrets.FPL_FREE_TRANSFERS }}
         run: |
           if [ -z "$FPL_TEAM_ID" ]; then
             echo "FPL_TEAM_ID secret is not configured; keeping current dashboard data."
             exit 0
           fi
-          python generate_dashboard.py
+          if [ -z "$FPL_FREE_TRANSFERS" ]; then
+            export FPL_FREE_TRANSFERS=1
+          fi
+          python generate_dashboard_v3.py
+      - name: Sanity-check generated feed
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data.json'))
+          assert d.get('model_version')=='3.0-validated', d.get('model_version')
+          assert d.get('deadline_time')
+          assert len(d.get('comparison',{}).get('current_xi',[]))==11
+          assert len(d.get('lineup',[]))==11
+          assert d.get('recent_form',{}).get('promoted') is True
+          assert d.get('captain_model',{}).get('promoted') is True
+          print('Model 3.0 feed sanity check passed')
+          PY
       - name: Publish updated feed
         run: |
           if git diff --quiet -- data.json; then
@@ -46,5 +71,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json
-          git commit -m "Dashboard: refresh public FPL analysis"
+          git commit -m "Dashboard: refresh Model 3.0 analysis"
           git push
