@@ -1,6 +1,6 @@
 {
   "model_version": "3.0-validated",
-  "generated_at": "2026-08-23T14:54:06.765930Z",
+  "generated_at": "2026-08-23T15:54:34.668040Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
@@ -27,7 +27,7 @@
       "volatility_penalty": 0
     }
   },
-  "recent_form_players_loaded": 143,
+  "recent_form_players_loaded": 142,
   "team_strength": {
     "1": {
       "team": "Arsenal",
@@ -243,9 +243,9 @@
       0.75,
       0.6
     ],
-    "weighted_gain": 6.89,
-    "bank_after": 0.5,
-    "free_transfers_after": 4,
+    "weighted_gain": 6.85,
+    "bank_after": 2.0,
+    "free_transfers_after": 3,
     "hit_points": 0,
     "plan": [
       {
@@ -271,10 +271,24 @@
       },
       {
         "gw": 3,
-        "action": "bank",
-        "transfers": 0,
+        "action": "transfer",
+        "transfers": 1,
         "hit": 0,
-        "label": "Spar gratisbyttet"
+        "pairs": [
+          {
+            "out": {
+              "id": 428,
+              "name": "Cunha",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 236,
+              "name": "Dewsbury-Hall",
+              "team": "Everton"
+            }
+          }
+        ],
+        "label": "Cunha → Dewsbury-Hall"
       },
       {
         "gw": 4,
@@ -293,7 +307,7 @@
     ]
   },
   "recommendation": {
-    "edge": 6.89,
+    "edge": 6.85,
     "transfers": [
       {
         "out": {
@@ -812,14 +826,14 @@
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 2.81,
+        "xp": 2.85,
         "xp_low": 0,
-        "xp_high": 6.08,
+        "xp_high": 6.11,
         "risk": "middels",
-        "volatility": 0.91,
+        "volatility": 0.89,
         "fixture": "Crystal Palace (A)",
         "availability": 1,
-        "expected_minutes": 64.4,
+        "expected_minutes": 65.0,
         "news": "",
         "change": null,
         "form": {
@@ -831,8 +845,8 @@
           "recent_confidence": 0.2
         },
         "xp_breakdown": {
-          "appearance": 1.54,
-          "goals": 0.74,
+          "appearance": 1.56,
+          "goals": 0.75,
           "assists": 0.27,
           "clean_sheet": 0.0,
           "saves": 0,
@@ -1243,14 +1257,14 @@
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 2.81,
+        "xp": 2.85,
         "xp_low": 0,
-        "xp_high": 6.08,
+        "xp_high": 6.11,
         "risk": "middels",
-        "volatility": 0.91,
+        "volatility": 0.89,
         "fixture": "Crystal Palace (A)",
         "availability": 1,
-        "expected_minutes": 64.4,
+        "expected_minutes": 65.0,
         "news": "",
         "change": null,
         "form": {
@@ -1262,8 +1276,8 @@
           "recent_confidence": 0.2
         },
         "xp_breakdown": {
-          "appearance": 1.54,
-          "goals": 0.74,
+          "appearance": 1.56,
+          "goals": 0.75,
           "assists": 0.27,
           "clean_sheet": 0.0,
           "saves": 0,
@@ -1675,14 +1689,14 @@
       "team": "Man City",
       "position": "FWD",
       "price": 15.5,
-      "xp": 2.81,
+      "xp": 2.85,
       "xp_low": 0,
-      "xp_high": 6.08,
+      "xp_high": 6.11,
       "risk": "middels",
-      "volatility": 0.91,
+      "volatility": 0.89,
       "fixture": "Crystal Palace (A)",
       "availability": 1,
-      "expected_minutes": 64.4,
+      "expected_minutes": 65.0,
       "news": "",
       "change": null,
       "form": {
@@ -1694,8 +1708,8 @@
         "recent_confidence": 0.2
       },
       "xp_breakdown": {
-        "appearance": 1.54,
-        "goals": 0.74,
+        "appearance": 1.56,
+        "goals": 0.75,
         "assists": 0.27,
         "clean_sheet": 0.0,
         "saves": 0,
@@ -1829,32 +1843,32 @@
       "team": "Newcastle",
       "position": "FWD",
       "price": 6.0,
-      "xp": 2.51,
+      "xp": 1.84,
       "xp_low": 0,
-      "xp_high": 5.6,
-      "risk": "middels",
-      "volatility": 0.96,
+      "xp_high": 4.41,
+      "risk": "høy",
+      "volatility": 1.09,
       "fixture": "Spurs (A)",
       "availability": 1,
-      "expected_minutes": 51.2,
+      "expected_minutes": 38.0,
       "news": "",
       "change": null,
       "form": {
-        "season_multiplier": 1.0,
-        "recent_multiplier": 1.0,
+        "season_multiplier": 0.995,
+        "recent_multiplier": 0.996,
         "recent_xgi90": 0.0,
-        "recent_minutes": 0.0,
+        "recent_minutes": 13.0,
         "recent_matches": 1,
-        "recent_confidence": 0.0
+        "recent_confidence": 0.035
       },
       "xp_breakdown": {
-        "appearance": 1.4,
-        "goals": 0.65,
-        "assists": 0.24,
+        "appearance": 1.02,
+        "goals": 0.47,
+        "assists": 0.18,
         "clean_sheet": 0.0,
         "saves": 0,
         "defensive": 0.0,
-        "bonus": 0.23,
+        "bonus": 0.17,
         "conceded": 0,
         "cards": 0
       }
@@ -1900,9 +1914,519 @@
   "candidates": [
     {
       "status": "VURDERES",
-      "edge": 1.7,
-      "short_gain": 1.8,
-      "horizon_gain": 2.15,
+      "edge": 3.24,
+      "short_gain": 3.38,
+      "horizon_gain": 3.69,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 1.84,
+            "xp_low": 0,
+            "xp_high": 4.41,
+            "risk": "høy",
+            "volatility": 1.09,
+            "fixture": "Spurs (A)",
+            "availability": 1,
+            "expected_minutes": 38.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.995,
+              "recent_multiplier": 0.996,
+              "recent_xgi90": 0.0,
+              "recent_minutes": 13.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.035
+            },
+            "xp_breakdown": {
+              "appearance": 1.02,
+              "goals": 0.47,
+              "assists": 0.18,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 125,
+            "name": "Georginio",
+            "team_id": 5,
+            "team": "Brighton",
+            "position": "FWD",
+            "price": 5.5,
+            "xp": 2.94,
+            "xp_low": 0,
+            "xp_high": 6.3,
+            "risk": "middels",
+            "volatility": 0.89,
+            "fixture": "Chelsea (A)",
+            "availability": 1,
+            "expected_minutes": 65.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.997,
+              "recent_multiplier": 1.01,
+              "recent_xgi90": 0.51,
+              "recent_minutes": 90.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.2
+            },
+            "xp_breakdown": {
+              "appearance": 1.56,
+              "goals": 0.75,
+              "assists": 0.36,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.26,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 3.12,
+      "short_gain": 3.37,
+      "horizon_gain": 3.57,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 1.84,
+            "xp_low": 0,
+            "xp_high": 4.41,
+            "risk": "høy",
+            "volatility": 1.09,
+            "fixture": "Spurs (A)",
+            "availability": 1,
+            "expected_minutes": 38.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.995,
+              "recent_multiplier": 0.996,
+              "recent_xgi90": 0.0,
+              "recent_minutes": 13.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.035
+            },
+            "xp_breakdown": {
+              "appearance": 1.02,
+              "goals": 0.47,
+              "assists": 0.18,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 295,
+            "name": "McBurnie",
+            "team_id": 11,
+            "team": "Hull City",
+            "position": "FWD",
+            "price": 5.5,
+            "xp": 2.94,
+            "xp_low": 0,
+            "xp_high": 6.29,
+            "risk": "middels",
+            "volatility": 0.89,
+            "fixture": "Coventry City (A)",
+            "availability": 1,
+            "expected_minutes": 65.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.984,
+              "recent_multiplier": 0.989,
+              "recent_xgi90": 0.17,
+              "recent_minutes": 90.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.2
+            },
+            "xp_breakdown": {
+              "appearance": 1.56,
+              "goals": 0.75,
+              "assists": 0.36,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.26,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 2.92,
+      "short_gain": 3.09,
+      "horizon_gain": 3.37,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 1.84,
+            "xp_low": 0,
+            "xp_high": 4.41,
+            "risk": "høy",
+            "volatility": 1.09,
+            "fixture": "Spurs (A)",
+            "availability": 1,
+            "expected_minutes": 38.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.995,
+              "recent_multiplier": 0.996,
+              "recent_xgi90": 0.0,
+              "recent_minutes": 13.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.035
+            },
+            "xp_breakdown": {
+              "appearance": 1.02,
+              "goals": 0.47,
+              "assists": 0.18,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 491,
+            "name": "Igor Jesus",
+            "team_id": 18,
+            "team": "Nott'm Forest",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.85,
+            "xp_low": 0,
+            "xp_high": 6.11,
+            "risk": "middels",
+            "volatility": 0.89,
+            "fixture": "Liverpool (A)",
+            "availability": 1,
+            "expected_minutes": 65.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.987,
+              "recent_multiplier": 0.993,
+              "recent_xgi90": 0.24,
+              "recent_minutes": 90.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.2
+            },
+            "xp_breakdown": {
+              "appearance": 1.56,
+              "goals": 0.75,
+              "assists": 0.27,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.26,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 2.77,
+      "short_gain": 2.95,
+      "horizon_gain": 3.22,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 1.84,
+            "xp_low": 0,
+            "xp_high": 4.41,
+            "risk": "høy",
+            "volatility": 1.09,
+            "fixture": "Spurs (A)",
+            "availability": 1,
+            "expected_minutes": 38.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.995,
+              "recent_multiplier": 0.996,
+              "recent_xgi90": 0.0,
+              "recent_minutes": 13.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.035
+            },
+            "xp_breakdown": {
+              "appearance": 1.02,
+              "goals": 0.47,
+              "assists": 0.18,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 249,
+            "name": "Barry",
+            "team_id": 9,
+            "team": "Everton",
+            "position": "FWD",
+            "price": 5.5,
+            "xp": 2.8,
+            "xp_low": 0,
+            "xp_high": 6.06,
+            "risk": "middels",
+            "volatility": 0.91,
+            "fixture": "Bournemouth (A)",
+            "availability": 1,
+            "expected_minutes": 56.8,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.998,
+              "recent_multiplier": 1.01,
+              "recent_xgi90": 0.54,
+              "recent_minutes": 78.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.178
+            },
+            "xp_breakdown": {
+              "appearance": 1.52,
+              "goals": 0.75,
+              "assists": 0.24,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.28,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 1.94,
+      "short_gain": 2.22,
+      "horizon_gain": 2.39,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 1.84,
+            "xp_low": 0,
+            "xp_high": 4.41,
+            "risk": "høy",
+            "volatility": 1.09,
+            "fixture": "Spurs (A)",
+            "availability": 1,
+            "expected_minutes": 38.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.995,
+              "recent_multiplier": 0.996,
+              "recent_xgi90": 0.0,
+              "recent_minutes": 13.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.035
+            },
+            "xp_breakdown": {
+              "appearance": 1.02,
+              "goals": 0.47,
+              "assists": 0.18,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 81,
+            "name": "Rodríguez",
+            "team_id": 3,
+            "team": "Bournemouth",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 2.67,
+            "xp_low": 0,
+            "xp_high": 5.95,
+            "risk": "middels",
+            "volatility": 0.96,
+            "fixture": "Everton (H)",
+            "availability": 1,
+            "expected_minutes": 51.2,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 1.0,
+              "recent_multiplier": 1,
+              "recent_xgi90": 0,
+              "recent_minutes": 0,
+              "recent_matches": 0,
+              "recent_confidence": 0
+            },
+            "xp_breakdown": {
+              "appearance": 1.4,
+              "goals": 0.76,
+              "assists": 0.28,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.23,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 1.94,
+      "short_gain": 2.22,
+      "horizon_gain": 2.39,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 1.84,
+            "xp_low": 0,
+            "xp_high": 4.41,
+            "risk": "høy",
+            "volatility": 1.09,
+            "fixture": "Spurs (A)",
+            "availability": 1,
+            "expected_minutes": 38.0,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.995,
+              "recent_multiplier": 0.996,
+              "recent_xgi90": 0.0,
+              "recent_minutes": 13.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.035
+            },
+            "xp_breakdown": {
+              "appearance": 1.02,
+              "goals": 0.47,
+              "assists": 0.18,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 347,
+            "name": "Nmecha",
+            "team_id": 13,
+            "team": "Leeds",
+            "position": "FWD",
+            "price": 5.5,
+            "xp": 2.67,
+            "xp_low": 0,
+            "xp_high": 5.95,
+            "risk": "middels",
+            "volatility": 0.96,
+            "fixture": "Brentford (H)",
+            "availability": 1,
+            "expected_minutes": 51.2,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 1.0,
+              "recent_multiplier": 1,
+              "recent_xgi90": 0,
+              "recent_minutes": 0,
+              "recent_matches": 0,
+              "recent_confidence": 0
+            },
+            "xp_breakdown": {
+              "appearance": 1.4,
+              "goals": 0.76,
+              "assists": 0.28,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.23,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 1.84,
+      "short_gain": 1.93,
+      "horizon_gain": 2.29,
       "gate_misses": [],
       "pairs": [
         {
@@ -1950,14 +2474,14 @@
             "team": "Man City",
             "position": "DEF",
             "price": 6.0,
-            "xp": 2.63,
+            "xp": 2.67,
             "xp_low": 0,
-            "xp_high": 6.23,
+            "xp_high": 6.28,
             "risk": "høy",
-            "volatility": 1.07,
+            "volatility": 1.05,
             "fixture": "Crystal Palace (A)",
             "availability": 1,
-            "expected_minutes": 66.3,
+            "expected_minutes": 66.8,
             "news": "",
             "change": null,
             "form": {
@@ -1969,13 +2493,98 @@
               "recent_confidence": 0.2
             },
             "xp_breakdown": {
-              "appearance": 1.55,
+              "appearance": 1.58,
+              "goals": 0.4,
+              "assists": 0.15,
+              "clean_sheet": 0.62,
+              "saves": 0,
+              "defensive": 0.08,
+              "bonus": 0.26,
+              "conceded": -0.4,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 1.7,
+      "short_gain": 1.81,
+      "horizon_gain": 2.15,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 4,
+            "name": "Gabriel",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "DEF",
+            "price": 8.0,
+            "xp": 2.04,
+            "xp_low": 0,
+            "xp_high": 5.2,
+            "risk": "høy",
+            "volatility": 1.21,
+            "fixture": "Aston Villa (A)",
+            "availability": 1,
+            "expected_minutes": 66.8,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.98,
+              "recent_multiplier": 0.983,
+              "recent_xgi90": 0.06,
+              "recent_minutes": 90.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.2
+            },
+            "xp_breakdown": {
+              "appearance": 1.58,
+              "goals": 0.2,
+              "assists": 0.15,
+              "clean_sheet": 0.62,
+              "saves": 0,
+              "defensive": 0.08,
+              "bonus": 0.19,
+              "conceded": -0.4,
+              "cards": -0.37
+            }
+          },
+          "in": {
+            "id": 391,
+            "name": "Gvardiol",
+            "team_id": 15,
+            "team": "Man City",
+            "position": "DEF",
+            "price": 5.5,
+            "xp": 2.63,
+            "xp_low": 0,
+            "xp_high": 6.2,
+            "risk": "høy",
+            "volatility": 1.06,
+            "fixture": "Crystal Palace (A)",
+            "availability": 1,
+            "expected_minutes": 66.8,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.987,
+              "recent_multiplier": 0.993,
+              "recent_xgi90": 0.24,
+              "recent_minutes": 90.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.2
+            },
+            "xp_breakdown": {
+              "appearance": 1.58,
               "goals": 0.39,
               "assists": 0.15,
               "clean_sheet": 0.62,
               "saves": 0,
-              "defensive": 0.07,
-              "bonus": 0.25,
+              "defensive": 0.08,
+              "bonus": 0.22,
               "conceded": -0.4,
               "cards": 0
             }
@@ -2152,601 +2761,6 @@
           }
         }
       ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.37,
-      "short_gain": 1.5,
-      "horizon_gain": 1.82,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 4,
-            "name": "Gabriel",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "DEF",
-            "price": 8.0,
-            "xp": 2.04,
-            "xp_low": 0,
-            "xp_high": 5.2,
-            "risk": "høy",
-            "volatility": 1.21,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 66.8,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.98,
-              "recent_multiplier": 0.983,
-              "recent_xgi90": 0.06,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.2,
-              "assists": 0.15,
-              "clean_sheet": 0.62,
-              "saves": 0,
-              "defensive": 0.08,
-              "bonus": 0.19,
-              "conceded": -0.4,
-              "cards": -0.37
-            }
-          },
-          "in": {
-            "id": 115,
-            "name": "De Cuyper",
-            "team_id": 5,
-            "team": "Brighton",
-            "position": "DEF",
-            "price": 4.5,
-            "xp": 2.53,
-            "xp_low": 0,
-            "xp_high": 6.02,
-            "risk": "høy",
-            "volatility": 1.07,
-            "fixture": "Chelsea (A)",
-            "availability": 1,
-            "expected_minutes": 57.6,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 1.031,
-              "recent_multiplier": 1.062,
-              "recent_xgi90": 1.58,
-              "recent_minutes": 77.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.176
-            },
-            "xp_breakdown": {
-              "appearance": 1.54,
-              "goals": 0.33,
-              "assists": 0.2,
-              "clean_sheet": 0.61,
-              "saves": 0,
-              "defensive": 0.04,
-              "bonus": 0.22,
-              "conceded": -0.4,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.34,
-      "short_gain": 1.55,
-      "horizon_gain": 1.79,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 4,
-            "name": "Gabriel",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "DEF",
-            "price": 8.0,
-            "xp": 2.04,
-            "xp_low": 0,
-            "xp_high": 5.2,
-            "risk": "høy",
-            "volatility": 1.21,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 66.8,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.98,
-              "recent_multiplier": 0.983,
-              "recent_xgi90": 0.06,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.2,
-              "assists": 0.15,
-              "clean_sheet": 0.62,
-              "saves": 0,
-              "defensive": 0.08,
-              "bonus": 0.19,
-              "conceded": -0.4,
-              "cards": -0.37
-            }
-          },
-          "in": {
-            "id": 498,
-            "name": "Senesi",
-            "team_id": 19,
-            "team": "Spurs",
-            "position": "DEF",
-            "price": 6.0,
-            "xp": 2.76,
-            "xp_low": 0,
-            "xp_high": 6.25,
-            "risk": "middels",
-            "volatility": 0.99,
-            "fixture": "Newcastle (H)",
-            "availability": 1,
-            "expected_minutes": 66.8,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.979,
-              "recent_multiplier": 0.98,
-              "recent_xgi90": 0.02,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.24,
-              "assists": 0.17,
-              "clean_sheet": 0.78,
-              "saves": 0,
-              "defensive": 0.12,
-              "bonus": 0.19,
-              "conceded": -0.32,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.3,
-      "short_gain": 1.62,
-      "horizon_gain": 1.75,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 4,
-            "name": "Gabriel",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "DEF",
-            "price": 8.0,
-            "xp": 2.04,
-            "xp_low": 0,
-            "xp_high": 5.2,
-            "risk": "høy",
-            "volatility": 1.21,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 66.8,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.98,
-              "recent_multiplier": 0.983,
-              "recent_xgi90": 0.06,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.2,
-              "assists": 0.15,
-              "clean_sheet": 0.62,
-              "saves": 0,
-              "defensive": 0.08,
-              "bonus": 0.19,
-              "conceded": -0.4,
-              "cards": -0.37
-            }
-          },
-          "in": {
-            "id": 10,
-            "name": "White",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "DEF",
-            "price": 5.5,
-            "xp": 2.58,
-            "xp_low": 0,
-            "xp_high": 5.92,
-            "risk": "middels",
-            "volatility": 1.01,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 66.8,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.992,
-              "recent_multiplier": 1.002,
-              "recent_xgi90": 0.39,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.2,
-              "assists": 0.24,
-              "clean_sheet": 0.62,
-              "saves": 0,
-              "defensive": 0.08,
-              "bonus": 0.26,
-              "conceded": -0.4,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.28,
-      "short_gain": 1.52,
-      "horizon_gain": 1.73,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 557,
-            "name": "Tzolis",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "MID",
-            "price": 6.5,
-            "xp": 2.77,
-            "xp_low": 0,
-            "xp_high": 6.02,
-            "risk": "middels",
-            "volatility": 0.91,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 55.4,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.991,
-              "recent_multiplier": 0.999,
-              "recent_xgi90": 0.33,
-              "recent_minutes": 75.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.172
-            },
-            "xp_breakdown": {
-              "appearance": 1.54,
-              "goals": 0.52,
-              "assists": 0.35,
-              "clean_sheet": 0.15,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.22,
-              "conceded": 0,
-              "cards": 0
-            }
-          },
-          "in": {
-            "id": 335,
-            "name": "Stach",
-            "team_id": 13,
-            "team": "Leeds",
-            "position": "MID",
-            "price": 6.0,
-            "xp": 3.42,
-            "xp_low": 0,
-            "xp_high": 7.35,
-            "risk": "middels",
-            "volatility": 0.9,
-            "fixture": "Brentford (H)",
-            "availability": 1,
-            "expected_minutes": 66.0,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.983,
-              "recent_multiplier": 0.988,
-              "recent_xgi90": 0.15,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.9,
-              "assists": 0.39,
-              "clean_sheet": 0.19,
-              "saves": 0,
-              "defensive": 0.01,
-              "bonus": 0.35,
-              "conceded": 0,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.14,
-      "short_gain": 1.36,
-      "horizon_gain": 1.59,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 428,
-            "name": "Cunha",
-            "team_id": 16,
-            "team": "Man Utd",
-            "position": "MID",
-            "price": 8.0,
-            "xp": 2.95,
-            "xp_low": 0,
-            "xp_high": 6.42,
-            "risk": "middels",
-            "volatility": 0.92,
-            "fixture": "Ipswich Town (H)",
-            "availability": 1,
-            "expected_minutes": 58.5,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.995,
-              "recent_multiplier": 1.005,
-              "recent_xgi90": 0.45,
-              "recent_minutes": 79.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.18
-            },
-            "xp_breakdown": {
-              "appearance": 1.54,
-              "goals": 0.65,
-              "assists": 0.35,
-              "clean_sheet": 0.19,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.23,
-              "conceded": 0,
-              "cards": 0
-            }
-          },
-          "in": {
-            "id": 335,
-            "name": "Stach",
-            "team_id": 13,
-            "team": "Leeds",
-            "position": "MID",
-            "price": 6.0,
-            "xp": 3.42,
-            "xp_low": 0,
-            "xp_high": 7.35,
-            "risk": "middels",
-            "volatility": 0.9,
-            "fixture": "Brentford (H)",
-            "availability": 1,
-            "expected_minutes": 66.0,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.983,
-              "recent_multiplier": 0.988,
-              "recent_xgi90": 0.15,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.9,
-              "assists": 0.39,
-              "clean_sheet": 0.19,
-              "saves": 0,
-              "defensive": 0.01,
-              "bonus": 0.35,
-              "conceded": 0,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.12,
-      "short_gain": 1.38,
-      "horizon_gain": 1.57,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 557,
-            "name": "Tzolis",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "MID",
-            "price": 6.5,
-            "xp": 2.77,
-            "xp_low": 0,
-            "xp_high": 6.02,
-            "risk": "middels",
-            "volatility": 0.91,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 55.4,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.991,
-              "recent_multiplier": 0.999,
-              "recent_xgi90": 0.33,
-              "recent_minutes": 75.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.172
-            },
-            "xp_breakdown": {
-              "appearance": 1.54,
-              "goals": 0.52,
-              "assists": 0.35,
-              "clean_sheet": 0.15,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.22,
-              "conceded": 0,
-              "cards": 0
-            }
-          },
-          "in": {
-            "id": 68,
-            "name": "Tavernier",
-            "team_id": 3,
-            "team": "Bournemouth",
-            "position": "MID",
-            "price": 6.0,
-            "xp": 3.37,
-            "xp_low": 0,
-            "xp_high": 7.3,
-            "risk": "middels",
-            "volatility": 0.91,
-            "fixture": "Everton (H)",
-            "availability": 1,
-            "expected_minutes": 65.5,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.994,
-              "recent_multiplier": 1.005,
-              "recent_xgi90": 0.43,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.55,
-              "goals": 0.89,
-              "assists": 0.39,
-              "clean_sheet": 0.19,
-              "saves": 0,
-              "defensive": 0.01,
-              "bonus": 0.35,
-              "conceded": 0,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "status": "VURDERES",
-      "edge": 1.07,
-      "short_gain": 1.28,
-      "horizon_gain": 1.52,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 557,
-            "name": "Tzolis",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "MID",
-            "price": 6.5,
-            "xp": 2.77,
-            "xp_low": 0,
-            "xp_high": 6.02,
-            "risk": "middels",
-            "volatility": 0.91,
-            "fixture": "Aston Villa (A)",
-            "availability": 1,
-            "expected_minutes": 55.4,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.991,
-              "recent_multiplier": 0.999,
-              "recent_xgi90": 0.33,
-              "recent_minutes": 75.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.172
-            },
-            "xp_breakdown": {
-              "appearance": 1.54,
-              "goals": 0.52,
-              "assists": 0.35,
-              "clean_sheet": 0.15,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.22,
-              "conceded": 0,
-              "cards": 0
-            }
-          },
-          "in": {
-            "id": 236,
-            "name": "Dewsbury-Hall",
-            "team_id": 9,
-            "team": "Everton",
-            "position": "MID",
-            "price": 6.5,
-            "xp": 3.19,
-            "xp_low": 0,
-            "xp_high": 6.86,
-            "risk": "middels",
-            "volatility": 0.9,
-            "fixture": "Bournemouth (A)",
-            "availability": 1,
-            "expected_minutes": 66.0,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.989,
-              "recent_multiplier": 0.996,
-              "recent_xgi90": 0.29,
-              "recent_minutes": 90.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.2
-            },
-            "xp_breakdown": {
-              "appearance": 1.58,
-              "goals": 0.77,
-              "assists": 0.33,
-              "clean_sheet": 0.15,
-              "saves": 0,
-              "defensive": 0.01,
-              "bonus": 0.35,
-              "conceded": 0,
-              "cards": 0
-            }
-          }
-        }
-      ]
     }
   ],
   "future": [
@@ -2758,7 +2772,7 @@
         0,
         7.35
       ],
-      "xi_xp": 31.58,
+      "xi_xp": 31.61,
       "action": {
         "gw": 2,
         "action": "transfer",
@@ -2783,19 +2797,33 @@
     },
     {
       "gw": 3,
-      "captain": "Slater",
-      "captain_xp": 3.25,
+      "captain": "Dewsbury-Hall",
+      "captain_xp": 3.42,
       "captain_range": [
         0,
-        6.97
+        7.35
       ],
-      "xi_xp": 31.27,
+      "xi_xp": 31.81,
       "action": {
         "gw": 3,
-        "action": "bank",
-        "transfers": 0,
+        "action": "transfer",
+        "transfers": 1,
         "hit": 0,
-        "label": "Spar gratisbyttet"
+        "pairs": [
+          {
+            "out": {
+              "id": 428,
+              "name": "Cunha",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 236,
+              "name": "Dewsbury-Hall",
+              "team": "Everton"
+            }
+          }
+        ],
+        "label": "Cunha → Dewsbury-Hall"
       }
     },
     {
@@ -2806,7 +2834,7 @@
         0,
         7.35
       ],
-      "xi_xp": 31.58,
+      "xi_xp": 31.85,
       "action": {
         "gw": 4,
         "action": "bank",
@@ -2823,7 +2851,7 @@
         0,
         7.35
       ],
-      "xi_xp": 30.96,
+      "xi_xp": 31.5,
       "action": {
         "gw": 5,
         "action": "bank",
