@@ -7,6 +7,7 @@ on:
     paths:
       - "generate_dashboard_v3.py"
       - "model_v2_core.py"
+      - "model_live_sanity.py"
       - "team_strength_v2.py"
       - "player_form_v2.py"
       - "recent_form_v2.py"
@@ -36,6 +37,8 @@ jobs:
           python-version: "3.12"
       - name: Install dependency
         run: pip install requests
+      - name: Regression-check xP core
+        run: python model_live_sanity.py
       - name: Preflight Model 3.0 inputs
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
@@ -70,6 +73,10 @@ jobs:
           assert len(d.get('lineup',[]))==11
           assert d.get('recent_form',{}).get('promoted') is True
           assert d.get('captain_model',{}).get('promoted') is True
+          # No healthy player in the selected XI should be projected for zero minutes.
+          for p in d.get('lineup',[]):
+            if float(p.get('availability',0))>=.99:
+              assert float(p.get('expected_minutes',0))>0,(p.get('name'),p.get('expected_minutes'))
           print('Model 3.0 feed sanity check passed:', d.get('generated_at'))
           PY
       - name: Publish updated feed
