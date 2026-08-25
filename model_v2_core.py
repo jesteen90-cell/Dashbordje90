@@ -2,8 +2,8 @@
 
 Component expected-points engine for live projection and walk-forward tests.
 Inputs must be pre-deadline features only. The engine returns mean xP and an
-uncertainty estimate. Model 3.1 also stabilizes early-season minutes so one
-benching or a missing `starts` field cannot collapse a proven player to 0 xP.
+uncertainty estimate. Model 3.1 stabilizes noisy early-season role estimates
+without inventing starter status for players who have not played at all.
 """
 from __future__ import annotations
 import math
@@ -21,18 +21,16 @@ def beta_shrink(rate, minutes, prior, prior_minutes=900):
     return w*max(0.0,rate)+(1-w)*prior
 
 def stabilized_role(start_rate,sub_rate,minutes_history,position):
-    """Shrink noisy early-season role observations toward conservative priors.
-
-    After only one or two GWs, raw starts/minutes can be 0 because of a benching,
-    late registration, API lag or rotation. We therefore let observed role take
-    over gradually rather than treating one game as certainty.
-    """
+    """Stabilize tiny early-season samples without creating phantom starters."""
     sr=clamp(float(start_rate));br=clamp(float(sub_rate));mins=max(0.0,float(minutes_history))
-    # Conservative PL starter priors by FPL position. These are deliberately
-    # below nailed-player levels; observed minutes dominate after ~4 matches.
+    # Critical guard: a player with zero competitive minutes gets no artificial
+    # starter prior. This prevents unplayed/fringe assets from receiving 45-55 xMins.
+    if mins <= 0:
+        return sr,br
     prior_start={1:.62,2:.66,3:.64,4:.62}.get(int(position),.64)
     prior_sub={1:.02,2:.10,3:.14,4:.16}.get(int(position),.12)
-    w=mins/(mins+300.0)
+    # Priors matter most after one partial/odd appearance and fade quickly.
+    w=mins/(mins+240.0)
     out_start=(1-w)*prior_start+w*sr
     out_sub=(1-w)*prior_sub+w*br
     if out_start+out_sub>1:
