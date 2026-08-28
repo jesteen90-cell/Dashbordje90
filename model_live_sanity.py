@@ -2,7 +2,7 @@ from pathlib import Path
 import py_compile
 from model_v2_core import project, stabilized_role, attack_evidence_minutes, bonus_prior_2627, defcon_threshold_probability, expected_save_points, goalkeeper_save_multiplier, penalty_components
 from team_strength_v2 import build_strength, fixture_difficulty
-from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS
+from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS, sale_value, _incoming_pools
 from recent_form_v2 import blend_rates
 
 def base(**kw):
@@ -10,13 +10,18 @@ def base(**kw):
 
 def pipeline_sanity():
  for p in Path('.').glob('*.py'):py_compile.compile(str(p),doraise=True)
- opt=Path('transfer_optimizer_v2.py').read_text();assert 'BENCH_RESILIENCE_WEIGHT=.055' in opt and 'def captain_value' in opt
+ opt=Path('transfer_optimizer_v2.py').read_text();assert 'BENCH_RESILIENCE_WEIGHT=.055' in opt and 'def captain_value' in opt and 'def sale_value' in opt and "'reentry_pool':True" in opt
  dl=Path('decision_layer_v4.py').read_text();assert 'def select_squad_view' in dl and "data['lineup']=target_xi" in dl
  build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build;assert 'reconcile_breakdown' in build and 'set_piece_roles.json' in build and "projection_integration':'active'" in build
  gen=Path('generate_dashboard_v3.py').read_text();assert "'penalty_taker_share':penalty_share(p)" in gen and "'projection_integration':'active'" in gen and "'bonus','penalty','conceded'" in gen
  roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
  html=Path('index.html').read_text();app=Path('app.js').read_text();assert '<script src="app.js"></script>' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html and 'function render()' in app and 'function kit(' in app
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
+
+def transfer_planner_sanity():
+ p={'id':1,'element_type':3,'team':1,'now_cost':80,'selling_price':74,'_x':{2:5,3:5}};assert sale_value(p)==74;assert sale_value({**p,'selling_price':80})==80
+ players=[p,{'id':2,'element_type':3,'team':2,'now_cost':75,'_x':{2:7,3:1}},{'id':3,'element_type':3,'team':3,'now_cost':75,'_x':{2:1,3:8}}]
+ pools=_incoming_pools(players,[p],[2,3],{2:1,3:1},per_pos=8);ids={int(x['id']) for x in pools[3]};assert 1 in ids and 2 in ids and 3 in ids
 
 def strength_sanity():
  ratings={2:{'home_attack':1.45,'away_attack':1.40,'attack':1.42,'home_defence':.72,'away_defence':.75,'defence':.74}};d,bd=fixture_difficulty(ratings,2,True,'DEF');a,ba=fixture_difficulty(ratings,2,True,'FWD');assert bd=='opponent-attack' and ba=='opponent-defence' and d>=4 and a<=3
@@ -65,5 +70,5 @@ def main():
  sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0;ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
  seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5));starter=project(base(minutes_history=180,start_rate=1,sub_rate=0));assert 15<seen['xmins']<70 and starter['xmins']>seen['xmins']
  unknown=project(base(minutes_history=90,start_rate=1,avg_start_mins=88));est=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000));assert est['xmins']>=76 and est['xmins']>=unknown['xmins']+8
- strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();penalty_sanity();pipeline_sanity();print('live model sanity passed',{'penalty_components':True,'set_piece_projection':True,'xp_reconciliation':True,'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
+ transfer_planner_sanity();strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();penalty_sanity();pipeline_sanity();print('live model sanity passed',{'transfer_sale_values':True,'transfer_reentry_pool':True,'penalty_components':True,'set_piece_projection':True,'xp_reconciliation':True,'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
 if __name__=='__main__':main()
