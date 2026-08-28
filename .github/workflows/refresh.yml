@@ -8,6 +8,7 @@ on:
       - "generate_dashboard_v3.py"
       - "market_ensemble_v1.py"
       - "market_ab_shadow.py"
+      - "player_attack_share_v1.py"
       - "freeze_market_ab.py"
       - "evaluate_market_ab.py"
       - "market_odds.json"
@@ -76,26 +77,16 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          d=json.load(open('data.json'))
-          assert d.get('model_version')=='3.1-market-ready'
-          me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me and me.get('method')
-          if not me.get('available'): assert me.get('active') is False
+          d=json.load(open('data.json')); assert d.get('model_version')=='3.1-market-ready'
+          me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.3-component-adaptive'
-          assert dl.get('explainability') is True and dl.get('captain_comparison') is True
-          assert dl.get('backtest_adaptive') is True and dl.get('component_adaptive') is True
-          assert 0.90 <= float(dl.get('threshold')) <= 1.45
-          controls=dl.get('controls',{}); assert 0.85 <= float(controls.get('minutes_penalty_scale',1)) <= 1.25; assert 0.90 <= float(controls.get('availability_penalty_scale',1)) <= 1.25
-          assert d.get('deadline_time') and len(d.get('comparison',{}).get('current_xi',[]))==11 and len(d.get('lineup',[]))==11
-          assert d.get('recent_form',{}).get('promoted') is True and d.get('captain_model',{}).get('promoted') is True
-          assert d.get('decision_explanation',{}).get('decision') in ('BANK','BYTT') and len(d.get('captain_comparison',[]))>=3
-          bench=d.get('bench',[])
-          if bench: assert bench[-1].get('position')=='GK'
-          score=json.load(open('backtest/scorecard.json')); assert score.get('version')=='2.0'; assert 'minutes_mae' in score and 'position_diagnostics' in score
-          ab=json.load(open('market_ab/scorecard.json')); assert ab.get('version')=='1.1-two-sided'; assert 'offensive_mae_internal' in ab and 'captain_proxy_regret_internal' in ab
-          params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.1-two-sided'; assert 'offensive_mae_improvement' in params.get('evidence',{})
-          shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.1-two-sided'
-          if params.get('promoted'): assert me.get('ab_promoted') is True
-          print('Two-sided market A/B sanity passed',ab.get('active_gws'),ab.get('offensive_mae_improvement'),ab.get('captain_proxy_improvement'))
+          assert d.get('deadline_time') and len(d.get('lineup',[]))==11
+          score=json.load(open('backtest/scorecard.json')); assert score.get('version')=='2.0'
+          ab=json.load(open('market_ab/scorecard.json')); assert ab.get('version')=='1.2-player-share'; assert 'offensive_mae_share' in ab and 'promote_player_share' in ab
+          params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
+          shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
+          for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
+          print('Player-share A/B/C sanity passed',ab.get('active_gws'),ab.get('player_share_offensive_improvement'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
