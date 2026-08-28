@@ -1,6 +1,7 @@
 from pathlib import Path
 import py_compile
 from model_v2_core import project, stabilized_role
+from team_strength_v2 import build_strength, fixture_difficulty
 
 
 def base(**kw):
@@ -36,6 +37,28 @@ def pipeline_sanity():
     assert 'MutationObserver' not in ui
 
 
+def strength_sanity():
+    ratings={2:{'home_attack':1.45,'away_attack':1.40,'attack':1.42,'home_defence':.72,'away_defence':.75,'defence':.74}}
+    def_h,basis_d=fixture_difficulty(ratings,2,True,'DEF')
+    fwd_h,basis_a=fixture_difficulty(ratings,2,True,'FWD')
+    assert basis_d=='opponent-attack' and basis_a=='opponent-defence'
+    assert def_h>=4,(def_h,fwd_h)
+    assert fwd_h<=3,(def_h,fwd_h)
+
+    teams={i:{'position':i,'rank':i,'points':0} for i in range(1,21)}
+    fixtures=[{'finished':True,'team_h':1,'team_a':20,'team_h_score':6,'team_a_score':0,'event':1,'id':1}]
+    s=build_strength(fixtures,teams)
+    assert len(s)==20
+    one=s[1]
+    assert one['evidence_confidence']=='low',one
+    assert one['early_season_cap'] is True
+    assert .75 <= one['attack'] <= 1.30,one
+    assert one['prior_source'] in ('table-shrunk','neutral-fallback','fpl-bootstrap')
+    if one['prior_source']=='table-shrunk':
+        assert one['prior_version']=='2.2-table-shrunk-early-cap',one
+        assert one['prior_available'] is False,one
+
+
 def main():
     sr,sub=stabilized_role(0,0,0,4)
     assert sr==0 and sub==0,(sr,sub)
@@ -63,7 +86,8 @@ def main():
     faded=project(base(minutes_history=2700,start_rate=1,avg_start_mins=90,goal90=.31,prev_minutes=3000,prev_goal90=.90))
     assert abs(faded['goal90_used']-.31) < abs(elite['goal90_used']-.31),(elite,faded)
 
+    strength_sanity()
     pipeline_sanity()
-    print('live model sanity passed', {'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'elite_goal_prior':round(elite['goal_prior_used'],3),'faded_goal90':round(faded['goal90_used'],3)})
+    print('live model sanity passed', {'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'elite_goal_prior':round(elite['goal_prior_used'],3),'faded_goal90':round(faded['goal90_used'],3),'position_aware_fdr':True})
 
 if __name__=='__main__':main()
