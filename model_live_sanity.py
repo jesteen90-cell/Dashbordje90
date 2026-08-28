@@ -4,6 +4,7 @@ from model_v2_core import project, stabilized_role, attack_evidence_minutes, bon
 from team_strength_v2 import build_strength, fixture_difficulty
 from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS, sale_value, _incoming_pools
 from recent_form_v2 import blend_rates
+from availability_v1 import next_round_availability, availability_for_gw
 
 def base(**kw):
  d={'position':4,'availability':1.0,'start_rate':0.0,'avg_start_mins':78,'sub_rate':0.0,'avg_sub_mins':18,'minutes_history':0,'goal90':0.0,'assist90':0.0,'prev_minutes':0.0,'prev_goal90':0.0,'prev_assist90':0.0,'save90':0.0,'defcon90':0.0,'bonus90':0.0,'yellow90':0.0,'red90':0.0,'opponent_goal_lambda':1.35,'attack_multiplier':1.0};d.update(kw);return d
@@ -14,6 +15,7 @@ def pipeline_sanity():
  dl=Path('decision_layer_v4.py').read_text();assert 'def select_squad_view' in dl and "data['lineup']=target_xi" in dl
  build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build;assert 'reconcile_breakdown' in build and 'set_piece_roles.json' in build and "projection_integration':'active'" in build
  gen=Path('generate_dashboard_v3.py').read_text();assert "'penalty_taker_share':penalty_share(p)" in gen and "'projection_integration':'active'" in gen and "'bonus','penalty','conceded'" in gen
+ assert 'availability_for_gw' in gen and "'budget':{" in gen and "'3.8-availability-recovery-set-piece-projection'" in gen and "'selling_price'" in gen
  roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
  html=Path('index.html').read_text();app=Path('app.js').read_text();assert '<script src="app.js"></script>' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html and 'function render()' in app and 'function kit(' in app
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
@@ -22,6 +24,12 @@ def transfer_planner_sanity():
  p={'id':1,'element_type':3,'team':1,'now_cost':80,'selling_price':74,'_x':{2:5,3:5}};assert sale_value(p)==74;assert sale_value({**p,'selling_price':80})==80
  players=[p,{'id':2,'element_type':3,'team':2,'now_cost':75,'_x':{2:7,3:1}},{'id':3,'element_type':3,'team':3,'now_cost':75,'_x':{2:1,3:8}}]
  pools=_incoming_pools(players,[p],[2,3],{2:1,3:1},per_pos=8);ids={int(x['id']) for x in pools[3]};assert 1 in ids and 2 in ids and 3 in ids
+
+def availability_sanity():
+ doubt={'status':'d','chance_of_playing_next_round':50};vals=[availability_for_gw(doubt,2,g) for g in range(2,7)];assert vals[0]==.5 and all(a<b for a,b in zip(vals,vals[1:])) and vals[-1]>.85
+ injured={'status':'i','chance_of_playing_next_round':25};assert availability_for_gw(injured,2,2)==.25 and availability_for_gw(injured,2,4)>.6
+ suspended={'status':'s','chance_of_playing_next_round':0};assert next_round_availability(suspended)==0 and availability_for_gw(suspended,2,3)>=.65 and availability_for_gw(suspended,2,5)>=.94
+ unavailable={'status':'u','chance_of_playing_next_round':0};assert all(availability_for_gw(unavailable,2,g)==0 for g in range(2,7))
 
 def strength_sanity():
  ratings={2:{'home_attack':1.45,'away_attack':1.40,'attack':1.42,'home_defence':.72,'away_defence':.75,'defence':.74}};d,bd=fixture_difficulty(ratings,2,True,'DEF');a,ba=fixture_difficulty(ratings,2,True,'FWD');assert bd=='opponent-attack' and ba=='opponent-defence' and d>=4 and a<=3
@@ -70,5 +78,5 @@ def main():
  sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0;ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
  seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5));starter=project(base(minutes_history=180,start_rate=1,sub_rate=0));assert 15<seen['xmins']<70 and starter['xmins']>seen['xmins']
  unknown=project(base(minutes_history=90,start_rate=1,avg_start_mins=88));est=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000));assert est['xmins']>=76 and est['xmins']>=unknown['xmins']+8
- transfer_planner_sanity();strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();penalty_sanity();pipeline_sanity();print('live model sanity passed',{'transfer_sale_values':True,'transfer_reentry_pool':True,'penalty_components':True,'set_piece_projection':True,'xp_reconciliation':True,'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
+ transfer_planner_sanity();availability_sanity();strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();penalty_sanity();pipeline_sanity();print('live model sanity passed',{'availability_recovery':True,'transfer_sale_values':True,'transfer_reentry_pool':True,'penalty_components':True,'set_piece_projection':True,'xp_reconciliation':True,'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
 if __name__=='__main__':main()
