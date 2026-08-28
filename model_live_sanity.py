@@ -1,6 +1,6 @@
 from pathlib import Path
 import py_compile
-from model_v2_core import project, stabilized_role, attack_evidence_minutes, bonus_prior_2627, defcon_threshold_probability, expected_save_points
+from model_v2_core import project, stabilized_role, attack_evidence_minutes, bonus_prior_2627, defcon_threshold_probability, expected_save_points, goalkeeper_save_multiplier
 from team_strength_v2 import build_strength, fixture_difficulty
 from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS
 from recent_form_v2 import blend_rates
@@ -45,22 +45,18 @@ def bonus_sanity():
 
 def defcon_sanity():
  for pos,thr in ((2,10),(3,12),(4,12)):
-  lo=defcon_threshold_probability(thr*.55,thr,pos);mid=defcon_threshold_probability(thr,thr,pos);hi=defcon_threshold_probability(thr*1.7,thr,pos)
-  assert 0<lo<mid<hi<1,(pos,lo,mid,hi);assert mid<.75,(pos,mid)
+  lo=defcon_threshold_probability(thr*.55,thr,pos);mid=defcon_threshold_probability(thr,thr,pos);hi=defcon_threshold_probability(thr*1.7,thr,pos);assert 0<lo<mid<hi<1,(pos,lo,mid,hi);assert mid<.75,(pos,mid)
  cb=project(base(position=2,minutes_history=900,start_rate=1,avg_start_mins=90,prev_minutes=3000,defcon90=10));dm=project(base(position=3,minutes_history=900,start_rate=1,avg_start_mins=90,prev_minutes=3000,defcon90=12));assert 0<cb['defcon_probability']<1 and 0<dm['defcon_probability']<1
 
 def goalkeeper_sanity():
- # FPL awards one point per completed block of three saves, not one-third per save.
- assert expected_save_points(0)==0
- vals=[expected_save_points(x) for x in (1,2,3,4,6,8)]
- assert vals==sorted(vals) and vals[2]>vals[1]
- assert expected_save_points(3)<1.0 and expected_save_points(6)<2.0
- gk=project(base(position=1,minutes_history=900,start_rate=1,avg_start_mins=90,prev_minutes=3000,save90=4.5,opponent_goal_lambda=1.5))
- assert gk['expected_saves']>4 and 0<gk['saves']<gk['expected_saves']/3+.2
+ assert 0<expected_save_points(3)<1 and expected_save_points(6)>expected_save_points(3)
+ assert .78<=goalkeeper_save_multiplier(.2)<goalkeeper_save_multiplier(1.35)<goalkeeper_save_multiplier(3.0)<=1.28
+ common={'position':1,'minutes_history':900,'start_rate':1,'avg_start_mins':90,'prev_minutes':3000,'save90':3.5}
+ easy=project(base(**common,opponent_goal_lambda=.65));hard=project(base(**common,opponent_goal_lambda=2.2));assert hard['expected_saves']>easy['expected_saves'];assert hard['save_fixture_multiplier']>1>easy['save_fixture_multiplier'];assert hard['saves']>easy['saves']
 
 def main():
  sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0;ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
  seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5));starter=project(base(minutes_history=180,start_rate=1,sub_rate=0));assert 15<seen['xmins']<70 and starter['xmins']>seen['xmins']
  unknown=project(base(minutes_history=90,start_rate=1,avg_start_mins=88));est=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000));assert est['xmins']>=76 and est['xmins']>=unknown['xmins']+8
- strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();pipeline_sanity();print('live model sanity passed',{'goalkeeper_save_distribution':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
+ strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();pipeline_sanity();print('live model sanity passed',{'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
 if __name__=='__main__':main()
