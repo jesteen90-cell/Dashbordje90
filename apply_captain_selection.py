@@ -46,7 +46,10 @@ def main():
  score_gap=round(n(cap_shadow.get(key))-n(runner.get(key)),3) if runner else None
  xp_gap=round(n(cap_row.get('xp'))-n(runner_row.get('xp')),2) if runner else None
  haul_gap=round(n(hp.get('p10'))-n(rhp.get('p10')),4) if runner and hp.get('p10') is not None and rhp.get('p10') is not None else None
- # Confidence is data, not only UI logic: stable across clients and testable in CI.
+ strengths=list((d.get('team_strength') or {}).values())
+ team_prior_available=bool(strengths) and all(bool(x.get('prior_available')) for x in strengths)
+ market_active=bool((d.get('market_ensemble') or {}).get('active'))
+ input_quality='HIGH' if team_prior_available and market_active else 'MEDIUM' if team_prior_available or market_active else 'LOW'
  conf_raw=0.0
  if score_gap is not None: conf_raw+=max(-1,min(1,score_gap/.45))*1.6
  if xp_gap is not None: conf_raw+=max(-1,min(1,xp_gap/1.2))*1.1
@@ -55,9 +58,11 @@ def main():
  conf_raw+=(1 if cm>=82 else .55 if cm>=72 else .15 if cm>=60 else -1)
  conf_raw+=(.8 if ca>=.95 else .45 if ca>=.85 else .1 if ca>=.75 else -1)
  if not safe: conf_raw-=2
+ if input_quality=='LOW': conf_raw-=.65
+ elif input_quality=='MEDIUM': conf_raw-=.25
  conf_score=round(max(0,min(100,50+conf_raw*12)))
  conf_level='HØY' if conf_raw>=3.2 else 'MIDDELS' if conf_raw>=1.5 else 'LAV'
- d['captain_explanation']={'version':'1.1-confidence-data','model':model,'captain':{'id':cap_id,'name':cap_row.get('name'),'team':cap_row.get('team'),'xp':round(n(cap_row.get('xp')),2),'expected_minutes':round(cm,1),'availability':round(ca,3),'model_score':round(n(cap_shadow.get(key)),3),'p10_plus':hp.get('p10'),'p15_plus':hp.get('p15'),'p_goal_2plus':hp.get('p_goal_2'),'p_multi_return':hp.get('p_multi_return')},'runner_up':{'id':runner.get('id'),'name':runner.get('name'),'team':runner.get('team'),'xp':round(n(runner_row.get('xp')),2),'expected_minutes':round(n(runner_row.get('expected_minutes')),1),'availability':round(n(runner_row.get('availability'),1),3),'model_score':round(n(runner.get(key)),3),'p10_plus':rhp.get('p10'),'p15_plus':rhp.get('p15'),'p_goal_2plus':rhp.get('p_goal_2'),'p_multi_return':rhp.get('p_multi_return')},'score_gap':score_gap,'xp_gap':xp_gap,'haul10_gap':haul_gap,'confidence':{'score':conf_score,'level':conf_level,'raw':round(conf_raw,3)},'selected_pick_safe':safe,'reason':sel.get('reason')}
+ d['captain_explanation']={'version':'1.2-confidence-quality','model':model,'captain':{'id':cap_id,'name':cap_row.get('name'),'team':cap_row.get('team'),'xp':round(n(cap_row.get('xp')),2),'expected_minutes':round(cm,1),'availability':round(ca,3),'model_score':round(n(cap_shadow.get(key)),3),'p10_plus':hp.get('p10'),'p15_plus':hp.get('p15'),'p_goal_2plus':hp.get('p_goal_2'),'p_multi_return':hp.get('p_multi_return')},'runner_up':{'id':runner.get('id'),'name':runner.get('name'),'team':runner.get('team'),'xp':round(n(runner_row.get('xp')),2),'expected_minutes':round(n(runner_row.get('expected_minutes')),1),'availability':round(n(runner_row.get('availability'),1),3),'model_score':round(n(runner.get(key)),3),'p10_plus':rhp.get('p10'),'p15_plus':rhp.get('p15'),'p_goal_2plus':rhp.get('p_goal_2'),'p_multi_return':rhp.get('p_multi_return')},'score_gap':score_gap,'xp_gap':xp_gap,'haul10_gap':haul_gap,'confidence':{'score':conf_score,'level':conf_level,'raw':round(conf_raw,3),'input_quality':input_quality},'input_quality':{'team_prior_available':team_prior_available,'market_active':market_active,'level':input_quality},'selected_pick_safe':safe,'reason':sel.get('reason')}
  d['captain_model_selection']['applied']=True
  d['captain_model_selection']['applied_captain_id']=cap_id
  d['captain_model_selection']['applied_captain_name']=cap_row.get('name')
@@ -75,10 +80,9 @@ def main():
  d['captain_comparison']=display
  if isinstance(d.get('captain_pool'),dict): d['captain_pool']['display_count']=len(display)
  d.setdefault('optimizer',{})['captain_horizon_search']=True
- # Do not rewrite/mask the Decision Layer version. Keep real engine metadata and only assert consistency.
  dl=d.get('decision_layer') or {}
  dl['squad_view_consistent']=bool(dl.get('squad_view_consistent',True))
  d['decision_layer']=dl
  DATA.write_text(json.dumps(d,ensure_ascii=False,indent=2))
- print('Applied captain:',cap_row.get('name'),'model=',model,'safe=',safe,'confidence=',conf_level,conf_score,'runner=',runner.get('name'),'pool=',len(ranked),'display=',len(display))
+ print('Applied captain:',cap_row.get('name'),'model=',model,'safe=',safe,'confidence=',conf_level,conf_score,'quality=',input_quality,'runner=',runner.get('name'),'pool=',len(ranked),'display=',len(display))
 if __name__=='__main__':main()
