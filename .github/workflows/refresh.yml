@@ -115,17 +115,17 @@ jobs:
           import json
           d=json.load(open('data.json'))
           pri=json.load(open('team_strength_prior.json')); assert pri.get('version') in ('1.0-fpl-bootstrap','1.1-fpl-bootstrap-safe'); assert len(pri.get('teams') or {})==20
-          assert d.get('model_version') in ('3.0-validated','3.1-market-ready','3.2-history-prior','3.3-fixture-strength-v2','3.4-fixture-outlook'), d.get('model_version')
-          if d.get('model_version') in ('3.2-history-prior','3.3-fixture-strength-v2','3.4-fixture-outlook'):
+          supported=('3.0-validated','3.1-market-ready','3.2-history-prior','3.3-fixture-strength-v2','3.4-fixture-outlook','3.5-keeper-fixture-saves','3.6-penalty-events','3.7-set-piece-projection')
+          assert d.get('model_version') in supported, d.get('model_version')
+          if d.get('model_version') in supported[2:]:
             hp=d.get('historical_attack_prior') or {}; assert hp.get('version')=='1.0-prev-season-fade'; assert int(hp.get('coverage') or 0)>0
-          if d.get('model_version') in ('3.3-fixture-strength-v2','3.4-fixture-outlook'):
+          if d.get('model_version') in supported[3:]:
             sm=d.get('team_strength_model') or {}; assert sm.get('version')=='2.1-adaptive-early-season'; assert sm.get('prior_sources'); ts=d.get('team_strength') or {}; assert len(ts)==20
             assert all(0<=float((r or {}).get('evidence_share',0))<=1 for r in ts.values()); assert all((r or {}).get('prior_source') in ('fpl-bootstrap','table-shrunk','neutral-fallback') for r in ts.values())
-          if d.get('model_version')=='3.4-fixture-outlook':
-            rows=(d.get('lineup') or [])+(d.get('bench') or []); assert rows
-            assert all(isinstance(p.get('fixture_outlook'),list) for p in rows)
-            assert all(1<=int(f.get('difficulty'))<=5 for p in rows for f in p.get('fixture_outlook',[]))
-            assert all(len(p.get('fixture_outlook') or [])>=3 for p in rows), 'Each squad player needs at least 3 fixture entries'
+          rows=(d.get('lineup') or [])+(d.get('bench') or []); assert rows
+          assert all(isinstance(p.get('fixture_outlook'),list) for p in rows)
+          assert all(1<=int(f.get('difficulty'))<=5 for p in rows for f in p.get('fixture_outlook',[]))
+          assert all(len(p.get('fixture_outlook') or [])>=3 for p in rows), 'Each squad player needs at least 3 fixture entries'
           opt=d.get('optimizer',{}); assert opt.get('captain_horizon_search') is True, opt
           pool=d.get('captain_pool') or {}; assert pool.get('version')=='1.0-all-xi'; assert int(pool.get('candidate_count') or 0)==11,pool; assert int(pool.get('display_count') or 0)<=5,pool
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
@@ -135,6 +135,7 @@ jobs:
           xi=d.get('lineup') or []; caps=[p for p in xi if p.get('captain')]; vice=[p for p in xi if p.get('vice')]; assert len(xi)==11; assert len(caps)==1; assert len(vice)==1; assert int(caps[0]['id'])==int(sel['applied_captain_id'])
           ex=d.get('captain_explanation') or {}; assert ex.get('version') in ('1.0','1.1-confidence-data','1.2-confidence-quality','1.3-confidence-source-quality'); assert int(ex.get('captain',{}).get('id'))==int(sel.get('applied_captain_id'))
           confirmed=d.get('confirmed_fpl') or {}; assert confirmed.get('source')=='official-picks-api'; assert confirmed.get('exact_order') is True; assert len(confirmed.get('lineup') or [])==11; assert len(confirmed.get('bench') or [])==4; assert len([p for p in confirmed['lineup'] if p.get('captain')])==1; assert len([p for p in confirmed['lineup'] if p.get('vice')])==1; assert [p['id'] for p in (d.get('comparison') or {}).get('current_xi',[])]==[p['id'] for p in confirmed['lineup']]
+          assert all(str(p.get('team') or '').strip() not in ('','?','Ukjent lag') for p in confirmed['lineup']+confirmed['bench']), 'Confirmed FPL player missing team name'
           dl=d.get('decision_layer',{}); assert dl.get('version') in ('4.4-premium-adaptive','4.5-squad-consistent','4.6-input-quality-threshold'); assert dl.get('squad_view_consistent') is True
           if dl.get('version')=='4.6-input-quality-threshold':
             iq=dl.get('input_quality') or {}; assert 0<=float(iq.get('score',0))<=1; assert 0<=float(iq.get('threshold_penalty',0))<=.24; assert iq.get('strength_quality'); assert isinstance(iq.get('market_active'),bool); assert float(dl.get('threshold'))>=float(dl.get('base_threshold'))
