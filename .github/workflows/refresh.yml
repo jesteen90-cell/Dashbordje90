@@ -25,6 +25,7 @@ on:
       - "expand_captain_pool.py"
       - "enrich_captain_inputs.py"
       - "captain_v4_shadow.py"
+      - "captain_diagnostics.py"
       - "evaluate_captain_v4.py"
       - "select_captain_model.py"
       - "apply_captain_selection.py"
@@ -96,6 +97,7 @@ jobs:
           python expand_captain_pool.py
           python enrich_captain_inputs.py
           python captain_v4_shadow.py
+          python captain_diagnostics.py
           python select_captain_model.py
           python apply_captain_selection.py
           python market_ab_shadow.py
@@ -112,6 +114,7 @@ jobs:
           pool=d.get('captain_pool') or {}; assert pool.get('version')=='1.0-all-xi'; assert int(pool.get('candidate_count') or 0)==11,pool; assert int(pool.get('display_count') or 0)<=5,pool
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
           cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.1-haul-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick') and cap4.get('v41_pick'); assert len(cap4.get('candidates') or [])==11, len(cap4.get('candidates') or [])
+          diag=json.load(open('captain_diagnostics.json')); assert diag.get('version')=='1.0'; assert int(diag.get('candidate_count') or 0)==11; assert diag.get('leader')
           for p in cap4.get('candidates',[]):
             hp=p.get('haul_probabilities') or {}; assert all(k in hp for k in ('p_goal_1','p_goal_2','p_goal_3','p_multi_return','p10','p15')); assert 0 <= float(p.get('haul_bonus',0)) <= .90
           sel=d.get('captain_model_selection') or {}; assert sel.get('version')=='1.0'; assert sel.get('production_model') in ('v3','v4','v4.1'); assert sel.get('selected_pick'); assert sel.get('applied') is True; assert sel.get('applied_captain_id'); assert isinstance(sel.get('safety_gate'),dict)
@@ -123,7 +126,7 @@ jobs:
           chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('squad_view_consistent') is True
-          print('Captain full-XI sanity:',len(cap4.get('candidates') or []),'modelled,',len(d.get('captain_comparison') or []),'displayed. Applied:',ex.get('captain',{}).get('name'),'runner:',ex.get('runner_up',{}).get('name'))
+          print('Captain full-XI sanity:',len(cap4.get('candidates') or []),'modelled,',len(d.get('captain_comparison') or []),'displayed. Applied:',ex.get('captain',{}).get('name'),'runner:',ex.get('runner_up',{}).get('name'),'diag leader:',diag.get('leader',{}).get('name'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -134,12 +137,12 @@ jobs:
           python freeze_chip_strategy.py
       - name: Publish feed, snapshots and backtests
         run: |
-          if git diff --quiet -- data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/; then
+          if git diff --quiet -- data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json captain_diagnostics.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/; then
             echo "No dashboard, snapshot or backtest change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh full-XI captain analysis"
+          git add data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json captain_diagnostics.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
+          git commit -m "Dashboard: refresh full-XI captain diagnostics"
           git push
