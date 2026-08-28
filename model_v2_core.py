@@ -1,8 +1,9 @@
 """FPL Model shared core.
 
 Component expected-points engine for live projection and walk-forward tests.
-Inputs must be pre-deadline features only. Model 3.5 improves early-season role
-estimation and propagates start/sub/zero-minute uncertainty into xP intervals.
+Inputs must be pre-deadline features only. Model 3.6 improves early-season role
+uncertainty and uses effective attacking evidence rather than raw team minutes
+when shrinking player goal/assist rates.
 """
 from __future__ import annotations
 import math
@@ -18,6 +19,18 @@ def p_ge(k,lam): return 1-sum(poisson_pmf(i,lam) for i in range(k))
 def beta_shrink(rate, minutes, prior, prior_minutes=900):
     w=max(0.0,minutes)/(max(0.0,minutes)+prior_minutes)
     return w*max(0.0,rate)+(1-w)*prior
+
+def attack_evidence_minutes(current_minutes,recent_minutes=0.0,recent_confidence=0.0):
+    """Effective sample size for attacking rates.
+
+    Season minutes remain the main evidence. Recent-match history can add only a
+    bounded amount and is confidence weighted, preventing one hot match from
+    overwhelming previous-season/position priors while still learning faster
+    than a pure season-minutes model.
+    """
+    cm=max(0.0,float(current_minutes or 0));rm=max(0.0,float(recent_minutes or 0));rc=clamp(float(recent_confidence or 0))
+    recent_extra=min(360.0,rm)*rc*.35
+    return min(1800.0,cm+recent_extra)
 
 def historical_attack_prior(position_prior, prev_rate, prev_minutes, history_strength=900.0):
     pm=max(0.0,float(prev_minutes or 0)); pr=max(0.0,float(prev_rate or 0))
@@ -51,18 +64,16 @@ def uncertainty(mean,md,pos,g_rate,a_rate,lam,frac,save90,dc_prob,bonus):
     papp=md['p_start']+md['p_sub'];eapp=md['appearance_pts'];eapp2=max(0,papp-md['p_60'])*1+md['p_60']*4
     v_app=max(0,eapp2-eapp*eapp);vg=(GOAL_PTS[pos]**2)*max(0,g_rate*frac);va=9*max(0,a_rate*frac);pcs=md['p_60']*math.exp(-lam);vcs=(CS_PTS[pos]**2)*pcs*(1-pcs);vs=(max(0,save90)*frac)/9 if pos==1 else 0
     vdc=4*dc_prob*(1-dc_prob) if pos in (2,3,4) else 0;vb=max(.10,bonus*(1.35-bonus/3)) if bonus>0 else .08
-    # Role uncertainty: two players can have similar xMins but very different
-    # 0/sub/start distributions. Scale minute variance into expected-point space.
-    minute_cv2=md.get('minute_variance',0)/(90.0**2)
-    v_role=min(mean*mean*.45,mean*mean*.32*minute_cv2)
+    minute_cv2=md.get('minute_variance',0)/(90.0**2);v_role=min(mean*mean*.45,mean*mean*.32*minute_cv2)
     raw=v_app+vg+va+vcs+vs+vdc+vb+v_role;variance=max(.35,raw*1.18+.12*mean*mean);sd=math.sqrt(variance);p10=max(0,mean-Z80*sd);p90=max(p10,mean+Z80*sd)
     return {'variance':variance,'sd':sd,'p10':p10,'p90':p90,'volatility':sd/max(mean,1.0),'role_variance':v_role,'minute_variance':md.get('minute_variance',0)}
 
 def project(inp):
     pos=int(inp['position']);avail=clamp(float(inp.get('availability',1)));hist=float(inp.get('minutes_history',0));prev_mins=float(inp.get('prev_minutes',0) or 0);sr,sub=stabilized_role(float(inp.get('start_rate',.7)),float(inp.get('sub_rate',.15)),hist,pos,prev_mins);md=minutes_distribution(sr,float(inp.get('avg_start_mins',78)),sub,float(inp.get('avg_sub_mins',18)),avail);frac=md['xmins']/90;atk=float(inp.get('attack_multiplier',1))
-    gp={1:.01,2:.055,3:.20,4:.31}[pos];ap={1:.01,2:.08,3:.18,4:.15}[pos];gprior=historical_attack_prior(gp,float(inp.get('prev_goal90',0) or 0),prev_mins);aprior=historical_attack_prior(ap,float(inp.get('prev_assist90',0) or 0),prev_mins);g90=beta_shrink(float(inp.get('goal90',0)),hist,gprior)*atk;a90=beta_shrink(float(inp.get('assist90',0)),hist,aprior)*atk;goals=g90*frac*GOAL_PTS[pos];assists=a90*frac*3
+    gp={1:.01,2:.055,3:.20,4:.31}[pos];ap={1:.01,2:.08,3:.18,4:.15}[pos];gprior=historical_attack_prior(gp,float(inp.get('prev_goal90',0) or 0),prev_mins);aprior=historical_attack_prior(ap,float(inp.get('prev_assist90',0) or 0),prev_mins)
+    attack_mins=attack_evidence_minutes(hist,inp.get('recent_minutes',0),inp.get('recent_confidence',0));g90=beta_shrink(float(inp.get('goal90',0)),attack_mins,gprior)*atk;a90=beta_shrink(float(inp.get('assist90',0)),attack_mins,aprior)*atk;goals=g90*frac*GOAL_PTS[pos];assists=a90*frac*3
     lam=max(.05,float(inp.get('opponent_goal_lambda',1.35)));cs_prob=math.exp(-lam);cs=md['p_60']*cs_prob*CS_PTS[pos];conceded=expected_conceded_deduction(lam,md['p_60']) if pos in (1,2) else 0;save90=max(0,float(inp.get('save90',0)));saves=(save90*frac/3) if pos==1 else 0;dc=0;dc_prob=0
     if pos in (2,3,4):
         dc90=beta_shrink(float(inp.get('defcon90',0)),hist,{2:8.0,3:7.0,4:3.0}[pos],720);lamdc=max(.01,dc90*frac);threshold=10 if pos==2 else 12;dc_prob=p_ge(threshold,lamdc)*md['p_60'];dc=2*dc_prob
     bonus90=beta_shrink(float(inp.get('bonus90',0)),hist,{1:.25,2:.28,3:.38,4:.40}[pos],900);bonus=min(1.8,bonus90*frac)*avail;yellow=-clamp(float(inp.get('yellow90',0))*frac,0,.5);red=-3*clamp(float(inp.get('red90',0))*frac,0,.08);total=max(0,md['appearance_pts']+goals+assists+cs+conceded+saves+dc+bonus+yellow+red);u=uncertainty(total,md,pos,g90,a90,lam,frac,save90,dc_prob,bonus)
-    return {'total':total,'xmins':md['xmins'],'p_start':md['p_start'],'p_60':md['p_60'],'cs_probability':cs_prob,'appearance':md['appearance_pts'],'goals':goals,'assists':assists,'clean_sheet':cs,'conceded':conceded,'saves':saves,'defensive':dc,'bonus':bonus,'cards':yellow+red,'goal90_used':g90,'assist90_used':a90,'goal_prior_used':gprior,'assist_prior_used':aprior,**u}
+    return {'total':total,'xmins':md['xmins'],'p_start':md['p_start'],'p_60':md['p_60'],'cs_probability':cs_prob,'appearance':md['appearance_pts'],'goals':goals,'assists':assists,'clean_sheet':cs,'conceded':conceded,'saves':saves,'defensive':dc,'bonus':bonus,'cards':yellow+red,'goal90_used':g90,'assist90_used':a90,'goal_prior_used':gprior,'assist_prior_used':aprior,'attack_evidence_minutes':attack_mins,**u}
