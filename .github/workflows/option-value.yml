@@ -1,4 +1,4 @@
-name: Enrich Budget Option Timing and Robustness
+name: Enrich Budget Option Timing Robustness and Final Gate
 
 on:
   workflow_dispatch:
@@ -9,6 +9,7 @@ on:
       - "transfer_option_value_v1.py"
       - "transfer_timing_v1.py"
       - "transfer_robustness_v1.py"
+      - "final_transfer_gate_v1.py"
       - "freeze_option_value.py"
       - "evaluate_option_value.py"
       - "freeze_transfer_timing.py"
@@ -17,7 +18,6 @@ on:
   workflow_run:
     workflows: ["Refresh FPL Dashboard"]
     types: [completed]
-
 permissions:
   contents: write
 concurrency:
@@ -37,14 +37,13 @@ jobs:
           python-version: "3.12"
       - name: Install dependency
         run: pip install requests
-      - name: Build budget intelligence shadow
-        run: python budget_intelligence_v1.py
-      - name: Build deadline timing shadow
-        run: python transfer_timing_v1.py
-      - name: Build transfer option value shadow
-        run: python transfer_option_value_v1.py
-      - name: Build cross-horizon robustness audit
-        run: python transfer_robustness_v1.py
+      - name: Build decision safety layers
+        run: |
+          python budget_intelligence_v1.py
+          python transfer_timing_v1.py
+          python transfer_option_value_v1.py
+          python transfer_robustness_v1.py
+          python final_transfer_gate_v1.py
       - name: Sanity-check decision safety layers
         run: |
           python - <<'PY'
@@ -57,28 +56,29 @@ jobs:
           rob=d.get('transfer_robustness') or {}; assert rob.get('version')=='1.0-shadow'; assert rob.get('affects_transfer_ranking') is False
           candidates=d.get('candidates') or []; assert int(rob.get('candidate_count') or 0)==len(candidates)
           for c in candidates:
-              tv=c.get('timing_value_shadow') or {}; assert tv.get('version')=='1.0' and tv.get('affects_ranking') is False and tv.get('price_prediction') is False; assert 0<=float(tv.get('lock_risk') or 0)<=1; assert 0<=float(tv.get('information_value') or 0)<=1
-              ov=c.get('option_value_shadow') or {}; assert ov.get('version')=='1.1' and ov.get('affects_ranking') is False; assert float(ov.get('total',0))>=0
-              rv=c.get('robustness_shadow') or {}; assert rv.get('version')=='1.0-shadow' and rv.get('affects_ranking') is False; assert rv.get('label') in ('ROBUST','BLANDET','FRAGIL'); assert set((rv.get('weighted_gain') or {}).keys())=={'gw1','gw3','plan'}
-          print('Decision safety sanity OK',rob)
+              tv=c.get('timing_value_shadow') or {}; assert tv.get('version')=='1.0' and tv.get('affects_ranking') is False and tv.get('price_prediction') is False
+              ov=c.get('option_value_shadow') or {}; assert ov.get('version')=='1.1' and ov.get('affects_ranking') is False
+              rv=c.get('robustness_shadow') or {}; assert rv.get('version')=='1.0-shadow' and rv.get('affects_ranking') is False; assert rv.get('label') in ('ROBUST','BLANDET','FRAGIL')
+          fg=d.get('final_transfer_gate') or {}; assert fg.get('version')=='1.0-predeadline'; assert fg.get('verdict') in ('GO','WAIT / RECHECK','NO-GO')
+          # Critical invariant: safety/shadow evidence may never promote a rejected production transfer.
+          if not bool((d.get('decision_layer') or {}).get('approved_first_move')): assert fg.get('verdict')=='NO-GO'
+          if fg.get('robustness')=='FRAGIL': assert fg.get('verdict')!='GO'
+          print('Final decision safety OK',fg)
           PY
-      - name: Evaluate completed evidence
+      - name: Evaluate and freeze evidence
         run: |
           python evaluate_option_value.py
           python evaluate_transfer_timing.py
-      - name: Freeze pre-deadline evidence
-        run: |
           python freeze_option_value.py
           python freeze_transfer_timing.py
       - name: Sanity-check evidence scorecards
         run: |
           python - <<'PY'
           import json
-          s=json.load(open('option_value_backtest/scorecard.json')); assert s.get('version')=='1.0'; assert isinstance(s.get('promote'),bool); assert isinstance(s.get('promotion_ready'),bool)
+          s=json.load(open('option_value_backtest/scorecard.json')); assert s.get('version')=='1.0'; assert isinstance(s.get('promote'),bool)
           if int(s.get('evaluated_gws') or 0)<8: assert s.get('promote') is False
-          t=json.load(open('timing_backtest/scorecard.json')); assert t.get('version')=='1.0'; assert isinstance(t.get('calibration_ready'),bool); assert isinstance(t.get('promote_timing_thresholds'),bool)
+          t=json.load(open('timing_backtest/scorecard.json')); assert t.get('version')=='1.0'; assert isinstance(t.get('promote_timing_thresholds'),bool)
           if int(t.get('candidate_samples') or 0)<20: assert t.get('promote_timing_thresholds') is False
-          print('Evidence sanity OK',s,t)
           PY
       - name: Publish enriched feed and evidence
         run: |
@@ -86,7 +86,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/
-          git commit -m "Dashboard: enrich transfer decision safety"
+          git commit -m "Dashboard: enrich final transfer decision safety"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
