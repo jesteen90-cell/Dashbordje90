@@ -1,0 +1,70 @@
+name: Enrich Budget and Option Value
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "budget_intelligence_v1.py"
+      - "transfer_option_value_v1.py"
+      - ".github/workflows/option-value.yml"
+  workflow_run:
+    workflows: ["Refresh FPL Dashboard"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dashboard-option-value
+  cancel-in-progress: true
+
+jobs:
+  enrich:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependency
+        run: pip install requests
+      - name: Build budget intelligence shadow
+        run: python budget_intelligence_v1.py
+      - name: Build transfer option value shadow
+        run: python transfer_option_value_v1.py
+      - name: Sanity-check option value feed
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data.json'))
+          bi=d.get('budget_intelligence') or {}
+          assert bi.get('version')=='1.0-shadow'
+          assert bi.get('affects_transfer_ranking') is False
+          assert 0 <= float((bi.get('flexibility') or {}).get('score',0)) <= 1
+          tov=d.get('transfer_option_value') or {}
+          assert tov.get('version')=='1.0-shadow'
+          assert tov.get('affects_transfer_ranking') is False
+          base=tov.get('baseline_bank_action') or {}
+          assert int(base.get('future_free_transfers') or 0) >= 1
+          for c in d.get('candidates') or []:
+              ov=c.get('option_value_shadow') or {}
+              assert ov.get('affects_ranking') is False
+              assert float(ov.get('total',0)) >= 0
+              assert int(ov.get('affordable_upgrade_paths') or 0) >= 0
+          print('Budget/option sanity OK',bi.get('flexibility'),base,'candidates',len(d.get('candidates') or []))
+          PY
+      - name: Publish enriched feed
+        run: |
+          if git diff --quiet -- data.json; then echo "No budget/option change."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Dashboard: enrich budget and option value"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
