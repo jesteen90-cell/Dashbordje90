@@ -1,5 +1,5 @@
 from __future__ import annotations
-import json, os
+import json, os, runpy
 from pathlib import Path
 import requests
 
@@ -10,7 +10,7 @@ POS={1:'GK',2:'DEF',3:'MID',4:'FWD'}
 
 
 def get(path):
-    r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-confirmed-lineup/1.3'},timeout=18)
+    r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-confirmed-lineup/1.4'},timeout=18)
     r.raise_for_status();return r.json()
 
 
@@ -37,8 +37,6 @@ def main():
     if gw<=0: raise RuntimeError('Missing source_snapshot_gw')
     snap=get(f'entry/{TEAM_ID}/event/{gw}/picks/');picks,auto_subs=apply_automatic_subs(snap.get('picks') or [],snap.get('automatic_subs') or [])
     if len(picks)!=15: raise RuntimeError(f'Expected 15 confirmed picks, got {len(picks)}')
-    # Always load official team names. Historical/fallback rows can otherwise
-    # inherit an empty or '?' team label from a current projection row.
     boot=get('bootstrap-static/');bootstrap={int(p['id']):p for p in boot.get('elements') or []};team_names={int(t['id']):t.get('name','') for t in boot.get('teams') or []}
     rows={int(p['id']):dict(p) for p in (data.get('lineup') or [])+(data.get('bench') or []) if p.get('id') is not None}
     for side in ('current_xi','transfer_xi'):
@@ -58,5 +56,9 @@ def main():
     data.setdefault('comparison',{})['current_xi']=xi
     data['confirmed_fpl']={'gw':gw,'source':'official-picks-api','view':'effective-points-lineup','exact_order':True,'automatic_subs_applied':auto_subs,'lineup':xi,'bench':bench,'captain_id':next(p['id'] for p in xi if p.get('captain')),'vice_id':next(p['id'] for p in xi if p.get('vice')),'fallback_rows':missing}
     PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Applied effective FPL GW',gw,'XI=',[p['name'] for p in xi],'bench=',[p['name'] for p in bench],'auto-subs=',auto_subs,'fallback=',missing)
+    # projection_cache.json exists inside the main refresh at this point. Use it
+    # to reconstruct the post-transfer current squad and choose the best legal XI.
+    runpy.run_path('current_squad_sync_v1.py',run_name='__main__')
+    runpy.run_path('optimal_lineup_v1.py',run_name='__main__')
 
 if __name__=='__main__': main()
