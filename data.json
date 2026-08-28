@@ -1,6 +1,6 @@
 {
   "model_version": "3.7-set-piece-projection",
-  "generated_at": "2026-08-28T10:29:07.143617Z",
+  "generated_at": "2026-08-28T10:41:42.681924Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
@@ -964,87 +964,6 @@
       }
     },
     {
-      "id": 557,
-      "name": "Tzolis",
-      "team_id": 1,
-      "team": "Arsenal",
-      "position": "MID",
-      "price": 6.5,
-      "xp": 2.48,
-      "xp_low": 0,
-      "xp_high": 5.54,
-      "risk": "middels",
-      "volatility": 0.97,
-      "fixture": "Aston Villa (A)",
-      "fixture_outlook": [
-        {
-          "gw": 2,
-          "label": "AST A",
-          "difficulty": 3,
-          "difficulty_basis": "opponent-defence",
-          "xp": 2.48
-        },
-        {
-          "gw": 3,
-          "label": "CHE H",
-          "difficulty": 3,
-          "difficulty_basis": "opponent-defence",
-          "xp": 2.57
-        },
-        {
-          "gw": 4,
-          "label": "SUN A",
-          "difficulty": 3,
-          "difficulty_basis": "opponent-defence",
-          "xp": 2.46
-        }
-      ],
-      "availability": 1,
-      "expected_minutes": 50.2,
-      "news": "",
-      "change": null,
-      "set_piece_role": {
-        "penalty_taker_share": 0,
-        "source_version": "2026-08-28-manual-v2"
-      },
-      "form": {
-        "season_multiplier": 0.999,
-        "recent_multiplier": 0.999,
-        "recent_xgi90": 0.33,
-        "recent_minutes": 75.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.172
-      },
-      "historical_prior": {
-        "prev_minutes": 326.0,
-        "prev_goal90": 0.0,
-        "prev_assist90": 0.0,
-        "goal_prior_used": 0.147,
-        "assist_prior_used": 0.132
-      },
-      "xp_breakdown": {
-        "appearance": 1.39,
-        "goals": 0.39,
-        "assists": 0.28,
-        "clean_sheet": 0.2,
-        "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.21,
-        "penalty": 0.0,
-        "conceded": 0,
-        "cards": 0,
-        "displayed_sum": 2.48,
-        "reconciled": true
-      },
-      "captain": false,
-      "vice": false,
-      "set_pieces": {
-        "penalty_taker_share": 0.0,
-        "penalty_role": "unknown",
-        "source": "none"
-      }
-    },
-    {
       "id": 290,
       "name": "Slater",
       "team_id": 11,
@@ -1116,6 +1035,88 @@
         "cards": 0,
         "other_model_components": -0.01,
         "displayed_sum": 3.36,
+        "reconciled": true
+      },
+      "captain": false,
+      "vice": false,
+      "set_pieces": {
+        "penalty_taker_share": 0.0,
+        "penalty_role": "unknown",
+        "source": "none"
+      }
+    },
+    {
+      "id": 397,
+      "name": "Semenyo",
+      "team_id": 15,
+      "team": "Man City",
+      "position": "MID",
+      "price": 8.5,
+      "xp": 4.72,
+      "xp_low": 0,
+      "xp_high": 9.81,
+      "risk": "middels",
+      "volatility": 0.84,
+      "fixture": "Crystal Palace (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "CRY A",
+          "difficulty": 3,
+          "difficulty_basis": "opponent-defence",
+          "xp": 4.72
+        },
+        {
+          "gw": 3,
+          "label": "COV H",
+          "difficulty": 3,
+          "difficulty_basis": "opponent-defence",
+          "xp": 5.2
+        },
+        {
+          "gw": 4,
+          "label": "MAN A",
+          "difficulty": 3,
+          "difficulty_basis": "opponent-defence",
+          "xp": 4.73
+        }
+      ],
+      "availability": 1,
+      "expected_minutes": 81.9,
+      "news": "",
+      "change": "in",
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
+      "form": {
+        "season_multiplier": 0.986,
+        "recent_multiplier": 0.984,
+        "recent_xgi90": 0.08,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "historical_prior": {
+        "prev_minutes": 3200.0,
+        "prev_goal90": 0.478,
+        "prev_assist90": 0.169,
+        "goal_prior_used": 0.417,
+        "assist_prior_used": 0.171
+      },
+      "xp_breakdown": {
+        "appearance": 1.91,
+        "goals": 1.71,
+        "assists": 0.42,
+        "clean_sheet": 0.22,
+        "saves": 0,
+        "defensive": 0.12,
+        "bonus": 0.33,
+        "penalty": 0.0,
+        "conceded": 0,
+        "cards": 0,
+        "other_model_components": 0.01,
+        "displayed_sum": 4.72,
         "reconciled": true
       },
       "captain": false,
@@ -1772,6 +1773,167 @@
             "source": "none"
           }
         }
+      },
+      {
+        "out": {
+          "id": 557,
+          "name": "Tzolis",
+          "team_id": 1,
+          "team": "Arsenal",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 2.48,
+          "xp_low": 0,
+          "xp_high": 5.54,
+          "risk": "middels",
+          "volatility": 0.97,
+          "fixture": "Aston Villa (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "AST A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 2.48
+            },
+            {
+              "gw": 3,
+              "label": "CHE H",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 2.57
+            },
+            {
+              "gw": 4,
+              "label": "SUN A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 2.46
+            }
+          ],
+          "availability": 1,
+          "expected_minutes": 50.2,
+          "news": "",
+          "change": "out",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
+          "form": {
+            "season_multiplier": 0.999,
+            "recent_multiplier": 0.999,
+            "recent_xgi90": 0.33,
+            "recent_minutes": 75.0,
+            "recent_matches": 1,
+            "recent_confidence": 0.172
+          },
+          "historical_prior": {
+            "prev_minutes": 326.0,
+            "prev_goal90": 0.0,
+            "prev_assist90": 0.0,
+            "goal_prior_used": 0.147,
+            "assist_prior_used": 0.132
+          },
+          "xp_breakdown": {
+            "appearance": 1.39,
+            "goals": 0.39,
+            "assists": 0.28,
+            "clean_sheet": 0.2,
+            "saves": 0,
+            "defensive": 0.01,
+            "bonus": 0.21,
+            "penalty": 0.0,
+            "conceded": 0,
+            "cards": 0,
+            "displayed_sum": 2.48,
+            "reconciled": true
+          },
+          "set_pieces": {
+            "penalty_taker_share": 0.0,
+            "penalty_role": "unknown",
+            "source": "none"
+          }
+        },
+        "in": {
+          "id": 397,
+          "name": "Semenyo",
+          "team_id": 15,
+          "team": "Man City",
+          "position": "MID",
+          "price": 8.5,
+          "xp": 4.72,
+          "xp_low": 0,
+          "xp_high": 9.81,
+          "risk": "middels",
+          "volatility": 0.84,
+          "fixture": "Crystal Palace (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "CRY A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 4.72
+            },
+            {
+              "gw": 3,
+              "label": "COV H",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.2
+            },
+            {
+              "gw": 4,
+              "label": "MAN A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 4.73
+            }
+          ],
+          "availability": 1,
+          "expected_minutes": 81.9,
+          "news": "",
+          "change": "in",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
+          "form": {
+            "season_multiplier": 0.986,
+            "recent_multiplier": 0.984,
+            "recent_xgi90": 0.08,
+            "recent_minutes": 90.0,
+            "recent_matches": 1,
+            "recent_confidence": 0.2
+          },
+          "historical_prior": {
+            "prev_minutes": 3200.0,
+            "prev_goal90": 0.478,
+            "prev_assist90": 0.169,
+            "goal_prior_used": 0.417,
+            "assist_prior_used": 0.171
+          },
+          "xp_breakdown": {
+            "appearance": 1.91,
+            "goals": 1.71,
+            "assists": 0.42,
+            "clean_sheet": 0.22,
+            "saves": 0,
+            "defensive": 0.12,
+            "bonus": 0.33,
+            "penalty": 0.0,
+            "conceded": 0,
+            "cards": 0,
+            "other_model_components": 0.01,
+            "displayed_sum": 4.72,
+            "reconciled": true
+          },
+          "set_pieces": {
+            "penalty_taker_share": 0.0,
+            "penalty_role": "unknown",
+            "source": "none"
+          }
+        }
       }
     ],
     "current_xi": [
@@ -2315,7 +2477,7 @@
         "availability": 1,
         "expected_minutes": 50.2,
         "news": "",
-        "change": null,
+        "change": "out",
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
@@ -3264,87 +3426,6 @@
         }
       },
       {
-        "id": 557,
-        "name": "Tzolis",
-        "team_id": 1,
-        "team": "Arsenal",
-        "position": "MID",
-        "price": 6.5,
-        "xp": 2.48,
-        "xp_low": 0,
-        "xp_high": 5.54,
-        "risk": "middels",
-        "volatility": 0.97,
-        "fixture": "Aston Villa (A)",
-        "fixture_outlook": [
-          {
-            "gw": 2,
-            "label": "AST A",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-defence",
-            "xp": 2.48
-          },
-          {
-            "gw": 3,
-            "label": "CHE H",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-defence",
-            "xp": 2.57
-          },
-          {
-            "gw": 4,
-            "label": "SUN A",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-defence",
-            "xp": 2.46
-          }
-        ],
-        "availability": 1,
-        "expected_minutes": 50.2,
-        "news": "",
-        "change": null,
-        "set_piece_role": {
-          "penalty_taker_share": 0,
-          "source_version": "2026-08-28-manual-v2"
-        },
-        "form": {
-          "season_multiplier": 0.999,
-          "recent_multiplier": 0.999,
-          "recent_xgi90": 0.33,
-          "recent_minutes": 75.0,
-          "recent_matches": 1,
-          "recent_confidence": 0.172
-        },
-        "historical_prior": {
-          "prev_minutes": 326.0,
-          "prev_goal90": 0.0,
-          "prev_assist90": 0.0,
-          "goal_prior_used": 0.147,
-          "assist_prior_used": 0.132
-        },
-        "xp_breakdown": {
-          "appearance": 1.39,
-          "goals": 0.39,
-          "assists": 0.28,
-          "clean_sheet": 0.2,
-          "saves": 0,
-          "defensive": 0.01,
-          "bonus": 0.21,
-          "penalty": 0.0,
-          "conceded": 0,
-          "cards": 0,
-          "displayed_sum": 2.48,
-          "reconciled": true
-        },
-        "captain": false,
-        "vice": false,
-        "set_pieces": {
-          "penalty_taker_share": 0.0,
-          "penalty_role": "unknown",
-          "source": "none"
-        }
-      },
-      {
         "id": 290,
         "name": "Slater",
         "team_id": 11,
@@ -3416,6 +3497,88 @@
           "cards": 0,
           "other_model_components": -0.01,
           "displayed_sum": 3.36,
+          "reconciled": true
+        },
+        "captain": false,
+        "vice": false,
+        "set_pieces": {
+          "penalty_taker_share": 0.0,
+          "penalty_role": "unknown",
+          "source": "none"
+        }
+      },
+      {
+        "id": 397,
+        "name": "Semenyo",
+        "team_id": 15,
+        "team": "Man City",
+        "position": "MID",
+        "price": 8.5,
+        "xp": 4.72,
+        "xp_low": 0,
+        "xp_high": 9.81,
+        "risk": "middels",
+        "volatility": 0.84,
+        "fixture": "Crystal Palace (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "CRY A",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-defence",
+            "xp": 4.72
+          },
+          {
+            "gw": 3,
+            "label": "COV H",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-defence",
+            "xp": 5.2
+          },
+          {
+            "gw": 4,
+            "label": "MAN A",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-defence",
+            "xp": 4.73
+          }
+        ],
+        "availability": 1,
+        "expected_minutes": 81.9,
+        "news": "",
+        "change": "in",
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
+        "form": {
+          "season_multiplier": 0.986,
+          "recent_multiplier": 0.984,
+          "recent_xgi90": 0.08,
+          "recent_minutes": 90.0,
+          "recent_matches": 1,
+          "recent_confidence": 0.2
+        },
+        "historical_prior": {
+          "prev_minutes": 3200.0,
+          "prev_goal90": 0.478,
+          "prev_assist90": 0.169,
+          "goal_prior_used": 0.417,
+          "assist_prior_used": 0.171
+        },
+        "xp_breakdown": {
+          "appearance": 1.91,
+          "goals": 1.71,
+          "assists": 0.42,
+          "clean_sheet": 0.22,
+          "saves": 0,
+          "defensive": 0.12,
+          "bonus": 0.33,
+          "penalty": 0.0,
+          "conceded": 0,
+          "cards": 0,
+          "other_model_components": 0.01,
+          "displayed_sum": 4.72,
           "reconciled": true
         },
         "captain": false,
@@ -3753,17 +3916,178 @@
             "source": "none"
           }
         }
+      },
+      {
+        "out": {
+          "id": 557,
+          "name": "Tzolis",
+          "team_id": 1,
+          "team": "Arsenal",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 2.48,
+          "xp_low": 0,
+          "xp_high": 5.54,
+          "risk": "middels",
+          "volatility": 0.97,
+          "fixture": "Aston Villa (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "AST A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 2.48
+            },
+            {
+              "gw": 3,
+              "label": "CHE H",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 2.57
+            },
+            {
+              "gw": 4,
+              "label": "SUN A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 2.46
+            }
+          ],
+          "availability": 1,
+          "expected_minutes": 50.2,
+          "news": "",
+          "change": "out",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
+          "form": {
+            "season_multiplier": 0.999,
+            "recent_multiplier": 0.999,
+            "recent_xgi90": 0.33,
+            "recent_minutes": 75.0,
+            "recent_matches": 1,
+            "recent_confidence": 0.172
+          },
+          "historical_prior": {
+            "prev_minutes": 326.0,
+            "prev_goal90": 0.0,
+            "prev_assist90": 0.0,
+            "goal_prior_used": 0.147,
+            "assist_prior_used": 0.132
+          },
+          "xp_breakdown": {
+            "appearance": 1.39,
+            "goals": 0.39,
+            "assists": 0.28,
+            "clean_sheet": 0.2,
+            "saves": 0,
+            "defensive": 0.01,
+            "bonus": 0.21,
+            "penalty": 0.0,
+            "conceded": 0,
+            "cards": 0,
+            "displayed_sum": 2.48,
+            "reconciled": true
+          },
+          "set_pieces": {
+            "penalty_taker_share": 0.0,
+            "penalty_role": "unknown",
+            "source": "none"
+          }
+        },
+        "in": {
+          "id": 397,
+          "name": "Semenyo",
+          "team_id": 15,
+          "team": "Man City",
+          "position": "MID",
+          "price": 8.5,
+          "xp": 4.72,
+          "xp_low": 0,
+          "xp_high": 9.81,
+          "risk": "middels",
+          "volatility": 0.84,
+          "fixture": "Crystal Palace (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "CRY A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 4.72
+            },
+            {
+              "gw": 3,
+              "label": "COV H",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.2
+            },
+            {
+              "gw": 4,
+              "label": "MAN A",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 4.73
+            }
+          ],
+          "availability": 1,
+          "expected_minutes": 81.9,
+          "news": "",
+          "change": "in",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
+          "form": {
+            "season_multiplier": 0.986,
+            "recent_multiplier": 0.984,
+            "recent_xgi90": 0.08,
+            "recent_minutes": 90.0,
+            "recent_matches": 1,
+            "recent_confidence": 0.2
+          },
+          "historical_prior": {
+            "prev_minutes": 3200.0,
+            "prev_goal90": 0.478,
+            "prev_assist90": 0.169,
+            "goal_prior_used": 0.417,
+            "assist_prior_used": 0.171
+          },
+          "xp_breakdown": {
+            "appearance": 1.91,
+            "goals": 1.71,
+            "assists": 0.42,
+            "clean_sheet": 0.22,
+            "saves": 0,
+            "defensive": 0.12,
+            "bonus": 0.33,
+            "penalty": 0.0,
+            "conceded": 0,
+            "cards": 0,
+            "other_model_components": 0.01,
+            "displayed_sum": 4.72,
+            "reconciled": true
+          },
+          "set_pieces": {
+            "penalty_taker_share": 0.0,
+            "penalty_role": "unknown",
+            "source": "none"
+          }
+        }
       }
     ]
   },
   "optimizer": {
-    "weighted_gain": 12.04,
+    "weighted_gain": 13.09,
     "plan": [
       {
         "gw": 2,
         "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
+        "transfers": 2,
+        "hit": 4,
         "pairs": [
           {
             "out": {
@@ -3776,16 +4100,7 @@
               "name": "Guéhi",
               "team": "Man City"
             }
-          }
-        ],
-        "label": "Gabriel → Guéhi"
-      },
-      {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
+          },
           {
             "out": {
               "id": 557,
@@ -3799,10 +4114,10 @@
             }
           }
         ],
-        "label": "Tzolis → Semenyo"
+        "label": "Gabriel → Guéhi + Tzolis → Semenyo (-4)"
       },
       {
-        "gw": 4,
+        "gw": 3,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -3823,7 +4138,7 @@
         "label": "Calafiori → Kayode"
       },
       {
-        "gw": 5,
+        "gw": 4,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -3842,6 +4157,27 @@
           }
         ],
         "label": "I.Sangaré → Tavernier"
+      },
+      {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 418,
+              "name": "Maguire",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 469,
+              "name": "N.Williams",
+              "team": "Nott'm Forest"
+            }
+          }
+        ],
+        "label": "Maguire → N.Williams"
       }
     ],
     "captain_horizon_search": true
@@ -3855,12 +4191,12 @@
         0,
         10.12
       ],
-      "xi_xp": 37.73,
+      "xi_xp": 39.97,
       "action": {
         "gw": 2,
         "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
+        "transfers": 2,
+        "hit": 4,
         "pairs": [
           {
             "out": {
@@ -3873,26 +4209,7 @@
               "name": "Guéhi",
               "team": "Man City"
             }
-          }
-        ],
-        "label": "Gabriel → Guéhi"
-      }
-    },
-    {
-      "gw": 3,
-      "captain": "Haaland",
-      "captain_xp": 5.42,
-      "captain_range": [
-        0,
-        11.12
-      ],
-      "xi_xp": 40.67,
-      "action": {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
+          },
           {
             "out": {
               "id": 557,
@@ -3906,20 +4223,20 @@
             }
           }
         ],
-        "label": "Tzolis → Semenyo"
+        "label": "Gabriel → Guéhi + Tzolis → Semenyo (-4)"
       }
     },
     {
-      "gw": 4,
+      "gw": 3,
       "captain": "Haaland",
-      "captain_xp": 4.9,
+      "captain_xp": 5.42,
       "captain_range": [
         0,
-        10.13
+        11.12
       ],
-      "xi_xp": 40.82,
+      "xi_xp": 41.94,
       "action": {
-        "gw": 4,
+        "gw": 3,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -3941,16 +4258,16 @@
       }
     },
     {
-      "gw": 5,
+      "gw": 4,
       "captain": "Haaland",
-      "captain_xp": 5.27,
+      "captain_xp": 4.9,
       "captain_range": [
         0,
-        10.85
+        10.13
       ],
-      "xi_xp": 43.44,
+      "xi_xp": 42.17,
       "action": {
-        "gw": 5,
+        "gw": 4,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -3969,6 +4286,37 @@
           }
         ],
         "label": "I.Sangaré → Tavernier"
+      }
+    },
+    {
+      "gw": 5,
+      "captain": "Haaland",
+      "captain_xp": 5.27,
+      "captain_range": [
+        0,
+        10.85
+      ],
+      "xi_xp": 44.4,
+      "action": {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 418,
+              "name": "Maguire",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 469,
+              "name": "N.Williams",
+              "team": "Nott'm Forest"
+            }
+          }
+        ],
+        "label": "Maguire → N.Williams"
       }
     }
   ],
@@ -5045,6 +5393,23 @@
       "vice": true
     },
     {
+      "id": 397,
+      "name": "Semenyo",
+      "team": "Man City",
+      "position": "MID",
+      "xp": 4.72,
+      "ceiling": 9.81,
+      "expected_minutes": 82.0,
+      "availability": 1.0,
+      "score": 5.361,
+      "p10_plus": 0.0907,
+      "p15_plus": 0.0215,
+      "p_goal_2plus": 0.0489,
+      "p_multi_return": 0.0818,
+      "captain": false,
+      "vice": false
+    },
+    {
       "id": 165,
       "name": "João Pedro",
       "team": "Chelsea",
@@ -5077,35 +5442,18 @@
       "p_multi_return": 0.0384,
       "captain": false,
       "vice": false
-    },
-    {
-      "id": 428,
-      "name": "Cunha",
-      "team": "Man Utd",
-      "position": "MID",
-      "xp": 3.52,
-      "ceiling": 7.65,
-      "expected_minutes": 64.0,
-      "availability": 1.0,
-      "score": 4.077,
-      "p10_plus": 0.024,
-      "p15_plus": 0.0091,
-      "p_goal_2plus": 0.0211,
-      "p_multi_return": 0.0403,
-      "captain": false,
-      "vice": false
     }
   ],
   "decision_explanation": {
     "decision": "BYTT",
     "why": [
-      "Første trekk modellen vurderer er Gabriel → Guéhi.",
+      "Første trekk modellen vurderer er Gabriel → Guéhi, Tzolis → Semenyo.",
       "Estimert gevinst: +10.02 xP neste 3 GW og +10.83 xP over planhorisonten.",
       "Datakvalitet 0.45 (svak tabellprior, market av) løfter BYTT-kravet med 0.18 xP.",
       "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.33.",
       "Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket."
     ],
-    "weighted_gain": 12.04,
+    "weighted_gain": 13.09,
     "threshold": 1.33,
     "distance_to_switch": 0,
     "switch_trigger": "Anbefalingen er robust nok nå.",
@@ -5859,7 +6207,7 @@
         "availability": 1,
         "expected_minutes": 50.2,
         "news": "",
-        "change": null,
+        "change": "out",
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
