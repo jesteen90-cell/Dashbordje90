@@ -1,10 +1,10 @@
 {
-  "model_version": "3.3-fixture-strength-v2",
-  "generated_at": "2026-08-28T08:28:24.337508Z",
+  "model_version": "3.4-fixture-outlook",
+  "generated_at": "2026-08-28T08:56:59.204243Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
-  "summary": "Modell 3.3 kombinerer adaptiv lagstyrke, spiller-spesifikke historiske angrepspriorer, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
+  "summary": "Modell 3.4 kombinerer adaptiv lagstyrke, 3-GW fixture outlook, spiller-spesifikke historiske angrepspriorer, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
   "source_snapshot_gw": 1,
   "free_transfers_assumed": 1,
   "market_ensemble": {
@@ -28,303 +28,343 @@
   "team_strength": {
     "1": {
       "team": "Arsenal",
-      "attack": 1.401,
-      "defence": 0.622,
-      "home_attack": 1.587,
-      "home_defence": 0.45,
-      "away_attack": 1.03,
-      "away_defence": 0.966,
+      "attack": 1.223,
+      "defence": 0.789,
+      "home_attack": 1.25,
+      "home_defence": 0.75,
+      "away_attack": 1.027,
+      "away_defence": 0.97,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "2": {
       "team": "Aston Villa",
-      "attack": 0.617,
-      "defence": 1.636,
-      "home_attack": 0.957,
-      "home_defence": 1.037,
-      "away_attack": 0.446,
-      "away_defence": 1.936,
+      "attack": 0.783,
+      "defence": 1.25,
+      "home_attack": 0.963,
+      "home_defence": 1.034,
+      "away_attack": 0.75,
+      "away_defence": 1.25,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "3": {
       "team": "Bournemouth",
-      "attack": 0.883,
-      "defence": 1.14,
-      "home_attack": 1.015,
-      "home_defence": 0.984,
-      "away_attack": 0.818,
-      "away_defence": 1.217,
+      "attack": 0.935,
+      "defence": 1.076,
+      "home_attack": 1.009,
+      "home_defence": 0.99,
+      "away_attack": 0.882,
+      "away_defence": 1.138,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "4": {
       "team": "Brentford",
-      "attack": 1.396,
-      "defence": 0.627,
-      "home_attack": 1.583,
-      "home_defence": 0.454,
-      "away_attack": 1.022,
-      "away_defence": 0.974,
+      "attack": 1.218,
+      "defence": 0.794,
+      "home_attack": 1.25,
+      "home_defence": 0.75,
+      "away_attack": 1.021,
+      "away_defence": 0.976,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "5": {
       "team": "Brighton",
-      "attack": 1.636,
-      "defence": 0.617,
-      "home_attack": 1.936,
-      "home_defence": 0.446,
-      "away_attack": 1.037,
-      "away_defence": 0.957,
+      "attack": 1.25,
+      "defence": 0.783,
+      "home_attack": 1.25,
+      "home_defence": 0.75,
+      "away_attack": 1.034,
+      "away_defence": 0.963,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "6": {
       "team": "Chelsea",
-      "attack": 1.38,
-      "defence": 1.103,
-      "home_attack": 1.072,
-      "home_defence": 0.931,
-      "away_attack": 1.534,
-      "away_defence": 1.189,
+      "attack": 1.202,
+      "defence": 1.04,
+      "home_attack": 1.054,
+      "home_defence": 0.947,
+      "away_attack": 1.25,
+      "away_defence": 1.105,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "7": {
       "team": "Coventry City",
-      "attack": 0.627,
-      "defence": 1.396,
-      "home_attack": 0.974,
-      "home_defence": 1.022,
-      "away_attack": 0.454,
-      "away_defence": 1.583,
+      "attack": 0.794,
+      "defence": 1.218,
+      "home_attack": 0.976,
+      "home_defence": 1.021,
+      "away_attack": 0.75,
+      "away_defence": 1.25,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "8": {
       "team": "Crystal Palace",
-      "attack": 0.638,
-      "defence": 1.155,
-      "home_attack": 0.99,
-      "home_defence": 1.007,
-      "away_attack": 0.462,
-      "away_defence": 1.23,
+      "attack": 0.804,
+      "defence": 1.092,
+      "home_attack": 0.989,
+      "home_defence": 1.009,
+      "away_attack": 0.75,
+      "away_defence": 1.152,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "9": {
       "team": "Everton",
-      "attack": 1.161,
-      "defence": 0.632,
-      "home_attack": 1.234,
-      "home_defence": 0.458,
+      "attack": 1.097,
+      "defence": 0.799,
+      "home_attack": 1.156,
+      "home_defence": 0.75,
       "away_attack": 1.015,
-      "away_defence": 0.982,
+      "away_defence": 0.983,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "10": {
       "team": "Fulham",
-      "attack": 1.119,
-      "defence": 1.364,
-      "home_attack": 1.201,
-      "home_defence": 1.523,
-      "away_attack": 0.954,
-      "away_defence": 1.047,
+      "attack": 1.055,
+      "defence": 1.186,
+      "home_attack": 1.119,
+      "home_defence": 1.25,
+      "away_attack": 0.966,
+      "away_defence": 1.035,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "11": {
       "team": "Hull City",
-      "attack": 1.155,
-      "defence": 0.638,
-      "home_attack": 1.23,
-      "home_defence": 0.462,
-      "away_attack": 1.007,
-      "away_defence": 0.99,
+      "attack": 1.092,
+      "defence": 0.804,
+      "home_attack": 1.152,
+      "home_defence": 0.75,
+      "away_attack": 1.009,
+      "away_defence": 0.989,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "12": {
       "team": "Ipswich Town",
-      "attack": 1.145,
-      "defence": 0.878,
-      "home_attack": 1.221,
-      "home_defence": 0.814,
-      "away_attack": 0.992,
-      "away_defence": 1.006,
+      "attack": 1.082,
+      "defence": 0.93,
+      "home_attack": 1.142,
+      "home_defence": 0.878,
+      "away_attack": 0.997,
+      "away_defence": 1.002,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "13": {
       "team": "Leeds",
-      "attack": 0.904,
-      "defence": 0.659,
-      "home_attack": 1.047,
-      "home_defence": 0.954,
-      "away_attack": 0.833,
-      "away_defence": 0.511,
+      "attack": 0.956,
+      "defence": 0.825,
+      "home_attack": 1.035,
+      "home_defence": 0.966,
+      "away_attack": 0.9,
+      "away_defence": 0.75,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "14": {
       "team": "Liverpool",
-      "attack": 1.129,
-      "defence": 1.124,
-      "home_attack": 1.039,
-      "home_defence": 0.961,
-      "away_attack": 1.174,
-      "away_defence": 1.205,
+      "attack": 1.066,
+      "defence": 1.061,
+      "home_attack": 1.028,
+      "home_defence": 0.972,
+      "away_attack": 1.093,
+      "away_defence": 1.124,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "15": {
       "team": "Man City",
-      "attack": 1.14,
-      "defence": 0.883,
-      "home_attack": 1.217,
-      "home_defence": 0.818,
-      "away_attack": 0.984,
-      "away_defence": 1.015,
+      "attack": 1.076,
+      "defence": 0.935,
+      "home_attack": 1.138,
+      "home_defence": 0.882,
+      "away_attack": 0.99,
+      "away_defence": 1.009,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "16": {
       "team": "Man Utd",
-      "attack": 0.632,
-      "defence": 1.161,
-      "home_attack": 0.982,
+      "attack": 0.799,
+      "defence": 1.097,
+      "home_attack": 0.983,
       "home_defence": 1.015,
-      "away_attack": 0.458,
-      "away_defence": 1.234,
+      "away_attack": 0.75,
+      "away_defence": 1.156,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "17": {
       "team": "Newcastle",
-      "attack": 1.124,
-      "defence": 1.129,
-      "home_attack": 1.205,
-      "home_defence": 1.174,
-      "away_attack": 0.961,
-      "away_defence": 1.039,
+      "attack": 1.061,
+      "defence": 1.066,
+      "home_attack": 1.124,
+      "home_defence": 1.093,
+      "away_attack": 0.972,
+      "away_defence": 1.028,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "18": {
       "team": "Nott'm Forest",
-      "attack": 0.643,
-      "defence": 0.92,
-      "home_attack": 0.499,
-      "home_defence": 0.844,
-      "away_attack": 0.931,
-      "away_defence": 1.072,
+      "attack": 0.81,
+      "defence": 0.972,
+      "home_attack": 0.75,
+      "home_defence": 0.913,
+      "away_attack": 0.947,
+      "away_defence": 1.054,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "19": {
       "team": "Spurs",
-      "attack": 0.622,
-      "defence": 1.401,
-      "home_attack": 0.966,
-      "home_defence": 1.03,
-      "away_attack": 0.45,
-      "away_defence": 1.587,
+      "attack": 0.789,
+      "defence": 1.223,
+      "home_attack": 0.97,
+      "home_defence": 1.027,
+      "away_attack": 0.75,
+      "away_defence": 1.25,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     },
     "20": {
       "team": "Sunderland",
-      "attack": 0.878,
-      "defence": 1.145,
-      "home_attack": 1.006,
-      "home_defence": 0.992,
-      "away_attack": 0.814,
-      "away_defence": 1.221,
+      "attack": 0.93,
+      "defence": 1.082,
+      "home_attack": 1.002,
+      "home_defence": 0.997,
+      "away_attack": 0.878,
+      "away_defence": 1.142,
       "sample_weight": 1.0,
-      "prior_weight_matches": 2.0,
-      "evidence_share": 0.333,
+      "prior_weight_matches": 5.0,
+      "evidence_share": 0.167,
+      "evidence_confidence": "low",
       "prior_source": "table-shrunk",
       "prior_available": 0,
-      "prior_version": "1.0-fpl-bootstrap"
+      "prior_version": "1.0-fpl-bootstrap",
+      "early_season_cap": 1
     }
   },
   "lineup": [
@@ -335,12 +375,32 @@
       "team": "Spurs",
       "position": "GK",
       "price": 4.5,
-      "xp": 2.62,
+      "xp": 2.61,
       "xp_low": 0,
-      "xp_high": 5.49,
+      "xp_high": 5.48,
       "risk": "middels",
       "volatility": 0.86,
       "fixture": "Newcastle (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "NEW H",
+          "difficulty": 3,
+          "xp": 2.61
+        },
+        {
+          "gw": 3,
+          "label": "NOT A",
+          "difficulty": 3,
+          "xp": 2.65
+        },
+        {
+          "gw": 4,
+          "label": "EVE H",
+          "difficulty": 3,
+          "xp": 2.58
+        }
+      ],
       "availability": 1,
       "expected_minutes": 64.5,
       "news": "",
@@ -381,12 +441,32 @@
       "team": "Arsenal",
       "position": "DEF",
       "price": 5.6,
-      "xp": 2.66,
+      "xp": 2.65,
       "xp_low": 0,
-      "xp_high": 6.11,
+      "xp_high": 6.09,
       "risk": "middels",
       "volatility": 1.01,
       "fixture": "Aston Villa (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "AST A",
+          "difficulty": 3,
+          "xp": 2.65
+        },
+        {
+          "gw": 3,
+          "label": "CHE H",
+          "difficulty": 3,
+          "xp": 2.72
+        },
+        {
+          "gw": 4,
+          "label": "SUN A",
+          "difficulty": 3,
+          "xp": 2.61
+        }
+      ],
       "availability": 1,
       "expected_minutes": 61.0,
       "news": "",
@@ -410,11 +490,11 @@
         "appearance": 1.56,
         "goals": 0.21,
         "assists": 0.27,
-        "clean_sheet": 0.74,
+        "clean_sheet": 0.73,
         "saves": 0,
         "defensive": 0.05,
         "bonus": 0.17,
-        "conceded": -0.34,
+        "conceded": -0.35,
         "cards": 0
       },
       "captain": false,
@@ -427,12 +507,32 @@
       "team": "Man Utd",
       "position": "DEF",
       "price": 5.0,
-      "xp": 2.65,
+      "xp": 2.64,
       "xp_low": 0,
       "xp_high": 6.03,
       "risk": "middels",
       "volatility": 1.0,
       "fixture": "Ipswich Town (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "IPS H",
+          "difficulty": 3,
+          "xp": 2.64
+        },
+        {
+          "gw": 3,
+          "label": "EVE A",
+          "difficulty": 3,
+          "xp": 2.32
+        },
+        {
+          "gw": 4,
+          "label": "MAN H",
+          "difficulty": 3,
+          "xp": 2.65
+        }
+      ],
       "availability": 1,
       "expected_minutes": 68.1,
       "news": "",
@@ -479,6 +579,26 @@
       "risk": "middels",
       "volatility": 1.0,
       "fixture": "Hull City (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "HUL H",
+          "difficulty": 3,
+          "xp": 2.61
+        },
+        {
+          "gw": 3,
+          "label": "MAN A",
+          "difficulty": 3,
+          "xp": 2.29
+        },
+        {
+          "gw": 4,
+          "label": "BRI H",
+          "difficulty": 3,
+          "xp": 2.58
+        }
+      ],
       "availability": 1,
       "expected_minutes": 68.1,
       "news": "",
@@ -525,6 +645,26 @@
       "risk": "middels",
       "volatility": 0.86,
       "fixture": "Ipswich Town (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "IPS H",
+          "difficulty": 3,
+          "xp": 4.06
+        },
+        {
+          "gw": 3,
+          "label": "EVE A",
+          "difficulty": 3,
+          "xp": 3.53
+        },
+        {
+          "gw": 4,
+          "label": "MAN H",
+          "difficulty": 3,
+          "xp": 4.06
+        }
+      ],
       "availability": 1,
       "expected_minutes": 67.3,
       "news": "",
@@ -565,12 +705,32 @@
       "team": "Man Utd",
       "position": "MID",
       "price": 8.0,
-      "xp": 3.21,
+      "xp": 3.2,
       "xp_low": 0,
       "xp_high": 7.07,
       "risk": "middels",
       "volatility": 0.94,
       "fixture": "Ipswich Town (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "IPS H",
+          "difficulty": 3,
+          "xp": 3.2
+        },
+        {
+          "gw": 3,
+          "label": "EVE A",
+          "difficulty": 3,
+          "xp": 2.87
+        },
+        {
+          "gw": 4,
+          "label": "MAN H",
+          "difficulty": 3,
+          "xp": 3.21
+        }
+      ],
       "availability": 1,
       "expected_minutes": 59.5,
       "news": "",
@@ -605,45 +765,65 @@
       "vice": false
     },
     {
-      "id": 557,
-      "name": "Tzolis",
-      "team_id": 1,
-      "team": "Arsenal",
+      "id": 488,
+      "name": "I.Sangaré",
+      "team_id": 18,
+      "team": "Nott'm Forest",
       "position": "MID",
-      "price": 6.5,
-      "xp": 2.71,
+      "price": 5.0,
+      "xp": 2.66,
       "xp_low": 0,
-      "xp_high": 5.79,
+      "xp_high": 5.56,
       "risk": "middels",
-      "volatility": 0.89,
-      "fixture": "Aston Villa (A)",
+      "volatility": 0.85,
+      "fixture": "Liverpool (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "LIV A",
+          "difficulty": 3,
+          "xp": 2.66
+        },
+        {
+          "gw": 3,
+          "label": "SPU H",
+          "difficulty": 3,
+          "xp": 2.72
+        },
+        {
+          "gw": 4,
+          "label": "AST A",
+          "difficulty": 3,
+          "xp": 2.68
+        }
+      ],
       "availability": 1,
-      "expected_minutes": 56.3,
+      "expected_minutes": 67.3,
       "news": "",
       "change": null,
       "form": {
-        "season_multiplier": 0.999,
-        "recent_multiplier": 0.999,
-        "recent_xgi90": 0.33,
-        "recent_minutes": 75.0,
+        "season_multiplier": 0.982,
+        "recent_multiplier": 0.981,
+        "recent_xgi90": 0.04,
+        "recent_minutes": 90.0,
         "recent_matches": 1,
-        "recent_confidence": 0.172
+        "recent_confidence": 0.2
       },
       "historical_prior": {
-        "prev_minutes": 326.0,
-        "prev_goal90": 0.0,
-        "prev_assist90": 0.0,
-        "goal_prior_used": 0.147,
-        "assist_prior_used": 0.132
+        "prev_minutes": 2073.0,
+        "prev_goal90": 0.087,
+        "prev_assist90": 0.087,
+        "goal_prior_used": 0.121,
+        "assist_prior_used": 0.115
       },
       "xp_breakdown": {
-        "appearance": 1.56,
-        "goals": 0.44,
-        "assists": 0.31,
-        "clean_sheet": 0.18,
+        "appearance": 1.61,
+        "goals": 0.4,
+        "assists": 0.23,
+        "clean_sheet": 0.16,
         "saves": 0,
-        "defensive": 0.0,
-        "bonus": 0.22,
+        "defensive": 0.01,
+        "bonus": 0.26,
         "conceded": 0,
         "cards": 0
       },
@@ -663,6 +843,26 @@
       "risk": "middels",
       "volatility": 0.89,
       "fixture": "Coventry City (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "COV A",
+          "difficulty": 3,
+          "xp": 3.22
+        },
+        {
+          "gw": 3,
+          "label": "AST H",
+          "difficulty": 3,
+          "xp": 3.5
+        },
+        {
+          "gw": 4,
+          "label": "CHE A",
+          "difficulty": 3,
+          "xp": 3.16
+        }
+      ],
       "availability": 1,
       "expected_minutes": 67.3,
       "news": "",
@@ -697,18 +897,104 @@
       "vice": false
     },
     {
+      "id": 236,
+      "name": "Dewsbury-Hall",
+      "team_id": 9,
+      "team": "Everton",
+      "position": "MID",
+      "price": 6.5,
+      "xp": 3.65,
+      "xp_low": 0,
+      "xp_high": 7.83,
+      "risk": "middels",
+      "volatility": 0.89,
+      "fixture": "Bournemouth (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "BOU A",
+          "difficulty": 3,
+          "xp": 3.65
+        },
+        {
+          "gw": 3,
+          "label": "MAN H",
+          "difficulty": 3,
+          "xp": 3.95
+        },
+        {
+          "gw": 4,
+          "label": "SPU A",
+          "difficulty": 3,
+          "xp": 3.68
+        }
+      ],
+      "availability": 1,
+      "expected_minutes": 67.3,
+      "news": "",
+      "change": "in",
+      "form": {
+        "season_multiplier": 0.997,
+        "recent_multiplier": 0.996,
+        "recent_xgi90": 0.29,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "historical_prior": {
+        "prev_minutes": 2629.0,
+        "prev_goal90": 0.274,
+        "prev_assist90": 0.24,
+        "goal_prior_used": 0.255,
+        "assist_prior_used": 0.224
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 1.04,
+        "assists": 0.46,
+        "clean_sheet": 0.17,
+        "saves": 0,
+        "defensive": 0.01,
+        "bonus": 0.36,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
       "id": 411,
       "name": "Haaland",
       "team_id": 15,
       "team": "Man City",
       "position": "FWD",
       "price": 15.5,
-      "xp": 4.18,
+      "xp": 4.19,
       "xp_low": 0,
-      "xp_high": 8.89,
+      "xp_high": 8.91,
       "risk": "middels",
       "volatility": 0.88,
       "fixture": "Crystal Palace (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "CRY A",
+          "difficulty": 3,
+          "xp": 4.19
+        },
+        {
+          "gw": 3,
+          "label": "COV H",
+          "difficulty": 3,
+          "xp": 4.64
+        },
+        {
+          "gw": 4,
+          "label": "MAN A",
+          "difficulty": 3,
+          "xp": 4.2
+        }
+      ],
       "availability": 1,
       "expected_minutes": 66.3,
       "news": "",
@@ -731,7 +1017,7 @@
       "xp_breakdown": {
         "appearance": 1.59,
         "goals": 1.88,
-        "assists": 0.44,
+        "assists": 0.45,
         "clean_sheet": 0.0,
         "saves": 0,
         "defensive": 0.0,
@@ -749,12 +1035,32 @@
       "team": "Chelsea",
       "position": "FWD",
       "price": 7.6,
-      "xp": 3.95,
+      "xp": 3.94,
       "xp_low": 0,
-      "xp_high": 8.35,
+      "xp_high": 8.33,
       "risk": "middels",
       "volatility": 0.87,
       "fixture": "Brighton (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "BRI H",
+          "difficulty": 3,
+          "xp": 3.94
+        },
+        {
+          "gw": 3,
+          "label": "ARS A",
+          "difficulty": 3,
+          "xp": 3.87
+        },
+        {
+          "gw": 4,
+          "label": "HUL H",
+          "difficulty": 3,
+          "xp": 3.97
+        }
+      ],
       "availability": 1,
       "expected_minutes": 66.3,
       "news": "",
@@ -776,7 +1082,7 @@
       },
       "xp_breakdown": {
         "appearance": 1.59,
-        "goals": 1.38,
+        "goals": 1.37,
         "assists": 0.64,
         "clean_sheet": 0.0,
         "saves": 0,
@@ -787,99 +1093,9 @@
       },
       "captain": false,
       "vice": false
-    },
-    {
-      "id": 295,
-      "name": "McBurnie",
-      "team_id": 11,
-      "team": "Hull City",
-      "position": "FWD",
-      "price": 5.5,
-      "xp": 3.36,
-      "xp_low": 0,
-      "xp_high": 7.18,
-      "risk": "middels",
-      "volatility": 0.89,
-      "fixture": "Coventry City (A)",
-      "availability": 1,
-      "expected_minutes": 66.3,
-      "news": "",
-      "change": "in",
-      "form": {
-        "season_multiplier": 0.994,
-        "recent_multiplier": 0.989,
-        "recent_xgi90": 0.17,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "historical_prior": {
-        "prev_minutes": 1279.0,
-        "prev_goal90": 0.422,
-        "prev_assist90": 0.211,
-        "goal_prior_used": 0.376,
-        "assist_prior_used": 0.186
-      },
-      "xp_breakdown": {
-        "appearance": 1.59,
-        "goals": 1.02,
-        "assists": 0.48,
-        "clean_sheet": 0.0,
-        "saves": 0,
-        "defensive": 0.0,
-        "bonus": 0.27,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
     }
   ],
   "bench": [
-    {
-      "id": 4,
-      "name": "Gabriel",
-      "team_id": 1,
-      "team": "Arsenal",
-      "position": "DEF",
-      "price": 8.0,
-      "xp": 2.58,
-      "xp_low": 0,
-      "xp_high": 6.32,
-      "risk": "høy",
-      "volatility": 1.13,
-      "fixture": "Aston Villa (A)",
-      "availability": 1,
-      "expected_minutes": 68.1,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.981,
-        "recent_multiplier": 0.983,
-        "recent_xgi90": 0.06,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "historical_prior": {
-        "prev_minutes": 2750.0,
-        "prev_goal90": 0.098,
-        "prev_assist90": 0.164,
-        "goal_prior_used": 0.088,
-        "assist_prior_used": 0.143
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.37,
-        "assists": 0.31,
-        "clean_sheet": 0.75,
-        "saves": 0,
-        "defensive": 0.08,
-        "bonus": 0.19,
-        "conceded": -0.35,
-        "cards": -0.38
-      }
-    },
     {
       "id": 277,
       "name": "Egan",
@@ -893,6 +1109,26 @@
       "risk": "middels",
       "volatility": 0.97,
       "fixture": "Coventry City (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "COV A",
+          "difficulty": 3,
+          "xp": 2.58
+        },
+        {
+          "gw": 3,
+          "label": "AST H",
+          "difficulty": 3,
+          "xp": 3.04
+        },
+        {
+          "gw": 4,
+          "label": "CHE A",
+          "difficulty": 3,
+          "xp": 2.51
+        }
+      ],
       "availability": 1,
       "expected_minutes": 68.1,
       "news": "",
@@ -916,7 +1152,7 @@
         "appearance": 1.61,
         "goals": 0.15,
         "assists": 0.11,
-        "clean_sheet": 0.73,
+        "clean_sheet": 0.72,
         "saves": 0,
         "defensive": 0.16,
         "bonus": 0.19,
@@ -925,45 +1161,129 @@
       }
     },
     {
-      "id": 488,
-      "name": "I.Sangaré",
-      "team_id": 18,
-      "team": "Nott'm Forest",
-      "position": "MID",
-      "price": 5.0,
-      "xp": 2.65,
+      "id": 4,
+      "name": "Gabriel",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "DEF",
+      "price": 8.0,
+      "xp": 2.57,
       "xp_low": 0,
-      "xp_high": 5.53,
-      "risk": "middels",
-      "volatility": 0.85,
-      "fixture": "Liverpool (A)",
+      "xp_high": 6.3,
+      "risk": "høy",
+      "volatility": 1.13,
+      "fixture": "Aston Villa (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "AST A",
+          "difficulty": 3,
+          "xp": 2.57
+        },
+        {
+          "gw": 3,
+          "label": "CHE H",
+          "difficulty": 3,
+          "xp": 2.67
+        },
+        {
+          "gw": 4,
+          "label": "SUN A",
+          "difficulty": 3,
+          "xp": 2.53
+        }
+      ],
       "availability": 1,
-      "expected_minutes": 67.3,
+      "expected_minutes": 68.1,
       "news": "",
       "change": null,
       "form": {
-        "season_multiplier": 0.982,
-        "recent_multiplier": 0.981,
-        "recent_xgi90": 0.04,
+        "season_multiplier": 0.981,
+        "recent_multiplier": 0.983,
+        "recent_xgi90": 0.06,
         "recent_minutes": 90.0,
         "recent_matches": 1,
         "recent_confidence": 0.2
       },
       "historical_prior": {
-        "prev_minutes": 2073.0,
-        "prev_goal90": 0.087,
-        "prev_assist90": 0.087,
-        "goal_prior_used": 0.121,
-        "assist_prior_used": 0.115
+        "prev_minutes": 2750.0,
+        "prev_goal90": 0.098,
+        "prev_assist90": 0.164,
+        "goal_prior_used": 0.088,
+        "assist_prior_used": 0.143
       },
       "xp_breakdown": {
         "appearance": 1.61,
-        "goals": 0.39,
-        "assists": 0.22,
-        "clean_sheet": 0.16,
+        "goals": 0.37,
+        "assists": 0.3,
+        "clean_sheet": 0.74,
         "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.26,
+        "defensive": 0.08,
+        "bonus": 0.19,
+        "conceded": -0.35,
+        "cards": -0.38
+      }
+    },
+    {
+      "id": 465,
+      "name": "Osula",
+      "team_id": 17,
+      "team": "Newcastle",
+      "position": "FWD",
+      "price": 6.0,
+      "xp": 0,
+      "xp_low": 0,
+      "xp_high": 0.76,
+      "risk": "lav",
+      "volatility": 0.59,
+      "fixture": "Spurs (A)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "SPU A",
+          "difficulty": 3,
+          "xp": 0
+        },
+        {
+          "gw": 3,
+          "label": "BOU H",
+          "difficulty": 3,
+          "xp": 0
+        },
+        {
+          "gw": 4,
+          "label": "LEE A",
+          "difficulty": 3,
+          "xp": 0
+        }
+      ],
+      "availability": 0,
+      "expected_minutes": 0.0,
+      "news": "Foot injury - Unknown return date",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.993,
+        "recent_multiplier": 0.994,
+        "recent_xgi90": 0.2,
+        "recent_minutes": 55.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.133
+      },
+      "historical_prior": {
+        "prev_minutes": 805.0,
+        "prev_goal90": 0.783,
+        "prev_assist90": 0.112,
+        "goal_prior_used": 0.533,
+        "assist_prior_used": 0.132
+      },
+      "xp_breakdown": {
+        "appearance": 0.0,
+        "goals": 0.0,
+        "assists": 0.0,
+        "clean_sheet": 0.0,
+        "saves": 0,
+        "defensive": 0.0,
+        "bonus": 0.0,
         "conceded": 0,
         "cards": 0
       }
@@ -981,6 +1301,26 @@
       "risk": "lav",
       "volatility": 0.59,
       "fixture": "Newcastle (H)",
+      "fixture_outlook": [
+        {
+          "gw": 2,
+          "label": "NEW H",
+          "difficulty": 3,
+          "xp": 0
+        },
+        {
+          "gw": 3,
+          "label": "NOT A",
+          "difficulty": 3,
+          "xp": 0
+        },
+        {
+          "gw": 4,
+          "label": "EVE H",
+          "difficulty": 3,
+          "xp": 0
+        }
+      ],
       "availability": 1,
       "expected_minutes": 0.0,
       "news": "",
@@ -1018,89 +1358,129 @@
     "changes": [
       {
         "out": {
-          "id": 465,
-          "name": "Osula",
-          "team_id": 17,
-          "team": "Newcastle",
-          "position": "FWD",
-          "price": 6.0,
-          "xp": 0,
+          "id": 557,
+          "name": "Tzolis",
+          "team_id": 1,
+          "team": "Arsenal",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 2.71,
           "xp_low": 0,
-          "xp_high": 0.76,
-          "risk": "lav",
-          "volatility": 0.59,
-          "fixture": "Spurs (A)",
-          "availability": 0,
-          "expected_minutes": 0.0,
-          "news": "Foot injury - Unknown return date",
+          "xp_high": 5.78,
+          "risk": "middels",
+          "volatility": 0.89,
+          "fixture": "Aston Villa (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "AST A",
+              "difficulty": 3,
+              "xp": 2.71
+            },
+            {
+              "gw": 3,
+              "label": "CHE H",
+              "difficulty": 3,
+              "xp": 2.81
+            },
+            {
+              "gw": 4,
+              "label": "SUN A",
+              "difficulty": 3,
+              "xp": 2.69
+            }
+          ],
+          "availability": 1,
+          "expected_minutes": 56.3,
+          "news": "",
           "change": "out",
           "form": {
-            "season_multiplier": 0.993,
-            "recent_multiplier": 0.994,
-            "recent_xgi90": 0.2,
-            "recent_minutes": 55.0,
+            "season_multiplier": 0.999,
+            "recent_multiplier": 0.999,
+            "recent_xgi90": 0.33,
+            "recent_minutes": 75.0,
             "recent_matches": 1,
-            "recent_confidence": 0.133
+            "recent_confidence": 0.172
           },
           "historical_prior": {
-            "prev_minutes": 805.0,
-            "prev_goal90": 0.783,
-            "prev_assist90": 0.112,
-            "goal_prior_used": 0.533,
+            "prev_minutes": 326.0,
+            "prev_goal90": 0.0,
+            "prev_assist90": 0.0,
+            "goal_prior_used": 0.147,
             "assist_prior_used": 0.132
           },
           "xp_breakdown": {
-            "appearance": 0.0,
-            "goals": 0.0,
-            "assists": 0.0,
-            "clean_sheet": 0.0,
+            "appearance": 1.56,
+            "goals": 0.44,
+            "assists": 0.31,
+            "clean_sheet": 0.18,
             "saves": 0,
             "defensive": 0.0,
-            "bonus": 0.0,
+            "bonus": 0.22,
             "conceded": 0,
             "cards": 0
           }
         },
         "in": {
-          "id": 295,
-          "name": "McBurnie",
-          "team_id": 11,
-          "team": "Hull City",
-          "position": "FWD",
-          "price": 5.5,
-          "xp": 3.36,
+          "id": 236,
+          "name": "Dewsbury-Hall",
+          "team_id": 9,
+          "team": "Everton",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 3.65,
           "xp_low": 0,
-          "xp_high": 7.18,
+          "xp_high": 7.83,
           "risk": "middels",
           "volatility": 0.89,
-          "fixture": "Coventry City (A)",
+          "fixture": "Bournemouth (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "BOU A",
+              "difficulty": 3,
+              "xp": 3.65
+            },
+            {
+              "gw": 3,
+              "label": "MAN H",
+              "difficulty": 3,
+              "xp": 3.95
+            },
+            {
+              "gw": 4,
+              "label": "SPU A",
+              "difficulty": 3,
+              "xp": 3.68
+            }
+          ],
           "availability": 1,
-          "expected_minutes": 66.3,
+          "expected_minutes": 67.3,
           "news": "",
           "change": "in",
           "form": {
-            "season_multiplier": 0.994,
-            "recent_multiplier": 0.989,
-            "recent_xgi90": 0.17,
+            "season_multiplier": 0.997,
+            "recent_multiplier": 0.996,
+            "recent_xgi90": 0.29,
             "recent_minutes": 90.0,
             "recent_matches": 1,
             "recent_confidence": 0.2
           },
           "historical_prior": {
-            "prev_minutes": 1279.0,
-            "prev_goal90": 0.422,
-            "prev_assist90": 0.211,
-            "goal_prior_used": 0.376,
-            "assist_prior_used": 0.186
+            "prev_minutes": 2629.0,
+            "prev_goal90": 0.274,
+            "prev_assist90": 0.24,
+            "goal_prior_used": 0.255,
+            "assist_prior_used": 0.224
           },
           "xp_breakdown": {
-            "appearance": 1.59,
-            "goals": 1.02,
-            "assists": 0.48,
-            "clean_sheet": 0.0,
+            "appearance": 1.61,
+            "goals": 1.04,
+            "assists": 0.46,
+            "clean_sheet": 0.17,
             "saves": 0,
-            "defensive": 0.0,
-            "bonus": 0.27,
+            "defensive": 0.01,
+            "bonus": 0.36,
             "conceded": 0,
             "cards": 0
           }
@@ -1115,12 +1495,32 @@
         "team": "Spurs",
         "position": "GK",
         "price": 4.5,
-        "xp": 2.62,
+        "xp": 2.61,
         "xp_low": 0,
-        "xp_high": 5.49,
+        "xp_high": 5.48,
         "risk": "middels",
         "volatility": 0.86,
         "fixture": "Newcastle (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "NEW H",
+            "difficulty": 3,
+            "xp": 2.61
+          },
+          {
+            "gw": 3,
+            "label": "NOT A",
+            "difficulty": 3,
+            "xp": 2.65
+          },
+          {
+            "gw": 4,
+            "label": "EVE H",
+            "difficulty": 3,
+            "xp": 2.58
+          }
+        ],
         "availability": 1,
         "expected_minutes": 64.5,
         "news": "",
@@ -1161,12 +1561,32 @@
         "team": "Arsenal",
         "position": "DEF",
         "price": 5.6,
-        "xp": 2.66,
+        "xp": 2.65,
         "xp_low": 0,
-        "xp_high": 6.11,
+        "xp_high": 6.09,
         "risk": "middels",
         "volatility": 1.01,
         "fixture": "Aston Villa (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "AST A",
+            "difficulty": 3,
+            "xp": 2.65
+          },
+          {
+            "gw": 3,
+            "label": "CHE H",
+            "difficulty": 3,
+            "xp": 2.72
+          },
+          {
+            "gw": 4,
+            "label": "SUN A",
+            "difficulty": 3,
+            "xp": 2.61
+          }
+        ],
         "availability": 1,
         "expected_minutes": 61.0,
         "news": "",
@@ -1190,11 +1610,11 @@
           "appearance": 1.56,
           "goals": 0.21,
           "assists": 0.27,
-          "clean_sheet": 0.74,
+          "clean_sheet": 0.73,
           "saves": 0,
           "defensive": 0.05,
           "bonus": 0.17,
-          "conceded": -0.34,
+          "conceded": -0.35,
           "cards": 0
         },
         "captain": false,
@@ -1207,12 +1627,32 @@
         "team": "Man Utd",
         "position": "DEF",
         "price": 5.0,
-        "xp": 2.65,
+        "xp": 2.64,
         "xp_low": 0,
         "xp_high": 6.03,
         "risk": "middels",
         "volatility": 1.0,
         "fixture": "Ipswich Town (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "IPS H",
+            "difficulty": 3,
+            "xp": 2.64
+          },
+          {
+            "gw": 3,
+            "label": "EVE A",
+            "difficulty": 3,
+            "xp": 2.32
+          },
+          {
+            "gw": 4,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 2.65
+          }
+        ],
         "availability": 1,
         "expected_minutes": 68.1,
         "news": "",
@@ -1259,6 +1699,26 @@
         "risk": "middels",
         "volatility": 1.0,
         "fixture": "Hull City (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "HUL H",
+            "difficulty": 3,
+            "xp": 2.61
+          },
+          {
+            "gw": 3,
+            "label": "MAN A",
+            "difficulty": 3,
+            "xp": 2.29
+          },
+          {
+            "gw": 4,
+            "label": "BRI H",
+            "difficulty": 3,
+            "xp": 2.58
+          }
+        ],
         "availability": 1,
         "expected_minutes": 68.1,
         "news": "",
@@ -1305,6 +1765,26 @@
         "risk": "middels",
         "volatility": 0.86,
         "fixture": "Ipswich Town (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "IPS H",
+            "difficulty": 3,
+            "xp": 4.06
+          },
+          {
+            "gw": 3,
+            "label": "EVE A",
+            "difficulty": 3,
+            "xp": 3.53
+          },
+          {
+            "gw": 4,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 4.06
+          }
+        ],
         "availability": 1,
         "expected_minutes": 67.3,
         "news": "",
@@ -1345,12 +1825,32 @@
         "team": "Man Utd",
         "position": "MID",
         "price": 8.0,
-        "xp": 3.21,
+        "xp": 3.2,
         "xp_low": 0,
         "xp_high": 7.07,
         "risk": "middels",
         "volatility": 0.94,
         "fixture": "Ipswich Town (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "IPS H",
+            "difficulty": 3,
+            "xp": 3.2
+          },
+          {
+            "gw": 3,
+            "label": "EVE A",
+            "difficulty": 3,
+            "xp": 2.87
+          },
+          {
+            "gw": 4,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 3.21
+          }
+        ],
         "availability": 1,
         "expected_minutes": 59.5,
         "news": "",
@@ -1393,14 +1893,34 @@
         "price": 6.5,
         "xp": 2.71,
         "xp_low": 0,
-        "xp_high": 5.79,
+        "xp_high": 5.78,
         "risk": "middels",
         "volatility": 0.89,
         "fixture": "Aston Villa (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "AST A",
+            "difficulty": 3,
+            "xp": 2.71
+          },
+          {
+            "gw": 3,
+            "label": "CHE H",
+            "difficulty": 3,
+            "xp": 2.81
+          },
+          {
+            "gw": 4,
+            "label": "SUN A",
+            "difficulty": 3,
+            "xp": 2.69
+          }
+        ],
         "availability": 1,
         "expected_minutes": 56.3,
         "news": "",
-        "change": null,
+        "change": "out",
         "form": {
           "season_multiplier": 0.999,
           "recent_multiplier": 0.999,
@@ -1437,12 +1957,32 @@
         "team": "Nott'm Forest",
         "position": "MID",
         "price": 5.0,
-        "xp": 2.65,
+        "xp": 2.66,
         "xp_low": 0,
-        "xp_high": 5.53,
+        "xp_high": 5.56,
         "risk": "middels",
         "volatility": 0.85,
         "fixture": "Liverpool (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "LIV A",
+            "difficulty": 3,
+            "xp": 2.66
+          },
+          {
+            "gw": 3,
+            "label": "SPU H",
+            "difficulty": 3,
+            "xp": 2.72
+          },
+          {
+            "gw": 4,
+            "label": "AST A",
+            "difficulty": 3,
+            "xp": 2.68
+          }
+        ],
         "availability": 1,
         "expected_minutes": 67.3,
         "news": "",
@@ -1464,8 +2004,8 @@
         },
         "xp_breakdown": {
           "appearance": 1.61,
-          "goals": 0.39,
-          "assists": 0.22,
+          "goals": 0.4,
+          "assists": 0.23,
           "clean_sheet": 0.16,
           "saves": 0,
           "defensive": 0.01,
@@ -1489,6 +2029,26 @@
         "risk": "middels",
         "volatility": 0.89,
         "fixture": "Coventry City (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "COV A",
+            "difficulty": 3,
+            "xp": 3.22
+          },
+          {
+            "gw": 3,
+            "label": "AST H",
+            "difficulty": 3,
+            "xp": 3.5
+          },
+          {
+            "gw": 4,
+            "label": "CHE A",
+            "difficulty": 3,
+            "xp": 3.16
+          }
+        ],
         "availability": 1,
         "expected_minutes": 67.3,
         "news": "",
@@ -1529,12 +2089,32 @@
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 4.18,
+        "xp": 4.19,
         "xp_low": 0,
-        "xp_high": 8.89,
+        "xp_high": 8.91,
         "risk": "middels",
         "volatility": 0.88,
         "fixture": "Crystal Palace (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "CRY A",
+            "difficulty": 3,
+            "xp": 4.19
+          },
+          {
+            "gw": 3,
+            "label": "COV H",
+            "difficulty": 3,
+            "xp": 4.64
+          },
+          {
+            "gw": 4,
+            "label": "MAN A",
+            "difficulty": 3,
+            "xp": 4.2
+          }
+        ],
         "availability": 1,
         "expected_minutes": 66.3,
         "news": "",
@@ -1557,7 +2137,7 @@
         "xp_breakdown": {
           "appearance": 1.59,
           "goals": 1.88,
-          "assists": 0.44,
+          "assists": 0.45,
           "clean_sheet": 0.0,
           "saves": 0,
           "defensive": 0.0,
@@ -1575,12 +2155,32 @@
         "team": "Chelsea",
         "position": "FWD",
         "price": 7.6,
-        "xp": 3.95,
+        "xp": 3.94,
         "xp_low": 0,
-        "xp_high": 8.35,
+        "xp_high": 8.33,
         "risk": "middels",
         "volatility": 0.87,
         "fixture": "Brighton (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "BRI H",
+            "difficulty": 3,
+            "xp": 3.94
+          },
+          {
+            "gw": 3,
+            "label": "ARS A",
+            "difficulty": 3,
+            "xp": 3.87
+          },
+          {
+            "gw": 4,
+            "label": "HUL H",
+            "difficulty": 3,
+            "xp": 3.97
+          }
+        ],
         "availability": 1,
         "expected_minutes": 66.3,
         "news": "",
@@ -1602,7 +2202,7 @@
         },
         "xp_breakdown": {
           "appearance": 1.59,
-          "goals": 1.38,
+          "goals": 1.37,
           "assists": 0.64,
           "clean_sheet": 0.0,
           "saves": 0,
@@ -1623,12 +2223,32 @@
         "team": "Spurs",
         "position": "GK",
         "price": 4.5,
-        "xp": 2.62,
+        "xp": 2.61,
         "xp_low": 0,
-        "xp_high": 5.49,
+        "xp_high": 5.48,
         "risk": "middels",
         "volatility": 0.86,
         "fixture": "Newcastle (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "NEW H",
+            "difficulty": 3,
+            "xp": 2.61
+          },
+          {
+            "gw": 3,
+            "label": "NOT A",
+            "difficulty": 3,
+            "xp": 2.65
+          },
+          {
+            "gw": 4,
+            "label": "EVE H",
+            "difficulty": 3,
+            "xp": 2.58
+          }
+        ],
         "availability": 1,
         "expected_minutes": 64.5,
         "news": "",
@@ -1669,12 +2289,32 @@
         "team": "Arsenal",
         "position": "DEF",
         "price": 5.6,
-        "xp": 2.66,
+        "xp": 2.65,
         "xp_low": 0,
-        "xp_high": 6.11,
+        "xp_high": 6.09,
         "risk": "middels",
         "volatility": 1.01,
         "fixture": "Aston Villa (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "AST A",
+            "difficulty": 3,
+            "xp": 2.65
+          },
+          {
+            "gw": 3,
+            "label": "CHE H",
+            "difficulty": 3,
+            "xp": 2.72
+          },
+          {
+            "gw": 4,
+            "label": "SUN A",
+            "difficulty": 3,
+            "xp": 2.61
+          }
+        ],
         "availability": 1,
         "expected_minutes": 61.0,
         "news": "",
@@ -1698,11 +2338,11 @@
           "appearance": 1.56,
           "goals": 0.21,
           "assists": 0.27,
-          "clean_sheet": 0.74,
+          "clean_sheet": 0.73,
           "saves": 0,
           "defensive": 0.05,
           "bonus": 0.17,
-          "conceded": -0.34,
+          "conceded": -0.35,
           "cards": 0
         },
         "captain": false,
@@ -1715,12 +2355,32 @@
         "team": "Man Utd",
         "position": "DEF",
         "price": 5.0,
-        "xp": 2.65,
+        "xp": 2.64,
         "xp_low": 0,
         "xp_high": 6.03,
         "risk": "middels",
         "volatility": 1.0,
         "fixture": "Ipswich Town (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "IPS H",
+            "difficulty": 3,
+            "xp": 2.64
+          },
+          {
+            "gw": 3,
+            "label": "EVE A",
+            "difficulty": 3,
+            "xp": 2.32
+          },
+          {
+            "gw": 4,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 2.65
+          }
+        ],
         "availability": 1,
         "expected_minutes": 68.1,
         "news": "",
@@ -1767,6 +2427,26 @@
         "risk": "middels",
         "volatility": 1.0,
         "fixture": "Hull City (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "HUL H",
+            "difficulty": 3,
+            "xp": 2.61
+          },
+          {
+            "gw": 3,
+            "label": "MAN A",
+            "difficulty": 3,
+            "xp": 2.29
+          },
+          {
+            "gw": 4,
+            "label": "BRI H",
+            "difficulty": 3,
+            "xp": 2.58
+          }
+        ],
         "availability": 1,
         "expected_minutes": 68.1,
         "news": "",
@@ -1813,6 +2493,26 @@
         "risk": "middels",
         "volatility": 0.86,
         "fixture": "Ipswich Town (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "IPS H",
+            "difficulty": 3,
+            "xp": 4.06
+          },
+          {
+            "gw": 3,
+            "label": "EVE A",
+            "difficulty": 3,
+            "xp": 3.53
+          },
+          {
+            "gw": 4,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 4.06
+          }
+        ],
         "availability": 1,
         "expected_minutes": 67.3,
         "news": "",
@@ -1853,12 +2553,32 @@
         "team": "Man Utd",
         "position": "MID",
         "price": 8.0,
-        "xp": 3.21,
+        "xp": 3.2,
         "xp_low": 0,
         "xp_high": 7.07,
         "risk": "middels",
         "volatility": 0.94,
         "fixture": "Ipswich Town (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "IPS H",
+            "difficulty": 3,
+            "xp": 3.2
+          },
+          {
+            "gw": 3,
+            "label": "EVE A",
+            "difficulty": 3,
+            "xp": 2.87
+          },
+          {
+            "gw": 4,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 3.21
+          }
+        ],
         "availability": 1,
         "expected_minutes": 59.5,
         "news": "",
@@ -1893,45 +2613,65 @@
         "vice": false
       },
       {
-        "id": 557,
-        "name": "Tzolis",
-        "team_id": 1,
-        "team": "Arsenal",
+        "id": 488,
+        "name": "I.Sangaré",
+        "team_id": 18,
+        "team": "Nott'm Forest",
         "position": "MID",
-        "price": 6.5,
-        "xp": 2.71,
+        "price": 5.0,
+        "xp": 2.66,
         "xp_low": 0,
-        "xp_high": 5.79,
+        "xp_high": 5.56,
         "risk": "middels",
-        "volatility": 0.89,
-        "fixture": "Aston Villa (A)",
+        "volatility": 0.85,
+        "fixture": "Liverpool (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "LIV A",
+            "difficulty": 3,
+            "xp": 2.66
+          },
+          {
+            "gw": 3,
+            "label": "SPU H",
+            "difficulty": 3,
+            "xp": 2.72
+          },
+          {
+            "gw": 4,
+            "label": "AST A",
+            "difficulty": 3,
+            "xp": 2.68
+          }
+        ],
         "availability": 1,
-        "expected_minutes": 56.3,
+        "expected_minutes": 67.3,
         "news": "",
         "change": null,
         "form": {
-          "season_multiplier": 0.999,
-          "recent_multiplier": 0.999,
-          "recent_xgi90": 0.33,
-          "recent_minutes": 75.0,
+          "season_multiplier": 0.982,
+          "recent_multiplier": 0.981,
+          "recent_xgi90": 0.04,
+          "recent_minutes": 90.0,
           "recent_matches": 1,
-          "recent_confidence": 0.172
+          "recent_confidence": 0.2
         },
         "historical_prior": {
-          "prev_minutes": 326.0,
-          "prev_goal90": 0.0,
-          "prev_assist90": 0.0,
-          "goal_prior_used": 0.147,
-          "assist_prior_used": 0.132
+          "prev_minutes": 2073.0,
+          "prev_goal90": 0.087,
+          "prev_assist90": 0.087,
+          "goal_prior_used": 0.121,
+          "assist_prior_used": 0.115
         },
         "xp_breakdown": {
-          "appearance": 1.56,
-          "goals": 0.44,
-          "assists": 0.31,
-          "clean_sheet": 0.18,
+          "appearance": 1.61,
+          "goals": 0.4,
+          "assists": 0.23,
+          "clean_sheet": 0.16,
           "saves": 0,
-          "defensive": 0.0,
-          "bonus": 0.22,
+          "defensive": 0.01,
+          "bonus": 0.26,
           "conceded": 0,
           "cards": 0
         },
@@ -1951,6 +2691,26 @@
         "risk": "middels",
         "volatility": 0.89,
         "fixture": "Coventry City (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "COV A",
+            "difficulty": 3,
+            "xp": 3.22
+          },
+          {
+            "gw": 3,
+            "label": "AST H",
+            "difficulty": 3,
+            "xp": 3.5
+          },
+          {
+            "gw": 4,
+            "label": "CHE A",
+            "difficulty": 3,
+            "xp": 3.16
+          }
+        ],
         "availability": 1,
         "expected_minutes": 67.3,
         "news": "",
@@ -1985,18 +2745,104 @@
         "vice": false
       },
       {
+        "id": 236,
+        "name": "Dewsbury-Hall",
+        "team_id": 9,
+        "team": "Everton",
+        "position": "MID",
+        "price": 6.5,
+        "xp": 3.65,
+        "xp_low": 0,
+        "xp_high": 7.83,
+        "risk": "middels",
+        "volatility": 0.89,
+        "fixture": "Bournemouth (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "BOU A",
+            "difficulty": 3,
+            "xp": 3.65
+          },
+          {
+            "gw": 3,
+            "label": "MAN H",
+            "difficulty": 3,
+            "xp": 3.95
+          },
+          {
+            "gw": 4,
+            "label": "SPU A",
+            "difficulty": 3,
+            "xp": 3.68
+          }
+        ],
+        "availability": 1,
+        "expected_minutes": 67.3,
+        "news": "",
+        "change": "in",
+        "form": {
+          "season_multiplier": 0.997,
+          "recent_multiplier": 0.996,
+          "recent_xgi90": 0.29,
+          "recent_minutes": 90.0,
+          "recent_matches": 1,
+          "recent_confidence": 0.2
+        },
+        "historical_prior": {
+          "prev_minutes": 2629.0,
+          "prev_goal90": 0.274,
+          "prev_assist90": 0.24,
+          "goal_prior_used": 0.255,
+          "assist_prior_used": 0.224
+        },
+        "xp_breakdown": {
+          "appearance": 1.61,
+          "goals": 1.04,
+          "assists": 0.46,
+          "clean_sheet": 0.17,
+          "saves": 0,
+          "defensive": 0.01,
+          "bonus": 0.36,
+          "conceded": 0,
+          "cards": 0
+        },
+        "captain": false,
+        "vice": false
+      },
+      {
         "id": 411,
         "name": "Haaland",
         "team_id": 15,
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 4.18,
+        "xp": 4.19,
         "xp_low": 0,
-        "xp_high": 8.89,
+        "xp_high": 8.91,
         "risk": "middels",
         "volatility": 0.88,
         "fixture": "Crystal Palace (A)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "CRY A",
+            "difficulty": 3,
+            "xp": 4.19
+          },
+          {
+            "gw": 3,
+            "label": "COV H",
+            "difficulty": 3,
+            "xp": 4.64
+          },
+          {
+            "gw": 4,
+            "label": "MAN A",
+            "difficulty": 3,
+            "xp": 4.2
+          }
+        ],
         "availability": 1,
         "expected_minutes": 66.3,
         "news": "",
@@ -2019,7 +2865,7 @@
         "xp_breakdown": {
           "appearance": 1.59,
           "goals": 1.88,
-          "assists": 0.44,
+          "assists": 0.45,
           "clean_sheet": 0.0,
           "saves": 0,
           "defensive": 0.0,
@@ -2037,12 +2883,32 @@
         "team": "Chelsea",
         "position": "FWD",
         "price": 7.6,
-        "xp": 3.95,
+        "xp": 3.94,
         "xp_low": 0,
-        "xp_high": 8.35,
+        "xp_high": 8.33,
         "risk": "middels",
         "volatility": 0.87,
         "fixture": "Brighton (H)",
+        "fixture_outlook": [
+          {
+            "gw": 2,
+            "label": "BRI H",
+            "difficulty": 3,
+            "xp": 3.94
+          },
+          {
+            "gw": 3,
+            "label": "ARS A",
+            "difficulty": 3,
+            "xp": 3.87
+          },
+          {
+            "gw": 4,
+            "label": "HUL H",
+            "difficulty": 3,
+            "xp": 3.97
+          }
+        ],
         "availability": 1,
         "expected_minutes": 66.3,
         "news": "",
@@ -2064,58 +2930,12 @@
         },
         "xp_breakdown": {
           "appearance": 1.59,
-          "goals": 1.38,
+          "goals": 1.37,
           "assists": 0.64,
           "clean_sheet": 0.0,
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.33,
-          "conceded": 0,
-          "cards": 0
-        },
-        "captain": false,
-        "vice": false
-      },
-      {
-        "id": 295,
-        "name": "McBurnie",
-        "team_id": 11,
-        "team": "Hull City",
-        "position": "FWD",
-        "price": 5.5,
-        "xp": 3.36,
-        "xp_low": 0,
-        "xp_high": 7.18,
-        "risk": "middels",
-        "volatility": 0.89,
-        "fixture": "Coventry City (A)",
-        "availability": 1,
-        "expected_minutes": 66.3,
-        "news": "",
-        "change": "in",
-        "form": {
-          "season_multiplier": 0.994,
-          "recent_multiplier": 0.989,
-          "recent_xgi90": 0.17,
-          "recent_minutes": 90.0,
-          "recent_matches": 1,
-          "recent_confidence": 0.2
-        },
-        "historical_prior": {
-          "prev_minutes": 1279.0,
-          "prev_goal90": 0.422,
-          "prev_assist90": 0.211,
-          "goal_prior_used": 0.376,
-          "assist_prior_used": 0.186
-        },
-        "xp_breakdown": {
-          "appearance": 1.59,
-          "goals": 1.02,
-          "assists": 0.48,
-          "clean_sheet": 0.0,
-          "saves": 0,
-          "defensive": 0.0,
-          "bonus": 0.27,
           "conceded": 0,
           "cards": 0
         },
@@ -2128,89 +2948,129 @@
     "transfers": [
       {
         "out": {
-          "id": 465,
-          "name": "Osula",
-          "team_id": 17,
-          "team": "Newcastle",
-          "position": "FWD",
-          "price": 6.0,
-          "xp": 0,
+          "id": 557,
+          "name": "Tzolis",
+          "team_id": 1,
+          "team": "Arsenal",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 2.71,
           "xp_low": 0,
-          "xp_high": 0.76,
-          "risk": "lav",
-          "volatility": 0.59,
-          "fixture": "Spurs (A)",
-          "availability": 0,
-          "expected_minutes": 0.0,
-          "news": "Foot injury - Unknown return date",
+          "xp_high": 5.78,
+          "risk": "middels",
+          "volatility": 0.89,
+          "fixture": "Aston Villa (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "AST A",
+              "difficulty": 3,
+              "xp": 2.71
+            },
+            {
+              "gw": 3,
+              "label": "CHE H",
+              "difficulty": 3,
+              "xp": 2.81
+            },
+            {
+              "gw": 4,
+              "label": "SUN A",
+              "difficulty": 3,
+              "xp": 2.69
+            }
+          ],
+          "availability": 1,
+          "expected_minutes": 56.3,
+          "news": "",
           "change": "out",
           "form": {
-            "season_multiplier": 0.993,
-            "recent_multiplier": 0.994,
-            "recent_xgi90": 0.2,
-            "recent_minutes": 55.0,
+            "season_multiplier": 0.999,
+            "recent_multiplier": 0.999,
+            "recent_xgi90": 0.33,
+            "recent_minutes": 75.0,
             "recent_matches": 1,
-            "recent_confidence": 0.133
+            "recent_confidence": 0.172
           },
           "historical_prior": {
-            "prev_minutes": 805.0,
-            "prev_goal90": 0.783,
-            "prev_assist90": 0.112,
-            "goal_prior_used": 0.533,
+            "prev_minutes": 326.0,
+            "prev_goal90": 0.0,
+            "prev_assist90": 0.0,
+            "goal_prior_used": 0.147,
             "assist_prior_used": 0.132
           },
           "xp_breakdown": {
-            "appearance": 0.0,
-            "goals": 0.0,
-            "assists": 0.0,
-            "clean_sheet": 0.0,
+            "appearance": 1.56,
+            "goals": 0.44,
+            "assists": 0.31,
+            "clean_sheet": 0.18,
             "saves": 0,
             "defensive": 0.0,
-            "bonus": 0.0,
+            "bonus": 0.22,
             "conceded": 0,
             "cards": 0
           }
         },
         "in": {
-          "id": 295,
-          "name": "McBurnie",
-          "team_id": 11,
-          "team": "Hull City",
-          "position": "FWD",
-          "price": 5.5,
-          "xp": 3.36,
+          "id": 236,
+          "name": "Dewsbury-Hall",
+          "team_id": 9,
+          "team": "Everton",
+          "position": "MID",
+          "price": 6.5,
+          "xp": 3.65,
           "xp_low": 0,
-          "xp_high": 7.18,
+          "xp_high": 7.83,
           "risk": "middels",
           "volatility": 0.89,
-          "fixture": "Coventry City (A)",
+          "fixture": "Bournemouth (A)",
+          "fixture_outlook": [
+            {
+              "gw": 2,
+              "label": "BOU A",
+              "difficulty": 3,
+              "xp": 3.65
+            },
+            {
+              "gw": 3,
+              "label": "MAN H",
+              "difficulty": 3,
+              "xp": 3.95
+            },
+            {
+              "gw": 4,
+              "label": "SPU A",
+              "difficulty": 3,
+              "xp": 3.68
+            }
+          ],
           "availability": 1,
-          "expected_minutes": 66.3,
+          "expected_minutes": 67.3,
           "news": "",
           "change": "in",
           "form": {
-            "season_multiplier": 0.994,
-            "recent_multiplier": 0.989,
-            "recent_xgi90": 0.17,
+            "season_multiplier": 0.997,
+            "recent_multiplier": 0.996,
+            "recent_xgi90": 0.29,
             "recent_minutes": 90.0,
             "recent_matches": 1,
             "recent_confidence": 0.2
           },
           "historical_prior": {
-            "prev_minutes": 1279.0,
-            "prev_goal90": 0.422,
-            "prev_assist90": 0.211,
-            "goal_prior_used": 0.376,
-            "assist_prior_used": 0.186
+            "prev_minutes": 2629.0,
+            "prev_goal90": 0.274,
+            "prev_assist90": 0.24,
+            "goal_prior_used": 0.255,
+            "assist_prior_used": 0.224
           },
           "xp_breakdown": {
-            "appearance": 1.59,
-            "goals": 1.02,
-            "assists": 0.48,
-            "clean_sheet": 0.0,
+            "appearance": 1.61,
+            "goals": 1.04,
+            "assists": 0.46,
+            "clean_sheet": 0.17,
             "saves": 0,
-            "defensive": 0.0,
-            "bonus": 0.27,
+            "defensive": 0.01,
+            "bonus": 0.36,
             "conceded": 0,
             "cards": 0
           }
@@ -2219,7 +3079,7 @@
     ]
   },
   "optimizer": {
-    "weighted_gain": 8.58,
+    "weighted_gain": 6.98,
     "plan": [
       {
         "gw": 2,
@@ -2229,48 +3089,6 @@
         "pairs": [
           {
             "out": {
-              "id": 465,
-              "name": "Osula",
-              "team": "Newcastle"
-            },
-            "in": {
-              "id": 295,
-              "name": "McBurnie",
-              "team": "Hull City"
-            }
-          }
-        ],
-        "label": "Osula → McBurnie"
-      },
-      {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd"
-            },
-            "in": {
-              "id": 397,
-              "name": "Semenyo",
-              "team": "Man City"
-            }
-          }
-        ],
-        "label": "Cunha → Semenyo"
-      },
-      {
-        "gw": 4,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
               "id": 557,
               "name": "Tzolis",
               "team": "Arsenal"
@@ -2285,7 +3103,7 @@
         "label": "Tzolis → Dewsbury-Hall"
       },
       {
-        "gw": 5,
+        "gw": 3,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -2297,13 +3115,55 @@
               "team": "Arsenal"
             },
             "in": {
+              "id": 391,
+              "name": "Gvardiol",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "Gabriel → Gvardiol"
+      },
+      {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal"
+            },
+            "in": {
               "id": 115,
               "name": "De Cuyper",
               "team": "Brighton"
             }
           }
         ],
-        "label": "Gabriel → De Cuyper"
+        "label": "Calafiori → De Cuyper"
+      },
+      {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 488,
+              "name": "I.Sangaré",
+              "team": "Nott'm Forest"
+            },
+            "in": {
+              "id": 397,
+              "name": "Semenyo",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "I.Sangaré → Semenyo"
       }
     ],
     "captain_horizon_search": true
@@ -2312,76 +3172,14 @@
     {
       "gw": 2,
       "captain": "Haaland",
-      "captain_xp": 4.18,
-      "captain_range": [
-        0,
-        8.89
-      ],
-      "xi_xp": 35.23,
-      "action": {
-        "gw": 2,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 465,
-              "name": "Osula",
-              "team": "Newcastle"
-            },
-            "in": {
-              "id": 295,
-              "name": "McBurnie",
-              "team": "Hull City"
-            }
-          }
-        ],
-        "label": "Osula → McBurnie"
-      }
-    },
-    {
-      "gw": 3,
-      "captain": "Haaland",
-      "captain_xp": 5.1,
-      "captain_range": [
-        0,
-        10.63
-      ],
-      "xi_xp": 40.23,
-      "action": {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd"
-            },
-            "in": {
-              "id": 397,
-              "name": "Semenyo",
-              "team": "Man City"
-            }
-          }
-        ],
-        "label": "Cunha → Semenyo"
-      }
-    },
-    {
-      "gw": 4,
-      "captain": "Haaland",
       "captain_xp": 4.19,
       "captain_range": [
         0,
         8.91
       ],
-      "xi_xp": 36.62,
+      "xi_xp": 35.44,
       "action": {
-        "gw": 4,
+        "gw": 2,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -2403,16 +3201,16 @@
       }
     },
     {
-      "gw": 5,
+      "gw": 3,
       "captain": "Haaland",
-      "captain_xp": 4.7,
+      "captain_xp": 4.64,
       "captain_range": [
         0,
-        9.89
+        9.78
       ],
-      "xi_xp": 39.12,
+      "xi_xp": 37.09,
       "action": {
-        "gw": 5,
+        "gw": 3,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -2424,22 +3222,84 @@
               "team": "Arsenal"
             },
             "in": {
+              "id": 391,
+              "name": "Gvardiol",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "Gabriel → Gvardiol"
+      }
+    },
+    {
+      "gw": 4,
+      "captain": "Haaland",
+      "captain_xp": 4.2,
+      "captain_range": [
+        0,
+        8.92
+      ],
+      "xi_xp": 36.42,
+      "action": {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal"
+            },
+            "in": {
               "id": 115,
               "name": "De Cuyper",
               "team": "Brighton"
             }
           }
         ],
-        "label": "Gabriel → De Cuyper"
+        "label": "Calafiori → De Cuyper"
+      }
+    },
+    {
+      "gw": 5,
+      "captain": "Haaland",
+      "captain_xp": 4.52,
+      "captain_range": [
+        0,
+        9.54
+      ],
+      "xi_xp": 38.81,
+      "action": {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 488,
+              "name": "I.Sangaré",
+              "team": "Nott'm Forest"
+            },
+            "in": {
+              "id": 397,
+              "name": "Semenyo",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "I.Sangaré → Semenyo"
       }
     }
   ],
   "candidates": [
     {
       "status": "GJØR DET",
-      "edge": 11.55,
-      "short_gain": 10.8,
-      "horizon_gain": 11.65,
+      "edge": 11.07,
+      "short_gain": 10.31,
+      "horizon_gain": 11.17,
       "gate_misses": [],
       "pairs": [
         {
@@ -2456,6 +3316,26 @@
             "risk": "lav",
             "volatility": 0.59,
             "fixture": "Spurs (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 3,
+                "label": "BOU H",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 4,
+                "label": "LEE A",
+                "difficulty": 3,
+                "xp": 0
+              }
+            ],
             "availability": 0,
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
@@ -2500,6 +3380,26 @@
             "risk": "middels",
             "volatility": 0.89,
             "fixture": "Coventry City (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "COV A",
+                "difficulty": 3,
+                "xp": 3.36
+              },
+              {
+                "gw": 3,
+                "label": "AST H",
+                "difficulty": 3,
+                "xp": 3.64
+              },
+              {
+                "gw": 4,
+                "label": "CHE A",
+                "difficulty": 3,
+                "xp": 3.31
+              }
+            ],
             "availability": 1,
             "expected_minutes": 66.3,
             "news": "",
@@ -2536,9 +3436,9 @@
     },
     {
       "status": "GJØR DET",
-      "edge": 10.41,
-      "short_gain": 9.58,
-      "horizon_gain": 10.51,
+      "edge": 10.28,
+      "short_gain": 9.5,
+      "horizon_gain": 10.38,
       "gate_misses": [],
       "pairs": [
         {
@@ -2555,6 +3455,26 @@
             "risk": "lav",
             "volatility": 0.59,
             "fixture": "Spurs (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 3,
+                "label": "BOU H",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 4,
+                "label": "LEE A",
+                "difficulty": 3,
+                "xp": 0
+              }
+            ],
             "availability": 0,
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
@@ -2593,12 +3513,32 @@
             "team": "Fulham",
             "position": "FWD",
             "price": 6.0,
-            "xp": 3.1,
+            "xp": 3.11,
             "xp_low": 0,
-            "xp_high": 6.63,
+            "xp_high": 6.66,
             "risk": "middels",
             "volatility": 0.89,
             "fixture": "Sunderland (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SUN A",
+                "difficulty": 3,
+                "xp": 3.11
+              },
+              {
+                "gw": 3,
+                "label": "CRY H",
+                "difficulty": 3,
+                "xp": 3.3
+              },
+              {
+                "gw": 4,
+                "label": "LIV A",
+                "difficulty": 3,
+                "xp": 3.09
+              }
+            ],
             "availability": 1,
             "expected_minutes": 66.3,
             "news": "",
@@ -2620,8 +3560,8 @@
             },
             "xp_breakdown": {
               "appearance": 1.59,
-              "goals": 0.94,
-              "assists": 0.29,
+              "goals": 0.95,
+              "assists": 0.3,
               "clean_sheet": 0.0,
               "saves": 0,
               "defensive": 0.0,
@@ -2634,111 +3574,10 @@
       ]
     },
     {
-      "status": "VURDERES",
-      "edge": 9.55,
-      "short_gain": 8.89,
-      "horizon_gain": 9.65,
-      "gate_misses": [
-        "For lavt forventet minuttgrunnlag"
-      ],
-      "pairs": [
-        {
-          "out": {
-            "id": 465,
-            "name": "Osula",
-            "team_id": 17,
-            "team": "Newcastle",
-            "position": "FWD",
-            "price": 6.0,
-            "xp": 0,
-            "xp_low": 0,
-            "xp_high": 0.76,
-            "risk": "lav",
-            "volatility": 0.59,
-            "fixture": "Spurs (A)",
-            "availability": 0,
-            "expected_minutes": 0.0,
-            "news": "Foot injury - Unknown return date",
-            "change": null,
-            "form": {
-              "season_multiplier": 0.993,
-              "recent_multiplier": 0.994,
-              "recent_xgi90": 0.2,
-              "recent_minutes": 55.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.133
-            },
-            "historical_prior": {
-              "prev_minutes": 805.0,
-              "prev_goal90": 0.783,
-              "prev_assist90": 0.112,
-              "goal_prior_used": 0.533,
-              "assist_prior_used": 0.132
-            },
-            "xp_breakdown": {
-              "appearance": 0.0,
-              "goals": 0.0,
-              "assists": 0.0,
-              "clean_sheet": 0.0,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.0,
-              "conceded": 0,
-              "cards": 0
-            }
-          },
-          "in": {
-            "id": 249,
-            "name": "Barry",
-            "team_id": 9,
-            "team": "Everton",
-            "position": "FWD",
-            "price": 5.5,
-            "xp": 2.87,
-            "xp_low": 0,
-            "xp_high": 6.24,
-            "risk": "middels",
-            "volatility": 0.91,
-            "fixture": "Bournemouth (A)",
-            "availability": 1,
-            "expected_minutes": 57.8,
-            "news": "",
-            "change": null,
-            "form": {
-              "season_multiplier": 1.006,
-              "recent_multiplier": 1.01,
-              "recent_xgi90": 0.54,
-              "recent_minutes": 78.0,
-              "recent_matches": 1,
-              "recent_confidence": 0.178
-            },
-            "historical_prior": {
-              "prev_minutes": 1898.0,
-              "prev_goal90": 0.379,
-              "prev_assist90": 0.0,
-              "goal_prior_used": 0.357,
-              "assist_prior_used": 0.052
-            },
-            "xp_breakdown": {
-              "appearance": 1.55,
-              "goals": 0.95,
-              "assists": 0.09,
-              "clean_sheet": 0.0,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.29,
-              "conceded": 0,
-              "cards": 0
-            }
-          }
-        }
-      ]
-    },
-    {
       "status": "GJØR DET",
-      "edge": 9.31,
-      "short_gain": 8.72,
-      "horizon_gain": 9.41,
+      "edge": 9.46,
+      "short_gain": 8.83,
+      "horizon_gain": 9.56,
       "gate_misses": [],
       "pairs": [
         {
@@ -2755,6 +3594,26 @@
             "risk": "lav",
             "volatility": 0.59,
             "fixture": "Spurs (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 3,
+                "label": "BOU H",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 4,
+                "label": "LEE A",
+                "difficulty": 3,
+                "xp": 0
+              }
+            ],
             "availability": 0,
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
@@ -2793,12 +3652,32 @@
             "team": "Nott'm Forest",
             "position": "FWD",
             "price": 6.0,
-            "xp": 2.91,
+            "xp": 2.93,
             "xp_low": 0,
-            "xp_high": 6.18,
+            "xp_high": 6.22,
             "risk": "middels",
-            "volatility": 0.87,
+            "volatility": 0.88,
             "fixture": "Liverpool (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "LIV A",
+                "difficulty": 3,
+                "xp": 2.93
+              },
+              {
+                "gw": 3,
+                "label": "SPU H",
+                "difficulty": 3,
+                "xp": 2.94
+              },
+              {
+                "gw": 4,
+                "label": "AST A",
+                "difficulty": 3,
+                "xp": 2.96
+              }
+            ],
             "availability": 1,
             "expected_minutes": 66.3,
             "news": "",
@@ -2820,8 +3699,8 @@
             },
             "xp_breakdown": {
               "appearance": 1.59,
-              "goals": 0.65,
-              "assists": 0.4,
+              "goals": 0.66,
+              "assists": 0.41,
               "clean_sheet": 0.0,
               "saves": 0,
               "defensive": 0.0,
@@ -2835,9 +3714,9 @@
     },
     {
       "status": "VURDERES",
-      "edge": 9.07,
-      "short_gain": 8.14,
-      "horizon_gain": 9.17,
+      "edge": 9.46,
+      "short_gain": 8.81,
+      "horizon_gain": 9.56,
       "gate_misses": [
         "For lavt forventet minuttgrunnlag"
       ],
@@ -2856,6 +3735,167 @@
             "risk": "lav",
             "volatility": 0.59,
             "fixture": "Spurs (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 3,
+                "label": "BOU H",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 4,
+                "label": "LEE A",
+                "difficulty": 3,
+                "xp": 0
+              }
+            ],
+            "availability": 0,
+            "expected_minutes": 0.0,
+            "news": "Foot injury - Unknown return date",
+            "change": null,
+            "form": {
+              "season_multiplier": 0.993,
+              "recent_multiplier": 0.994,
+              "recent_xgi90": 0.2,
+              "recent_minutes": 55.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.133
+            },
+            "historical_prior": {
+              "prev_minutes": 805.0,
+              "prev_goal90": 0.783,
+              "prev_assist90": 0.112,
+              "goal_prior_used": 0.533,
+              "assist_prior_used": 0.132
+            },
+            "xp_breakdown": {
+              "appearance": 0.0,
+              "goals": 0.0,
+              "assists": 0.0,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.0,
+              "conceded": 0,
+              "cards": 0
+            }
+          },
+          "in": {
+            "id": 249,
+            "name": "Barry",
+            "team_id": 9,
+            "team": "Everton",
+            "position": "FWD",
+            "price": 5.5,
+            "xp": 2.88,
+            "xp_low": 0,
+            "xp_high": 6.25,
+            "risk": "middels",
+            "volatility": 0.91,
+            "fixture": "Bournemouth (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "BOU A",
+                "difficulty": 3,
+                "xp": 2.88
+              },
+              {
+                "gw": 3,
+                "label": "MAN H",
+                "difficulty": 3,
+                "xp": 3.04
+              },
+              {
+                "gw": 4,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 2.9
+              }
+            ],
+            "availability": 1,
+            "expected_minutes": 57.8,
+            "news": "",
+            "change": null,
+            "form": {
+              "season_multiplier": 1.006,
+              "recent_multiplier": 1.01,
+              "recent_xgi90": 0.54,
+              "recent_minutes": 78.0,
+              "recent_matches": 1,
+              "recent_confidence": 0.178
+            },
+            "historical_prior": {
+              "prev_minutes": 1898.0,
+              "prev_goal90": 0.379,
+              "prev_assist90": 0.0,
+              "goal_prior_used": 0.357,
+              "assist_prior_used": 0.052
+            },
+            "xp_breakdown": {
+              "appearance": 1.55,
+              "goals": 0.95,
+              "assists": 0.09,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.29,
+              "conceded": 0,
+              "cards": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "status": "VURDERES",
+      "edge": 9.1,
+      "short_gain": 8.39,
+      "horizon_gain": 9.2,
+      "gate_misses": [
+        "For lavt forventet minuttgrunnlag"
+      ],
+      "pairs": [
+        {
+          "out": {
+            "id": 465,
+            "name": "Osula",
+            "team_id": 17,
+            "team": "Newcastle",
+            "position": "FWD",
+            "price": 6.0,
+            "xp": 0,
+            "xp_low": 0,
+            "xp_high": 0.76,
+            "risk": "lav",
+            "volatility": 0.59,
+            "fixture": "Spurs (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 3,
+                "label": "BOU H",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 4,
+                "label": "LEE A",
+                "difficulty": 3,
+                "xp": 0
+              }
+            ],
             "availability": 0,
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
@@ -2894,12 +3934,32 @@
             "team": "Spurs",
             "position": "FWD",
             "price": 6.0,
-            "xp": 2.88,
+            "xp": 2.87,
             "xp_low": 0,
-            "xp_high": 6.32,
+            "xp_high": 6.31,
             "risk": "middels",
             "volatility": 0.94,
             "fixture": "Newcastle (H)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "NEW H",
+                "difficulty": 3,
+                "xp": 2.87
+              },
+              {
+                "gw": 3,
+                "label": "NOT A",
+                "difficulty": 3,
+                "xp": 2.67
+              },
+              {
+                "gw": 4,
+                "label": "EVE H",
+                "difficulty": 3,
+                "xp": 2.85
+              }
+            ],
             "availability": 1,
             "expected_minutes": 49.3,
             "news": "",
@@ -2936,9 +3996,9 @@
     },
     {
       "status": "GJØR DET",
-      "edge": 8.72,
-      "short_gain": 7.98,
-      "horizon_gain": 8.82,
+      "edge": 8.92,
+      "short_gain": 8.24,
+      "horizon_gain": 9.02,
       "gate_misses": [],
       "pairs": [
         {
@@ -2955,6 +4015,26 @@
             "risk": "lav",
             "volatility": 0.59,
             "fixture": "Spurs (A)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "SPU A",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 3,
+                "label": "BOU H",
+                "difficulty": 3,
+                "xp": 0
+              },
+              {
+                "gw": 4,
+                "label": "LEE A",
+                "difficulty": 3,
+                "xp": 0
+              }
+            ],
             "availability": 0,
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
@@ -2993,12 +4073,32 @@
             "team": "Leeds",
             "position": "FWD",
             "price": 6.0,
-            "xp": 2.82,
+            "xp": 2.81,
             "xp_low": 0,
-            "xp_high": 6.44,
+            "xp_high": 6.43,
             "risk": "middels",
             "volatility": 1.0,
             "fixture": "Brentford (H)",
+            "fixture_outlook": [
+              {
+                "gw": 2,
+                "label": "BRE H",
+                "difficulty": 3,
+                "xp": 2.81
+              },
+              {
+                "gw": 3,
+                "label": "BRI A",
+                "difficulty": 3,
+                "xp": 2.57
+              },
+              {
+                "gw": 4,
+                "label": "NEW H",
+                "difficulty": 3,
+                "xp": 2.85
+              }
+            ],
             "availability": 1,
             "expected_minutes": 66.3,
             "news": "",
@@ -3020,7 +4120,7 @@
             },
             "xp_breakdown": {
               "appearance": 1.59,
-              "goals": 1.15,
+              "goals": 1.14,
               "assists": 0.18,
               "clean_sheet": 0.0,
               "saves": 0,
@@ -3051,12 +4151,12 @@
       "name": "Haaland",
       "team": "Man City",
       "position": "FWD",
-      "xp": 4.18,
-      "ceiling": 8.89,
+      "xp": 4.19,
+      "ceiling": 8.91,
       "expected_minutes": 66.0,
       "availability": 1.0,
-      "score": 4.788,
-      "p10_plus": 0.1097,
+      "score": 4.799,
+      "p10_plus": 0.1102,
       "p15_plus": 0.0435,
       "p_goal_2plus": 0.0967,
       "p_multi_return": 0.1426,
@@ -3085,12 +4185,12 @@
       "name": "João Pedro",
       "team": "Chelsea",
       "position": "FWD",
-      "xp": 3.95,
-      "ceiling": 8.35,
+      "xp": 3.94,
+      "ceiling": 8.33,
       "expected_minutes": 66.0,
       "availability": 1.0,
-      "score": 4.519,
-      "p10_plus": 0.0814,
+      "score": 4.508,
+      "p10_plus": 0.0809,
       "p15_plus": 0.025,
       "p_goal_2plus": 0.0566,
       "p_multi_return": 0.1271,
@@ -3098,19 +4198,19 @@
       "vice": false
     },
     {
-      "id": 295,
-      "name": "McBurnie",
-      "team": "Hull City",
-      "position": "FWD",
-      "xp": 3.36,
-      "ceiling": 7.18,
-      "expected_minutes": 66.0,
+      "id": 236,
+      "name": "Dewsbury-Hall",
+      "team": "Everton",
+      "position": "MID",
+      "xp": 3.65,
+      "ceiling": 7.83,
+      "expected_minutes": 67.0,
       "availability": 1.0,
-      "score": 3.872,
-      "p10_plus": 0.04,
-      "p15_plus": 0.012,
-      "p_goal_2plus": 0.0275,
-      "p_multi_return": 0.0707,
+      "score": 4.206,
+      "p10_plus": 0.0302,
+      "p15_plus": 0.009,
+      "p_goal_2plus": 0.0209,
+      "p_multi_return": 0.0534,
       "captain": false,
       "vice": false
     },
@@ -3119,11 +4219,11 @@
       "name": "Cunha",
       "team": "Man Utd",
       "position": "MID",
-      "xp": 3.21,
+      "xp": 3.2,
       "ceiling": 7.07,
       "expected_minutes": 60.0,
       "availability": 1.0,
-      "score": 3.741,
+      "score": 3.734,
       "p10_plus": 0.0213,
       "p15_plus": 0.0081,
       "p_goal_2plus": 0.0187,
@@ -3135,18 +4235,18 @@
   "decision_explanation": {
     "decision": "BYTT",
     "why": [
-      "Første trekk modellen vurderer er Osula → McBurnie.",
-      "Estimert gevinst: +10.80 xP neste 3 GW og +11.65 xP over planhorisonten.",
+      "Første trekk modellen vurderer er Tzolis → Dewsbury-Hall.",
+      "Estimert gevinst: +10.31 xP neste 3 GW og +11.17 xP over planhorisonten.",
       "Datakvalitet 0.45 (svak tabellprior, market av) løfter BYTT-kravet med 0.18 xP.",
       "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.33.",
       "Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket."
     ],
-    "weighted_gain": 8.58,
+    "weighted_gain": 6.98,
     "threshold": 1.33,
     "distance_to_switch": 0,
     "switch_trigger": "Anbefalingen er robust nok nå.",
-    "horizon_3gw": 10.8,
-    "horizon_plan": 11.65,
+    "horizon_3gw": 10.31,
+    "horizon_plan": 11.17,
     "premium_structure_bias": 0.0,
     "input_quality": {
       "score": 0.45,
@@ -3262,11 +4362,11 @@
       "id": 411,
       "name": "Haaland",
       "team": "Man City",
-      "v3_score": 4.788,
-      "v4_score": 5.4013,
-      "v41_score": 5.5394,
-      "elite_prior": 0.9436,
-      "haul_bonus": 0.138,
+      "v3_score": 4.799,
+      "v4_score": 5.4124,
+      "v41_score": 5.5507,
+      "elite_prior": 0.9437,
+      "haul_bonus": 0.1383,
       "haul_probabilities": {
         "goal_lambda": 0.5212,
         "assist_lambda": 0.1403,
@@ -3274,12 +4374,12 @@
         "p_goal_2": 0.0967,
         "p_goal_3": 0.016,
         "p_multi_return": 0.1426,
-        "p10": 0.1097,
+        "p10": 0.1102,
         "p15": 0.0435,
         "history_weight": 0.8889
       },
-      "xp": 4.18,
-      "ceiling": 8.89,
+      "xp": 4.19,
+      "ceiling": 8.91,
       "expected_minutes": 66.0,
       "prev_minutes": 2953.0,
       "prev_points": 239.0
@@ -3307,11 +4407,11 @@
       "id": 411,
       "name": "Haaland",
       "team": "Man City",
-      "xp": 4.18,
+      "xp": 4.19,
       "expected_minutes": 66.3,
       "availability": 1.0,
-      "model_score": 4.788,
-      "p10_plus": 0.1097,
+      "model_score": 4.799,
+      "p10_plus": 0.1102,
       "p15_plus": 0.0435,
       "p_goal_2plus": 0.0967,
       "p_multi_return": 0.1426
@@ -3329,13 +4429,13 @@
       "p_goal_2plus": 0.0117,
       "p_multi_return": 0.1169
     },
-    "score_gap": 0.153,
-    "xp_gap": 0.12,
-    "haul10_gap": 0.0389,
+    "score_gap": 0.164,
+    "xp_gap": 0.13,
+    "haul10_gap": 0.0394,
     "confidence": {
-      "score": 67,
+      "score": 68,
       "level": "LAV",
-      "raw": 1.424,
+      "raw": 1.477,
       "input_quality": "MEDIUM"
     },
     "input_quality": {
