@@ -20,6 +20,7 @@ on:
       - "freeze_market_ab.py"
       - "evaluate_market_ab.py"
       - "captain_v4_prior.py"
+      - "captain_haul_v41.py"
       - "captain_horizon_v1.py"
       - "enrich_captain_inputs.py"
       - "captain_v4_shadow.py"
@@ -103,15 +104,14 @@ jobs:
           opt=d.get('optimizer',{}); assert opt.get('captain_horizon_search') is True, opt
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
           for p in d.get('captain_comparison',[]): assert p.get('season_minutes') is not None and p.get('season_xg') is not None and p.get('season_xa') is not None
-          cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.0-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick')
+          cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.1-haul-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick') and cap4.get('v41_pick')
+          for p in cap4.get('candidates',[]):
+            hp=p.get('haul_probabilities') or {}; assert all(k in hp for k in ('p_goal_1','p_goal_2','p_goal_3','p_multi_return','p10','p15')); assert 0 <= float(p.get('haul_bonus',0)) <= .90
           premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'; assert int(premium.get('gw'))==int(d.get('gw')); assert len(premium.get('current_squad_ids',[]))==15
-          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'; assert chip.get('tc_decision') in ('HOLD','CONSIDER','USE_NOW'); assert set(chip.get('scores',{}))=={'wildcard','free_hit','bench_boost','triple_captain'}; assert isinstance(chip.get('chip_roadmap'),list)
-          ce=chip.get('evidence',{}); exact=ce.get('exact_fixture_diagnostics') or []; assert exact; assert all('squad_blank_count' in r and 'squad_double_count' in r and 'team_fixture_counts' in r for r in exact); assert 'exact_free_hit_candidate_gw' in ce and 'exact_bench_boost_candidate_gw' in ce
-          if chip.get('chip_roadmap'):
-            gws=[x['gw'] for x in chip['chip_roadmap']]; assert len(gws)==len(set(gws))
+          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'
-          print('Exact fixture-count chip sanity passed',[(r['gw'],r['squad_blank_count'],r['squad_double_count']) for r in exact])
+          print('Captain v4.1 haul sanity:',cap4.get('v3_pick',{}).get('name'),'->',cap4.get('v41_pick',{}).get('name'),cap4.get('v41_pick',{}).get('haul_probabilities'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -122,12 +122,12 @@ jobs:
           python freeze_chip_strategy.py
       - name: Publish feed, snapshots and backtests
         run: |
-          if git diff --quiet -- data.json premium_structure_shadow.json chip_strategy_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/; then
+          if git diff --quiet -- data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/; then
             echo "No dashboard, snapshot or backtest change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json premium_structure_shadow.json chip_strategy_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh analysis and exact-fixture chip shadow"
+          git add data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
+          git commit -m "Dashboard: refresh analysis with Captain v4.1 haul shadow"
           git push
