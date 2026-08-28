@@ -4,7 +4,6 @@ from pathlib import Path
 import requests
 
 DATA=Path('data.json')
-CACHE=Path('projection_cache.json')
 BOOT='https://fantasy.premierleague.com/api/bootstrap-static/'
 
 def n(v,d=0.0):
@@ -38,12 +37,17 @@ def flexibility(bank_after):
 
 def main():
     d=json.loads(DATA.read_text())
-    cache=json.loads(CACHE.read_text()) if CACHE.exists() else {}
     r=requests.get(BOOT,headers={'Accept':'application/json','User-Agent':'fpl-autopilot-budget-intelligence-v1'},timeout=18);r.raise_for_status();boot=r.json()
     byid={int(p['id']):p for p in boot.get('elements',[])}
-    squad_ids={int(x) for x in cache.get('squad_ids',[]) if x is not None}
+    confirmed=d.get('confirmed_fpl') or {}
+    squad=(confirmed.get('lineup') or [])+(confirmed.get('bench') or [])
+    if len(squad)!=15:squad=(d.get('comparison') or {}).get('current_xi',[])+(d.get('confirmed_fpl') or {}).get('bench',[])
+    squad_ids={int(p['id']) for p in squad if p.get('id') is not None}
     squad_boot=[byid[x] for x in squad_ids if x in byid]
+    # If public lineup enrichment is temporarily absent, the production budget
+    # remains the authoritative market-value fallback.
     market_total=sum(n(p.get('now_cost'))/10 for p in squad_boot)
+    if len(squad_boot)!=15:market_total=n((d.get('budget') or {}).get('squad_market_value'))
     premium_total=sum(n(p.get('now_cost'))/10 for p in squad_boot if n(p.get('now_cost'))>=100)
     premium_share=premium_total/max(market_total,0.1)
     current_bank=n((d.get('budget') or {}).get('bank'))
@@ -65,10 +69,11 @@ def main():
         if ims:watch.append({'id':inn.get('id'),'name':inn.get('name'),'signal':ims,'bank_after':round(bank_after,1),'horizon_gain':c.get('horizon_gain')})
     watch.sort(key=lambda x:(n((x.get('signal') or {}).get('score')),n(x.get('horizon_gain'))),reverse=True)
     d['budget_intelligence']={
-        'version':'1.1-shadow',
+        'version':'1.2-shadow',
         'mode':'shadow',
         'affects_transfer_ranking':False,
-        'squad_source':'projection_cache.squad_ids',
+        'squad_source':'confirmed_fpl + bootstrap-static',
+        'squad_players_found':len(squad_boot),
         'bank':round(current_bank,1),
         'flexibility':current_flex,
         'premium_locked_value':round(premium_total,1),
