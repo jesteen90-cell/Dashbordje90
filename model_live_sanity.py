@@ -32,7 +32,6 @@ def pipeline_sanity():
     assert "player.out" in html and "player.in" in html
     assert 'Siste bekreftede FPL-startellever' in html
     assert 'Siste bekreftede FPL-benk' in html
-    # The optional enhancer is intentionally disabled after a Safari render-loop incident.
     ui=Path('captain_explain_ui.js').read_text(encoding='utf-8') if Path('captain_explain_ui.js').exists() else ''
     assert 'MutationObserver' not in ui
 
@@ -51,6 +50,12 @@ def main():
     starter=project(base(minutes_history=180,start_rate=1,sub_rate=0,goal90=.3,assist90=.1))
     assert starter['xmins'] > seen['xmins'],(starter,seen)
 
+    unknown_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=.3,assist90=.1))
+    established_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000,goal90=.3,assist90=.1))
+    assert established_early['xmins'] >= 76,established_early
+    assert established_early['xmins'] >= unknown_early['xmins']+8,(unknown_early,established_early)
+    assert established_early['p_start'] > .84,established_early
+
     generic=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0))
     elite=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0,prev_minutes=3000,prev_goal90=.90,prev_assist90=.12))
     assert elite['goal_prior_used'] > generic['goal_prior_used']+.20,(generic,elite)
@@ -59,6 +64,6 @@ def main():
     assert abs(faded['goal90_used']-.31) < abs(elite['goal90_used']-.31),(elite,faded)
 
     pipeline_sanity()
-    print('live model + history-prior sanity passed', {'ghost_xmins':ghost['xmins'],'elite_goal_prior':round(elite['goal_prior_used'],3),'generic_goal_prior':round(generic['goal_prior_used'],3),'faded_goal90':round(faded['goal90_used'],3)})
+    print('live model sanity passed', {'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'elite_goal_prior':round(elite['goal_prior_used'],3),'faded_goal90':round(faded['goal90_used'],3)})
 
 if __name__=='__main__':main()
