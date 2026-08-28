@@ -1,107 +1,25 @@
 (function(){
   function pct(v){return v==null?'—':Math.round(Number(v)*100)+'%'}
   function num(v,d=2){return v==null?'—':Number(v).toFixed(d)}
-  function haulStrip(row){
-    if(!row || row.p10_plus==null) return '';
-    return `<div class="haulStrip" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px"><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p10_plus)}</b><span style="font-size:7px;color:#aaa2ba">10+</span></div><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p15_plus)}</b><span style="font-size:7px;color:#aaa2ba">15+</span></div><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p_goal_2plus)}</b><span style="font-size:7px;color:#aaa2ba">2+ mål</span></div><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p_multi_return)}</b><span style="font-size:7px;color:#aaa2ba">multi</span></div></div>`;
-  }
-  function fallbackConfidence(e){
-    const c=e.captain||{},r=e.runner_up||{};
-    const scoreGap=Number(e.score_gap||0),xpGap=Number(e.xp_gap||0);
-    const haulGap=(c.p10_plus!=null&&r.p10_plus!=null)?Number(c.p10_plus)-Number(r.p10_plus):0;
-    const min=Number(c.expected_minutes||0),avail=Number(c.availability==null?1:c.availability);
-    let s=0;
-    s+=Math.max(-1,Math.min(1,scoreGap/.45))*1.6;
-    s+=Math.max(-1,Math.min(1,xpGap/1.2))*1.1;
-    s+=Math.max(-1,Math.min(1,haulGap/.12))*1.0;
-    s+=(min>=82?1:min>=72?.55:min>=60?.15:-1);
-    s+=(avail>=.95?.8:avail>=.85?.45:avail>=.75?.1:-1);
-    if(!e.selected_pick_safe)s-=2;
-    const level=s>=3.2?'HØY':s>=1.5?'MIDDELS':'LAV';
-    return {score:Math.round(Math.max(0,Math.min(100,50+s*12))),level,haulGap};
-  }
-  function confidence(e){
-    const fb=fallbackConfidence(e),server=e.confidence||{};
-    const level=['LAV','MIDDELS','HØY'].includes(server.level)?server.level:fb.level;
-    const score=Number.isFinite(Number(server.score))?Math.max(0,Math.min(100,Math.round(Number(server.score)))):fb.score;
-    const label=level==='HØY'?'Sterkt kapteinsvalg':level==='MIDDELS'?'Godt, men ikke klart':'Tett kapteinskamp';
-    const haulGap=e.haul10_gap!=null?Number(e.haul10_gap):fb.haulGap;
-    return {score,level,label,haulGap};
-  }
-  function addCardHaul(e){
-    const rows=[e.captain||{},e.runner_up||{}];
-    document.querySelectorAll('#captains .captCard').forEach(card=>{
-      if(card.querySelector('.haulStrip')) return;
-      const name=(card.querySelector('.captName')?.textContent||'').trim();
-      const row=rows.find(x=>String(x.name||'').trim()===name);
-      if(!row || row.p10_plus==null) return;
-      card.insertAdjacentHTML('beforeend',haulStrip(row));
-      if(row.id===e.captain?.id){card.style.borderColor='#00e99088';card.style.boxShadow='0 0 0 1px #00e99018 inset';}
-    });
-  }
-  function changes(){
-    let xs=(D.comparison||{}).changes||[];
-    if(!xs.length && D.candidates?.[0]?.pairs) xs=D.candidates[0].pairs;
-    return xs.filter(x=>x?.out?.id&&x?.in?.id);
-  }
-  function replacePlayers(rows,removeKey,addKey,xs){
-    const m=new Map((rows||[]).filter(x=>x?.id!=null).map(x=>[Number(x.id),x]));
-    xs.forEach(ch=>{m.delete(Number(ch[removeKey].id));m.set(Number(ch[addKey].id),ch[addKey]);});
-    return [...m.values()];
-  }
-  function benchFrom(squad,xi){
-    const ids=new Set((xi||[]).map(x=>Number(x.id)));
-    return (squad||[]).filter(x=>!ids.has(Number(x.id)));
-  }
-  function benchCard(p,mode){
-    const red=mode==='out',green=mode==='in';
-    const style=red?'position:relative;border:3px solid #ff496b;background:#ff496b16;box-shadow:0 0 0 2px #4b0714,0 0 22px #ff496b88':green?'position:relative;border:3px solid #18eda0;background:#18eda014;box-shadow:0 0 0 2px #063d2a,0 0 22px #18eda066':'position:relative';
-    const badge=red?'<span style="position:absolute;right:6px;top:6px;padding:3px 7px;border-radius:99px;background:#ff496b;color:#fff;font-size:8px;font-weight:1000;z-index:4">UT</span>':green?'<span style="position:absolute;right:6px;top:6px;padding:3px 7px;border-radius:99px;background:#00a96e;color:#fff;font-size:8px;font-weight:1000;z-index:4">INN</span>':'';
-    return `<div class="benchCard" style="${style}">${badge}${kit(p)}<span class="name">${esc(p.name)}</span><span class="pos">${esc(P[p.position]||p.position||'')}</span><span class="xp">${Number(p.xp||0).toFixed(2)} xP</span><span class="fix">${esc(p.fixture||'')}</span></div>`;
+  function changes(){let xs=(D.comparison||{}).changes||[];if(!xs.length&&D.candidates?.[0]?.pairs)xs=D.candidates[0].pairs;return xs.filter(x=>x?.out?.id&&x?.in?.id)}
+  function replacePlayers(rows,removeKey,addKey,xs){const m=new Map((rows||[]).filter(x=>x?.id!=null).map(x=>[Number(x.id),x]));xs.forEach(ch=>{m.delete(Number(ch[removeKey].id));m.set(Number(ch[addKey].id),ch[addKey])});return [...m.values()]}
+  function benchFrom(squad,xi){const ids=new Set((xi||[]).map(x=>Number(x.id)));return (squad||[]).filter(x=>!ids.has(Number(x.id)))}
+  function benchCard(p,mode){const red=mode==='out',green=mode==='in';const style=red?'position:relative;border:3px solid #ff496b;background:#ff496b16;box-shadow:0 0 0 2px #4b0714,0 0 22px #ff496b88':green?'position:relative;border:3px solid #18eda0;background:#18eda014;box-shadow:0 0 0 2px #063d2a,0 0 22px #18eda066':'position:relative';const badge=red?'<span style="position:absolute;right:6px;top:6px;padding:3px 7px;border-radius:99px;background:#ff496b;color:#fff;font-size:8px;font-weight:1000;z-index:4">UT</span>':green?'<span style="position:absolute;right:6px;top:6px;padding:3px 7px;border-radius:99px;background:#00a96e;color:#fff;font-size:8px;font-weight:1000;z-index:4">INN</span>':'';return `<div class="benchCard" style="${style}">${badge}${kit(p)}<span class="name">${esc(p.name)}</span><span class="pos">${esc(P[p.position]||p.position||'')}</span><span class="xp">${Number(p.xp||0).toFixed(2)} xP</span><span class="fix">${esc(p.fixture||'')}</span></div>`}
+  function sourceNote(){
+    const gw=D.source_snapshot_gw;
+    return `<div id="fplSourceNote" style="margin:8px 0 12px;padding:10px 12px;border-radius:14px;border:1px solid #ffd45b35;background:#ffd45b0b;font-size:10px;line-height:1.45;color:#ddd4e8"><b style="color:#ffe39a">Siste bekreftede FPL-lag${gw?' · GW '+gw:''}</b><br><span style="color:#aaa2ba">Dette er siste lag FPL gjør offentlig tilgjengelig. Endringer du gjør i FPL-appen før neste deadline er private og vises ikke her før vi kobler autentisert My Team-synk.</span></div>`;
   }
   function renderBenches(){
-    if(typeof D==='undefined'||!D) return;
-    const curXi=(D.comparison||{}).current_xi||D.lineup||[];
-    const afterXi=(D.comparison||{}).transfer_xi||D.lineup||curXi;
-    const xs=changes();
-    const active=[...(D.lineup||[]),...(D.bench||[])];
-    const approved=Boolean(D.decision_layer?.approved_first_move);
-    const currentSquad=approved?replacePlayers(active,'in','out',xs):active;
-    const afterSquad=approved?active:replacePlayers(active,'out','in',xs);
-    const currentBench=benchFrom(currentSquad,curXi);
-    const afterBench=benchFrom(afterSquad,afterXi);
-    const outIds=new Set(xs.map(x=>Number(x.out.id))),inIds=new Set(xs.map(x=>Number(x.in.id)));
-
+    if(typeof D==='undefined'||!D)return;const curXi=(D.comparison||{}).current_xi||D.lineup||[];const afterXi=(D.comparison||{}).transfer_xi||D.lineup||curXi;const xs=changes();const active=[...(D.lineup||[]),...(D.bench||[])];const approved=Boolean(D.decision_layer?.approved_first_move);const currentSquad=approved?replacePlayers(active,'in','out',xs):active;const afterSquad=approved?active:replacePlayers(active,'out','in',xs);const currentBench=benchFrom(currentSquad,curXi);const afterBench=benchFrom(afterSquad,afterXi);const outIds=new Set(xs.map(x=>Number(x.out.id))),inIds=new Set(xs.map(x=>Number(x.in.id)));
     const currentSection=document.querySelector('#current')?.closest('.section');
-    if(currentSection && !document.querySelector('#currentBench')){
-      currentSection.insertAdjacentHTML('afterend','<div class="section" id="currentBenchSection"><h2>Nåværende benk</h2><div id="currentBench" class="bench"></div></div>');
-    }
-    const oldBench=document.querySelector('#bench');
-    if(oldBench){
-      const h=oldBench.closest('.section')?.querySelector('h2');
-      if(h)h.textContent='Benk etter foreslått trekk';
-    }
-    const cb=document.querySelector('#currentBench');
-    if(cb)cb.innerHTML=currentBench.map(p=>benchCard(p,outIds.has(Number(p.id))?'out':'')).join('');
-    if(oldBench)oldBench.innerHTML=afterBench.map(p=>benchCard(p,inIds.has(Number(p.id))?'in':'')).join('');
+    if(currentSection){const h=currentSection.querySelector('h2');if(h)h.textContent='Siste bekreftede FPL-startellever';if(!document.querySelector('#fplSourceNote'))currentSection.querySelector('h2')?.insertAdjacentHTML('afterend',sourceNote());if(!document.querySelector('#currentBench'))currentSection.insertAdjacentHTML('afterend','<div class="section" id="currentBenchSection"><h2>Siste bekreftede FPL-benk</h2><div id="currentBench" class="bench"></div></div>')}
+    const after=document.querySelector('#after')?.closest('.section')?.querySelector('h2');if(after)after.textContent='Modellens lag etter foreslått trekk';
+    const oldBench=document.querySelector('#bench');if(oldBench){const h=oldBench.closest('.section')?.querySelector('h2');if(h)h.textContent='Modellens benk etter foreslått trekk'}
+    const cb=document.querySelector('#currentBench');if(cb)cb.innerHTML=currentBench.map(p=>benchCard(p,outIds.has(Number(p.id))?'out':'')).join('');if(oldBench)oldBench.innerHTML=afterBench.map(p=>benchCard(p,inIds.has(Number(p.id))?'in':'')).join('');
   }
-  function renderCaptain(){
-    if(typeof D==='undefined' || !D || !D.captain_explanation) return;
-    const e=D.captain_explanation,c=e.captain||{},r=e.runner_up||{},conf=confidence(e);
-    const host=document.querySelector('#captains');
-    if(!host) return;
-    addCardHaul(e);
-    if(document.querySelector('#captainExplain')) return;
-    const box=document.createElement('div');
-    box.id='captainExplain';
-    box.style.cssText='grid-column:1/-1;margin-top:2px;padding:13px;border-radius:17px;border:1px solid #00e99044;background:linear-gradient(145deg,#00e9900d,#ffffff08);';
-    const haul=(c.p10_plus!=null)?`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px"><div class="mini"><b>${pct(c.p10_plus)}</b><span>10+ poeng</span></div><div class="mini"><b>${pct(c.p15_plus)}</b><span>15+ poeng</span></div><div class="mini"><b>${pct(c.p_goal_2plus)}</b><span>2+ mål</span></div><div class="mini"><b>${pct(c.p_multi_return)}</b><span>flere returns</span></div></div>`:'';
-    const confColor=conf.level==='HØY'?'#00e990':conf.level==='MIDDELS'?'#ffd45b':'#ff7a92';
-    const confHtml=`<div style="margin-top:10px;padding:10px;border-radius:13px;background:#0002"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div><div class="eyebrow">Captain confidence</div><b style="font-size:15px">${conf.level} · ${conf.label}</b></div><div style="font-size:18px;font-weight:950;color:${confColor}">${conf.score}%</div></div><div style="height:7px;border-radius:99px;background:#ffffff12;margin-top:7px;overflow:hidden"><div style="height:100%;width:${conf.score}%;background:${confColor}"></div></div></div>`;
-    box.innerHTML=`<div class="eyebrow">Hvorfor kaptein?</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:end"><div><div style="font-size:20px;font-weight:950">${c.name||'—'} (C)</div><div class="muted" style="font-size:11px">${c.team||''} · modell ${e.model||'—'}</div></div><div style="text-align:right"><b>${num(c.xp)} xP</b><div class="muted" style="font-size:10px">${num(c.expected_minutes,0)} min · ${pct(c.availability)}</div></div></div>${haul}${confHtml}<div style="margin-top:10px;padding:9px 10px;border-radius:12px;background:#0002;font-size:11px"><b>Mot #2 ${r.name||'—'}:</b> modellgap ${e.score_gap==null?'—':(Number(e.score_gap)>=0?'+':'')+num(e.score_gap,3)} · xP-gap ${e.xp_gap==null?'—':(Number(e.xp_gap)>=0?'+':'')+num(e.xp_gap)}${c.p10_plus!=null&&r.p10_plus!=null?` · 10+-gap ${(conf.haulGap>=0?'+':'')+pct(conf.haulGap)}`:''}. ${e.selected_pick_safe?'Består':'Består ikke'} sikkerhetsgaten for minutter/availability.</div>`;
-    host.appendChild(box);
-  }
-  function render(){renderCaptain();renderBenches();}
-  window.addEventListener('load',()=>{setTimeout(render,350);setTimeout(render,1200)});
-  new MutationObserver(()=>render()).observe(document.documentElement,{childList:true,subtree:true});
+  function confidence(e){const s=e.confidence||{};return {score:Number.isFinite(Number(s.score))?Math.max(0,Math.min(100,Math.round(Number(s.score)))):50,level:['LAV','MIDDELS','HØY'].includes(s.level)?s.level:'LAV'}}
+  function renderCaptain(){if(typeof D==='undefined'||!D||!D.captain_explanation)return;const e=D.captain_explanation,c=e.captain||{},r=e.runner_up||{},conf=confidence(e),host=document.querySelector('#captains');if(!host||document.querySelector('#captainExplain'))return;const box=document.createElement('div');box.id='captainExplain';box.style.cssText='grid-column:1/-1;margin-top:2px;padding:13px;border-radius:17px;border:1px solid #00e99044;background:linear-gradient(145deg,#00e9900d,#ffffff08)';const col=conf.level==='HØY'?'#00e990':conf.level==='MIDDELS'?'#ffd45b':'#ff7a92';box.innerHTML=`<div class="eyebrow">Hvorfor kaptein?</div><div style="display:flex;justify-content:space-between;gap:10px"><div><b style="font-size:20px">${c.name||'—'} (C)</b><div class="muted">${c.team||''} · modell ${e.model||'—'}</div></div><div style="text-align:right"><b>${num(c.xp)} xP</b><div class="muted">${num(c.expected_minutes,0)} min · ${pct(c.availability)}</div></div></div><div style="margin-top:10px;padding:10px;border-radius:13px;background:#0002"><div style="display:flex;justify-content:space-between"><b>${conf.level} confidence</b><b style="color:${col}">${conf.score}%</b></div><div style="height:7px;border-radius:99px;background:#ffffff12;margin-top:7px;overflow:hidden"><div style="height:100%;width:${conf.score}%;background:${col}"></div></div></div><div style="margin-top:9px;font-size:11px"><b>Mot #2 ${r.name||'—'}:</b> modellgap ${e.score_gap==null?'—':num(e.score_gap,3)} · xP-gap ${e.xp_gap==null?'—':num(e.xp_gap)}.</div>`;host.appendChild(box)}
+  function polish(){const meta=document.querySelector('#meta');if(meta&&D?.source_snapshot_gw)meta.title='Dashboardet bruker siste offentlige FPL-snapshot for faktisk lag';document.querySelectorAll('.section h2').forEach(h=>{h.style.letterSpacing='-.025em'});}
+  function render(){renderCaptain();renderBenches();polish()}
+  window.addEventListener('load',()=>{setTimeout(render,350);setTimeout(render,1200)});new MutationObserver(()=>render()).observe(document.documentElement,{childList:true,subtree:true});
 })();
