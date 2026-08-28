@@ -1,0 +1,189 @@
+{
+  "snapshot_version": "1.0",
+  "frozen_at": "2026-08-28T11:35:36.295809Z",
+  "gw": 2,
+  "deadline_time": "2026-08-28T17:30:00Z",
+  "model_version": "3.8-availability-recovery-set-piece-projection",
+  "budget": {
+    "bank": 0.0,
+    "squad_market_value": 100.2,
+    "squad_selling_value": 100.2,
+    "market_budget_total": 100.2,
+    "selling_budget_total": 100.2,
+    "bank_raw": 0,
+    "squad_market_value_raw": 1002,
+    "squad_selling_value_raw": 1002,
+    "currency": "GBP",
+    "selling_value_live": false,
+    "selling_value_note": "Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris."
+  },
+  "free_transfers": 1,
+  "budget_intelligence_version": "1.2-shadow",
+  "transfer_option_value_version": "1.1-shadow",
+  "baseline_bank_action": {
+    "bank": 0.0,
+    "future_free_transfers": 2,
+    "option_value": 1.5,
+    "affordable_upgrade_paths": 11,
+    "top_upgrade_paths": [
+      {
+        "out_id": 465,
+        "out_name": "Osula",
+        "in_id": 569,
+        "in_name": "Gonzalo",
+        "gain": 5.48,
+        "cost": 6.0
+      },
+      {
+        "out_id": 488,
+        "out_name": "I.Sangaré",
+        "in_id": 286,
+        "in_name": "Belloumi",
+        "gain": 4.84,
+        "cost": 5.0
+      },
+      {
+        "out_id": 557,
+        "out_name": "Tzolis",
+        "in_id": 236,
+        "in_name": "Dewsbury-Hall",
+        "gain": 4.17,
+        "cost": 6.5
+      },
+      {
+        "out_id": 418,
+        "out_name": "Maguire",
+        "in_id": 88,
+        "in_name": "Kayode",
+        "gain": 3.14,
+        "cost": 4.6
+      },
+      {
+        "out_id": 4,
+        "out_name": "Gabriel",
+        "in_id": 388,
+        "in_name": "Guéhi",
+        "gain": 2.96,
+        "cost": 6.0
+      }
+    ]
+  },
+  "production_top_rank": 1,
+  "shadow_top_rank": 1,
+  "candidates": [
+    {
+      "rank": 1,
+      "out": {
+        "id": 465,
+        "name": "Osula"
+      },
+      "in": {
+        "id": 569,
+        "name": "Gonzalo"
+      },
+      "horizon_gain": 8.69,
+      "short_gain": 8.26,
+      "bank_after": 0.0,
+      "option_value": 1.05,
+      "option_vs_bank": -0.45,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 8.24
+    },
+    {
+      "rank": 2,
+      "out": {
+        "id": 465,
+        "name": "Osula"
+      },
+      "in": {
+        "id": 295,
+        "name": "McBurnie"
+      },
+      "horizon_gain": 8.14,
+      "short_gain": 7.84,
+      "bank_after": 0.5,
+      "option_value": 1.13,
+      "option_vs_bank": -0.37,
+      "future_free_transfers": 1,
+      "upgrade_paths": 11,
+      "shadow_score": 7.77
+    },
+    {
+      "rank": 3,
+      "out": {
+        "id": 465,
+        "name": "Osula"
+      },
+      "in": {
+        "id": 346,
+        "name": "Calvert-Lewin"
+      },
+      "horizon_gain": 8.12,
+      "short_gain": 7.72,
+      "bank_after": 0.0,
+      "option_value": 1.05,
+      "option_vs_bank": -0.45,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 7.67
+    },
+    {
+      "rank": 4,
+      "out": {
+        "id": 488,
+        "name": "I.Sangaré"
+      },
+      "in": {
+        "id": 286,
+        "name": "Belloumi"
+      },
+      "horizon_gain": 8.11,
+      "short_gain": 7.94,
+      "bank_after": 0.0,
+      "option_value": 1.05,
+      "option_vs_bank": -0.45,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 7.66
+    },
+    {
+      "rank": 5,
+      "out": {
+        "id": 465,
+        "name": "Osula"
+      },
+      "in": {
+        "id": 491,
+        "name": "Igor Jesus"
+      },
+      "horizon_gain": 8.03,
+      "short_gain": 7.74,
+      "bank_after": 0.0,
+      "option_value": 1.05,
+      "option_vs_bank": -0.45,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 7.58
+    },
+    {
+      "rank": 6,
+      "out": {
+        "id": 488,
+        "name": "I.Sangaré"
+      },
+      "in": {
+        "id": 545,
+        "name": "Sadiki"
+      },
+      "horizon_gain": 7.48,
+      "short_gain": 7.39,
+      "bank_after": 0.0,
+      "option_value": 1.05,
+      "option_vs_bank": -0.45,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 7.03
+    }
+  ]
+}
