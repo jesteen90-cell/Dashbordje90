@@ -112,7 +112,11 @@ jobs:
           import json
           d=json.load(open('data.json'))
           pri=json.load(open('team_strength_prior.json')); assert pri.get('version')=='1.0-fpl-bootstrap'; assert len(pri.get('teams') or {})==20
-          assert d.get('model_version') in ('3.0-validated','3.1-market-ready'), d.get('model_version')
+          assert d.get('model_version') in ('3.0-validated','3.1-market-ready','3.2-history-prior'), d.get('model_version')
+          if d.get('model_version')=='3.2-history-prior':
+            hp=d.get('historical_attack_prior') or {}; assert hp.get('version')=='1.0-prev-season-fade'; assert int(hp.get('coverage') or 0)>0
+            with_prev=[p for p in (d.get('lineup') or []) if float((p.get('historical_prior') or {}).get('prev_minutes') or 0)>0]
+            assert with_prev, 'No XI player received previous-season attacking prior'
           opt=d.get('optimizer',{}); assert opt.get('captain_horizon_search') is True, opt
           pool=d.get('captain_pool') or {}; assert pool.get('version')=='1.0-all-xi'; assert int(pool.get('candidate_count') or 0)==11,pool; assert int(pool.get('display_count') or 0)<=5,pool
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
@@ -129,7 +133,7 @@ jobs:
           chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('squad_view_consistent') is True
-          print('Captain/team-prior sanity:',ex.get('captain',{}).get('name'),'diag leader:',diag.get('leader',{}).get('name'))
+          print('Captain/history-prior sanity:',ex.get('captain',{}).get('name'),'diag leader:',diag.get('leader',{}).get('name'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -147,5 +151,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json captain_diagnostics.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh with stabilized team priors"
+          git commit -m "Dashboard: refresh with historical attacking priors"
           git push
