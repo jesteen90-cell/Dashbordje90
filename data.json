@@ -1,6 +1,6 @@
 {
   "model_version": "3.3-fixture-strength-v2",
-  "generated_at": "2026-08-28T07:58:07.140385Z",
+  "generated_at": "2026-08-28T08:01:20.582591Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
@@ -3137,24 +3137,34 @@
     "why": [
       "Første trekk modellen vurderer er Osula → McBurnie.",
       "Estimert gevinst: +10.80 xP neste 3 GW og +11.65 xP over planhorisonten.",
-      "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.15.",
+      "Datakvalitet 0.45 (svak tabellprior, market av) løfter BYTT-kravet med 0.18 xP.",
+      "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.33.",
       "Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket."
     ],
     "weighted_gain": 8.58,
-    "threshold": 1.15,
+    "threshold": 1.33,
     "distance_to_switch": 0,
     "switch_trigger": "Anbefalingen er robust nok nå.",
     "horizon_3gw": 10.8,
     "horizon_plan": 11.65,
-    "premium_structure_bias": 0.0
+    "premium_structure_bias": 0.0,
+    "input_quality": {
+      "score": 0.45,
+      "threshold_penalty": 0.18,
+      "strength_quality": "svak tabellprior",
+      "market_active": false,
+      "prior_sources": [
+        "table-shrunk"
+      ]
+    }
   },
   "decision_layer": {
-    "version": "4.5-squad-consistent",
+    "version": "4.6-input-quality-threshold",
     "approved_first_move": true,
-    "threshold": 1.15,
+    "threshold": 1.33,
     "base_threshold": 1.15,
     "controls": {
-      "threshold": 1.15,
+      "threshold": 1.33,
       "minutes_penalty_scale": 1.0,
       "availability_penalty_scale": 1.0,
       "volatility_penalty_scale": 1.0
@@ -3163,7 +3173,7 @@
       "enabled": false,
       "component_enabled": false,
       "base_threshold": 1.15,
-      "effective_threshold": 1.15,
+      "effective_threshold": 1.33,
       "evaluated_gws": 0,
       "reasons": [
         "Minst 4 ferdige frozen-snapshot GWs kreves før terskelkalibrering"
@@ -3177,7 +3187,25 @@
         "captain_hit_rate": null,
         "mean_captain_regret": null,
         "position_diagnostics": {}
+      },
+      "input_quality": {
+        "score": 0.45,
+        "threshold_penalty": 0.18,
+        "strength_quality": "svak tabellprior",
+        "market_active": false,
+        "prior_sources": [
+          "table-shrunk"
+        ]
       }
+    },
+    "input_quality": {
+      "score": 0.45,
+      "threshold_penalty": 0.18,
+      "strength_quality": "svak tabellprior",
+      "market_active": false,
+      "prior_sources": [
+        "table-shrunk"
+      ]
     },
     "premium_structure_feedback": {
       "enabled": false,
