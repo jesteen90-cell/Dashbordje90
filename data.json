@@ -4675,6 +4675,20 @@
           }
         ],
         "affects_ranking": false
+      },
+      "timing_value_shadow": {
+        "version": "1.0",
+        "label": "VENT PÅ MER INFO",
+        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+        "hours_to_deadline": 5.8,
+        "affordability_fragility": 1.0,
+        "incoming_price_pressure_risk": 1.0,
+        "outgoing_price_pressure_risk": 0.007,
+        "lock_risk": 0.723,
+        "information_value": 0.742,
+        "net_early_action_case": -0.02,
+        "price_prediction": false,
+        "affects_ranking": false
       }
     },
     {
@@ -4934,6 +4948,20 @@
           }
         ],
         "affects_ranking": false
+      },
+      "timing_value_shadow": {
+        "version": "1.0",
+        "label": "VENT PÅ MER INFO",
+        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+        "hours_to_deadline": 5.8,
+        "affordability_fragility": 0.1,
+        "incoming_price_pressure_risk": 0.586,
+        "outgoing_price_pressure_risk": 0.007,
+        "lock_risk": 0.042,
+        "information_value": 0.742,
+        "net_early_action_case": -0.7,
+        "price_prediction": false,
+        "affects_ranking": false
       }
     },
     {
@@ -5190,6 +5218,20 @@
           }
         ],
         "affects_ranking": false
+      },
+      "timing_value_shadow": {
+        "version": "1.0",
+        "label": "VENT PÅ MER INFO",
+        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+        "hours_to_deadline": 5.8,
+        "affordability_fragility": 1.0,
+        "incoming_price_pressure_risk": 0.0,
+        "outgoing_price_pressure_risk": 0.007,
+        "lock_risk": 0.003,
+        "information_value": 0.742,
+        "net_early_action_case": -0.74,
+        "price_prediction": false,
+        "affects_ranking": false
       }
     },
     {
@@ -5445,6 +5487,20 @@
             "cost": 4.6
           }
         ],
+        "affects_ranking": false
+      },
+      "timing_value_shadow": {
+        "version": "1.0",
+        "label": "VENT PÅ MER INFO",
+        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+        "hours_to_deadline": 5.8,
+        "affordability_fragility": 1.0,
+        "incoming_price_pressure_risk": 0.088,
+        "outgoing_price_pressure_risk": 0.088,
+        "lock_risk": 0.097,
+        "information_value": 0.742,
+        "net_early_action_case": -0.646,
+        "price_prediction": false,
         "affects_ranking": false
       }
     },
@@ -5703,6 +5759,20 @@
           }
         ],
         "affects_ranking": false
+      },
+      "timing_value_shadow": {
+        "version": "1.0",
+        "label": "VENT PÅ MER INFO",
+        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+        "hours_to_deadline": 5.8,
+        "affordability_fragility": 1.0,
+        "incoming_price_pressure_risk": 0.0,
+        "outgoing_price_pressure_risk": 0.007,
+        "lock_risk": 0.003,
+        "information_value": 0.742,
+        "net_early_action_case": -0.74,
+        "price_prediction": false,
+        "affects_ranking": false
       }
     },
     {
@@ -5959,6 +6029,20 @@
             "cost": 4.6
           }
         ],
+        "affects_ranking": false
+      },
+      "timing_value_shadow": {
+        "version": "1.0",
+        "label": "VENT PÅ MER INFO",
+        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+        "hours_to_deadline": 5.8,
+        "affordability_fragility": 1.0,
+        "incoming_price_pressure_risk": 0.0,
+        "outgoing_price_pressure_risk": 0.088,
+        "lock_risk": 0.033,
+        "information_value": 0.742,
+        "net_early_action_case": -0.709,
+        "price_prediction": false,
         "affects_ranking": false
       }
     }
@@ -9867,5 +9951,124 @@
       }
     ],
     "note": "Shadow-mål: verdien av bank, lagrede gratisbytter og realistiske oppgraderingsveier. Påvirker ikke anbefalingen før backtest viser gevinst."
+  },
+  "transfer_timing": {
+    "version": "1.0-shadow",
+    "mode": "shadow",
+    "hours_to_deadline": 5.8,
+    "affects_transfer_ranking": false,
+    "price_prediction": false,
+    "method": "price-pressure risk x affordability fragility versus information value",
+    "candidates": [
+      {
+        "candidate_index": 0,
+        "label": "Osula → Gonzalo",
+        "timing": {
+          "version": "1.0",
+          "label": "VENT PÅ MER INFO",
+          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+          "hours_to_deadline": 5.8,
+          "affordability_fragility": 1.0,
+          "incoming_price_pressure_risk": 1.0,
+          "outgoing_price_pressure_risk": 0.007,
+          "lock_risk": 0.723,
+          "information_value": 0.742,
+          "net_early_action_case": -0.02,
+          "price_prediction": false,
+          "affects_ranking": false
+        }
+      },
+      {
+        "candidate_index": 1,
+        "label": "Osula → McBurnie",
+        "timing": {
+          "version": "1.0",
+          "label": "VENT PÅ MER INFO",
+          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+          "hours_to_deadline": 5.8,
+          "affordability_fragility": 0.1,
+          "incoming_price_pressure_risk": 0.586,
+          "outgoing_price_pressure_risk": 0.007,
+          "lock_risk": 0.042,
+          "information_value": 0.742,
+          "net_early_action_case": -0.7,
+          "price_prediction": false,
+          "affects_ranking": false
+        }
+      },
+      {
+        "candidate_index": 2,
+        "label": "Osula → Calvert-Lewin",
+        "timing": {
+          "version": "1.0",
+          "label": "VENT PÅ MER INFO",
+          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+          "hours_to_deadline": 5.8,
+          "affordability_fragility": 1.0,
+          "incoming_price_pressure_risk": 0.0,
+          "outgoing_price_pressure_risk": 0.007,
+          "lock_risk": 0.003,
+          "information_value": 0.742,
+          "net_early_action_case": -0.74,
+          "price_prediction": false,
+          "affects_ranking": false
+        }
+      },
+      {
+        "candidate_index": 3,
+        "label": "I.Sangaré → Belloumi",
+        "timing": {
+          "version": "1.0",
+          "label": "VENT PÅ MER INFO",
+          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+          "hours_to_deadline": 5.8,
+          "affordability_fragility": 1.0,
+          "incoming_price_pressure_risk": 0.088,
+          "outgoing_price_pressure_risk": 0.088,
+          "lock_risk": 0.097,
+          "information_value": 0.742,
+          "net_early_action_case": -0.646,
+          "price_prediction": false,
+          "affects_ranking": false
+        }
+      },
+      {
+        "candidate_index": 4,
+        "label": "Osula → Igor Jesus",
+        "timing": {
+          "version": "1.0",
+          "label": "VENT PÅ MER INFO",
+          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+          "hours_to_deadline": 5.8,
+          "affordability_fragility": 1.0,
+          "incoming_price_pressure_risk": 0.0,
+          "outgoing_price_pressure_risk": 0.007,
+          "lock_risk": 0.003,
+          "information_value": 0.742,
+          "net_early_action_case": -0.74,
+          "price_prediction": false,
+          "affects_ranking": false
+        }
+      },
+      {
+        "candidate_index": 5,
+        "label": "I.Sangaré → Sadiki",
+        "timing": {
+          "version": "1.0",
+          "label": "VENT PÅ MER INFO",
+          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
+          "hours_to_deadline": 5.8,
+          "affordability_fragility": 1.0,
+          "incoming_price_pressure_risk": 0.0,
+          "outgoing_price_pressure_risk": 0.088,
+          "lock_risk": 0.033,
+          "information_value": 0.742,
+          "net_early_action_case": -0.709,
+          "price_prediction": false,
+          "affects_ranking": false
+        }
+      }
+    ],
+    "note": "Timing-signalet avgjør når et ellers godt bytte eventuelt bør gjøres. Det skal ikke gjøre et dårlig bytte godt, og det forsøker ikke å forutsi FPLs skjulte prisalgoritme."
   }
 }
