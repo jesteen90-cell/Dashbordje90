@@ -7,6 +7,9 @@ on:
     paths:
       - "generate_dashboard_v3.py"
       - "market_ensemble_v1.py"
+      - "market_ab_shadow.py"
+      - "freeze_market_ab.py"
+      - "evaluate_market_ab.py"
       - "market_odds.json"
       - "decision_layer_v4.py"
       - "freeze_snapshot.py"
@@ -61,7 +64,9 @@ jobs:
           print('Validated model inputs present')
           PY
       - name: Evaluate completed frozen snapshots
-        run: python evaluate_frozen_snapshots.py
+        run: |
+          python evaluate_frozen_snapshots.py
+          python evaluate_market_ab.py
       - name: Build validated dashboard feed
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
@@ -70,6 +75,7 @@ jobs:
           if [ -z "$FPL_FREE_TRANSFERS" ]; then export FPL_FREE_TRANSFERS=1; fi
           python generate_dashboard_v3.py
           python decision_layer_v4.py
+          python market_ab_shadow.py
       - name: Sanity-check generated feed
         run: |
           python - <<'PY'
@@ -78,7 +84,6 @@ jobs:
           assert d.get('model_version')=='3.1-market-ready', d.get('model_version')
           me=d.get('market_ensemble',{})
           assert 'available' in me and 'active' in me and me.get('method')
-          # Missing/stale market data must degrade safely to internal team strength.
           if not me.get('available'): assert me.get('active') is False
           dl=d.get('decision_layer',{})
           assert dl.get('version')=='4.3-component-adaptive', dl.get('version')
@@ -99,21 +104,25 @@ jobs:
             if float(p.get('availability',0))>=.99: assert float(p.get('expected_minutes',0))>0,(p.get('name'),p.get('expected_minutes'))
           bench=d.get('bench',[])
           if bench: assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
-          score=json.load(open('backtest/scorecard.json'))
-          assert score.get('version')=='2.0'
-          assert 'minutes_mae' in score and 'position_diagnostics' in score
-          print('Model 3.1 market-ready + decision layer 4.3 sanity check passed:', d.get('generated_at'), me)
+          score=json.load(open('backtest/scorecard.json')); assert score.get('version')=='2.0'; assert 'minutes_mae' in score and 'position_diagnostics' in score
+          ab=json.load(open('market_ab/scorecard.json')); assert ab.get('version')=='1.0'
+          params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.0'
+          shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw'))
+          if params.get('promoted'): assert me.get('ab_promoted') is True
+          print('Model 3.1 + Decision 4.3 + market A/B sanity passed', d.get('generated_at'), me, ab.get('active_gws'))
           PY
-      - name: Freeze first valid pre-deadline snapshot
-        run: python freeze_snapshot.py
-      - name: Publish feed, snapshots and backtest
+      - name: Freeze pre-deadline snapshots
         run: |
-          if git diff --quiet -- data.json snapshots/ backtest/; then
+          python freeze_snapshot.py
+          python freeze_market_ab.py
+      - name: Publish feed, snapshots and backtests
+        run: |
+          if git diff --quiet -- data.json snapshots/ backtest/ market_ab/ market_ab_snapshots/; then
             echo "No dashboard, snapshot or backtest change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json snapshots/ backtest/
-          git commit -m "Dashboard: refresh analysis, snapshots and backtest"
+          git add data.json snapshots/ backtest/ market_ab/ market_ab_snapshots/
+          git commit -m "Dashboard: refresh analysis and frozen A/B evidence"
           git push
