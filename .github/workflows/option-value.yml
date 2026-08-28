@@ -1,4 +1,4 @@
-name: Enrich Budget Option Timing Robustness Final Gate Plan Bench and Regret
+name: Enrich Budget Option Timing Robustness Final Gate Plan Bench Regret Confidence Lock
 
 on:
   workflow_dispatch:
@@ -12,6 +12,8 @@ on:
       - "absence_severity_v1.py"
       - "transfer_necessity_v1.py"
       - "transfer_regret_v1.py"
+      - "decision_confidence_v1.py"
+      - "deadline_lock_v1.py"
       - "final_transfer_gate_v1.py"
       - "final_transfer_duel_v2.py"
       - "plan_intelligence_v1.py"
@@ -53,9 +55,11 @@ jobs:
           python absence_severity_v1.py
           python transfer_necessity_v1.py
           python transfer_regret_v1.py
+          python decision_confidence_v1.py
           python plan_intelligence_v1.py
           python final_transfer_gate_v1.py
           python final_transfer_duel_v2.py
+          python deadline_lock_v1.py
       - name: Sanity-check decision safety layers
         run: |
           python - <<'PY'
@@ -69,19 +73,22 @@ jobs:
           ab=d.get('absence_severity_model') or {}; assert ab.get('version')=='1.0-shadow'; assert ab.get('affects_transfer_ranking') is False
           tn=d.get('transfer_necessity_model') or {}; assert tn.get('version')=='1.0-shadow'; assert tn.get('affects_transfer_ranking') is False
           rg=d.get('transfer_regret_model') or {}; assert rg.get('version')=='1.0-shadow'; assert rg.get('affects_transfer_ranking') is False
+          dc=d.get('decision_confidence_model') or {}; assert dc.get('version')=='1.0-shadow'; assert dc.get('affects_transfer_ranking') is False
           pi=d.get('plan_intelligence') or {}; assert pi.get('version')=='1.0'; assert pi.get('rolling_plan') is True
           future=d.get('future') or []; assert len(future)>=2
           for r in future:
               x=r.get('plan_intelligence') or {}; assert x.get('version')=='1.0'; assert 0 <= int(x.get('free_transfers_after') or 0) <= 5
-          candidates=d.get('candidates') or []; assert int(rob.get('candidate_count') or 0)==len(candidates); assert int(ab.get('candidate_count') or 0)==len(candidates); assert int(tn.get('candidate_count') or 0)==len(candidates); assert int(rg.get('candidate_count') or 0)==len(candidates)
+          candidates=d.get('candidates') or []; assert int(rob.get('candidate_count') or 0)==len(candidates); assert int(ab.get('candidate_count') or 0)==len(candidates); assert int(tn.get('candidate_count') or 0)==len(candidates); assert int(rg.get('candidate_count') or 0)==len(candidates); assert int(dc.get('candidate_count') or 0)==len(candidates)
           for c in candidates:
               nv=c.get('transfer_necessity_shadow') or {}; assert nv.get('version')=='1.0-shadow' and nv.get('affects_ranking') is False; assert nv.get('label') in ('SPAR FT','LUKSUSBYTTE','FORNUFTIG','NØDVENDIG')
               rr=c.get('transfer_regret_shadow') or {}; assert rr.get('version')=='1.0-shadow' and rr.get('affects_ranking') is False; assert 0<=float(rr.get('regret_make_transfer'))<=1; assert 0<=float(rr.get('regret_save_ft'))<=1
-          fg=d.get('final_transfer_gate') or {}; assert str(fg.get('version','')).startswith('2.'); assert fg.get('verdict') in ('GO','WAIT / RECHECK','NO-GO'); assert fg.get('authoritative_headline')==d.get('headline')
+              cf=c.get('decision_confidence_shadow') or {}; assert cf.get('version')=='1.0-shadow' and cf.get('affects_ranking') is False; assert 0<=float(cf.get('score'))<=1; assert len(cf.get('components') or {})>=8
+          fg=d.get('final_transfer_gate') or {}; assert str(fg.get('version','')).startswith('2.'); assert fg.get('verdict') in ('GO','WAIT / RECHECK','NO-GO')
           duel=d.get('final_transfer_duel') or {}; assert str(duel.get('version','')).startswith('2.'); assert duel.get('affects_transfer_ranking') is False; assert duel.get('verdict') in ('GO','WAIT / RECHECK','NO-GO'); assert len(duel.get('rows') or [])>=2
+          lock=d.get('deadline_lock') or {}; assert lock.get('version')=='1.0-predeadline'; assert lock.get('affects_transfer_ranking') is False; assert lock.get('verdict') in ('LOCKED / NO-GO','UNLOCKED ONLY AFTER RECHECK','UNLOCKED / GO'); assert lock.get('headline')==d.get('headline')
           if not bool((d.get('decision_layer') or {}).get('approved_first_move')):
-              assert fg.get('verdict')=='NO-GO'; assert duel.get('verdict')=='NO-GO'
-          print('Decision safety + regret sanity OK',fg.get('verdict'),duel.get('verdict'),rg)
+              assert fg.get('verdict')=='NO-GO'; assert duel.get('verdict')=='NO-GO'; assert lock.get('verdict')=='LOCKED / NO-GO'
+          print('Decision safety + confidence + deadline lock sanity OK',fg.get('verdict'),duel.get('verdict'),lock)
           PY
       - name: Evaluate and freeze evidence
         run: |
@@ -104,7 +111,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/
-          git commit -m "Dashboard: enrich transfer regret decision"
+          git commit -m "Dashboard: enrich confidence and deadline lock"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
