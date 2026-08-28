@@ -12,10 +12,10 @@ def pipeline_sanity():
  for p in Path('.').glob('*.py'):py_compile.compile(str(p),doraise=True)
  opt=Path('transfer_optimizer_v2.py').read_text();assert 'BENCH_RESILIENCE_WEIGHT=.055' in opt and 'def captain_value' in opt
  dl=Path('decision_layer_v4.py').read_text();assert 'def select_squad_view' in dl and "data['lineup']=target_xi" in dl
- build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build;assert 'reconcile_breakdown' in build and 'set_piece_roles.json' in build
+ build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build;assert 'reconcile_breakdown' in build and 'set_piece_roles.json' in build and "projection_integration':'active'" in build
  gen=Path('generate_dashboard_v3.py').read_text();assert "'penalty_taker_share':penalty_share(p)" in gen and "'projection_integration':'active'" in gen and "'bonus','penalty','conceded'" in gen
  roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
- html=Path('index.html').read_text();assert 'function render()' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html
+ html=Path('index.html').read_text();app=Path('app.js').read_text();assert '<script src="app.js"></script>' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html and 'function render()' in app and 'function kit(' in app
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
 
 def strength_sanity():
