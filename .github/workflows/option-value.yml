@@ -43,20 +43,33 @@ jobs:
           import json
           d=json.load(open('data.json'))
           bi=d.get('budget_intelligence') or {}
-          assert bi.get('version')=='1.0-shadow'
+          assert bi.get('version')=='1.2-shadow', bi.get('version')
           assert bi.get('affects_transfer_ranking') is False
+          assert bi.get('squad_source')=='confirmed_fpl + bootstrap-static'
+          assert int(bi.get('squad_players_found') or 0)==15, bi.get('squad_players_found')
+          assert float(bi.get('squad_market_value') or 0)>0
           assert 0 <= float((bi.get('flexibility') or {}).get('score',0)) <= 1
+          pool=d.get('transfer_option_pool') or {}
+          assert pool.get('version')=='1.0-compact'
+          assert len(pool.get('owned_ids') or [])==15
+          assert len(pool.get('players') or [])>=15
+          assert len(pool.get('gws') or [])>=2
           tov=d.get('transfer_option_value') or {}
-          assert tov.get('version')=='1.0-shadow'
+          assert tov.get('version')=='1.1-shadow', tov.get('version')
+          assert tov.get('source')=='data.json transfer_option_pool'
           assert tov.get('affects_transfer_ranking') is False
           base=tov.get('baseline_bank_action') or {}
-          assert int(base.get('future_free_transfers') or 0) >= 1
-          for c in d.get('candidates') or []:
+          assert 1 <= int(base.get('future_free_transfers') or 0) <= 5
+          assert int(base.get('affordable_upgrade_paths') or 0)>=0
+          candidates=d.get('candidates') or []
+          for c in candidates:
               ov=c.get('option_value_shadow') or {}
+              assert ov.get('version')=='1.1'
               assert ov.get('affects_ranking') is False
               assert float(ov.get('total',0)) >= 0
               assert int(ov.get('affordable_upgrade_paths') or 0) >= 0
-          print('Budget/option sanity OK',bi.get('flexibility'),base,'candidates',len(d.get('candidates') or []))
+              assert 1 <= int(ov.get('future_free_transfers') or 0) <= 5
+          print('Budget/option sanity OK',bi.get('flexibility'),base,'pool',len(pool.get('players') or []),'candidates',len(candidates))
           PY
       - name: Publish enriched feed
         run: |
