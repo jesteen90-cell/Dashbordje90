@@ -66,18 +66,23 @@ def enrich(obj):
   for v in obj:enrich(v)
 
 def budget_summary():
- """Expose FPL money in user-facing pounds while keeping raw tenths auditable."""
+ """Expose both market and true FPL sale budget when the source provides it."""
  market_value_raw=sum(int(p.get('now_cost') or 0) for p in squad)
  bank_raw=int(bank or 0)
+ selling_live=all(p.get('selling_price') is not None for p in squad)
+ selling_value_raw=sum(int(p.get('selling_price') if p.get('selling_price') is not None else p.get('now_cost') or 0) for p in squad)
  return {
   'bank':round(bank_raw/10,1),
   'squad_market_value':round(market_value_raw/10,1),
+  'squad_selling_value':round(selling_value_raw/10,1),
   'market_budget_total':round((market_value_raw+bank_raw)/10,1),
+  'selling_budget_total':round((selling_value_raw+bank_raw)/10,1),
   'bank_raw':bank_raw,
   'squad_market_value_raw':market_value_raw,
+  'squad_selling_value_raw':selling_value_raw,
   'currency':'GBP',
-  'selling_value_live':False,
-  'selling_value_note':'Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris.'
+  'selling_value_live':selling_live,
+  'selling_value_note':'Faktisk FPL-salgsverdi brukes.' if selling_live else 'Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris.'
  }
 
 feed_path=Path('data.json')
@@ -95,5 +100,9 @@ if feed_path.exists():
 rows=[]
 for p in players:
  rows.append({'id':int(p['id']),'name':p['web_name'],'team':int(p['team']),'element_type':int(p['element_type']),'now_cost':int(p['now_cost']),'xp':{str(g):round(float(p['_x'].get(g,0)),4) for g in gws}})
-out={'version':'1.1-budget-aware','gws':gws,'weights':{str(k):v for k,v in weights.items()},'squad_ids':[int(p['id']) for p in squad],'bank':int(bank),'budget':budget_summary(),'players':rows}
+out={'version':'1.2-sale-budget-aware','gws':gws,'weights':{str(k):v for k,v in weights.items()},'squad_ids':[int(p['id']) for p in squad],'bank':int(bank),'budget':budget_summary(),'players':rows}
 Path('projection_cache.json').write_text(json.dumps(out,ensure_ascii=False,indent=2));print('Exported production projection cache',len(rows),'players')
+
+# Budget Intelligence is deliberately a post-projection shadow layer. It can
+# annotate timing/flexibility without changing xP or transfer ranking.
+runpy.run_path('budget_intelligence_v1.py',run_name='__main__')
