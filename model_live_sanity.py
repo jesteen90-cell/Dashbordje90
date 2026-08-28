@@ -12,7 +12,8 @@ def pipeline_sanity():
  for p in Path('.').glob('*.py'):py_compile.compile(str(p),doraise=True)
  opt=Path('transfer_optimizer_v2.py').read_text();assert 'BENCH_RESILIENCE_WEIGHT=.055' in opt and 'def captain_value' in opt
  dl=Path('decision_layer_v4.py').read_text();assert 'def select_squad_view' in dl and "data['lineup']=target_xi" in dl
- build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build
+ build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build;assert 'reconcile_breakdown' in build and 'set_piece_roles.json' in build and "'projection_integration':'pending'" in build
+ roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
  html=Path('index.html').read_text();assert 'function render()' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
 
@@ -55,8 +56,6 @@ def goalkeeper_sanity():
  easy=project(base(**common,opponent_goal_lambda=.65));hard=project(base(**common,opponent_goal_lambda=2.2));assert hard['expected_saves']>easy['expected_saves'];assert hard['save_fixture_multiplier']>1>easy['save_fixture_multiplier'];assert hard['saves']>easy['saves']
 
 def penalty_sanity():
- # Official direct scoring is +5 for a save and -2 for a miss. Rare events must
- # remain small in expectation and absent taker data must not invent miss risk.
  gk=project(base(position=1,minutes_history=1800,start_rate=1,avg_start_mins=90,prev_minutes=3000,penalty_save90=.08));assert 0<gk['penalty_save']<.5 and gk['penalty_miss']==0
  normal=project(base(position=4,minutes_history=1800,start_rate=1,avg_start_mins=90,prev_minutes=3000));taker=project(base(position=4,minutes_history=1800,start_rate=1,avg_start_mins=90,prev_minutes=3000,penalty_taker_share=1,penalty_miss90=.05));assert normal['penalty']==0 and taker['penalty_miss']<0 and taker['total']<normal['total']
  ps,pm,_,_=penalty_components({'minutes_history':900,'penalty_save90':.1},1,1,1);assert ps>0 and pm==0
@@ -65,5 +64,5 @@ def main():
  sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0;ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
  seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5));starter=project(base(minutes_history=180,start_rate=1,sub_rate=0));assert 15<seen['xmins']<70 and starter['xmins']>seen['xmins']
  unknown=project(base(minutes_history=90,start_rate=1,avg_start_mins=88));est=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000));assert est['xmins']>=76 and est['xmins']>=unknown['xmins']+8
- strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();penalty_sanity();pipeline_sanity();print('live model sanity passed',{'penalty_components':True,'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
+ strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();goalkeeper_sanity();penalty_sanity();pipeline_sanity();print('live model sanity passed',{'penalty_components':True,'set_piece_metadata':True,'xp_reconciliation':True,'goalkeeper_fixture_saves':True,'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
 if __name__=='__main__':main()
