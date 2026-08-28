@@ -108,7 +108,8 @@ jobs:
             if s: assert len(s.get('squad_ids',[]))==15 and all(c.get('captain_id') for c in s.get('captains',[]))
           pscore=json.load(open('backtest/premium_structure_scorecard.json')); assert pscore.get('version')=='1.0'; assert 'winner_counts' in pscore and 'mean_regret' in pscore
           pparams=json.load(open('backtest/premium_structure_params.json')); assert pparams.get('version')=='1.0'; assert pparams.get('promoted_structure') in ('none','premium_forward','premium_midfielder'); assert float(pparams.get('candidate_bias',0))<=.20
-          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.0-shadow'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'; assert chip.get('recommendation') in ('hold','wildcard','free_hit','bench_boost','triple_captain'); assert set(chip.get('scores',{}))=={'wildcard','free_hit','bench_boost','triple_captain'}
+          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.2-half-season-reservation'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'; assert chip.get('tc_decision') in ('HOLD','CONSIDER','USE_NOW'); assert chip.get('recommendation') in ('hold','wildcard','free_hit','bench_boost','triple_captain'); assert set(chip.get('scores',{}))=={'wildcard','free_hit','bench_boost','triple_captain'}
+          ce=chip.get('evidence',{}); assert ce.get('tc_half') in (1,2); assert ce.get('tc_cutoff_gw') in (19,38); assert float(ce.get('tc_expiry_pressure',0))>=0; assert float(ce.get('tc_reservation_cost',0))>=0
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('premium_structure_adaptive') is True; assert 'premium_structure_feedback' in dl
@@ -118,7 +119,7 @@ jobs:
           params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
           shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
           for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
-          print('Decision 4.4 + chip shadow sanity passed',chip.get('recommendation'),chip.get('confidence'),chip.get('scores'))
+          print('Decision 4.4 + TC half-season reservation sanity passed',chip.get('tc_decision'),chip.get('scores'),ce.get('future_best_captain_spot'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -136,5 +137,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json premium_structure_shadow.json chip_strategy_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh analysis, premium evidence and chip shadow"
+          git commit -m "Dashboard: refresh analysis, premium evidence and chip reservation shadow"
           git push
