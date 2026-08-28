@@ -10,6 +10,7 @@ on:
       - "transfer_timing_v1.py"
       - "transfer_robustness_v1.py"
       - "final_transfer_gate_v1.py"
+      - "final_transfer_duel_v2.py"
       - "plan_intelligence_v1.py"
       - "bench_replacement_v1.py"
       - "freeze_option_value.py"
@@ -48,6 +49,7 @@ jobs:
           python bench_replacement_v1.py
           python plan_intelligence_v1.py
           python final_transfer_gate_v1.py
+          python final_transfer_duel_v2.py
       - name: Sanity-check decision safety layers
         run: |
           python - <<'PY'
@@ -70,9 +72,11 @@ jobs:
               rv=c.get('robustness_shadow') or {}; assert rv.get('version')=='1.0-shadow' and rv.get('affects_ranking') is False; assert rv.get('label') in ('ROBUST','BLANDET','FRAGIL')
               ba=c.get('bench_adjustment_shadow') or {}; assert ba.get('version')=='1.0' and ba.get('affects_ranking') is False
           fg=d.get('final_transfer_gate') or {}; assert fg.get('version')=='1.0-predeadline'; assert fg.get('verdict') in ('GO','WAIT / RECHECK','NO-GO')
-          if not bool((d.get('decision_layer') or {}).get('approved_first_move')): assert fg.get('verdict')=='NO-GO'
+          duel=d.get('final_transfer_duel') or {}; assert duel.get('version')=='2.0-bench-aware'; assert duel.get('affects_transfer_ranking') is False; assert duel.get('verdict') in ('GO','WAIT / RECHECK','NO-GO'); assert len(duel.get('rows') or [])>=2
+          if not bool((d.get('decision_layer') or {}).get('approved_first_move')):
+              assert fg.get('verdict')=='NO-GO'; assert duel.get('verdict')=='NO-GO'
           if fg.get('robustness')=='FRAGIL': assert fg.get('verdict')!='GO'
-          print('Final decision, bench and plan sanity OK',fg,pi,br)
+          print('Final decision, duel, bench and plan sanity OK',fg,duel,pi,br)
           PY
       - name: Evaluate and freeze evidence
         run: |
@@ -95,7 +99,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/
-          git commit -m "Dashboard: enrich plan and bench-aware decision safety"
+          git commit -m "Dashboard: enrich bench-aware final duel"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
