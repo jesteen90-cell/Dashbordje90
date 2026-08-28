@@ -1,0 +1,1 @@
+(()=>{async function run(){try{const r=await fetch(`data.json?meta=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const d=await r.json(),el=document.getElementById('teamId');if(el)el.textContent=d.fpl_team_id?`FPL-lag #${d.fpl_team_id}`:'FPL-lag: ikke tilgjengelig';}catch(_e){}}run();})();
