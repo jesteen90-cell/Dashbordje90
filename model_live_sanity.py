@@ -1,8 +1,9 @@
 from pathlib import Path
 import py_compile
-from model_v2_core import project, stabilized_role
+from model_v2_core import project, stabilized_role, attack_evidence_minutes
 from team_strength_v2 import build_strength, fixture_difficulty
 from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS
+from recent_form_v2 import blend_rates
 
 
 def base(**kw):
@@ -45,6 +46,26 @@ def uncertainty_sanity():
     assert rotation['sd']/max(rotation['total'],1) > secure['sd']/max(secure['total'],1),(secure,rotation)
 
 
+def attacking_evidence_sanity():
+    # Recent evidence may help, but is bounded and cannot turn one match into a huge sample.
+    assert attack_evidence_minutes(90,90,.20) < 100
+    assert attack_evidence_minutes(90,900,1.0) <= 216
+    assert attack_evidence_minutes(3000,900,1.0) <= 1800
+    b={'goal90':.50,'assist90':.20}
+    season={'multiplier':1.10}
+    recent_low={'multiplier':1.20,'confidence':.10,'minutes':90}
+    recent_high={'multiplier':1.20,'confidence':.80,'minutes':720}
+    low,m1=blend_rates(b,season,recent_low,attack_share=.40,enabled=True)
+    high,m2=blend_rates(b,season,recent_high,attack_share=.40,enabled=True)
+    # Confidence gates overlap; we no longer multiply 1.10*1.20 directly.
+    assert 1.10 < m1 < m2 < 1.20,(m1,m2)
+    assert low['recent_minutes']==90 and abs(low['recent_confidence']-.10)<1e-9
+    assert high['goal90'] > low['goal90']
+    early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=1.0,assist90=.4,prev_minutes=3000,prev_goal90=.55,prev_assist90=.15,recent_minutes=90,recent_confidence=.20))
+    assert 90 < early['attack_evidence_minutes'] < 100,early
+    assert early['goal90_used'] < .70,early
+
+
 def main():
     sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0
     ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
@@ -53,7 +74,7 @@ def main():
     unknown_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=.3,assist90=.1));established_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000,goal90=.3,assist90=.1));assert established_early['xmins']>=76 and established_early['xmins']>=unknown_early['xmins']+8 and established_early['p_start']>.84
     generic=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0));elite=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0,prev_minutes=3000,prev_goal90=.90,prev_assist90=.12));assert elite['goal_prior_used']>generic['goal_prior_used']+.20 and elite['goals']>generic['goals']+.35
     faded=project(base(minutes_history=2700,start_rate=1,avg_start_mins=90,goal90=.31,prev_minutes=3000,prev_goal90=.90));assert abs(faded['goal90_used']-.31)<abs(elite['goal90_used']-.31)
-    strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();pipeline_sanity()
-    print('live model sanity passed',{'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'position_aware_fdr':True,'bench_resilience':True,'captain_optimizer_aligned':True,'role_uncertainty':True})
+    strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();pipeline_sanity()
+    print('live model sanity passed',{'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'position_aware_fdr':True,'bench_resilience':True,'captain_optimizer_aligned':True,'role_uncertainty':True,'attack_evidence':True,'form_overlap_guard':True})
 
 if __name__=='__main__':main()
