@@ -56,8 +56,8 @@ def main():
     data.setdefault('comparison',{})['current_xi']=xi
     data['confirmed_fpl']={'gw':gw,'source':'official-picks-api','view':'effective-points-lineup','exact_order':True,'automatic_subs_applied':auto_subs,'lineup':xi,'bench':bench,'captain_id':next(p['id'] for p in xi if p.get('captain')),'vice_id':next(p['id'] for p in xi if p.get('vice')),'fallback_rows':missing}
     PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Applied effective FPL GW',gw,'XI=',[p['name'] for p in xi],'bench=',[p['name'] for p in bench],'auto-subs=',auto_subs,'fallback=',missing)
-    # projection_cache.json exists inside the main refresh at this point. Use it
-    # to reconstruct the post-transfer current squad and choose the best legal XI.
+    # projection_cache exists during the main refresh. Current Squad Sync may use
+    # official history or a GW-scoped user-confirmed pre-deadline override.
     runpy.run_path('current_squad_sync_v1.py',run_name='__main__')
     runpy.run_path('optimal_lineup_v1.py',run_name='__main__')
 
