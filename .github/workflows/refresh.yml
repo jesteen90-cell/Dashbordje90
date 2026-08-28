@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - "generate_dashboard_v3.py"
+      - "market_ensemble_v1.py"
+      - "market_odds.json"
       - "decision_layer_v4.py"
       - "freeze_snapshot.py"
       - "evaluate_frozen_snapshots.py"
@@ -42,7 +44,7 @@ jobs:
         run: pip install requests
       - name: Regression-check xP core
         run: python model_live_sanity.py
-      - name: Preflight Model 3.0 inputs
+      - name: Preflight validated inputs
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
         run: |
@@ -56,7 +58,7 @@ jobs:
           assert rf.get('promote') is True, 'recent form not promoted'
           assert cap.get('promote') is True, 'captain v3 not promoted'
           assert tr.get('promote') is True, 'transfer strategy not promoted'
-          print('Validated Model 3.0 inputs present')
+          print('Validated model inputs present')
           PY
       - name: Evaluate completed frozen snapshots
         run: python evaluate_frozen_snapshots.py
@@ -73,13 +75,15 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('data.json'))
-          assert d.get('model_version')=='3.0-validated', d.get('model_version')
+          assert d.get('model_version')=='3.1-market-ready', d.get('model_version')
+          me=d.get('market_ensemble',{})
+          assert 'available' in me and 'active' in me and me.get('method')
+          # Missing/stale market data must degrade safely to internal team strength.
+          if not me.get('available'): assert me.get('active') is False
           dl=d.get('decision_layer',{})
           assert dl.get('version')=='4.3-component-adaptive', dl.get('version')
-          assert dl.get('explainability') is True
-          assert dl.get('captain_comparison') is True
-          assert dl.get('backtest_adaptive') is True
-          assert dl.get('component_adaptive') is True
+          assert dl.get('explainability') is True and dl.get('captain_comparison') is True
+          assert dl.get('backtest_adaptive') is True and dl.get('component_adaptive') is True
           assert 0.90 <= float(dl.get('threshold')) <= 1.45
           controls=dl.get('controls',{})
           assert 0.85 <= float(controls.get('minutes_penalty_scale',1)) <= 1.25
@@ -92,15 +96,13 @@ jobs:
           assert d.get('decision_explanation',{}).get('decision') in ('BANK','BYTT')
           assert len(d.get('captain_comparison',[]))>=3
           for p in d.get('lineup',[]):
-            if float(p.get('availability',0))>=.99:
-              assert float(p.get('expected_minutes',0))>0,(p.get('name'),p.get('expected_minutes'))
+            if float(p.get('availability',0))>=.99: assert float(p.get('expected_minutes',0))>0,(p.get('name'),p.get('expected_minutes'))
           bench=d.get('bench',[])
-          if bench:
-            assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
+          if bench: assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
           score=json.load(open('backtest/scorecard.json'))
           assert score.get('version')=='2.0'
           assert 'minutes_mae' in score and 'position_diagnostics' in score
-          print('Model 3.0 + decision layer 4.3 sanity check passed:', d.get('generated_at'))
+          print('Model 3.1 market-ready + decision layer 4.3 sanity check passed:', d.get('generated_at'), me)
           PY
       - name: Freeze first valid pre-deadline snapshot
         run: python freeze_snapshot.py
