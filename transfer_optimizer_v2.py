@@ -32,6 +32,16 @@ def legal(squad):
     for p in squad:clubs[int(p['team'])]=clubs.get(int(p['team']),0)+1
     return max(clubs.values(),default=0)<=3
 
+def sale_value(p):
+    """Use actual FPL selling value when present, otherwise current price.
+
+    The official picks payload can expose selling_price. Falling back to
+    now_cost keeps historical/backtest data working, while avoiding inflated
+    budgets once selling_price is wired into the live squad objects.
+    """
+    try:return int(p.get('selling_price',p.get('now_cost',0)))
+    except Exception:return int(p.get('now_cost',0) or 0)
+
 def captain_value(p,gw):
     xp=float(p['_x'].get(gw,0));proj=(p.get('_proj') or {}).get(gw,{}) or {};w=CAPTAIN_WEIGHTS
     ceiling=float(proj.get('p90',xp));mins=float(proj.get('xmins',90))/90;attack=float(proj.get('attack_multiplier',1));vol=float(proj.get('volatility',0))
@@ -72,9 +82,15 @@ def gw_value(squad,gw):
     return o['raw']+captain_xp+bench_resilience(squad,o['xi'],gw)
 
 def _incoming_pools(players,squad,gws,weights,per_pos=12):
-    owned={int(p['id']) for p in squad};pools={};caph=horizon_values(players,gws,weights)
+    """Build candidate pools from all players, not only currently unowned.
+
+    State-level ownership filtering happens when a transfer is generated. This
+    allows a player sold in GW N to become a legal buy-back candidate later in
+    the planning horizon, which is important around fixture swings.
+    """
+    pools={};caph=horizon_values(players,gws,weights)
     for pos in POS_COUNTS:
-        xs=[p for p in players if int(p['element_type'])==pos and int(p['id']) not in owned]
+        xs=[p for p in players if int(p['element_type'])==pos]
         def pool_score(p):
             vals=[float(p['_x'].get(g,0))*weights.get(g,1) for g in gws];h=caph.get(int(p['id']),{});persistence=float(h.get('captain_horizon_bonus',0));near=int(h.get('near_best_gws',0))
             cap_peak=max((captain_value(p,g)*weights.get(g,1) for g in gws),default=0)
@@ -85,7 +101,7 @@ def _incoming_pools(players,squad,gws,weights,per_pos=12):
 def _one_transfer_states(st,pools):
     owned={int(p['id']) for p in st['squad']};out=[]
     for sell in st['squad']:
-        budget=st['bank']+int(sell['now_cost'])
+        budget=st['bank']+sale_value(sell)
         for buy in pools[int(sell['element_type'])]:
             if int(buy['id']) in owned or int(buy['now_cost'])>budget:continue
             ns=[p for p in st['squad'] if int(p['id'])!=int(sell['id'])]+[buy]
@@ -114,7 +130,7 @@ def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=70,per_p
                     owned={int(p['id']) for p in ns1};sell_candidates=sorted(ns1,key=lambda p:sum(float(p['_x'].get(g,0))*weights.get(g,1) for g in gws))[:8]
                     for sell in sell_candidates:
                         if int(sell['id'])==p1[0][1]:continue
-                        budget=nb1+int(sell['now_cost'])
+                        budget=nb1+sale_value(sell)
                         for buy in pools[int(sell['element_type'])][:6]:
                             if int(buy['id']) in owned or int(buy['now_cost'])>budget:continue
                             ns2=[p for p in ns1 if int(p['id'])!=int(sell['id'])]+[buy]
@@ -126,4 +142,4 @@ def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=70,per_p
             if key not in dedup or st['score']>dedup[key]['score']:dedup[key]=st
         beam=sorted(dedup.values(),key=lambda s:s['score'],reverse=True)[:beam_width]
     best=beam[0];baseline=sum(cv(squad,g)*weights.get(g,1) for g in gws)
-    return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'hit_points':best['hits'],'moves':best['moves'],'squad':best['squad'],'cache_entries':len(cache),'captain_horizon_search':True,'captain_selection_aligned':True,'captain_weights':CAPTAIN_WEIGHTS,'bench_resilience':True,'bench_resilience_weight':BENCH_RESILIENCE_WEIGHT}
+    return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'hit_points':best['hits'],'moves':best['moves'],'squad':best['squad'],'cache_entries':len(cache),'captain_horizon_search':True,'captain_selection_aligned':True,'captain_weights':CAPTAIN_WEIGHTS,'bench_resilience':True,'bench_resilience_weight':BENCH_RESILIENCE_WEIGHT,'selling_price_aware':True,'reentry_pool':True}
