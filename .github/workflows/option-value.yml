@@ -10,6 +10,8 @@ on:
       - "transfer_timing_v1.py"
       - "freeze_option_value.py"
       - "evaluate_option_value.py"
+      - "freeze_transfer_timing.py"
+      - "evaluate_transfer_timing.py"
       - ".github/workflows/option-value.yml"
   workflow_run:
     workflows: ["Refresh FPL Dashboard"]
@@ -91,7 +93,11 @@ jobs:
         run: python evaluate_option_value.py
       - name: Freeze pre-deadline option-value snapshot
         run: python freeze_option_value.py
-      - name: Sanity-check option scorecard
+      - name: Evaluate completed timing snapshots
+        run: python evaluate_transfer_timing.py
+      - name: Freeze pre-deadline timing snapshot
+        run: python freeze_transfer_timing.py
+      - name: Sanity-check evidence scorecards
         run: |
           python - <<'PY'
           import json
@@ -100,17 +106,22 @@ jobs:
           assert int(s.get('evaluated_gws') or 0)>=0
           assert isinstance(s.get('promote'),bool)
           assert isinstance(s.get('promotion_ready'),bool)
-          if int(s.get('evaluated_gws') or 0)<8:
-              assert s.get('promote') is False
-          print('Option scorecard sanity OK',s)
+          if int(s.get('evaluated_gws') or 0)<8: assert s.get('promote') is False
+          t=json.load(open('timing_backtest/scorecard.json'))
+          assert t.get('version')=='1.0'
+          assert int(t.get('candidate_samples') or 0)>=0
+          assert isinstance(t.get('calibration_ready'),bool)
+          assert isinstance(t.get('promote_timing_thresholds'),bool)
+          if int(t.get('candidate_samples') or 0)<20: assert t.get('promote_timing_thresholds') is False
+          print('Evidence sanity OK',s,t)
           PY
-      - name: Publish enriched feed and option evidence
+      - name: Publish enriched feed and evidence
         run: |
-          if git diff --quiet -- data.json option_value_snapshots/ option_value_backtest/; then echo "No budget/option/timing change."; exit 0; fi
+          if git diff --quiet -- data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/; then echo "No budget/option/timing change."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json option_value_snapshots/ option_value_backtest/
-          git commit -m "Dashboard: enrich budget option and timing"
+          git add data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/
+          git commit -m "Dashboard: enrich and evaluate option and timing"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
