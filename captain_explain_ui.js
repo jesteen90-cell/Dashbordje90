@@ -33,7 +33,7 @@
     });
   }
   function render(){
-    if(!window.D || !D.captain_explanation) return;
+    if(typeof D==='undefined' || !D || !D.captain_explanation) return;
     const e=D.captain_explanation,c=e.captain||{},r=e.runner_up||{},conf=confidence(e);
     const host=document.querySelector('#captains');
     if(!host) return;
