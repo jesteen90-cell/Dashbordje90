@@ -1,8 +1,9 @@
 """FPL Model shared core.
 
 Component expected-points engine for live projection and walk-forward tests.
-Inputs must be pre-deadline features only. Model 3.2 stabilizes noisy early-
-season role and attacking estimates without hard-coding individual players.
+Inputs must be pre-deadline features only. Model 3.4 improves early-season role
+estimation by using previous-season minutes as a bounded prior for established
+starters, while keeping new/rotational players conservative.
 """
 from __future__ import annotations
 import math
@@ -20,22 +21,33 @@ def beta_shrink(rate, minutes, prior, prior_minutes=900):
     return w*max(0.0,rate)+(1-w)*prior
 
 def historical_attack_prior(position_prior, prev_rate, prev_minutes, history_strength=900.0):
-    """Build a bounded player-specific prior from the previous season.
-
-    Previous-season evidence is itself shrunk toward the positional baseline,
-    so one unusual season never becomes an unrestricted permanent prior.
-    """
     pm=max(0.0,float(prev_minutes or 0)); pr=max(0.0,float(prev_rate or 0))
     if pm<=0:return position_prior
     w=pm/(pm+history_strength)
     return clamp(position_prior+w*(pr-position_prior),position_prior*.35,max(position_prior*3.2,position_prior+.05))
 
-def stabilized_role(start_rate,sub_rate,minutes_history,position):
-    sr=clamp(float(start_rate));br=clamp(float(sub_rate));mins=max(0.0,float(minutes_history))
-    if mins <= 0:return sr,br
-    prior_start={1:.62,2:.66,3:.64,4:.62}.get(int(position),.64)
-    prior_sub={1:.02,2:.10,3:.14,4:.16}.get(int(position),.12)
-    w=mins/(mins+240.0);out_start=(1-w)*prior_start+w*sr;out_sub=(1-w)*prior_sub+w*br
+def stabilized_role(start_rate,sub_rate,minutes_history,position,prev_minutes=0.0):
+    """Shrink current role toward a bounded prior that can use last season's minutes.
+
+    A player with 2500–3000 previous-season minutes should not be treated like an
+    unknown rotation option after one new-season start. Previous minutes are used
+    only as a soft prior and current-season evidence still takes over quickly.
+    """
+    sr=clamp(float(start_rate));br=clamp(float(sub_rate));mins=max(0.0,float(minutes_history));pm=max(0.0,float(prev_minutes or 0))
+    if mins<=0:return sr,br
+    base_start={1:.62,2:.66,3:.64,4:.62}.get(int(position),.64)
+    base_sub={1:.02,2:.10,3:.14,4:.16}.get(int(position),.12)
+    if pm>0:
+        season_share=clamp(pm/(38*90),0,.96)
+        hist_w=clamp(pm/(pm+900.0),0,.78)
+        prior_start=clamp(base_start*(1-hist_w)+season_share*hist_w,.18,.94)
+        prior_sub=clamp(base_sub*(1-hist_w)+max(0.02,1-prior_start)*.35*hist_w,.01,.28)
+    else:
+        prior_start,prior_sub=base_start,base_sub
+    # Current season should overtake the prior within a few full matches.
+    current_w=mins/(mins+180.0)
+    out_start=(1-current_w)*prior_start+current_w*sr
+    out_sub=(1-current_w)*prior_sub+current_w*br
     if out_start+out_sub>1:
         z=out_start+out_sub;out_start/=z;out_sub/=z
     return clamp(out_start),clamp(out_sub)
@@ -60,12 +72,11 @@ def uncertainty(mean,md,pos,g_rate,a_rate,lam,frac,save90,dc_prob,bonus):
     return {'variance':variance,'sd':sd,'p10':p10,'p90':p90,'volatility':sd/max(mean,1.0)}
 
 def project(inp):
-    pos=int(inp['position']);avail=clamp(float(inp.get('availability',1)));hist=float(inp.get('minutes_history',0))
-    sr,sub=stabilized_role(float(inp.get('start_rate',.7)),float(inp.get('sub_rate',.15)),hist,pos)
+    pos=int(inp['position']);avail=clamp(float(inp.get('availability',1)));hist=float(inp.get('minutes_history',0));prev_mins=float(inp.get('prev_minutes',0) or 0)
+    sr,sub=stabilized_role(float(inp.get('start_rate',.7)),float(inp.get('sub_rate',.15)),hist,pos,prev_mins)
     md=minutes_distribution(sr,float(inp.get('avg_start_mins',78)),sub,float(inp.get('avg_sub_mins',18)),avail)
     frac=md['xmins']/90;atk=float(inp.get('attack_multiplier',1))
     gp={1:.01,2:.055,3:.20,4:.31}[pos];ap={1:.01,2:.08,3:.18,4:.15}[pos]
-    prev_mins=float(inp.get('prev_minutes',0) or 0)
     gprior=historical_attack_prior(gp,float(inp.get('prev_goal90',0) or 0),prev_mins)
     aprior=historical_attack_prior(ap,float(inp.get('prev_assist90',0) or 0),prev_mins)
     g90=beta_shrink(float(inp.get('goal90',0)),hist,gprior)*atk
