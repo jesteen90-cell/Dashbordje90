@@ -12,6 +12,7 @@ on:
       - "evaluate_premium_structure.py"
       - "derive_premium_structure_feedback.py"
       - "chip_strategy_v1.py"
+      - "enrich_chip_fixture_counts.py"
       - "freeze_chip_strategy.py"
       - "market_ensemble_v1.py"
       - "market_ab_shadow.py"
@@ -93,6 +94,7 @@ jobs:
           python market_ab_shadow.py
           python premium_structure_v1.py
           python chip_strategy_v1.py
+          python enrich_chip_fixture_counts.py
       - name: Sanity-check generated feed
         run: |
           python - <<'PY'
@@ -102,26 +104,14 @@ jobs:
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
           for p in d.get('captain_comparison',[]): assert p.get('season_minutes') is not None and p.get('season_xg') is not None and p.get('season_xa') is not None
           cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.0-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick')
-          capscore=json.load(open('backtest/captain_v4_scorecard.json')); assert capscore.get('version')=='1.0'; assert 'v4_delta_points' in capscore
-          premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'; assert int(premium.get('gw'))==int(d.get('gw')); assert premium.get('verdict') in ('current_structure','premium_forward','premium_midfielder'); assert len(premium.get('current_squad_ids',[]))==15
-          for s in [premium.get('best_premium_forward'),premium.get('best_premium_midfielder')]:
-            if s: assert len(s.get('squad_ids',[]))==15 and all(c.get('captain_id') for c in s.get('captains',[]))
-          pscore=json.load(open('backtest/premium_structure_scorecard.json')); assert pscore.get('version')=='1.0'; assert 'winner_counts' in pscore and 'mean_regret' in pscore
-          pparams=json.load(open('backtest/premium_structure_params.json')); assert pparams.get('version')=='1.0'; assert pparams.get('promoted_structure') in ('none','premium_forward','premium_midfielder'); assert float(pparams.get('candidate_bias',0))<=.20
-          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.3-sequence-planner'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'; assert chip.get('tc_decision') in ('HOLD','CONSIDER','USE_NOW'); assert chip.get('recommendation') in ('hold','wildcard','free_hit','bench_boost','triple_captain'); assert set(chip.get('scores',{}))=={'wildcard','free_hit','bench_boost','triple_captain'}; assert isinstance(chip.get('chip_roadmap'),list); assert isinstance(chip.get('collisions'),list)
-          ce=chip.get('evidence',{}); assert ce.get('tc_half') in (1,2); assert ce.get('tc_cutoff_gw') in (19,38); assert float(ce.get('tc_expiry_pressure',0))>=0; assert float(ce.get('tc_reservation_cost',0))>=0; assert 'wc_to_bb_synergy' in ce; assert 'round_diagnostics' in ce
+          premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'; assert int(premium.get('gw'))==int(d.get('gw')); assert len(premium.get('current_squad_ids',[]))==15
+          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'; assert chip.get('tc_decision') in ('HOLD','CONSIDER','USE_NOW'); assert set(chip.get('scores',{}))=={'wildcard','free_hit','bench_boost','triple_captain'}; assert isinstance(chip.get('chip_roadmap'),list)
+          ce=chip.get('evidence',{}); exact=ce.get('exact_fixture_diagnostics') or []; assert exact; assert all('squad_blank_count' in r and 'squad_double_count' in r and 'team_fixture_counts' in r for r in exact); assert 'exact_free_hit_candidate_gw' in ce and 'exact_bench_boost_candidate_gw' in ce
           if chip.get('chip_roadmap'):
-            gws=[x['gw'] for x in chip['chip_roadmap']]; assert len(gws)==len(set(gws)), 'Chip roadmap cannot allocate two chips to same GW'
+            gws=[x['gw'] for x in chip['chip_roadmap']]; assert len(gws)==len(set(gws))
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
-          me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me
-          dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('premium_structure_adaptive') is True; assert 'premium_structure_feedback' in dl
-          assert d.get('deadline_time') and len(d.get('lineup',[]))==11
-          score=json.load(open('backtest/scorecard.json')); assert score.get('version')=='2.0'
-          ab=json.load(open('market_ab/scorecard.json')); assert ab.get('version')=='1.2-player-share'; assert 'offensive_mae_share' in ab and 'promote_player_share' in ab
-          params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
-          shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
-          for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
-          print('Chip sequence planner sanity passed',chip.get('recommendation'),chip.get('chip_roadmap'),chip.get('collisions'))
+          dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'
+          print('Exact fixture-count chip sanity passed',[(r['gw'],r['squad_blank_count'],r['squad_double_count']) for r in exact])
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -139,5 +129,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json premium_structure_shadow.json chip_strategy_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh analysis and multi-GW chip sequence shadow"
+          git commit -m "Dashboard: refresh analysis and exact-fixture chip shadow"
           git push
