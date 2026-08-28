@@ -2,6 +2,7 @@ from pathlib import Path
 import py_compile
 from model_v2_core import project, stabilized_role
 from team_strength_v2 import build_strength, fixture_difficulty
+from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT
 
 
 def base(**kw):
@@ -22,6 +23,8 @@ def pipeline_sanity():
     opt=Path('transfer_optimizer_v2.py').read_text(encoding='utf-8')
     assert 'from captain_horizon_v1 import horizon_values' in opt
     assert "'captain_horizon_search':True" in opt
+    assert "'bench_resilience':True" in opt
+    assert 'BENCH_RESILIENCE_WEIGHT=.055' in opt
     dl=Path('decision_layer_v4.py').read_text(encoding='utf-8')
     assert 'def select_squad_view' in dl
     assert "data['lineup']=target_xi" in dl
@@ -63,6 +66,21 @@ def strength_sanity():
         assert one['prior_available'] is False,one
 
 
+def bench_sanity():
+    def p(pid,pos,xp):return {'id':pid,'element_type':pos,'_x':{2:xp}}
+    xi=[p(i,2 if i<5 else (3 if i<9 else 4),5.0) for i in range(1,12)]
+    bench=[p(12,1,3.5),p(13,2,4.0),p(14,3,2.5),p(15,4,1.0)]
+    squad=xi+bench
+    base_value=bench_resilience(squad,xi,2)
+    better=list(squad);better[-3]=p(13,2,6.0)
+    improved=bench_resilience(better,xi,2)
+    gain=improved-base_value
+    assert 0<gain<.25,(base_value,improved,gain)
+    # A +2.0 xP bench-slot upgrade must remain far below a +2.0 starting-XI gain.
+    assert gain < 2.0*.15,gain
+    assert BENCH_RESILIENCE_WEIGHT <= .06
+
+
 def main():
     sr,sub=stabilized_role(0,0,0,4)
     assert sr==0 and sub==0,(sr,sub)
@@ -91,7 +109,8 @@ def main():
     assert abs(faded['goal90_used']-.31) < abs(elite['goal90_used']-.31),(elite,faded)
 
     strength_sanity()
+    bench_sanity()
     pipeline_sanity()
-    print('live model sanity passed', {'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'elite_goal_prior':round(elite['goal_prior_used'],3),'faded_goal90':round(faded['goal90_used'],3),'position_aware_fdr':True})
+    print('live model sanity passed', {'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'elite_goal_prior':round(elite['goal_prior_used'],3),'faded_goal90':round(faded['goal90_used'],3),'position_aware_fdr':True,'bench_resilience':True})
 
 if __name__=='__main__':main()
