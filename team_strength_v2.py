@@ -3,13 +3,14 @@ import json,math
 from pathlib import Path
 from collections import defaultdict
 def clamp(x,a,b):return max(a,min(b,x))
-def _priors(path='team_strength_prior.json'):
+def _prior_payload(path='team_strength_prior.json'):
  p=Path(path)
- if not p.exists():return {}
- try:return (json.loads(p.read_text()).get('teams') or {})
- except:return {}
+ if not p.exists():return {},False,'missing'
+ try:
+  d=json.loads(p.read_text());return (d.get('teams') or {}),bool(d.get('available')),str(d.get('version') or 'unknown')
+ except:return {},False,'invalid'
 def build_strength(fixtures,teams,decay=.88,prior_matches=5.0,league_goal_rate=1.45):
- pri=_priors();s=defaultdict(lambda:{'gf':0.,'ga':0.,'w':0.,'home_gf':0.,'home_ga':0.,'home_w':0.,'away_gf':0.,'away_ga':0.,'away_w':0.});done=[f for f in fixtures if f.get('finished') and f.get('team_h_score') is not None];done.sort(key=lambda f:(int(f.get('event') or 0),int(f.get('id') or 0)),reverse=True);ages=defaultdict(int)
+ pri,prior_available,prior_version=_prior_payload();s=defaultdict(lambda:{'gf':0.,'ga':0.,'w':0.,'home_gf':0.,'home_ga':0.,'home_w':0.,'away_gf':0.,'away_ga':0.,'away_w':0.});done=[f for f in fixtures if f.get('finished') and f.get('team_h_score') is not None];done.sort(key=lambda f:(int(f.get('event') or 0),int(f.get('id') or 0)),reverse=True);ages=defaultdict(int)
  for f in done:
   h,a=int(f['team_h']),int(f['team_a']);hg=float(f['team_h_score']);ag=float(f['team_a_score']);age=max(ages[h],ages[a]);w=decay**age;ages[h]+=1;ages[a]+=1
   for t,gf,ga,home in ((h,hg,ag,True),(a,ag,hg,False)):
@@ -17,18 +18,16 @@ def build_strength(fixtures,teams,decay=.88,prior_matches=5.0,league_goal_rate=1
  out={}
  for tid in teams:
   x=s[tid];pr=pri.get(str(tid),{})
-  # Convert bounded strength factors to prior goal rates. Current-season evidence
-  # takes over naturally through the denominator as weighted match count grows.
-  pa=(n:=float(pr.get('home_attack',1.08))) if pr else 1.08
-  pda=float(pr.get('home_defence',.92)) if pr else .92
-  paa=float(pr.get('away_attack',.92)) if pr else .92
-  pdaa=float(pr.get('away_defence',1.08)) if pr else 1.08
+  pa=float(pr.get('home_attack',1.0)) if pr else 1.0
+  pda=float(pr.get('home_defence',1.0)) if pr else 1.0
+  paa=float(pr.get('away_attack',1.0)) if pr else 1.0
+  pdaa=float(pr.get('away_defence',1.0)) if pr else 1.0
   overall_attack=(pa+paa)/2;overall_defence=(pda+pdaa)/2
   den=x['w']+prior_matches;gf=(x['gf']+league_goal_rate*overall_attack*prior_matches)/den;ga=(x['ga']+league_goal_rate*overall_defence*prior_matches)/den
   hw=x['home_w']+prior_matches/2;aw=x['away_w']+prior_matches/2
   hgf=(x['home_gf']+league_goal_rate*pa*prior_matches/2)/hw;hga=(x['home_ga']+league_goal_rate*pda*prior_matches/2)/hw
   agf=(x['away_gf']+league_goal_rate*paa*prior_matches/2)/aw;aga=(x['away_ga']+league_goal_rate*pdaa*prior_matches/2)/aw
-  out[tid]={'attack':gf/league_goal_rate,'defence':ga/league_goal_rate,'home_attack':hgf/league_goal_rate,'home_defence':hga/league_goal_rate,'away_attack':agf/league_goal_rate,'away_defence':aga/league_goal_rate,'sample_weight':x['w'],'prior_source':'fpl-bootstrap' if pr else 'neutral'}
+  out[tid]={'attack':gf/league_goal_rate,'defence':ga/league_goal_rate,'home_attack':hgf/league_goal_rate,'home_defence':hga/league_goal_rate,'away_attack':agf/league_goal_rate,'away_defence':aga/league_goal_rate,'sample_weight':x['w'],'prior_source':'fpl-bootstrap' if prior_available and pr else 'neutral-fallback','prior_available':prior_available,'prior_version':prior_version}
  return out
 def fixture_factors(ratings,team,opp,is_home,league_goal_rate=1.45):
  t=ratings.get(team,{});o=ratings.get(opp,{});ta=t.get('home_attack' if is_home else 'away_attack',t.get('attack',1));td=t.get('home_defence' if is_home else 'away_defence',t.get('defence',1));oa=o.get('away_attack' if is_home else 'home_attack',o.get('attack',1));od=o.get('away_defence' if is_home else 'home_defence',o.get('defence',1));attack=math.sqrt(max(.35,ta)*max(.35,od));opp_lambda=league_goal_rate*math.sqrt(max(.35,oa)*max(.35,td));return clamp(attack,.55,1.75),clamp(opp_lambda,.35,3.0)
