@@ -1,6 +1,6 @@
 {
   "model_version": "3.1-market-ready",
-  "generated_at": "2026-08-28T07:06:07.321904Z",
+  "generated_at": "2026-08-28T07:13:25.566514Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
@@ -2565,96 +2565,66 @@
       "id": 165,
       "name": "João Pedro",
       "team": "Chelsea",
+      "position": "FWD",
       "xp": 3.41,
       "ceiling": 7.24,
       "expected_minutes": 66.0,
       "availability": 1.0,
       "score": 3.919,
       "captain": true,
-      "vice": false,
-      "season_minutes": 90.0,
-      "season_points": 11.0,
-      "season_xg": 0.63,
-      "season_xa": 0.06,
-      "season_goals": 1.0,
-      "season_assists": 1.0,
-      "selected_by_percent": 67.7
+      "vice": false
     },
     {
       "id": 86,
       "name": "Lewis-Potter",
       "team": "Brentford",
+      "position": "MID",
       "xp": 3.22,
       "ceiling": 6.92,
       "expected_minutes": 67.0,
       "availability": 1.0,
       "score": 3.723,
       "captain": false,
-      "vice": true,
-      "season_minutes": 90.0,
-      "season_points": 10.0,
-      "season_xg": 0.77,
-      "season_xa": 0.12,
-      "season_goals": 1.0,
-      "season_assists": 0.0,
-      "selected_by_percent": 1.0
+      "vice": true
     },
     {
       "id": 426,
       "name": "B.Fernandes",
       "team": "Man Utd",
+      "position": "MID",
       "xp": 3.2,
       "ceiling": 6.86,
       "expected_minutes": 67.0,
       "availability": 1.0,
       "score": 3.697,
       "captain": false,
-      "vice": false,
-      "season_minutes": 90.0,
-      "season_points": 2.0,
-      "season_xg": 0.08,
-      "season_xa": 0.26,
-      "season_goals": 0.0,
-      "season_assists": 0.0,
-      "selected_by_percent": 48.5
+      "vice": false
     },
     {
       "id": 290,
       "name": "Slater",
       "team": "Hull City",
+      "position": "MID",
       "xp": 3.08,
       "ceiling": 6.59,
       "expected_minutes": 67.0,
       "availability": 1.0,
       "score": 3.559,
       "captain": false,
-      "vice": false,
-      "season_minutes": 90.0,
-      "season_points": 6.0,
-      "season_xg": 0.0,
-      "season_xa": 0.44,
-      "season_goals": 0.0,
-      "season_assists": 1.0,
-      "selected_by_percent": 3.8
+      "vice": false
     },
     {
       "id": 488,
       "name": "I.Sangaré",
       "team": "Nott'm Forest",
+      "position": "MID",
       "xp": 2.99,
       "ceiling": 6.41,
       "expected_minutes": 67.0,
       "availability": 1.0,
       "score": 3.46,
       "captain": false,
-      "vice": false,
-      "season_minutes": 90.0,
-      "season_points": 2.0,
-      "season_xg": 0.03,
-      "season_xa": 0.01,
-      "season_goals": 0.0,
-      "season_assists": 0.0,
-      "selected_by_percent": 1.0
+      "vice": false
     }
   ],
   "decision_explanation": {
@@ -2728,17 +2698,27 @@
     "squad_view_consistent": true,
     "engine_version": "4.5-squad-consistent"
   },
+  "captain_pool": {
+    "version": "1.0-all-xi",
+    "candidate_count": 11,
+    "policy": "all starting XI evaluated; display shortlist applied after model selection",
+    "display_count": 5
+  },
   "captain_v4_inputs": {
     "enriched": true,
-    "source": "FPL bootstrap-static",
-    "candidate_count": 5,
+    "source": "FPL bootstrap-static + element-summary history_past",
+    "candidate_count": 11,
     "fields": [
       "season_minutes",
       "season_points",
       "season_xg",
       "season_xa",
       "season_goals",
-      "season_assists"
+      "season_assists",
+      "prev_minutes",
+      "prev_points",
+      "prev_goals",
+      "prev_assists"
     ]
   },
   "captain_model_selection": {
@@ -2751,23 +2731,26 @@
       "name": "João Pedro",
       "team": "Chelsea",
       "v3_score": 3.919,
-      "v4_score": 4.6124,
-      "v41_score": 4.6694,
-      "elite_prior": 1.0667,
-      "haul_bonus": 0.057,
+      "v4_score": 4.4606,
+      "v41_score": 4.5571,
+      "elite_prior": 0.8332,
+      "haul_bonus": 0.0965,
       "haul_probabilities": {
-        "goal_lambda": 0.2878,
-        "assist_lambda": 0.1588,
-        "p_goal_1": 0.2501,
-        "p_goal_2": 0.0343,
-        "p_goal_3": 0.0032,
-        "p_multi_return": 0.0745,
-        "p10": 0.0433,
-        "p15": 0.015
+        "goal_lambda": 0.3813,
+        "assist_lambda": 0.2345,
+        "p_goal_1": 0.317,
+        "p_goal_2": 0.0566,
+        "p_goal_3": 0.007,
+        "p_multi_return": 0.1271,
+        "p10": 0.0735,
+        "p15": 0.025,
+        "history_weight": 0.8889
       },
       "xp": 3.41,
       "ceiling": 7.24,
-      "expected_minutes": 66.0
+      "expected_minutes": 66.0,
+      "prev_minutes": 2658.0,
+      "prev_points": 177.0
     },
     "promotion_flags": {
       "v4": false,
@@ -2796,10 +2779,10 @@
       "expected_minutes": 66.3,
       "availability": 1.0,
       "model_score": 3.919,
-      "p10_plus": 0.0433,
-      "p15_plus": 0.015,
-      "p_goal_2plus": 0.0343,
-      "p_multi_return": 0.0745
+      "p10_plus": 0.0735,
+      "p15_plus": 0.025,
+      "p_goal_2plus": 0.0566,
+      "p_multi_return": 0.1271
     },
     "runner_up": {
       "id": 86,
@@ -2808,10 +2791,10 @@
       "xp": 3.22,
       "expected_minutes": 67.3,
       "model_score": 3.723,
-      "p10_plus": 0.0432,
-      "p15_plus": 0.0162,
-      "p_goal_2plus": 0.0369,
-      "p_multi_return": 0.0731
+      "p10_plus": 0.0196,
+      "p15_plus": 0.0059,
+      "p_goal_2plus": 0.0137,
+      "p_multi_return": 0.0346
     },
     "score_gap": 0.196,
     "xp_gap": 0.19,
