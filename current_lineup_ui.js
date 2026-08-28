@@ -1,5 +1,5 @@
 (()=>{
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 let LAST=null;
 function visualPlayers(rows){return (rows||[]).map(p=>({...p,captain:!!p.optimal_captain,vice:!!p.optimal_vice}))}
 function renderVisualOptimal(d){
