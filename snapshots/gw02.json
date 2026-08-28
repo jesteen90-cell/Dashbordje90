@@ -1,338 +1,34 @@
 {
-  "model_version": "3.0-validated",
-  "generated_at": "2026-08-28T05:52:08.067048Z",
+  "snapshot_version": "1.0",
+  "frozen_at": "2026-08-28T05:52:08.209988Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
+  "model_version": "3.0-validated",
+  "decision_layer": {
+    "version": "4.1-explainable",
+    "approved_first_move": true,
+    "threshold": 1.15,
+    "blockers": [],
+    "candidate_count": 6,
+    "bench_ordering": "outfield by availability/minutes/xP; goalkeeper last",
+    "explainability": true,
+    "captain_comparison": true
+  },
   "headline": "GJØR BYTTET",
-  "summary": "Modell 3.0 kombinerer holdout-validert xP, dynamisk lagstyrke, godkjent recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
-  "source_snapshot_gw": 1,
-  "free_transfers_assumed": 1,
-  "recent_form": {
-    "promoted": true,
-    "params": {
-      "last_n": 8,
-      "decay": 0.88,
-      "strength": 0.3,
-      "attack_share": 0.4,
-      "prior": 360.0
-    }
-  },
-  "captain_model": {
-    "promoted": true,
-    "weights": {
-      "xp": 0.7,
-      "ceiling": 0.2,
-      "minutes": 0,
-      "attack": 0,
-      "volatility_penalty": 0
-    }
-  },
-  "recent_form_players_loaded": 143,
-  "team_strength": {
-    "1": {
-      "team": "Arsenal",
-      "attack": 1.178,
-      "defence": 0.833,
-      "home_attack": 1.363,
-      "home_defence": 0.657,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "2": {
-      "team": "Aston Villa",
-      "attack": 0.833,
-      "defence": 1.293,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.657,
-      "away_defence": 1.56,
-      "sample_weight": 1.0
-    },
-    "3": {
-      "team": "Bournemouth",
-      "attack": 0.948,
-      "defence": 1.063,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.854,
-      "away_defence": 1.166,
-      "sample_weight": 1.0
-    },
-    "4": {
-      "team": "Brentford",
-      "attack": 1.178,
-      "defence": 0.833,
-      "home_attack": 1.363,
-      "home_defence": 0.657,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "5": {
-      "team": "Brighton",
-      "attack": 1.293,
-      "defence": 0.833,
-      "home_attack": 1.56,
-      "home_defence": 0.657,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "6": {
-      "team": "Chelsea",
-      "attack": 1.178,
-      "defence": 1.063,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 1.248,
-      "away_defence": 1.166,
-      "sample_weight": 1.0
-    },
-    "7": {
-      "team": "Coventry City",
-      "attack": 0.833,
-      "defence": 1.178,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.657,
-      "away_defence": 1.363,
-      "sample_weight": 1.0
-    },
-    "8": {
-      "team": "Crystal Palace",
-      "attack": 0.833,
-      "defence": 1.063,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.657,
-      "away_defence": 1.166,
-      "sample_weight": 1.0
-    },
-    "9": {
-      "team": "Everton",
-      "attack": 1.063,
-      "defence": 0.833,
-      "home_attack": 1.166,
-      "home_defence": 0.657,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "10": {
-      "team": "Fulham",
-      "attack": 1.063,
-      "defence": 1.178,
-      "home_attack": 1.166,
-      "home_defence": 1.248,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "11": {
-      "team": "Hull City",
-      "attack": 1.063,
-      "defence": 0.833,
-      "home_attack": 1.166,
-      "home_defence": 0.657,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "12": {
-      "team": "Ipswich Town",
-      "attack": 1.063,
-      "defence": 0.948,
-      "home_attack": 1.166,
-      "home_defence": 0.854,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "13": {
-      "team": "Leeds",
-      "attack": 0.948,
-      "defence": 0.833,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.854,
-      "away_defence": 0.771,
-      "sample_weight": 1.0
-    },
-    "14": {
-      "team": "Liverpool",
-      "attack": 1.063,
-      "defence": 1.063,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 1.051,
-      "away_defence": 1.166,
-      "sample_weight": 1.0
-    },
-    "15": {
-      "team": "Man City",
-      "attack": 1.063,
-      "defence": 0.948,
-      "home_attack": 1.166,
-      "home_defence": 0.854,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "16": {
-      "team": "Man Utd",
-      "attack": 0.833,
-      "defence": 1.063,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.657,
-      "away_defence": 1.166,
-      "sample_weight": 1.0
-    },
-    "17": {
-      "team": "Newcastle",
-      "attack": 1.063,
-      "defence": 1.063,
-      "home_attack": 1.166,
-      "home_defence": 1.051,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "18": {
-      "team": "Nott'm Forest",
-      "attack": 0.833,
-      "defence": 0.948,
-      "home_attack": 0.771,
-      "home_defence": 0.854,
-      "away_attack": 0.92,
-      "away_defence": 1.08,
-      "sample_weight": 1.0
-    },
-    "19": {
-      "team": "Spurs",
-      "attack": 0.833,
-      "defence": 1.178,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.657,
-      "away_defence": 1.363,
-      "sample_weight": 1.0
-    },
-    "20": {
-      "team": "Sunderland",
-      "attack": 0.948,
-      "defence": 1.063,
-      "home_attack": 1.08,
-      "home_defence": 0.92,
-      "away_attack": 0.854,
-      "away_defence": 1.166,
-      "sample_weight": 1.0
-    }
-  },
-  "optimizer": {
-    "horizon_gws": [
-      2,
-      3,
-      4,
-      5
-    ],
-    "weights": [
-      1.0,
-      0.9,
-      0.75,
-      0.6
+  "decision_explanation": {
+    "decision": "BYTT",
+    "why": [
+      "Første trekk modellen vurderer er Cunha → Lewis-Potter.",
+      "Estimert gevinst: +9.40 xP neste 3 GW og +10.31 xP over planhorisonten.",
+      "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.15.",
+      "Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket."
     ],
     "weighted_gain": 5.51,
-    "bank_after": 6.0,
-    "free_transfers_after": 1,
-    "hit_points": 0,
-    "plan": [
-      {
-        "gw": 2,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd"
-            },
-            "in": {
-              "id": 86,
-              "name": "Lewis-Potter",
-              "team": "Brentford"
-            }
-          }
-        ],
-        "label": "Cunha → Lewis-Potter"
-      },
-      {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 4,
-              "name": "Gabriel",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 388,
-              "name": "Guéhi",
-              "team": "Man City"
-            }
-          }
-        ],
-        "label": "Gabriel → Guéhi"
-      },
-      {
-        "gw": 4,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 557,
-              "name": "Tzolis",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 335,
-              "name": "Stach",
-              "team": "Leeds"
-            }
-          }
-        ],
-        "label": "Tzolis → Stach"
-      },
-      {
-        "gw": 5,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 8,
-              "name": "Calafiori",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 115,
-              "name": "De Cuyper",
-              "team": "Brighton"
-            }
-          }
-        ],
-        "label": "Calafiori → De Cuyper"
-      }
-    ]
+    "threshold": 1.15,
+    "distance_to_switch": 0,
+    "switch_trigger": "Anbefalingen er robust nok nå.",
+    "horizon_3gw": 9.4,
+    "horizon_plan": 10.31
   },
   "recommendation": {
     "edge": 5.51,
@@ -1939,6 +1635,68 @@
       }
     }
   ],
+  "captain_comparison": [
+    {
+      "id": 165,
+      "name": "João Pedro",
+      "team": "Chelsea",
+      "xp": 3.41,
+      "ceiling": 7.24,
+      "expected_minutes": 66.0,
+      "availability": 1.0,
+      "score": 3.919,
+      "captain": true,
+      "vice": false
+    },
+    {
+      "id": 86,
+      "name": "Lewis-Potter",
+      "team": "Brentford",
+      "xp": 3.22,
+      "ceiling": 6.92,
+      "expected_minutes": 67.0,
+      "availability": 1.0,
+      "score": 3.723,
+      "captain": false,
+      "vice": true
+    },
+    {
+      "id": 426,
+      "name": "B.Fernandes",
+      "team": "Man Utd",
+      "xp": 3.2,
+      "ceiling": 6.86,
+      "expected_minutes": 67.0,
+      "availability": 1.0,
+      "score": 3.697,
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 290,
+      "name": "Slater",
+      "team": "Hull City",
+      "xp": 3.08,
+      "ceiling": 6.59,
+      "expected_minutes": 67.0,
+      "availability": 1.0,
+      "score": 3.559,
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 488,
+      "name": "I.Sangaré",
+      "team": "Nott'm Forest",
+      "xp": 2.99,
+      "ceiling": 6.41,
+      "expected_minutes": 67.0,
+      "availability": 1.0,
+      "score": 3.46,
+      "captain": false,
+      "vice": false
+    }
+  ],
   "candidates": [
     {
       "status": "GJØR DET",
@@ -2579,91 +2337,111 @@
       }
     }
   ],
-  "captain_comparison": [
-    {
-      "id": 165,
-      "name": "João Pedro",
-      "team": "Chelsea",
-      "xp": 3.41,
-      "ceiling": 7.24,
-      "expected_minutes": 66.0,
-      "availability": 1.0,
-      "score": 3.919,
-      "captain": true,
-      "vice": false
-    },
-    {
-      "id": 86,
-      "name": "Lewis-Potter",
-      "team": "Brentford",
-      "xp": 3.22,
-      "ceiling": 6.92,
-      "expected_minutes": 67.0,
-      "availability": 1.0,
-      "score": 3.723,
-      "captain": false,
-      "vice": true
-    },
-    {
-      "id": 426,
-      "name": "B.Fernandes",
-      "team": "Man Utd",
-      "xp": 3.2,
-      "ceiling": 6.86,
-      "expected_minutes": 67.0,
-      "availability": 1.0,
-      "score": 3.697,
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 290,
-      "name": "Slater",
-      "team": "Hull City",
-      "xp": 3.08,
-      "ceiling": 6.59,
-      "expected_minutes": 67.0,
-      "availability": 1.0,
-      "score": 3.559,
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 488,
-      "name": "I.Sangaré",
-      "team": "Nott'm Forest",
-      "xp": 2.99,
-      "ceiling": 6.41,
-      "expected_minutes": 67.0,
-      "availability": 1.0,
-      "score": 3.46,
-      "captain": false,
-      "vice": false
-    }
-  ],
-  "decision_explanation": {
-    "decision": "BYTT",
-    "why": [
-      "Første trekk modellen vurderer er Cunha → Lewis-Potter.",
-      "Estimert gevinst: +9.40 xP neste 3 GW og +10.31 xP over planhorisonten.",
-      "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.15.",
-      "Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket."
+  "optimizer": {
+    "horizon_gws": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "weights": [
+      1.0,
+      0.9,
+      0.75,
+      0.6
     ],
     "weighted_gain": 5.51,
-    "threshold": 1.15,
-    "distance_to_switch": 0,
-    "switch_trigger": "Anbefalingen er robust nok nå.",
-    "horizon_3gw": 9.4,
-    "horizon_plan": 10.31
+    "bank_after": 6.0,
+    "free_transfers_after": 1,
+    "hit_points": 0,
+    "plan": [
+      {
+        "gw": 2,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 428,
+              "name": "Cunha",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 86,
+              "name": "Lewis-Potter",
+              "team": "Brentford"
+            }
+          }
+        ],
+        "label": "Cunha → Lewis-Potter"
+      },
+      {
+        "gw": 3,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 4,
+              "name": "Gabriel",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 388,
+              "name": "Guéhi",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "Gabriel → Guéhi"
+      },
+      {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 557,
+              "name": "Tzolis",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 335,
+              "name": "Stach",
+              "team": "Leeds"
+            }
+          }
+        ],
+        "label": "Tzolis → Stach"
+      },
+      {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 115,
+              "name": "De Cuyper",
+              "team": "Brighton"
+            }
+          }
+        ],
+        "label": "Calafiori → De Cuyper"
+      }
+    ]
   },
-  "decision_layer": {
-    "version": "4.1-explainable",
-    "approved_first_move": true,
-    "threshold": 1.15,
-    "blockers": [],
-    "candidate_count": 6,
-    "bench_ordering": "outfield by availability/minutes/xP; goalkeeper last",
-    "explainability": true,
-    "captain_comparison": true
-  }
+  "source_snapshot_gw": 1,
+  "free_transfers_assumed": 1,
+  "generated_at": "2026-08-28T05:52:08.067048Z"
 }
