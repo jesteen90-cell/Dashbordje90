@@ -1,0 +1,1772 @@
+{
+  "version": "1.1-backtest-ready",
+  "gw": 2,
+  "gws": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "weights": {
+    "2": 1.0,
+    "3": 0.9,
+    "4": 0.75,
+    "5": 0.6
+  },
+  "current_squad_ids": [
+    496,
+    4,
+    8,
+    418,
+    426,
+    428,
+    557,
+    488,
+    465,
+    411,
+    165,
+    497,
+    277,
+    290,
+    173
+  ],
+  "current_horizon_value": 116.402,
+  "current_captains": [
+    {
+      "gw": 2,
+      "weighted_value": 35.689,
+      "xi_ids": [
+        496,
+        418,
+        277,
+        173,
+        426,
+        428,
+        557,
+        488,
+        290,
+        411,
+        165
+      ],
+      "captain_id": 165,
+      "captain": "João Pedro",
+      "captain_xp": 3.41
+    },
+    {
+      "gw": 3,
+      "weighted_value": 33.165,
+      "xi_ids": [
+        496,
+        4,
+        8,
+        277,
+        426,
+        428,
+        557,
+        488,
+        290,
+        411,
+        165
+      ],
+      "captain_id": 290,
+      "captain": "Slater",
+      "captain_xp": 3.707
+    },
+    {
+      "gw": 4,
+      "weighted_value": 26.767,
+      "xi_ids": [
+        496,
+        418,
+        277,
+        173,
+        426,
+        428,
+        557,
+        488,
+        290,
+        411,
+        165
+      ],
+      "captain_id": 165,
+      "captain": "João Pedro",
+      "captain_xp": 3.41
+    },
+    {
+      "gw": 5,
+      "weighted_value": 20.782,
+      "xi_ids": [
+        496,
+        418,
+        277,
+        173,
+        426,
+        428,
+        557,
+        488,
+        290,
+        411,
+        165
+      ],
+      "captain_id": 488,
+      "captain": "I.Sangaré",
+      "captain_xp": 3.197
+    }
+  ],
+  "best_premium_forward": null,
+  "best_premium_midfielder": {
+    "structure": "premium_midfielder",
+    "premium": "Palmer",
+    "premium_id": 154,
+    "support": "Gonzalo",
+    "support_id": 569,
+    "out": [
+      "B.Fernandes",
+      "Osula"
+    ],
+    "out_ids": [
+      426,
+      465
+    ],
+    "squad_ids": [
+      496,
+      4,
+      8,
+      418,
+      428,
+      557,
+      488,
+      411,
+      165,
+      497,
+      277,
+      290,
+      173,
+      154,
+      569
+    ],
+    "cost": 155,
+    "bank_after": 25,
+    "horizon_value": 118.784,
+    "delta_vs_current": 2.382,
+    "captains": [
+      {
+        "gw": 2,
+        "weighted_value": 36.092,
+        "xi_ids": [
+          496,
+          418,
+          277,
+          173,
+          428,
+          488,
+          290,
+          154,
+          411,
+          165,
+          569
+        ],
+        "captain_id": 165,
+        "captain": "João Pedro",
+        "captain_xp": 3.41
+      },
+      {
+        "gw": 3,
+        "weighted_value": 34.246,
+        "xi_ids": [
+          496,
+          4,
+          8,
+          277,
+          557,
+          488,
+          290,
+          154,
+          411,
+          165,
+          569
+        ],
+        "captain_id": 290,
+        "captain": "Slater",
+        "captain_xp": 3.707
+      },
+      {
+        "gw": 4,
+        "weighted_value": 27.069,
+        "xi_ids": [
+          496,
+          418,
+          277,
+          173,
+          428,
+          488,
+          290,
+          154,
+          411,
+          165,
+          569
+        ],
+        "captain_id": 165,
+        "captain": "João Pedro",
+        "captain_xp": 3.41
+      },
+      {
+        "gw": 5,
+        "weighted_value": 21.378,
+        "xi_ids": [
+          496,
+          418,
+          277,
+          173,
+          428,
+          488,
+          290,
+          154,
+          411,
+          165,
+          569
+        ],
+        "captain_id": 569,
+        "captain": "Gonzalo",
+        "captain_xp": 3.341
+      }
+    ]
+  },
+  "verdict": "premium_midfielder",
+  "scenarios": [
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Gonzalo",
+      "support_id": 569,
+      "out": [
+        "B.Fernandes",
+        "Osula"
+      ],
+      "out_ids": [
+        426,
+        465
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        428,
+        557,
+        488,
+        411,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        569
+      ],
+      "cost": 155,
+      "bank_after": 25,
+      "horizon_value": 118.784,
+      "delta_vs_current": 2.382,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 36.092,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            569
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 34.246,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165,
+            569
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 27.069,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            569
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 21.378,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            569
+          ],
+          "captain_id": 569,
+          "captain": "Gonzalo",
+          "captain_xp": 3.341
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "McBurnie",
+      "support_id": 295,
+      "out": [
+        "B.Fernandes",
+        "Osula"
+      ],
+      "out_ids": [
+        426,
+        465
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        428,
+        557,
+        488,
+        411,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        295
+      ],
+      "cost": 150,
+      "bank_after": 30,
+      "horizon_value": 118.64,
+      "delta_vs_current": 2.237,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 36.057,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            295
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 34.409,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165,
+            295
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 27.043,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            295
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 21.13,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            295
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Barry",
+      "support_id": 249,
+      "out": [
+        "B.Fernandes",
+        "Osula"
+      ],
+      "out_ids": [
+        426,
+        465
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        428,
+        557,
+        488,
+        411,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        249
+      ],
+      "cost": 150,
+      "bank_after": 30,
+      "horizon_value": 118.021,
+      "delta_vs_current": 1.618,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.911,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            249
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 34.047,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165,
+            249
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.933,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            249
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 21.129,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            249
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Igor Jesus",
+      "support_id": 491,
+      "out": [
+        "B.Fernandes",
+        "Osula"
+      ],
+      "out_ids": [
+        426,
+        465
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        428,
+        557,
+        488,
+        411,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        491
+      ],
+      "cost": 155,
+      "bank_after": 25,
+      "horizon_value": 117.999,
+      "delta_vs_current": 1.597,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.966,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            491
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 33.959,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165,
+            491
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.974,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            491
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 21.1,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            491
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Thiago",
+      "support_id": 106,
+      "out": [
+        "B.Fernandes",
+        "Osula"
+      ],
+      "out_ids": [
+        426,
+        465
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        428,
+        557,
+        488,
+        411,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        106
+      ],
+      "cost": 175,
+      "bank_after": 5,
+      "horizon_value": 117.996,
+      "delta_vs_current": 1.594,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.879,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 34.049,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165,
+            106
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.909,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 21.16,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            106
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Havertz",
+      "support_id": 26,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        26
+      ],
+      "cost": 170,
+      "bank_after": 50,
+      "horizon_value": 117.775,
+      "delta_vs_current": 1.373,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 36.384,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            154,
+            165,
+            26
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 33.242,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            154,
+            165,
+            26
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 27.288,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            154,
+            165,
+            26
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.86,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            154,
+            165,
+            26
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Wissa",
+      "support_id": 464,
+      "out": [
+        "B.Fernandes",
+        "Osula"
+      ],
+      "out_ids": [
+        426,
+        465
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        428,
+        557,
+        488,
+        411,
+        165,
+        497,
+        277,
+        290,
+        173,
+        154,
+        464
+      ],
+      "cost": 155,
+      "bank_after": 25,
+      "horizon_value": 117.682,
+      "delta_vs_current": 1.28,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.879,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 33.88,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165,
+            464
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.909,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            557,
+            488,
+            290,
+            154,
+            411,
+            165
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 21.015,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            428,
+            488,
+            290,
+            154,
+            411,
+            165,
+            464
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Gonzalo",
+      "support_id": 569,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        12,
+        569
+      ],
+      "cost": 155,
+      "bank_after": 65,
+      "horizon_value": 116.442,
+      "delta_vs_current": 0.04,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.693,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            569
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 33.081,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            569
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.77,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            569
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.898,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            569
+          ],
+          "captain_id": 569,
+          "captain": "Gonzalo",
+          "captain_xp": 3.341
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "McBurnie",
+      "support_id": 295,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        12,
+        295
+      ],
+      "cost": 150,
+      "bank_after": 70,
+      "horizon_value": 116.298,
+      "delta_vs_current": -0.105,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.659,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            295
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 33.244,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            295
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.744,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            295
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.651,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            295
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Barry",
+      "support_id": 249,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        12,
+        249
+      ],
+      "cost": 150,
+      "bank_after": 70,
+      "horizon_value": 115.679,
+      "delta_vs_current": -0.724,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.513,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            249
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 32.881,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            249
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.635,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            249
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.65,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            249
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Igor Jesus",
+      "support_id": 491,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        12,
+        491
+      ],
+      "cost": 155,
+      "bank_after": 65,
+      "horizon_value": 115.657,
+      "delta_vs_current": -0.745,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.567,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            491
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 32.794,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            491
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.675,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            491
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.621,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            491
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Thiago",
+      "support_id": 106,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        12,
+        106
+      ],
+      "cost": 175,
+      "bank_after": 45,
+      "horizon_value": 115.565,
+      "delta_vs_current": -0.837,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.429,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            106
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 32.884,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            106
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.572,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            106
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.68,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            106
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Wissa",
+      "support_id": 464,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        426,
+        428,
+        488,
+        465,
+        165,
+        497,
+        277,
+        290,
+        173,
+        12,
+        464
+      ],
+      "cost": 155,
+      "bank_after": 65,
+      "horizon_value": 115.016,
+      "delta_vs_current": -1.386,
+      "captains": [
+        {
+          "gw": 2,
+          "weighted_value": 35.295,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            464
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 3,
+          "weighted_value": 32.715,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            464
+          ],
+          "captain_id": 290,
+          "captain": "Slater",
+          "captain_xp": 3.707
+        },
+        {
+          "gw": 4,
+          "weighted_value": 26.471,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            464
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 3.41
+        },
+        {
+          "gw": 5,
+          "weighted_value": 20.536,
+          "xi_ids": [
+            496,
+            418,
+            277,
+            173,
+            426,
+            428,
+            488,
+            290,
+            12,
+            165,
+            464
+          ],
+          "captain_id": 488,
+          "captain": "I.Sangaré",
+          "captain_xp": 3.197
+        }
+      ]
+    }
+  ]
+}

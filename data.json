@@ -1,33 +1,23 @@
 {
-  "model_version": "3.0-validated",
-  "generated_at": "2026-08-28T05:52:08.067048Z",
+  "model_version": "3.1-market-ready",
+  "generated_at": "2026-08-28T07:06:07.321904Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
-  "summary": "Modell 3.0 kombinerer holdout-validert xP, dynamisk lagstyrke, godkjent recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
+  "summary": "Modell 3.1 kombinerer intern lagstyrke med valgfri, konservativ bookmaker-xG ensemblekalibrering, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
   "source_snapshot_gw": 1,
   "free_transfers_assumed": 1,
-  "recent_form": {
-    "promoted": true,
-    "params": {
-      "last_n": 8,
-      "decay": 0.88,
-      "strength": 0.3,
-      "attack_share": 0.4,
-      "prior": 360.0
-    }
+  "market_ensemble": {
+    "weight_cap": 0.65,
+    "weight_floor": 0.2,
+    "ab_promoted": false,
+    "available": false,
+    "reason": "market_odds.json missing",
+    "active": false,
+    "blend_count": 0,
+    "method": "internal team-strength prior + confidence-bounded market xG"
   },
-  "captain_model": {
-    "promoted": true,
-    "weights": {
-      "xp": 0.7,
-      "ceiling": 0.2,
-      "minutes": 0,
-      "attack": 0,
-      "volatility_penalty": 0
-    }
-  },
-  "recent_form_players_loaded": 143,
+  "market_fixture_blends": [],
   "team_strength": {
     "1": {
       "team": "Arsenal",
@@ -230,191 +220,587 @@
       "sample_weight": 1.0
     }
   },
-  "optimizer": {
-    "horizon_gws": [
-      2,
-      3,
-      4,
-      5
-    ],
-    "weights": [
-      1.0,
-      0.9,
-      0.75,
-      0.6
-    ],
-    "weighted_gain": 5.51,
-    "bank_after": 6.0,
-    "free_transfers_after": 1,
-    "hit_points": 0,
-    "plan": [
-      {
-        "gw": 2,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd"
-            },
-            "in": {
-              "id": 86,
-              "name": "Lewis-Potter",
-              "team": "Brentford"
-            }
-          }
-        ],
-        "label": "Cunha → Lewis-Potter"
+  "lineup": [
+    {
+      "id": 496,
+      "name": "Kinsky",
+      "team_id": 19,
+      "team": "Spurs",
+      "position": "GK",
+      "price": 4.5,
+      "xp": 2.76,
+      "xp_low": 0,
+      "xp_high": 5.78,
+      "risk": "middels",
+      "volatility": 0.85,
+      "fixture": "Newcastle (H)",
+      "availability": 1,
+      "expected_minutes": 64.5,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.981,
+        "recent_multiplier": 0.979,
+        "recent_xgi90": 0.0,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
       },
-      {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 4,
-              "name": "Gabriel",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 388,
-              "name": "Guéhi",
-              "team": "Man City"
-            }
-          }
-        ],
-        "label": "Gabriel → Guéhi"
+      "xp_breakdown": {
+        "appearance": 1.49,
+        "goals": 0.04,
+        "assists": 0.02,
+        "clean_sheet": 0.76,
+        "saves": 0.6,
+        "defensive": 0,
+        "bonus": 0.16,
+        "conceded": -0.31,
+        "cards": 0
       },
-      {
-        "gw": 4,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 557,
-              "name": "Tzolis",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 335,
-              "name": "Stach",
-              "team": "Leeds"
-            }
-          }
-        ],
-        "label": "Tzolis → Stach"
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 418,
+      "name": "Maguire",
+      "team_id": 16,
+      "team": "Man Utd",
+      "position": "DEF",
+      "price": 5.0,
+      "xp": 2.78,
+      "xp_low": 0,
+      "xp_high": 6.26,
+      "risk": "middels",
+      "volatility": 0.98,
+      "fixture": "Ipswich Town (H)",
+      "availability": 1,
+      "expected_minutes": 68.1,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 1.0,
+        "recent_multiplier": 1.005,
+        "recent_xgi90": 0.44,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
       },
-      {
-        "gw": 5,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 8,
-              "name": "Calafiori",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 115,
-              "name": "De Cuyper",
-              "team": "Brighton"
-            }
-          }
-        ],
-        "label": "Calafiori → De Cuyper"
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.25,
+        "assists": 0.18,
+        "clean_sheet": 0.79,
+        "saves": 0,
+        "defensive": 0.08,
+        "bonus": 0.19,
+        "conceded": -0.33,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 277,
+      "name": "Egan",
+      "team_id": 11,
+      "team": "Hull City",
+      "position": "DEF",
+      "price": 4.0,
+      "xp": 2.54,
+      "xp_low": 0,
+      "xp_high": 5.81,
+      "risk": "middels",
+      "volatility": 1.01,
+      "fixture": "Coventry City (A)",
+      "availability": 1,
+      "expected_minutes": 68.1,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.981,
+        "recent_multiplier": 0.979,
+        "recent_xgi90": 0.0,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.21,
+        "assists": 0.15,
+        "clean_sheet": 0.63,
+        "saves": 0,
+        "defensive": 0.16,
+        "bonus": 0.19,
+        "conceded": -0.41,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 173,
+      "name": "Thomas",
+      "team_id": 7,
+      "team": "Coventry City",
+      "position": "DEF",
+      "price": 4.0,
+      "xp": 2.8,
+      "xp_low": 0,
+      "xp_high": 6.3,
+      "risk": "middels",
+      "volatility": 0.98,
+      "fixture": "Hull City (H)",
+      "availability": 1,
+      "expected_minutes": 68.1,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.981,
+        "recent_multiplier": 0.981,
+        "recent_xgi90": 0.03,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.25,
+        "assists": 0.18,
+        "clean_sheet": 0.79,
+        "saves": 0,
+        "defensive": 0.11,
+        "bonus": 0.19,
+        "conceded": -0.33,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 426,
+      "name": "B.Fernandes",
+      "team_id": 16,
+      "team": "Man Utd",
+      "position": "MID",
+      "price": 12.0,
+      "xp": 3.2,
+      "xp_low": 0,
+      "xp_high": 6.86,
+      "risk": "middels",
+      "volatility": 0.89,
+      "fixture": "Ipswich Town (H)",
+      "availability": 1,
+      "expected_minutes": 67.3,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.998,
+        "recent_multiplier": 0.999,
+        "recent_xgi90": 0.34,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.73,
+        "assists": 0.4,
+        "clean_sheet": 0.19,
+        "saves": 0,
+        "defensive": 0.01,
+        "bonus": 0.26,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 557,
+      "name": "Tzolis",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "MID",
+      "price": 6.5,
+      "xp": 2.82,
+      "xp_low": 0,
+      "xp_high": 6.09,
+      "risk": "middels",
+      "volatility": 0.91,
+      "fixture": "Aston Villa (A)",
+      "availability": 1,
+      "expected_minutes": 56.3,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.999,
+        "recent_multiplier": 0.999,
+        "recent_xgi90": 0.33,
+        "recent_minutes": 75.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.172
+      },
+      "xp_breakdown": {
+        "appearance": 1.56,
+        "goals": 0.53,
+        "assists": 0.35,
+        "clean_sheet": 0.15,
+        "saves": 0,
+        "defensive": 0.0,
+        "bonus": 0.22,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 488,
+      "name": "I.Sangaré",
+      "team_id": 18,
+      "team": "Nott'm Forest",
+      "position": "MID",
+      "price": 5.0,
+      "xp": 2.99,
+      "xp_low": 0,
+      "xp_high": 6.41,
+      "risk": "middels",
+      "volatility": 0.89,
+      "fixture": "Liverpool (A)",
+      "availability": 1,
+      "expected_minutes": 67.3,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.982,
+        "recent_multiplier": 0.981,
+        "recent_xgi90": 0.04,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.63,
+        "assists": 0.34,
+        "clean_sheet": 0.15,
+        "saves": 0,
+        "defensive": 0.01,
+        "bonus": 0.26,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 290,
+      "name": "Slater",
+      "team_id": 11,
+      "team": "Hull City",
+      "position": "MID",
+      "price": 4.5,
+      "xp": 3.08,
+      "xp_low": 0,
+      "xp_high": 6.59,
+      "risk": "middels",
+      "volatility": 0.89,
+      "fixture": "Coventry City (A)",
+      "availability": 1,
+      "expected_minutes": 67.3,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.997,
+        "recent_multiplier": 1.005,
+        "recent_xgi90": 0.44,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.63,
+        "assists": 0.43,
+        "clean_sheet": 0.15,
+        "saves": 0,
+        "defensive": 0.01,
+        "bonus": 0.26,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 86,
+      "name": "Lewis-Potter",
+      "team_id": 4,
+      "team": "Brentford",
+      "position": "MID",
+      "price": 5.5,
+      "xp": 3.22,
+      "xp_low": 0,
+      "xp_high": 6.92,
+      "risk": "middels",
+      "volatility": 0.9,
+      "fixture": "Leeds (A)",
+      "availability": 1,
+      "expected_minutes": 67.3,
+      "news": "",
+      "change": "in",
+      "form": {
+        "season_multiplier": 1.017,
+        "recent_multiplier": 1.032,
+        "recent_xgi90": 0.89,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.79,
+        "assists": 0.34,
+        "clean_sheet": 0.15,
+        "saves": 0,
+        "defensive": 0.01,
+        "bonus": 0.33,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": true
+    },
+    {
+      "id": 411,
+      "name": "Haaland",
+      "team_id": 15,
+      "team": "Man City",
+      "position": "FWD",
+      "price": 15.5,
+      "xp": 2.9,
+      "xp_low": 0,
+      "xp_high": 6.19,
+      "risk": "middels",
+      "volatility": 0.88,
+      "fixture": "Crystal Palace (A)",
+      "availability": 1,
+      "expected_minutes": 66.3,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 1.013,
+        "recent_multiplier": 1.025,
+        "recent_xgi90": 0.76,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.59,
+        "goals": 0.76,
+        "assists": 0.28,
+        "clean_sheet": 0.0,
+        "saves": 0,
+        "defensive": 0.0,
+        "bonus": 0.27,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": false,
+      "vice": false
+    },
+    {
+      "id": 165,
+      "name": "João Pedro",
+      "team_id": 6,
+      "team": "Chelsea",
+      "position": "FWD",
+      "price": 7.6,
+      "xp": 3.41,
+      "xp_low": 0,
+      "xp_high": 7.24,
+      "risk": "middels",
+      "volatility": 0.88,
+      "fixture": "Brighton (H)",
+      "availability": 1,
+      "expected_minutes": 66.3,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 1.013,
+        "recent_multiplier": 1.02,
+        "recent_xgi90": 0.69,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.59,
+        "goals": 1.04,
+        "assists": 0.44,
+        "clean_sheet": 0.0,
+        "saves": 0,
+        "defensive": 0.0,
+        "bonus": 0.33,
+        "conceded": 0,
+        "cards": 0
+      },
+      "captain": true,
+      "vice": false
+    }
+  ],
+  "bench": [
+    {
+      "id": 4,
+      "name": "Gabriel",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "DEF",
+      "price": 8.0,
+      "xp": 2.09,
+      "xp_low": 0,
+      "xp_high": 5.26,
+      "risk": "høy",
+      "volatility": 1.19,
+      "fixture": "Aston Villa (A)",
+      "availability": 1,
+      "expected_minutes": 68.1,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.981,
+        "recent_multiplier": 0.983,
+        "recent_xgi90": 0.06,
+        "recent_minutes": 90.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.2
+      },
+      "xp_breakdown": {
+        "appearance": 1.61,
+        "goals": 0.21,
+        "assists": 0.15,
+        "clean_sheet": 0.63,
+        "saves": 0,
+        "defensive": 0.08,
+        "bonus": 0.19,
+        "conceded": -0.41,
+        "cards": -0.38
       }
-    ]
-  },
-  "recommendation": {
-    "edge": 5.51,
-    "transfers": [
-      {
-        "out": {
-          "id": 428,
-          "name": "Cunha",
-          "team_id": 16,
-          "team": "Man Utd",
-          "position": "MID",
-          "price": 8.0,
-          "xp": 3.0,
-          "xp_low": 0,
-          "xp_high": 6.49,
-          "risk": "middels",
-          "volatility": 0.91,
-          "fixture": "Ipswich Town (H)",
-          "availability": 1,
-          "expected_minutes": 59.5,
-          "news": "",
-          "change": null,
-          "form": {
-            "season_multiplier": 1.002,
-            "recent_multiplier": 1.005,
-            "recent_xgi90": 0.45,
-            "recent_minutes": 79.0,
-            "recent_matches": 1,
-            "recent_confidence": 0.18
-          },
-          "xp_breakdown": {
-            "appearance": 1.56,
-            "goals": 0.66,
-            "assists": 0.35,
-            "clean_sheet": 0.19,
-            "saves": 0,
-            "defensive": 0.0,
-            "bonus": 0.23,
-            "conceded": 0,
-            "cards": 0
-          }
-        },
-        "in": {
-          "id": 86,
-          "name": "Lewis-Potter",
-          "team_id": 4,
-          "team": "Brentford",
-          "position": "MID",
-          "price": 5.5,
-          "xp": 3.22,
-          "xp_low": 0,
-          "xp_high": 6.92,
-          "risk": "middels",
-          "volatility": 0.9,
-          "fixture": "Leeds (A)",
-          "availability": 1,
-          "expected_minutes": 67.3,
-          "news": "",
-          "change": null,
-          "form": {
-            "season_multiplier": 1.017,
-            "recent_multiplier": 1.032,
-            "recent_xgi90": 0.89,
-            "recent_minutes": 90.0,
-            "recent_matches": 1,
-            "recent_confidence": 0.2
-          },
-          "xp_breakdown": {
-            "appearance": 1.61,
-            "goals": 0.79,
-            "assists": 0.34,
-            "clean_sheet": 0.15,
-            "saves": 0,
-            "defensive": 0.01,
-            "bonus": 0.33,
-            "conceded": 0,
-            "cards": 0
-          }
-        }
+    },
+    {
+      "id": 8,
+      "name": "Calafiori",
+      "team_id": 1,
+      "team": "Arsenal",
+      "position": "DEF",
+      "price": 5.6,
+      "xp": 2.41,
+      "xp_low": 0,
+      "xp_high": 5.64,
+      "risk": "middels",
+      "volatility": 1.05,
+      "fixture": "Aston Villa (A)",
+      "availability": 1,
+      "expected_minutes": 61.0,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.987,
+        "recent_multiplier": 0.988,
+        "recent_xgi90": 0.13,
+        "recent_minutes": 80.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.182
+      },
+      "xp_breakdown": {
+        "appearance": 1.56,
+        "goals": 0.19,
+        "assists": 0.21,
+        "clean_sheet": 0.62,
+        "saves": 0,
+        "defensive": 0.05,
+        "bonus": 0.17,
+        "conceded": -0.41,
+        "cards": 0
       }
-    ]
-  },
+    },
+    {
+      "id": 465,
+      "name": "Osula",
+      "team_id": 17,
+      "team": "Newcastle",
+      "position": "FWD",
+      "price": 6.0,
+      "xp": 0,
+      "xp_low": 0,
+      "xp_high": 0.76,
+      "risk": "lav",
+      "volatility": 0.59,
+      "fixture": "Spurs (A)",
+      "availability": 0,
+      "expected_minutes": 0.0,
+      "news": "Foot injury - Unknown return date",
+      "change": null,
+      "form": {
+        "season_multiplier": 0.993,
+        "recent_multiplier": 0.994,
+        "recent_xgi90": 0.2,
+        "recent_minutes": 55.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.133
+      },
+      "xp_breakdown": {
+        "appearance": 0.0,
+        "goals": 0.0,
+        "assists": 0.0,
+        "clean_sheet": 0.0,
+        "saves": 0,
+        "defensive": 0.0,
+        "bonus": 0.0,
+        "conceded": 0,
+        "cards": 0
+      }
+    },
+    {
+      "id": 497,
+      "name": "Dubravka",
+      "team_id": 19,
+      "team": "Spurs",
+      "position": "GK",
+      "price": 4.0,
+      "xp": 0,
+      "xp_low": 0,
+      "xp_high": 0.76,
+      "risk": "lav",
+      "volatility": 0.59,
+      "fixture": "Newcastle (H)",
+      "availability": 1,
+      "expected_minutes": 0.0,
+      "news": "",
+      "change": null,
+      "form": {
+        "season_multiplier": 1.0,
+        "recent_multiplier": 1.0,
+        "recent_xgi90": 0.0,
+        "recent_minutes": 0.0,
+        "recent_matches": 1,
+        "recent_confidence": 0.0
+      },
+      "xp_breakdown": {
+        "appearance": 0.0,
+        "goals": 0.0,
+        "assists": 0.0,
+        "clean_sheet": 0.0,
+        "saves": 0.0,
+        "defensive": 0,
+        "bonus": 0.0,
+        "conceded": 0.0,
+        "cards": 0
+      }
+    }
+  ],
   "comparison": {
     "status": "GJØR DET",
     "changes": [
@@ -435,7 +821,7 @@
           "availability": 1,
           "expected_minutes": 59.5,
           "news": "",
-          "change": null,
+          "change": "out",
           "form": {
             "season_multiplier": 1.002,
             "recent_multiplier": 1.005,
@@ -472,7 +858,7 @@
           "availability": 1,
           "expected_minutes": 67.3,
           "news": "",
-          "change": null,
+          "change": "in",
           "form": {
             "season_multiplier": 1.017,
             "recent_multiplier": 1.032,
@@ -689,7 +1075,7 @@
           "cards": 0
         },
         "captain": false,
-        "vice": true
+        "vice": false
       },
       {
         "id": 428,
@@ -1358,584 +1744,299 @@
       }
     ]
   },
-  "lineup": [
+  "recommendation": {
+    "transfers": [
+      {
+        "out": {
+          "id": 428,
+          "name": "Cunha",
+          "team_id": 16,
+          "team": "Man Utd",
+          "position": "MID",
+          "price": 8.0,
+          "xp": 3.0,
+          "xp_low": 0,
+          "xp_high": 6.49,
+          "risk": "middels",
+          "volatility": 0.91,
+          "fixture": "Ipswich Town (H)",
+          "availability": 1,
+          "expected_minutes": 59.5,
+          "news": "",
+          "change": "out",
+          "form": {
+            "season_multiplier": 1.002,
+            "recent_multiplier": 1.005,
+            "recent_xgi90": 0.45,
+            "recent_minutes": 79.0,
+            "recent_matches": 1,
+            "recent_confidence": 0.18
+          },
+          "xp_breakdown": {
+            "appearance": 1.56,
+            "goals": 0.66,
+            "assists": 0.35,
+            "clean_sheet": 0.19,
+            "saves": 0,
+            "defensive": 0.0,
+            "bonus": 0.23,
+            "conceded": 0,
+            "cards": 0
+          }
+        },
+        "in": {
+          "id": 86,
+          "name": "Lewis-Potter",
+          "team_id": 4,
+          "team": "Brentford",
+          "position": "MID",
+          "price": 5.5,
+          "xp": 3.22,
+          "xp_low": 0,
+          "xp_high": 6.92,
+          "risk": "middels",
+          "volatility": 0.9,
+          "fixture": "Leeds (A)",
+          "availability": 1,
+          "expected_minutes": 67.3,
+          "news": "",
+          "change": "in",
+          "form": {
+            "season_multiplier": 1.017,
+            "recent_multiplier": 1.032,
+            "recent_xgi90": 0.89,
+            "recent_minutes": 90.0,
+            "recent_matches": 1,
+            "recent_confidence": 0.2
+          },
+          "xp_breakdown": {
+            "appearance": 1.61,
+            "goals": 0.79,
+            "assists": 0.34,
+            "clean_sheet": 0.15,
+            "saves": 0,
+            "defensive": 0.01,
+            "bonus": 0.33,
+            "conceded": 0,
+            "cards": 0
+          }
+        }
+      }
+    ]
+  },
+  "optimizer": {
+    "weighted_gain": 5.51,
+    "plan": [
+      {
+        "gw": 2,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 428,
+              "name": "Cunha",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 86,
+              "name": "Lewis-Potter",
+              "team": "Brentford"
+            }
+          }
+        ],
+        "label": "Cunha → Lewis-Potter"
+      },
+      {
+        "gw": 3,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 4,
+              "name": "Gabriel",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 388,
+              "name": "Guéhi",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "Gabriel → Guéhi"
+      },
+      {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 557,
+              "name": "Tzolis",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 335,
+              "name": "Stach",
+              "team": "Leeds"
+            }
+          }
+        ],
+        "label": "Tzolis → Stach"
+      },
+      {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 115,
+              "name": "De Cuyper",
+              "team": "Brighton"
+            }
+          }
+        ],
+        "label": "Calafiori → De Cuyper"
+      }
+    ],
+    "captain_horizon_search": true
+  },
+  "future": [
     {
-      "id": 496,
-      "name": "Kinsky",
-      "team_id": 19,
-      "team": "Spurs",
-      "position": "GK",
-      "price": 4.5,
-      "xp": 2.76,
-      "xp_low": 0,
-      "xp_high": 5.78,
-      "risk": "middels",
-      "volatility": 0.85,
-      "fixture": "Newcastle (H)",
-      "availability": 1,
-      "expected_minutes": 64.5,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.981,
-        "recent_multiplier": 0.979,
-        "recent_xgi90": 0.0,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.49,
-        "goals": 0.04,
-        "assists": 0.02,
-        "clean_sheet": 0.76,
-        "saves": 0.6,
-        "defensive": 0,
-        "bonus": 0.16,
-        "conceded": -0.31,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 418,
-      "name": "Maguire",
-      "team_id": 16,
-      "team": "Man Utd",
-      "position": "DEF",
-      "price": 5.0,
-      "xp": 2.78,
-      "xp_low": 0,
-      "xp_high": 6.26,
-      "risk": "middels",
-      "volatility": 0.98,
-      "fixture": "Ipswich Town (H)",
-      "availability": 1,
-      "expected_minutes": 68.1,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 1.0,
-        "recent_multiplier": 1.005,
-        "recent_xgi90": 0.44,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.25,
-        "assists": 0.18,
-        "clean_sheet": 0.79,
-        "saves": 0,
-        "defensive": 0.08,
-        "bonus": 0.19,
-        "conceded": -0.33,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 277,
-      "name": "Egan",
-      "team_id": 11,
-      "team": "Hull City",
-      "position": "DEF",
-      "price": 4.0,
-      "xp": 2.54,
-      "xp_low": 0,
-      "xp_high": 5.81,
-      "risk": "middels",
-      "volatility": 1.01,
-      "fixture": "Coventry City (A)",
-      "availability": 1,
-      "expected_minutes": 68.1,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.981,
-        "recent_multiplier": 0.979,
-        "recent_xgi90": 0.0,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.21,
-        "assists": 0.15,
-        "clean_sheet": 0.63,
-        "saves": 0,
-        "defensive": 0.16,
-        "bonus": 0.19,
-        "conceded": -0.41,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 173,
-      "name": "Thomas",
-      "team_id": 7,
-      "team": "Coventry City",
-      "position": "DEF",
-      "price": 4.0,
-      "xp": 2.8,
-      "xp_low": 0,
-      "xp_high": 6.3,
-      "risk": "middels",
-      "volatility": 0.98,
-      "fixture": "Hull City (H)",
-      "availability": 1,
-      "expected_minutes": 68.1,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.981,
-        "recent_multiplier": 0.981,
-        "recent_xgi90": 0.03,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.25,
-        "assists": 0.18,
-        "clean_sheet": 0.79,
-        "saves": 0,
-        "defensive": 0.11,
-        "bonus": 0.19,
-        "conceded": -0.33,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 426,
-      "name": "B.Fernandes",
-      "team_id": 16,
-      "team": "Man Utd",
-      "position": "MID",
-      "price": 12.0,
-      "xp": 3.2,
-      "xp_low": 0,
-      "xp_high": 6.86,
-      "risk": "middels",
-      "volatility": 0.89,
-      "fixture": "Ipswich Town (H)",
-      "availability": 1,
-      "expected_minutes": 67.3,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.998,
-        "recent_multiplier": 0.999,
-        "recent_xgi90": 0.34,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.73,
-        "assists": 0.4,
-        "clean_sheet": 0.19,
-        "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.26,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 557,
-      "name": "Tzolis",
-      "team_id": 1,
-      "team": "Arsenal",
-      "position": "MID",
-      "price": 6.5,
-      "xp": 2.82,
-      "xp_low": 0,
-      "xp_high": 6.09,
-      "risk": "middels",
-      "volatility": 0.91,
-      "fixture": "Aston Villa (A)",
-      "availability": 1,
-      "expected_minutes": 56.3,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.999,
-        "recent_multiplier": 0.999,
-        "recent_xgi90": 0.33,
-        "recent_minutes": 75.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.172
-      },
-      "xp_breakdown": {
-        "appearance": 1.56,
-        "goals": 0.53,
-        "assists": 0.35,
-        "clean_sheet": 0.15,
-        "saves": 0,
-        "defensive": 0.0,
-        "bonus": 0.22,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 488,
-      "name": "I.Sangaré",
-      "team_id": 18,
-      "team": "Nott'm Forest",
-      "position": "MID",
-      "price": 5.0,
-      "xp": 2.99,
-      "xp_low": 0,
-      "xp_high": 6.41,
-      "risk": "middels",
-      "volatility": 0.89,
-      "fixture": "Liverpool (A)",
-      "availability": 1,
-      "expected_minutes": 67.3,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.982,
-        "recent_multiplier": 0.981,
-        "recent_xgi90": 0.04,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.63,
-        "assists": 0.34,
-        "clean_sheet": 0.15,
-        "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.26,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 290,
-      "name": "Slater",
-      "team_id": 11,
-      "team": "Hull City",
-      "position": "MID",
-      "price": 4.5,
-      "xp": 3.08,
-      "xp_low": 0,
-      "xp_high": 6.59,
-      "risk": "middels",
-      "volatility": 0.89,
-      "fixture": "Coventry City (A)",
-      "availability": 1,
-      "expected_minutes": 67.3,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.997,
-        "recent_multiplier": 1.005,
-        "recent_xgi90": 0.44,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.63,
-        "assists": 0.43,
-        "clean_sheet": 0.15,
-        "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.26,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 86,
-      "name": "Lewis-Potter",
-      "team_id": 4,
-      "team": "Brentford",
-      "position": "MID",
-      "price": 5.5,
-      "xp": 3.22,
-      "xp_low": 0,
-      "xp_high": 6.92,
-      "risk": "middels",
-      "volatility": 0.9,
-      "fixture": "Leeds (A)",
-      "availability": 1,
-      "expected_minutes": 67.3,
-      "news": "",
-      "change": "in",
-      "form": {
-        "season_multiplier": 1.017,
-        "recent_multiplier": 1.032,
-        "recent_xgi90": 0.89,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.79,
-        "assists": 0.34,
-        "clean_sheet": 0.15,
-        "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.33,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": true
-    },
-    {
-      "id": 411,
-      "name": "Haaland",
-      "team_id": 15,
-      "team": "Man City",
-      "position": "FWD",
-      "price": 15.5,
-      "xp": 2.9,
-      "xp_low": 0,
-      "xp_high": 6.19,
-      "risk": "middels",
-      "volatility": 0.88,
-      "fixture": "Crystal Palace (A)",
-      "availability": 1,
-      "expected_minutes": 66.3,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 1.013,
-        "recent_multiplier": 1.025,
-        "recent_xgi90": 0.76,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.59,
-        "goals": 0.76,
-        "assists": 0.28,
-        "clean_sheet": 0.0,
-        "saves": 0,
-        "defensive": 0.0,
-        "bonus": 0.27,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": false,
-      "vice": false
-    },
-    {
-      "id": 165,
-      "name": "João Pedro",
-      "team_id": 6,
-      "team": "Chelsea",
-      "position": "FWD",
-      "price": 7.6,
-      "xp": 3.41,
-      "xp_low": 0,
-      "xp_high": 7.24,
-      "risk": "middels",
-      "volatility": 0.88,
-      "fixture": "Brighton (H)",
-      "availability": 1,
-      "expected_minutes": 66.3,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 1.013,
-        "recent_multiplier": 1.02,
-        "recent_xgi90": 0.69,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.59,
-        "goals": 1.04,
-        "assists": 0.44,
-        "clean_sheet": 0.0,
-        "saves": 0,
-        "defensive": 0.0,
-        "bonus": 0.33,
-        "conceded": 0,
-        "cards": 0
-      },
-      "captain": true,
-      "vice": false
-    }
-  ],
-  "bench": [
-    {
-      "id": 4,
-      "name": "Gabriel",
-      "team_id": 1,
-      "team": "Arsenal",
-      "position": "DEF",
-      "price": 8.0,
-      "xp": 2.09,
-      "xp_low": 0,
-      "xp_high": 5.26,
-      "risk": "høy",
-      "volatility": 1.19,
-      "fixture": "Aston Villa (A)",
-      "availability": 1,
-      "expected_minutes": 68.1,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.981,
-        "recent_multiplier": 0.983,
-        "recent_xgi90": 0.06,
-        "recent_minutes": 90.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.2
-      },
-      "xp_breakdown": {
-        "appearance": 1.61,
-        "goals": 0.21,
-        "assists": 0.15,
-        "clean_sheet": 0.63,
-        "saves": 0,
-        "defensive": 0.08,
-        "bonus": 0.19,
-        "conceded": -0.41,
-        "cards": -0.38
+      "gw": 2,
+      "captain": "João Pedro",
+      "captain_xp": 3.41,
+      "captain_range": [
+        0,
+        7.24
+      ],
+      "xi_xp": 32.5,
+      "action": {
+        "gw": 2,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 428,
+              "name": "Cunha",
+              "team": "Man Utd"
+            },
+            "in": {
+              "id": 86,
+              "name": "Lewis-Potter",
+              "team": "Brentford"
+            }
+          }
+        ],
+        "label": "Cunha → Lewis-Potter"
       }
     },
     {
-      "id": 8,
-      "name": "Calafiori",
-      "team_id": 1,
-      "team": "Arsenal",
-      "position": "DEF",
-      "price": 5.6,
-      "xp": 2.41,
-      "xp_low": 0,
-      "xp_high": 5.64,
-      "risk": "middels",
-      "volatility": 1.05,
-      "fixture": "Aston Villa (A)",
-      "availability": 1,
-      "expected_minutes": 61.0,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.987,
-        "recent_multiplier": 0.988,
-        "recent_xgi90": 0.13,
-        "recent_minutes": 80.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.182
-      },
-      "xp_breakdown": {
-        "appearance": 1.56,
-        "goals": 0.19,
-        "assists": 0.21,
-        "clean_sheet": 0.62,
-        "saves": 0,
-        "defensive": 0.05,
-        "bonus": 0.17,
-        "conceded": -0.41,
-        "cards": 0
+      "gw": 3,
+      "captain": "Lewis-Potter",
+      "captain_xp": 3.73,
+      "captain_range": [
+        0,
+        7.98
+      ],
+      "xi_xp": 35.33,
+      "action": {
+        "gw": 3,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 4,
+              "name": "Gabriel",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 388,
+              "name": "Guéhi",
+              "team": "Man City"
+            }
+          }
+        ],
+        "label": "Gabriel → Guéhi"
       }
     },
     {
-      "id": 465,
-      "name": "Osula",
-      "team_id": 17,
-      "team": "Newcastle",
-      "position": "FWD",
-      "price": 6.0,
-      "xp": 0,
-      "xp_low": 0,
-      "xp_high": 0.76,
-      "risk": "lav",
-      "volatility": 0.59,
-      "fixture": "Spurs (A)",
-      "availability": 0,
-      "expected_minutes": 0.0,
-      "news": "Foot injury - Unknown return date",
-      "change": null,
-      "form": {
-        "season_multiplier": 0.993,
-        "recent_multiplier": 0.994,
-        "recent_xgi90": 0.2,
-        "recent_minutes": 55.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.133
-      },
-      "xp_breakdown": {
-        "appearance": 0.0,
-        "goals": 0.0,
-        "assists": 0.0,
-        "clean_sheet": 0.0,
-        "saves": 0,
-        "defensive": 0.0,
-        "bonus": 0.0,
-        "conceded": 0,
-        "cards": 0
+      "gw": 4,
+      "captain": "Stach",
+      "captain_xp": 3.49,
+      "captain_range": [
+        0,
+        7.46
+      ],
+      "xi_xp": 33.37,
+      "action": {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 557,
+              "name": "Tzolis",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 335,
+              "name": "Stach",
+              "team": "Leeds"
+            }
+          }
+        ],
+        "label": "Tzolis → Stach"
       }
     },
     {
-      "id": 497,
-      "name": "Dubravka",
-      "team_id": 19,
-      "team": "Spurs",
-      "position": "GK",
-      "price": 4.0,
-      "xp": 0,
-      "xp_low": 0,
-      "xp_high": 0.76,
-      "risk": "lav",
-      "volatility": 0.59,
-      "fixture": "Newcastle (H)",
-      "availability": 1,
-      "expected_minutes": 0.0,
-      "news": "",
-      "change": null,
-      "form": {
-        "season_multiplier": 1.0,
-        "recent_multiplier": 1.0,
-        "recent_xgi90": 0.0,
-        "recent_minutes": 0.0,
-        "recent_matches": 1,
-        "recent_confidence": 0.0
-      },
-      "xp_breakdown": {
-        "appearance": 0.0,
-        "goals": 0.0,
-        "assists": 0.0,
-        "clean_sheet": 0.0,
-        "saves": 0.0,
-        "defensive": 0,
-        "bonus": 0.0,
-        "conceded": 0.0,
-        "cards": 0
+      "gw": 5,
+      "captain": "Lewis-Potter",
+      "captain_xp": 3.68,
+      "captain_range": [
+        0,
+        7.91
+      ],
+      "xi_xp": 34.98,
+      "action": {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal"
+            },
+            "in": {
+              "id": 115,
+              "name": "De Cuyper",
+              "team": "Brighton"
+            }
+          }
+        ],
+        "label": "Calafiori → De Cuyper"
       }
     }
   ],
@@ -2453,132 +2554,12 @@
       ]
     }
   ],
-  "future": [
-    {
-      "gw": 2,
-      "captain": "João Pedro",
-      "captain_xp": 3.41,
-      "captain_range": [
-        0,
-        7.24
-      ],
-      "xi_xp": 32.5,
-      "action": {
-        "gw": 2,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd"
-            },
-            "in": {
-              "id": 86,
-              "name": "Lewis-Potter",
-              "team": "Brentford"
-            }
-          }
-        ],
-        "label": "Cunha → Lewis-Potter"
-      }
-    },
-    {
-      "gw": 3,
-      "captain": "Lewis-Potter",
-      "captain_xp": 3.73,
-      "captain_range": [
-        0,
-        7.98
-      ],
-      "xi_xp": 35.33,
-      "action": {
-        "gw": 3,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 4,
-              "name": "Gabriel",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 388,
-              "name": "Guéhi",
-              "team": "Man City"
-            }
-          }
-        ],
-        "label": "Gabriel → Guéhi"
-      }
-    },
-    {
-      "gw": 4,
-      "captain": "Stach",
-      "captain_xp": 3.49,
-      "captain_range": [
-        0,
-        7.46
-      ],
-      "xi_xp": 33.37,
-      "action": {
-        "gw": 4,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 557,
-              "name": "Tzolis",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 335,
-              "name": "Stach",
-              "team": "Leeds"
-            }
-          }
-        ],
-        "label": "Tzolis → Stach"
-      }
-    },
-    {
-      "gw": 5,
-      "captain": "Lewis-Potter",
-      "captain_xp": 3.68,
-      "captain_range": [
-        0,
-        7.91
-      ],
-      "xi_xp": 34.98,
-      "action": {
-        "gw": 5,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 8,
-              "name": "Calafiori",
-              "team": "Arsenal"
-            },
-            "in": {
-              "id": 115,
-              "name": "De Cuyper",
-              "team": "Brighton"
-            }
-          }
-        ],
-        "label": "Calafiori → De Cuyper"
-      }
-    }
-  ],
+  "recent_form": {
+    "promoted": true
+  },
+  "captain_model": {
+    "promoted": true
+  },
   "captain_comparison": [
     {
       "id": 165,
@@ -2590,7 +2571,14 @@
       "availability": 1.0,
       "score": 3.919,
       "captain": true,
-      "vice": false
+      "vice": false,
+      "season_minutes": 90.0,
+      "season_points": 11.0,
+      "season_xg": 0.63,
+      "season_xa": 0.06,
+      "season_goals": 1.0,
+      "season_assists": 1.0,
+      "selected_by_percent": 67.7
     },
     {
       "id": 86,
@@ -2602,7 +2590,14 @@
       "availability": 1.0,
       "score": 3.723,
       "captain": false,
-      "vice": true
+      "vice": true,
+      "season_minutes": 90.0,
+      "season_points": 10.0,
+      "season_xg": 0.77,
+      "season_xa": 0.12,
+      "season_goals": 1.0,
+      "season_assists": 0.0,
+      "selected_by_percent": 1.0
     },
     {
       "id": 426,
@@ -2614,7 +2609,14 @@
       "availability": 1.0,
       "score": 3.697,
       "captain": false,
-      "vice": false
+      "vice": false,
+      "season_minutes": 90.0,
+      "season_points": 2.0,
+      "season_xg": 0.08,
+      "season_xa": 0.26,
+      "season_goals": 0.0,
+      "season_assists": 0.0,
+      "selected_by_percent": 48.5
     },
     {
       "id": 290,
@@ -2626,7 +2628,14 @@
       "availability": 1.0,
       "score": 3.559,
       "captain": false,
-      "vice": false
+      "vice": false,
+      "season_minutes": 90.0,
+      "season_points": 6.0,
+      "season_xg": 0.0,
+      "season_xa": 0.44,
+      "season_goals": 0.0,
+      "season_assists": 1.0,
+      "selected_by_percent": 3.8
     },
     {
       "id": 488,
@@ -2638,7 +2647,14 @@
       "availability": 1.0,
       "score": 3.46,
       "captain": false,
-      "vice": false
+      "vice": false,
+      "season_minutes": 90.0,
+      "season_points": 2.0,
+      "season_xg": 0.03,
+      "season_xa": 0.01,
+      "season_goals": 0.0,
+      "season_assists": 0.0,
+      "selected_by_percent": 1.0
     }
   ],
   "decision_explanation": {
@@ -2654,16 +2670,152 @@
     "distance_to_switch": 0,
     "switch_trigger": "Anbefalingen er robust nok nå.",
     "horizon_3gw": 9.4,
-    "horizon_plan": 10.31
+    "horizon_plan": 10.31,
+    "premium_structure_bias": 0.0
   },
   "decision_layer": {
-    "version": "4.1-explainable",
+    "version": "4.4-premium-adaptive",
     "approved_first_move": true,
     "threshold": 1.15,
-    "blockers": [],
-    "candidate_count": 6,
-    "bench_ordering": "outfield by availability/minutes/xP; goalkeeper last",
+    "base_threshold": 1.15,
+    "controls": {
+      "threshold": 1.15,
+      "minutes_penalty_scale": 1.0,
+      "availability_penalty_scale": 1.0,
+      "volatility_penalty_scale": 1.0
+    },
+    "feedback": {
+      "enabled": false,
+      "component_enabled": false,
+      "base_threshold": 1.15,
+      "effective_threshold": 1.15,
+      "evaluated_gws": 0,
+      "reasons": [
+        "Minst 4 ferdige frozen-snapshot GWs kreves før terskelkalibrering"
+      ],
+      "diagnostics": {
+        "xp_mae": null,
+        "xp_bias": null,
+        "minutes_mae": null,
+        "minutes_bias": null,
+        "expected_to_play_zero_rate": null,
+        "captain_hit_rate": null,
+        "mean_captain_regret": null,
+        "position_diagnostics": {}
+      }
+    },
+    "premium_structure_feedback": {
+      "enabled": false,
+      "promoted_structure": "none",
+      "candidate_bias": 0,
+      "evaluated_windows": 0,
+      "reason": "insufficient evaluated windows",
+      "version": "1.0",
+      "winner_shares": {
+        "current_structure": 0.0,
+        "premium_forward": 0.0,
+        "premium_midfielder": 0.0
+      },
+      "verdict_accuracy": null,
+      "mean_regret": null,
+      "min_windows": 6
+    },
     "explainability": true,
-    "captain_comparison": true
+    "captain_comparison": true,
+    "backtest_adaptive": true,
+    "component_adaptive": true,
+    "premium_structure_adaptive": true,
+    "squad_view_consistent": true,
+    "engine_version": "4.5-squad-consistent"
+  },
+  "captain_v4_inputs": {
+    "enriched": true,
+    "source": "FPL bootstrap-static",
+    "candidate_count": 5,
+    "fields": [
+      "season_minutes",
+      "season_points",
+      "season_xg",
+      "season_xa",
+      "season_goals",
+      "season_assists"
+    ]
+  },
+  "captain_model_selection": {
+    "version": "1.0",
+    "production_model": "v3",
+    "reason": "insufficient backtest evidence",
+    "evaluated_gws": 0,
+    "selected_pick": {
+      "id": 165,
+      "name": "João Pedro",
+      "team": "Chelsea",
+      "v3_score": 3.919,
+      "v4_score": 4.6124,
+      "v41_score": 4.6694,
+      "elite_prior": 1.0667,
+      "haul_bonus": 0.057,
+      "haul_probabilities": {
+        "goal_lambda": 0.2878,
+        "assist_lambda": 0.1588,
+        "p_goal_1": 0.2501,
+        "p_goal_2": 0.0343,
+        "p_goal_3": 0.0032,
+        "p_multi_return": 0.0745,
+        "p10": 0.0433,
+        "p15": 0.015
+      },
+      "xp": 3.41,
+      "ceiling": 7.24,
+      "expected_minutes": 66.0
+    },
+    "promotion_flags": {
+      "v4": false,
+      "v41": false
+    },
+    "applied": true,
+    "applied_captain_id": 165,
+    "applied_captain_name": "João Pedro",
+    "applied_vice_id": 86,
+    "safety_gate": {
+      "captain_min_minutes": 60,
+      "captain_min_availability": 0.75,
+      "vice_min_minutes": 55,
+      "vice_min_availability": 0.75,
+      "selected_pick_safe": true
+    }
+  },
+  "captain_explanation": {
+    "version": "1.0",
+    "model": "v3",
+    "captain": {
+      "id": 165,
+      "name": "João Pedro",
+      "team": "Chelsea",
+      "xp": 3.41,
+      "expected_minutes": 66.3,
+      "availability": 1.0,
+      "model_score": 3.919,
+      "p10_plus": 0.0433,
+      "p15_plus": 0.015,
+      "p_goal_2plus": 0.0343,
+      "p_multi_return": 0.0745
+    },
+    "runner_up": {
+      "id": 86,
+      "name": "Lewis-Potter",
+      "team": "Brentford",
+      "xp": 3.22,
+      "expected_minutes": 67.3,
+      "model_score": 3.723,
+      "p10_plus": 0.0432,
+      "p15_plus": 0.0162,
+      "p_goal_2plus": 0.0369,
+      "p_multi_return": 0.0731
+    },
+    "score_gap": 0.196,
+    "xp_gap": 0.19,
+    "selected_pick_safe": true,
+    "reason": "insufficient backtest evidence"
   }
 }
