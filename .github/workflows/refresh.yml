@@ -11,6 +11,8 @@ on:
       - "freeze_premium_structure.py"
       - "evaluate_premium_structure.py"
       - "derive_premium_structure_feedback.py"
+      - "chip_strategy_v1.py"
+      - "freeze_chip_strategy.py"
       - "market_ensemble_v1.py"
       - "market_ab_shadow.py"
       - "player_attack_share_v1.py"
@@ -90,6 +92,7 @@ jobs:
           python captain_v4_shadow.py
           python market_ab_shadow.py
           python premium_structure_v1.py
+          python chip_strategy_v1.py
       - name: Sanity-check generated feed
         run: |
           python - <<'PY'
@@ -105,6 +108,7 @@ jobs:
             if s: assert len(s.get('squad_ids',[]))==15 and all(c.get('captain_id') for c in s.get('captains',[]))
           pscore=json.load(open('backtest/premium_structure_scorecard.json')); assert pscore.get('version')=='1.0'; assert 'winner_counts' in pscore and 'mean_regret' in pscore
           pparams=json.load(open('backtest/premium_structure_params.json')); assert pparams.get('version')=='1.0'; assert pparams.get('promoted_structure') in ('none','premium_forward','premium_midfielder'); assert float(pparams.get('candidate_bias',0))<=.20
+          chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.0-shadow'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'; assert chip.get('recommendation') in ('hold','wildcard','free_hit','bench_boost','triple_captain'); assert set(chip.get('scores',{}))=={'wildcard','free_hit','bench_boost','triple_captain'}
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('premium_structure_adaptive') is True; assert 'premium_structure_feedback' in dl
@@ -114,7 +118,7 @@ jobs:
           params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
           shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
           for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
-          print('Decision 4.4 premium-adaptive sanity passed',pparams.get('evaluated_windows'),pparams.get('promoted_structure'),pparams.get('candidate_bias'))
+          print('Decision 4.4 + chip shadow sanity passed',chip.get('recommendation'),chip.get('confidence'),chip.get('scores'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -122,14 +126,15 @@ jobs:
           python freeze_market_ab.py
           python freeze_captain_v4.py
           python freeze_premium_structure.py
+          python freeze_chip_strategy.py
       - name: Publish feed, snapshots and backtests
         run: |
-          if git diff --quiet -- data.json premium_structure_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/; then
+          if git diff --quiet -- data.json premium_structure_shadow.json chip_strategy_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/; then
             echo "No dashboard, snapshot or backtest change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json premium_structure_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/
-          git commit -m "Dashboard: refresh analysis and adaptive premium evidence"
+          git add data.json premium_structure_shadow.json chip_strategy_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
+          git commit -m "Dashboard: refresh analysis, premium evidence and chip shadow"
           git push
