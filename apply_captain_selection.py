@@ -1,5 +1,5 @@
 from __future__ import annotations
-"""Apply the promoted captain model to dashboard C/V flags with safety gates."""
+"""Apply the promoted captain model to dashboard C/V flags with safety gates and expose explanation metadata."""
 import json
 from pathlib import Path
 DATA=Path('data.json'); SHADOW=Path('captain_v4_shadow.json')
@@ -40,12 +40,28 @@ def main():
  for k in ('lineup',):apply(d.get(k))
  cmp=d.get('comparison') or {}
  apply(cmp.get('current_xi'));apply(cmp.get('transfer_xi'))
- # Expose actual applied choice for UI/debugging.
+ # Explain the actual applied decision, not merely the original shadow winner.
+ cap_shadow=next((r for r in ranked if int(r.get('id') or 0)==cap_id),{})
+ runner=next((r for r in ranked if int(r.get('id') or 0)!=cap_id and int(r.get('id') or 0) in byid),{})
+ cap_row=byid.get(cap_id) or {}
+ runner_row=byid.get(int(runner.get('id') or 0)) or {}
+ hp=cap_shadow.get('haul_probabilities') or {}
+ rhp=runner.get('haul_probabilities') or {}
+ d['captain_explanation']={
+  'version':'1.0',
+  'model':model,
+  'captain':{'id':cap_id,'name':cap_row.get('name'),'team':cap_row.get('team'),'xp':round(n(cap_row.get('xp')),2),'expected_minutes':round(n(cap_row.get('expected_minutes')),1),'availability':round(n(cap_row.get('availability'),1),3),'model_score':round(n(cap_shadow.get(key)),3),'p10_plus':hp.get('p10'),'p15_plus':hp.get('p15'),'p_goal_2plus':hp.get('p_goal_2'),'p_multi_return':hp.get('p_multi_return')},
+  'runner_up':{'id':runner.get('id'),'name':runner.get('name'),'team':runner.get('team'),'xp':round(n(runner_row.get('xp')),2),'expected_minutes':round(n(runner_row.get('expected_minutes')),1),'model_score':round(n(runner.get(key)),3),'p10_plus':rhp.get('p10'),'p15_plus':rhp.get('p15'),'p_goal_2plus':rhp.get('p_goal_2'),'p_multi_return':rhp.get('p_multi_return')},
+  'score_gap':round(n(cap_shadow.get(key))-n(runner.get(key)),3) if runner else None,
+  'xp_gap':round(n(cap_row.get('xp'))-n(runner_row.get('xp')),2) if runner else None,
+  'selected_pick_safe':safe,
+  'reason':sel.get('reason')
+ }
  d['captain_model_selection']['applied']=True
  d['captain_model_selection']['applied_captain_id']=cap_id
- d['captain_model_selection']['applied_captain_name']=(byid.get(cap_id) or {}).get('name')
+ d['captain_model_selection']['applied_captain_name']=cap_row.get('name')
  d['captain_model_selection']['applied_vice_id']=vice_id
  d['captain_model_selection']['safety_gate']={'captain_min_minutes':60,'captain_min_availability':0.75,'vice_min_minutes':55,'vice_min_availability':0.75,'selected_pick_safe':safe}
  DATA.write_text(json.dumps(d,ensure_ascii=False,indent=2))
- print('Applied captain:',d['captain_model_selection']['applied_captain_name'],'model=',model,'safe=',safe,'vice=',vice_id)
+ print('Applied captain:',cap_row.get('name'),'model=',model,'safe=',safe,'runner=',runner.get('name'))
 if __name__=='__main__':main()
