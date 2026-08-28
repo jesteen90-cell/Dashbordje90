@@ -75,11 +75,15 @@ jobs:
           d=json.load(open('data.json'))
           assert d.get('model_version')=='3.0-validated', d.get('model_version')
           dl=d.get('decision_layer',{})
-          assert dl.get('version')=='4.2-backtest-adaptive', dl.get('version')
+          assert dl.get('version')=='4.3-component-adaptive', dl.get('version')
           assert dl.get('explainability') is True
           assert dl.get('captain_comparison') is True
           assert dl.get('backtest_adaptive') is True
+          assert dl.get('component_adaptive') is True
           assert 0.90 <= float(dl.get('threshold')) <= 1.45
+          controls=dl.get('controls',{})
+          assert 0.85 <= float(controls.get('minutes_penalty_scale',1)) <= 1.25
+          assert 0.90 <= float(controls.get('availability_penalty_scale',1)) <= 1.25
           assert d.get('deadline_time')
           assert len(d.get('comparison',{}).get('current_xi',[]))==11
           assert len(d.get('lineup',[]))==11
@@ -94,8 +98,9 @@ jobs:
           if bench:
             assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
           score=json.load(open('backtest/scorecard.json'))
-          assert score.get('version')=='1.0'
-          print('Model 3.0 + decision layer 4.2 sanity check passed:', d.get('generated_at'))
+          assert score.get('version')=='2.0'
+          assert 'minutes_mae' in score and 'position_diagnostics' in score
+          print('Model 3.0 + decision layer 4.3 sanity check passed:', d.get('generated_at'))
           PY
       - name: Freeze first valid pre-deadline snapshot
         run: python freeze_snapshot.py
