@@ -39,7 +39,53 @@
       if(row.id===e.captain?.id){card.style.borderColor='#00e99088';card.style.boxShadow='0 0 0 1px #00e99018 inset';}
     });
   }
-  function render(){
+  function changes(){
+    let xs=(D.comparison||{}).changes||[];
+    if(!xs.length && D.candidates?.[0]?.pairs) xs=D.candidates[0].pairs;
+    return xs.filter(x=>x?.out?.id&&x?.in?.id);
+  }
+  function replacePlayers(rows,removeKey,addKey,xs){
+    const m=new Map((rows||[]).filter(x=>x?.id!=null).map(x=>[Number(x.id),x]));
+    xs.forEach(ch=>{m.delete(Number(ch[removeKey].id));m.set(Number(ch[addKey].id),ch[addKey]);});
+    return [...m.values()];
+  }
+  function benchFrom(squad,xi){
+    const ids=new Set((xi||[]).map(x=>Number(x.id)));
+    return (squad||[]).filter(x=>!ids.has(Number(x.id)));
+  }
+  function benchCard(p,mode){
+    const red=mode==='out',green=mode==='in';
+    const style=red?'position:relative;border:3px solid #ff496b;background:#ff496b16;box-shadow:0 0 0 2px #4b0714,0 0 22px #ff496b88':green?'position:relative;border:3px solid #18eda0;background:#18eda014;box-shadow:0 0 0 2px #063d2a,0 0 22px #18eda066':'position:relative';
+    const badge=red?'<span style="position:absolute;right:6px;top:6px;padding:3px 7px;border-radius:99px;background:#ff496b;color:#fff;font-size:8px;font-weight:1000;z-index:4">UT</span>':green?'<span style="position:absolute;right:6px;top:6px;padding:3px 7px;border-radius:99px;background:#00a96e;color:#fff;font-size:8px;font-weight:1000;z-index:4">INN</span>':'';
+    return `<div class="benchCard" style="${style}">${badge}${kit(p)}<span class="name">${esc(p.name)}</span><span class="pos">${esc(P[p.position]||p.position||'')}</span><span class="xp">${Number(p.xp||0).toFixed(2)} xP</span><span class="fix">${esc(p.fixture||'')}</span></div>`;
+  }
+  function renderBenches(){
+    if(typeof D==='undefined'||!D) return;
+    const curXi=(D.comparison||{}).current_xi||D.lineup||[];
+    const afterXi=(D.comparison||{}).transfer_xi||D.lineup||curXi;
+    const xs=changes();
+    const active=[...(D.lineup||[]),...(D.bench||[])];
+    const approved=Boolean(D.decision_layer?.approved_first_move);
+    const currentSquad=approved?replacePlayers(active,'in','out',xs):active;
+    const afterSquad=approved?active:replacePlayers(active,'out','in',xs);
+    const currentBench=benchFrom(currentSquad,curXi);
+    const afterBench=benchFrom(afterSquad,afterXi);
+    const outIds=new Set(xs.map(x=>Number(x.out.id))),inIds=new Set(xs.map(x=>Number(x.in.id)));
+
+    const currentSection=document.querySelector('#current')?.closest('.section');
+    if(currentSection && !document.querySelector('#currentBench')){
+      currentSection.insertAdjacentHTML('afterend','<div class="section" id="currentBenchSection"><h2>Nåværende benk</h2><div id="currentBench" class="bench"></div></div>');
+    }
+    const oldBench=document.querySelector('#bench');
+    if(oldBench){
+      const h=oldBench.closest('.section')?.querySelector('h2');
+      if(h)h.textContent='Benk etter foreslått trekk';
+    }
+    const cb=document.querySelector('#currentBench');
+    if(cb)cb.innerHTML=currentBench.map(p=>benchCard(p,outIds.has(Number(p.id))?'out':'')).join('');
+    if(oldBench)oldBench.innerHTML=afterBench.map(p=>benchCard(p,inIds.has(Number(p.id))?'in':'')).join('');
+  }
+  function renderCaptain(){
     if(typeof D==='undefined' || !D || !D.captain_explanation) return;
     const e=D.captain_explanation,c=e.captain||{},r=e.runner_up||{},conf=confidence(e);
     const host=document.querySelector('#captains');
@@ -55,6 +101,7 @@
     box.innerHTML=`<div class="eyebrow">Hvorfor kaptein?</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:end"><div><div style="font-size:20px;font-weight:950">${c.name||'—'} (C)</div><div class="muted" style="font-size:11px">${c.team||''} · modell ${e.model||'—'}</div></div><div style="text-align:right"><b>${num(c.xp)} xP</b><div class="muted" style="font-size:10px">${num(c.expected_minutes,0)} min · ${pct(c.availability)}</div></div></div>${haul}${confHtml}<div style="margin-top:10px;padding:9px 10px;border-radius:12px;background:#0002;font-size:11px"><b>Mot #2 ${r.name||'—'}:</b> modellgap ${e.score_gap==null?'—':(Number(e.score_gap)>=0?'+':'')+num(e.score_gap,3)} · xP-gap ${e.xp_gap==null?'—':(Number(e.xp_gap)>=0?'+':'')+num(e.xp_gap)}${c.p10_plus!=null&&r.p10_plus!=null?` · 10+-gap ${(conf.haulGap>=0?'+':'')+pct(conf.haulGap)}`:''}. ${e.selected_pick_safe?'Består':'Består ikke'} sikkerhetsgaten for minutter/availability.</div>`;
     host.appendChild(box);
   }
+  function render(){renderCaptain();renderBenches();}
   window.addEventListener('load',()=>{setTimeout(render,350);setTimeout(render,1200)});
   new MutationObserver(()=>render()).observe(document.documentElement,{childList:true,subtree:true});
 })();
