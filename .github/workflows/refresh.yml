@@ -6,6 +6,8 @@ on:
     branches: [main]
     paths:
       - "generate_dashboard_v3.py"
+      - "build_dashboard_with_cache.py"
+      - "premium_structure_v1.py"
       - "market_ensemble_v1.py"
       - "market_ab_shadow.py"
       - "player_attack_share_v1.py"
@@ -77,11 +79,12 @@ jobs:
           FPL_FREE_TRANSFERS: ${{ secrets.FPL_FREE_TRANSFERS }}
         run: |
           if [ -z "$FPL_FREE_TRANSFERS" ]; then export FPL_FREE_TRANSFERS=1; fi
-          python generate_dashboard_v3.py
+          python build_dashboard_with_cache.py
           python decision_layer_v4.py
           python enrich_captain_inputs.py
           python captain_v4_shadow.py
           python market_ab_shadow.py
+          python premium_structure_v1.py
       - name: Sanity-check generated feed
         run: |
           python - <<'PY'
@@ -93,6 +96,8 @@ jobs:
             assert p.get('season_minutes') is not None and p.get('season_xg') is not None and p.get('season_xa') is not None
           cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.0-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick')
           capscore=json.load(open('backtest/captain_v4_scorecard.json')); assert capscore.get('version')=='1.0'; assert 'v4_delta_points' in capscore
+          premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.0-shadow'; assert int(premium.get('gw'))==int(d.get('gw')); assert premium.get('verdict') in ('current_structure','premium_forward','premium_midfielder'); assert 'current_horizon_value' in premium
+          cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.3-component-adaptive'
           assert d.get('deadline_time') and len(d.get('lineup',[]))==11
@@ -101,7 +106,7 @@ jobs:
           params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
           shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
           for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
-          print('Captain horizon + Captain v4 + player-share sanity passed',capscore.get('evaluated_gws'),capscore.get('v4_delta_points'),ab.get('active_gws'))
+          print('Premium structure + captain horizon sanity passed',premium.get('verdict'),premium.get('best_premium_forward'),premium.get('best_premium_midfielder'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -110,12 +115,12 @@ jobs:
           python freeze_captain_v4.py
       - name: Publish feed, snapshots and backtests
         run: |
-          if git diff --quiet -- data.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/; then
+          if git diff --quiet -- data.json premium_structure_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/; then
             echo "No dashboard, snapshot or backtest change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/
-          git commit -m "Dashboard: refresh analysis and frozen shadow evidence"
+          git add data.json premium_structure_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/
+          git commit -m "Dashboard: refresh analysis and premium structure shadow"
           git push
