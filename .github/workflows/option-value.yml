@@ -1,4 +1,4 @@
-name: Enrich Budget Option Timing Robustness and Final Gate
+name: Enrich Budget Option Timing Robustness Final Gate Plan and Bench
 
 on:
   workflow_dispatch:
@@ -10,6 +10,8 @@ on:
       - "transfer_timing_v1.py"
       - "transfer_robustness_v1.py"
       - "final_transfer_gate_v1.py"
+      - "plan_intelligence_v1.py"
+      - "bench_replacement_v1.py"
       - "freeze_option_value.py"
       - "evaluate_option_value.py"
       - "freeze_transfer_timing.py"
@@ -37,12 +39,14 @@ jobs:
           python-version: "3.12"
       - name: Install dependency
         run: pip install requests
-      - name: Build decision safety layers
+      - name: Build decision safety and plan layers
         run: |
           python budget_intelligence_v1.py
           python transfer_timing_v1.py
           python transfer_option_value_v1.py
           python transfer_robustness_v1.py
+          python bench_replacement_v1.py
+          python plan_intelligence_v1.py
           python final_transfer_gate_v1.py
       - name: Sanity-check decision safety layers
         run: |
@@ -54,16 +58,21 @@ jobs:
           timing=d.get('transfer_timing') or {}; assert timing.get('version')=='1.0-shadow'; assert timing.get('affects_transfer_ranking') is False; assert timing.get('price_prediction') is False
           tov=d.get('transfer_option_value') or {}; assert tov.get('version')=='1.1-shadow'; assert tov.get('affects_transfer_ranking') is False
           rob=d.get('transfer_robustness') or {}; assert rob.get('version')=='1.0-shadow'; assert rob.get('affects_transfer_ranking') is False
+          br=d.get('bench_replacement_model') or {}; assert br.get('version')=='1.0-shadow'; assert br.get('affects_transfer_ranking') is False
+          pi=d.get('plan_intelligence') or {}; assert pi.get('version')=='1.0'; assert pi.get('rolling_plan') is True
+          future=d.get('future') or []; assert len(future)>=2
+          for r in future:
+              x=r.get('plan_intelligence') or {}; assert x.get('version')=='1.0'; assert 0 <= int(x.get('free_transfers_after') or 0) <= 5
           candidates=d.get('candidates') or []; assert int(rob.get('candidate_count') or 0)==len(candidates)
           for c in candidates:
               tv=c.get('timing_value_shadow') or {}; assert tv.get('version')=='1.0' and tv.get('affects_ranking') is False and tv.get('price_prediction') is False
               ov=c.get('option_value_shadow') or {}; assert ov.get('version')=='1.1' and ov.get('affects_ranking') is False
               rv=c.get('robustness_shadow') or {}; assert rv.get('version')=='1.0-shadow' and rv.get('affects_ranking') is False; assert rv.get('label') in ('ROBUST','BLANDET','FRAGIL')
+              ba=c.get('bench_adjustment_shadow') or {}; assert ba.get('version')=='1.0' and ba.get('affects_ranking') is False
           fg=d.get('final_transfer_gate') or {}; assert fg.get('version')=='1.0-predeadline'; assert fg.get('verdict') in ('GO','WAIT / RECHECK','NO-GO')
-          # Critical invariant: safety/shadow evidence may never promote a rejected production transfer.
           if not bool((d.get('decision_layer') or {}).get('approved_first_move')): assert fg.get('verdict')=='NO-GO'
           if fg.get('robustness')=='FRAGIL': assert fg.get('verdict')!='GO'
-          print('Final decision safety OK',fg)
+          print('Final decision, bench and plan sanity OK',fg,pi,br)
           PY
       - name: Evaluate and freeze evidence
         run: |
@@ -86,7 +95,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/
-          git commit -m "Dashboard: enrich final transfer decision safety"
+          git commit -m "Dashboard: enrich plan and bench-aware decision safety"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
