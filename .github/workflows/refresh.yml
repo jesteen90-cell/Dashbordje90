@@ -25,6 +25,7 @@ on:
       - "enrich_captain_inputs.py"
       - "captain_v4_shadow.py"
       - "evaluate_captain_v4.py"
+      - "select_captain_model.py"
       - "freeze_captain_v4.py"
       - "market_odds.json"
       - "decision_layer_v4.py"
@@ -92,6 +93,7 @@ jobs:
           python decision_layer_v4.py
           python enrich_captain_inputs.py
           python captain_v4_shadow.py
+          python select_captain_model.py
           python market_ab_shadow.py
           python premium_structure_v1.py
           python chip_strategy_v1.py
@@ -106,12 +108,14 @@ jobs:
           cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.1-haul-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick') and cap4.get('v41_pick')
           for p in cap4.get('candidates',[]):
             hp=p.get('haul_probabilities') or {}; assert all(k in hp for k in ('p_goal_1','p_goal_2','p_goal_3','p_multi_return','p10','p15')); assert 0 <= float(p.get('haul_bonus',0)) <= .90
-          capscore=json.load(open('backtest/captain_v4_scorecard.json')); assert capscore.get('version')=='1.1-haul-regret'; assert 'v41_mean_regret' in capscore and 'v41_promote' in capscore and 'v41_delta_vs_v4' in capscore
+          sel=d.get('captain_model_selection') or {}; assert sel.get('version')=='1.0'; assert sel.get('production_model') in ('v3','v4','v4.1'); assert sel.get('selected_pick'); assert isinstance(sel.get('promotion_flags'),dict)
+          if sel.get('production_model')=='v4.1': assert sel.get('promotion_flags',{}).get('v41') is True
+          if sel.get('production_model')=='v4': assert sel.get('promotion_flags',{}).get('v4') is True
           premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'; assert int(premium.get('gw'))==int(d.get('gw')); assert len(premium.get('current_squad_ids',[]))==15
           chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'
-          print('Captain v4.1 regret sanity:',cap4.get('v3_pick',{}).get('name'),'->',cap4.get('v41_pick',{}).get('name'),capsCore if False else capscore.get('v41_evaluated_gws'),capscore.get('v41_mean_regret'),capscore.get('v41_promote'))
+          print('Captain selector sanity:',sel.get('production_model'),sel.get('selected_pick',{}).get('name'),sel.get('evaluated_gws'),sel.get('reason'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -129,5 +133,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh analysis with Captain v4.1 regret tracking"
+          git commit -m "Dashboard: refresh analysis with safe captain promotion selector"
           git push
