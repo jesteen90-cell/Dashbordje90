@@ -18,7 +18,8 @@ second=cands[1] if len(cands)>1 else {}
 rob=(best.get('robustness_shadow') or {})
 timing=(best.get('timing_value_shadow') or {})
 option=(best.get('option_value_shadow') or {})
-bench=(best.get('bench_replacement_shadow') or {})
+bench=(best.get('bench_adjustment_shadow') or {})
+necessity=(best.get('transfer_necessity_shadow') or {})
 
 source_gw=int(d.get('source_snapshot_gw') or 0)
 early_season=source_gw <= 3
@@ -31,6 +32,20 @@ blockers=[]; warnings=[]; go_triggers=[]; recheck=[]
 if not approved: blockers.append('Produksjonsmodellen godkjenner ikke første trekk.')
 if rob.get('label')=='FRAGIL': blockers.append('Beste kandidat er negativ i minst én tidshorisont.')
 elif rob.get('label')=='BLANDET': warnings.append('Tidshorisontene er ikke helt enige.')
+
+# Necessity is now part of the authoritative safety gate. It may only make us
+# more conservative; it can never promote a production-rejected transfer.
+necessity_label=necessity.get('label')
+necessity_score=necessity.get('score')
+if necessity_label=='SPAR FT':
+    blockers.append('Nødvendighetsmodellen vurderer at gratisbyttet har større strategisk verdi enn dette trekket.')
+    go_triggers.append('GO krever at byttenødvendigheten løftes over SPAR FT etter fersk informasjon eller sterkere fler-GW-gevinst.')
+elif necessity_label=='LUKSUSBYTTE':
+    warnings.append('Trekket er et luksusbytte, ikke en nødvendig reparasjon.')
+    go_triggers.append('Et luksusbytte krever tydelig merverdi mot SPAR FT før GO.')
+elif necessity_label=='FORNUFTIG':
+    warnings.append('Trekket er fornuftig, men ikke så nødvendig at andre varselsignaler kan ignoreres.')
+
 if adjusted_margin < .20:
     warnings.append('Fordelen over å spare byttet er for liten etter usikkerhetsmargin.')
     go_triggers.append('GO krever at den justerte fordelen mot SPAR FT stiger til minst +0,20 p.')
@@ -59,31 +74,34 @@ else: verdict='GO'
 if not approved: verdict='NO-GO'
 
 confidence=max(0,min(1,.55 + max(-.2,min(.25,adjusted_margin*.12)) + (.12 if rob.get('label')=='ROBUST' else -.08 if rob.get('label')=='FRAGIL' else 0) + (.08 if separation>=.35 else -.06 if separation<.20 else 0)))
+if necessity_label=='NØDVENDIG': confidence=min(1.0,confidence+.05)
+elif necessity_label=='LUKSUSBYTTE': confidence=min(confidence,.68)
+elif necessity_label=='SPAR FT': confidence=min(confidence,.45)
 if early_season: confidence=min(confidence,.72)
 if warnings: confidence=min(confidence,.74)
 if blockers: confidence=min(confidence,.45)
 headline={'GO':'GJØR BYTTET','WAIT / RECHECK':'VENT – SJEKK IGJEN','NO-GO':'IKKE GJØR BYTTET'}[verdict]
 
-# Human-readable next action: make WAIT operational rather than vague.
 if verdict=='GO':
     next_action='Byttet har passert siste sikkerhetskontroll. Kontroller bare at ingen ny lagnyhet har kommet før bekreftelse.'
 elif verdict=='NO-GO':
-    next_action='Ikke bruk gratisbyttet på dette trekket nå. Behold FT med mindre nye data endrer produksjonsmodellen.'
+    next_action='Ikke bruk gratisbyttet på dette trekket nå. Behold FT med mindre nye data endrer produksjonsmodellen eller nødvendigheten.'
 else:
     next_action='Vent med å bekrefte. Kjør ny vurdering når recheck-punktene er oppdatert; GO først når varselsignalene er borte eller fler-GW-fordelen klart forsvarer dem.'
 
 d['headline']=headline
 d['final_transfer_gate']={
- 'version':'2.1-actionable-recheck','production_approved':approved,'verdict':verdict,
+ 'version':'2.2-necessity-aware','production_approved':approved,'verdict':verdict,
  'authoritative_headline':headline,'confidence':round(confidence,2),
  'production_margin_vs_bank':round(margin,2),'early_season_uncertainty_penalty':early_penalty,
  'adjusted_margin_vs_bank':round(adjusted_margin,2),
  'candidate_1_vs_2_edge_gap':round(separation,2) if second else None,
  'robustness':rob.get('label'),'timing_recommendation':timing.get('recommendation'),
  'option_value_total':option.get('total'),'bench_adjusted_next_gw_gain':bench_gain,
- 'blockers':blockers,'warnings':warnings,'go_triggers':go_triggers[:5],
+ 'transfer_necessity':necessity_label,'transfer_necessity_score':necessity_score,
+ 'blockers':blockers,'warnings':warnings,'go_triggers':go_triggers[:6],
  'recheck_conditions':recheck[:5],'next_action':next_action,
- 'rule':'Final Gate controls the headline. Shadow layers may downgrade GO to WAIT/NO-GO, never promote a production-rejected transfer.'
+ 'rule':'Final Gate controls the headline. Necessity and other shadow layers may downgrade GO to WAIT/NO-GO, never promote a production-rejected transfer.'
 }
 P.write_text(json.dumps(d,ensure_ascii=False,indent=2))
 print('Final transfer gate',d['final_transfer_gate'])
