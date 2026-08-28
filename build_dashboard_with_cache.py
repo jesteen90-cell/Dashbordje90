@@ -4,7 +4,7 @@ Keeps premium-structure tests on exactly the same xP surface as production,
 without maintaining a second projection model. Feed enrichment is deliberately
 post-generation so UI metadata cannot destabilise the projection engine.
 """
-import json,runpy
+import json,runpy,os
 from pathlib import Path
 from team_strength_v2 import fixture_difficulty
 
@@ -58,11 +58,7 @@ def budget_summary():
  return {'bank':round(bank_raw/10,1),'squad_market_value':round(market_value_raw/10,1),'squad_selling_value':round(selling_value_raw/10,1),'market_budget_total':round((market_value_raw+bank_raw)/10,1),'selling_budget_total':round((selling_value_raw+bank_raw)/10,1),'bank_raw':bank_raw,'squad_market_value_raw':market_value_raw,'squad_selling_value_raw':selling_value_raw,'currency':'GBP','selling_value_live':selling_live,'selling_value_note':'Faktisk FPL-salgsverdi brukes.' if selling_live else 'Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris.'}
 
 def option_pool():
- """Compact public surface for future-flexibility analysis.
-
- Keeps the top 35 horizon players per position plus every currently owned
- player. This avoids publishing/depending on the full internal projection cache.
- """
+ """Compact public surface for future-flexibility analysis."""
  owned={int(p['id']) for p in squad};keep=set(owned)
  for pos in (1,2,3,4):
   xs=[p for p in players if int(p.get('element_type') or 0)==pos]
@@ -78,9 +74,10 @@ def option_pool():
 feed_path=Path('data.json')
 if feed_path.exists():
  feed=json.loads(feed_path.read_text());enrich(feed);feed['fixture_difficulty_model']={'version':'2.0-position-aware','defenders':'opponent-attack','attackers':'opponent-defence','home_away_adjusted':True};feed['budget']=budget_summary();feed['transfer_option_pool']={'version':'1.0-compact','players':option_pool(),'gws':gws[:4],'weights':{str(k):v for k,v in weights.items() if k in gws[:4]},'owned_ids':[int(p['id']) for p in squad]}
+ team_id=str(os.getenv('FPL_TEAM_ID') or '').strip();feed['fpl_team_id']=int(team_id) if team_id.isdigit() else None
  model_version=str(feed.get('model_version') or '');projection_active=('set-piece-projection' in model_version);feed['set_piece_model']={'version':set_piece_roles.get('version','none'),'penalty_roles_loaded':len(penalty_roles),'projection_integration':'active' if projection_active else 'pending','display_metadata_active':bool(penalty_roles)}
  if projection_active and feed['set_piece_model']['projection_integration']!='active':raise RuntimeError('Set-piece projection is active but feed status is not active')
- feed_path.write_text(json.dumps(feed,ensure_ascii=False,indent=2));print('Applied fixture difficulty, xP reconciliation, budget, option pool and set-piece metadata')
+ feed_path.write_text(json.dumps(feed,ensure_ascii=False,indent=2));print('Applied fixture difficulty, xP reconciliation, budget, team id, option pool and set-piece metadata')
 
 rows=[]
 for p in players:rows.append({'id':int(p['id']),'name':p['web_name'],'team':int(p['team']),'element_type':int(p['element_type']),'now_cost':int(p['now_cost']),'xp':{str(g):round(float(p['_x'].get(g,0)),4) for g in gws}})
