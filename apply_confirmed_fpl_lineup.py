@@ -6,11 +6,20 @@ import requests
 BASE='https://fantasy.premierleague.com/api'
 PATH=Path('data.json')
 TEAM_ID=int(os.environ['FPL_TEAM_ID'])
+POS={1:'GK',2:'DEF',3:'MID',4:'FWD'}
 
 
 def get(path):
-    r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-confirmed-lineup/1.0'},timeout=18)
+    r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-confirmed-lineup/1.1'},timeout=18)
     r.raise_for_status();return r.json()
+
+
+def fallback_row(pid, bootstrap, data):
+    p=bootstrap.get(pid)
+    if not p: raise RuntimeError(f'Confirmed FPL player {pid} missing from bootstrap')
+    teams={int(k):v for k,v in (data.get('team_names') or {}).items()} if isinstance(data.get('team_names'),dict) else {}
+    team_id=int(p['team'])
+    return {'id':pid,'name':p.get('web_name') or str(pid),'team_id':team_id,'team':teams.get(team_id,p.get('team_name') or ''),'position':POS.get(int(p.get('element_type') or 0),''),'price':round(float(p.get('now_cost') or 0)/10,1),'xp':0,'xp_low':0,'xp_high':0,'risk':'ukjent','volatility':0,'fixture':'','fixture_outlook':[],'availability':1,'expected_minutes':0,'news':p.get('news') or '','confirmed_row_fallback':True}
 
 
 def main():
@@ -20,23 +29,28 @@ def main():
     snap=get(f'entry/{TEAM_ID}/event/{gw}/picks/')
     picks=sorted(snap.get('picks') or [],key=lambda x:int(x.get('position') or 99))
     if len(picks)!=15: raise RuntimeError(f'Expected 15 confirmed picks, got {len(picks)}')
-    # Use rows already enriched with current xP/fixture/news data. The FPL API is
-    # authoritative only for which 11 started, bench order, captain and vice.
     rows={int(p['id']):dict(p) for p in (data.get('lineup') or [])+(data.get('bench') or []) if p.get('id') is not None}
     for side in ('current_xi','transfer_xi'):
         for p in ((data.get('comparison') or {}).get(side) or []):
             if p.get('id') is not None: rows.setdefault(int(p['id']),dict(p))
+    missing=[int(x['element']) for x in picks if int(x['element']) not in rows]
+    bootstrap={}
+    if missing:
+        boot=get('bootstrap-static/')
+        bootstrap={int(p['id']):p for p in boot.get('elements') or []}
+        team_names={int(t['id']):t.get('name','') for t in boot.get('teams') or []}
+        for pid in missing:
+            r=fallback_row(pid,bootstrap,data);r['team']=team_names.get(r['team_id'],r['team']);rows[pid]=r
     confirmed=[]
     for pick in picks:
-        pid=int(pick['element'])
-        if pid not in rows: raise RuntimeError(f'Confirmed FPL player {pid} missing from dashboard squad rows')
-        p=dict(rows[pid]);p['captain']=bool(pick.get('is_captain'));p['vice']=bool(pick.get('is_vice_captain'));p['confirmed_position']=int(pick['position']);p['confirmed_multiplier']=int(pick.get('multiplier') or 0)
+        pid=int(pick['element']);p=dict(rows[pid])
+        p['captain']=bool(pick.get('is_captain'));p['vice']=bool(pick.get('is_vice_captain'));p['confirmed_position']=int(pick['position']);p['confirmed_multiplier']=int(pick.get('multiplier') or 0)
         confirmed.append(p)
     xi=confirmed[:11];bench=confirmed[11:]
     if len([p for p in xi if p.get('captain')])!=1 or len([p for p in xi if p.get('vice')])!=1: raise RuntimeError('Confirmed captain/vice invalid')
     data.setdefault('comparison',{})['current_xi']=xi
-    data['confirmed_fpl']={'gw':gw,'source':'official-picks-api','exact_order':True,'lineup':xi,'bench':bench,'captain_id':next(p['id'] for p in xi if p.get('captain')),'vice_id':next(p['id'] for p in xi if p.get('vice'))}
+    data['confirmed_fpl']={'gw':gw,'source':'official-picks-api','exact_order':True,'lineup':xi,'bench':bench,'captain_id':next(p['id'] for p in xi if p.get('captain')),'vice_id':next(p['id'] for p in xi if p.get('vice')),'fallback_rows':missing}
     PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
-    print('Applied exact confirmed FPL GW',gw,'XI=',[p['name'] for p in xi],'bench=',[p['name'] for p in bench])
+    print('Applied exact confirmed FPL GW',gw,'XI=',[p['name'] for p in xi],'bench=',[p['name'] for p in bench],'fallback=',missing)
 
 if __name__=='__main__': main()
