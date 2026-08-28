@@ -97,6 +97,31 @@ def captain_comparison(lineup):
   rows.append({'id':p.get('id'),'name':p.get('name'),'team':p.get('team'),'xp':round(xp,2),'ceiling':round(ceiling,2),'expected_minutes':round(mins,0),'availability':round(avail,2),'score':round(score,3),'captain':bool(p.get('captain')),'vice':bool(p.get('vice')),'season_minutes':p.get('season_minutes'),'season_points':p.get('season_points'),'season_xg':p.get('season_xg'),'season_xa':p.get('season_xa'),'season_goals':p.get('season_goals')})
  return sorted(rows,key=lambda x:x['score'],reverse=True)[:5]
 
+def select_squad_view(data,approved):
+ """Make displayed XI/bench follow Decision Layer, even when generator's raw >1 gate disagrees."""
+ cmp=data.get('comparison') or {};changes=cmp.get('changes') or [];raw=n((data.get('optimizer') or {}).get('weighted_gain'))
+ target_xi=list(cmp.get('transfer_xi') if approved else cmp.get('current_xi') or [])
+ base=list(data.get('lineup') or [])+list(data.get('bench') or [])
+ rows={int(p.get('id')):dict(p) for p in base if p.get('id') is not None}
+ base_is_transfer=bool(changes) and raw>1.0
+ if base_is_transfer!=approved:
+  for ch in changes:
+   o,i=ch.get('out') or {},ch.get('in') or {};oid=int(o.get('id') or 0);iid=int(i.get('id') or 0)
+   if approved:
+    if oid:rows.pop(oid,None)
+    if iid:rows[iid]=dict(i)
+   else:
+    if iid:rows.pop(iid,None)
+    if oid:rows[oid]=dict(o)
+ xi_ids={int(p.get('id')) for p in target_xi if p.get('id') is not None}
+ bench=[p for pid,p in rows.items() if pid not in xi_ids]
+ if len(target_xi)==11 and len(bench)==4:
+  data['lineup']=target_xi;data['bench']=reorder_bench(bench)
+ else:
+  # Fail safe: keep existing complete view rather than publishing a malformed 15-man squad.
+  data.setdefault('decision_layer_warnings',[]).append(f'squad-view reconstruction failed: xi={len(target_xi)} bench={len(bench)}')
+ return data.get('lineup') or target_xi
+
 def explain_decision(data,approved,blockers,controls,effective_gain,premium_bias,premium):
  cmp=data.get('comparison') or {};changes=cmp.get('changes') or [];best=(data.get('candidates') or [{}])[0];short,horizon=n(best.get('short_gain')),n(best.get('horizon_gain'));reasons=[]
  if changes:reasons.append('Første trekk modellen vurderer er '+', '.join(f"{(c.get('out') or {}).get('name','?')} → {(c.get('in') or {}).get('name','?')}" for c in changes)+'.')
@@ -108,7 +133,8 @@ def main():
  data=json.loads(PATH.read_text());controls,feedback=adaptive_controls();premium=premium_feedback();candidates=data.get('candidates') or []
  for c in candidates:
   score,status,reasons=candidate_quality(c,controls,premium);c['edge'],c['status']=score,status;c['gate_misses']=list(dict.fromkeys(reasons+list(c.get('gate_misses') or [])))[:3]
- candidates.sort(key=lambda c:(n(c.get('edge')),n(c.get('horizon_gain'))),reverse=True);strong=[c for c in candidates if c.get('status')!='SVAK'];data['candidates']=strong[:6] if strong else candidates[:4];data['bench']=reorder_bench(data.get('bench') or [])
+ candidates.sort(key=lambda c:(n(c.get('edge')),n(c.get('horizon_gain'))),reverse=True);strong=[c for c in candidates if c.get('status')!='SVAK'];data['candidates']=strong[:6] if strong else candidates[:4]
  for lineup in [data.get('lineup') or [],(data.get('comparison') or {}).get('current_xi') or [],(data.get('comparison') or {}).get('transfer_xi') or []]:choose_safer_vice(lineup)
- approved,blockers,effective_gain,pb=hard_gate_first_move(data,controls,premium);comparison=data.get('comparison') or {};comparison['status']='GJØR DET' if approved else 'BANK' if comparison.get('changes') else comparison.get('status');data['comparison']=comparison;data['headline']='GJØR BYTTET' if approved else 'SPAR BYTTET';data.setdefault('recommendation',{})['transfers']=(comparison.get('changes') or []) if approved else [];lineup=comparison.get('transfer_xi') if approved else comparison.get('current_xi');lineup=lineup or data.get('lineup') or [];data['captain_comparison']=captain_comparison(lineup);data['decision_explanation']=explain_decision(data,approved,blockers,controls,effective_gain,pb,premium);data['decision_layer']={'version':'4.4-premium-adaptive','approved_first_move':approved,'threshold':round(controls['threshold'],2),'base_threshold':BASE_DO_THRESHOLD,'controls':{k:round(v,3) for k,v in controls.items()},'feedback':feedback,'premium_structure_feedback':premium,'explainability':True,'captain_comparison':True,'backtest_adaptive':True,'component_adaptive':True,'premium_structure_adaptive':True};PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2))
+ approved,blockers,effective_gain,pb=hard_gate_first_move(data,controls,premium);comparison=data.get('comparison') or {};comparison['status']='GJØR DET' if approved else 'BANK' if comparison.get('changes') else comparison.get('status');data['comparison']=comparison;data['headline']='GJØR BYTTET' if approved else 'SPAR BYTTET';data.setdefault('recommendation',{})['transfers']=(comparison.get('changes') or []) if approved else []
+ lineup=select_squad_view(data,approved);data['captain_comparison']=captain_comparison(lineup);data['decision_explanation']=explain_decision(data,approved,blockers,controls,effective_gain,pb,premium);data['decision_layer']={'version':'4.5-squad-consistent','approved_first_move':approved,'threshold':round(controls['threshold'],2),'base_threshold':BASE_DO_THRESHOLD,'controls':{k:round(v,3) for k,v in controls.items()},'feedback':feedback,'premium_structure_feedback':premium,'explainability':True,'captain_comparison':True,'backtest_adaptive':True,'component_adaptive':True,'premium_structure_adaptive':True,'squad_view_consistent':True};PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()
