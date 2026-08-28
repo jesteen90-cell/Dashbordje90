@@ -25,10 +25,16 @@ def pipeline_sanity():
     assert 'def select_squad_view' in dl
     assert "data['lineup']=target_xi" in dl
     assert "data['bench']=reorder_bench(bench)" in dl
-    ui=Path('captain_explain_ui.js').read_text(encoding='utf-8')
-    assert "typeof D==='undefined'" in ui
-    assert '!window.D' not in ui
-    assert 'Captain confidence' in ui
+    html=Path('index.html').read_text(encoding='utf-8')
+    assert 'function render()' in html
+    assert 'data.json?v=${Date.now()}' in html
+    assert 'class="player ${ch||\'\'}"' in html
+    assert "player.out" in html and "player.in" in html
+    assert 'Siste bekreftede FPL-startellever' in html
+    assert 'Siste bekreftede FPL-benk' in html
+    # The optional enhancer is intentionally disabled after a Safari render-loop incident.
+    ui=Path('captain_explain_ui.js').read_text(encoding='utf-8') if Path('captain_explain_ui.js').exists() else ''
+    assert 'MutationObserver' not in ui
 
 
 def main():
