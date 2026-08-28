@@ -10,6 +10,7 @@ on:
       - "premium_structure_v1.py"
       - "freeze_premium_structure.py"
       - "evaluate_premium_structure.py"
+      - "derive_premium_structure_feedback.py"
       - "market_ensemble_v1.py"
       - "market_ab_shadow.py"
       - "player_attack_share_v1.py"
@@ -76,6 +77,7 @@ jobs:
           python evaluate_market_ab.py
           python evaluate_captain_v4.py
           python evaluate_premium_structure.py
+          python derive_premium_structure_feedback.py
       - name: Build validated dashboard feed
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
@@ -102,16 +104,17 @@ jobs:
           for s in [premium.get('best_premium_forward'),premium.get('best_premium_midfielder')]:
             if s: assert len(s.get('squad_ids',[]))==15 and all(c.get('captain_id') for c in s.get('captains',[]))
           pscore=json.load(open('backtest/premium_structure_scorecard.json')); assert pscore.get('version')=='1.0'; assert 'winner_counts' in pscore and 'mean_regret' in pscore
+          pparams=json.load(open('backtest/premium_structure_params.json')); assert pparams.get('version')=='1.0'; assert pparams.get('promoted_structure') in ('none','premium_forward','premium_midfielder'); assert float(pparams.get('candidate_bias',0))<=.20
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           me=d.get('market_ensemble',{}); assert 'available' in me and 'active' in me
-          dl=d.get('decision_layer',{}); assert dl.get('version')=='4.3-component-adaptive'
+          dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('premium_structure_adaptive') is True; assert 'premium_structure_feedback' in dl
           assert d.get('deadline_time') and len(d.get('lineup',[]))==11
           score=json.load(open('backtest/scorecard.json')); assert score.get('version')=='2.0'
           ab=json.load(open('market_ab/scorecard.json')); assert ab.get('version')=='1.2-player-share'; assert 'offensive_mae_share' in ab and 'promote_player_share' in ab
           params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
           shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
           for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
-          print('Premium structure backtest sanity passed',premium.get('verdict'),pscore.get('evaluated_windows'),pscore.get('winner_counts'))
+          print('Decision 4.4 premium-adaptive sanity passed',pparams.get('evaluated_windows'),pparams.get('promoted_structure'),pparams.get('candidate_bias'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -128,5 +131,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json premium_structure_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/
-          git commit -m "Dashboard: refresh analysis and premium structure backtest"
+          git commit -m "Dashboard: refresh analysis and adaptive premium evidence"
           git push
