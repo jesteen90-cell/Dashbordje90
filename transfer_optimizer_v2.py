@@ -3,6 +3,7 @@ import itertools
 from captain_horizon_v1 import horizon_values
 
 POS_COUNTS={1:2,2:5,3:5,4:3}
+BENCH_RESILIENCE_WEIGHT=.055
 
 def legal(squad):
     if len(squad)!=15 or len({int(p['id']) for p in squad})!=15:return False
@@ -27,8 +28,24 @@ def best_xi(squad,gw):
     cap=max(best[1],key=lambda p:float(p['_x'].get(gw,0)))
     return {'raw':best[0],'captain':cap,'xi':best[1]}
 
+def bench_resilience(squad,xi,gw):
+    """Small insurance value for useful bench depth, never close to XI value.
+
+    Outfield bench slots receive descending weights; reserve goalkeeper gets an
+    even smaller weight. This fixes the old all-or-nothing bench valuation while
+    preserving the priority of improving the starting XI.
+    """
+    xi_ids={int(p['id']) for p in xi};bench=[p for p in squad if int(p['id']) not in xi_ids]
+    outfield=sorted((p for p in bench if int(p['element_type'])!=1),key=lambda p:float(p['_x'].get(gw,0)),reverse=True)
+    keepers=sorted((p for p in bench if int(p['element_type'])==1),key=lambda p:float(p['_x'].get(gw,0)),reverse=True)
+    slot_weights=(1.0,.55,.28)
+    value=sum(float(p['_x'].get(gw,0))*slot_weights[i] for i,p in enumerate(outfield[:3]))
+    if keepers:value+=float(keepers[0]['_x'].get(gw,0))*.18
+    return BENCH_RESILIENCE_WEIGHT*value
+
 def gw_value(squad,gw):
-    o=best_xi(squad,gw);return o['raw']+(float(o['captain']['_x'].get(gw,0)) if o['captain'] else 0)
+    o=best_xi(squad,gw);captain=float(o['captain']['_x'].get(gw,0)) if o['captain'] else 0
+    return o['raw']+captain+bench_resilience(squad,o['xi'],gw)
 
 def _incoming_pools(players,squad,gws,weights,per_pos=12):
     owned={int(p['id']) for p in squad};pools={}
@@ -45,8 +62,6 @@ def _incoming_pools(players,squad,gws,weights,per_pos=12):
             near=int(h.get('near_best_gws',0))
             return sum(vals)+0.18*max(vals,default=0)+0.55*persistence+0.08*near
         xs.sort(key=pool_score,reverse=True)
-        # Reserve two extra places for the strongest persistent captain options
-        # at MID/FWD, where expensive elite captains are most likely to live.
         limit=per_pos+2 if pos in (3,4) else per_pos
         pools[pos]=xs[:limit]
     return pools
@@ -65,9 +80,9 @@ def _one_transfer_states(st,pools):
 def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=70,per_pos=12,save_ft_value=.45,max_saved_ft=5,hit_cost=4.0,max_transfers_per_gw=2):
     """Fast beam-search transfer planner across multiple GWs.
 
-    Captain scoring is exact within each candidate squad: the best XI is selected
-    and its highest-xP player is doubled every GW. Persistent captain utility is
-    used only to improve candidate search coverage, never double-counted.
+    Starting-XI and captain points dominate. A deliberately small bench-resilience
+    term values autosub insurance without allowing bench-only upgrades to outrank
+    meaningful XI improvements.
     """
     assert legal(squad)
     beam_width=max(24,min(int(beam_width),70));per_pos=max(8,min(int(per_pos),12))
@@ -107,4 +122,4 @@ def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=70,per_p
             if key not in dedup or st['score']>dedup[key]['score']:dedup[key]=st
         beam=sorted(dedup.values(),key=lambda s:s['score'],reverse=True)[:beam_width]
     best=beam[0];baseline=sum(cv(squad,g)*weights.get(g,1) for g in gws)
-    return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'hit_points':best['hits'],'moves':best['moves'],'squad':best['squad'],'cache_entries':len(cache),'captain_horizon_search':True}
+    return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'hit_points':best['hits'],'moves':best['moves'],'squad':best['squad'],'cache_entries':len(cache),'captain_horizon_search':True,'bench_resilience':True,'bench_resilience_weight':BENCH_RESILIENCE_WEIGHT}
