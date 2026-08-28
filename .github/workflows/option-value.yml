@@ -9,6 +9,7 @@ on:
       - "transfer_option_value_v1.py"
       - "transfer_timing_v1.py"
       - "transfer_robustness_v1.py"
+      - "absence_severity_v1.py"
       - "final_transfer_gate_v1.py"
       - "final_transfer_duel_v2.py"
       - "plan_intelligence_v1.py"
@@ -47,6 +48,7 @@ jobs:
           python transfer_option_value_v1.py
           python transfer_robustness_v1.py
           python bench_replacement_v1.py
+          python absence_severity_v1.py
           python plan_intelligence_v1.py
           python final_transfer_gate_v1.py
           python final_transfer_duel_v2.py
@@ -61,16 +63,18 @@ jobs:
           tov=d.get('transfer_option_value') or {}; assert tov.get('version')=='1.1-shadow'; assert tov.get('affects_transfer_ranking') is False
           rob=d.get('transfer_robustness') or {}; assert rob.get('version')=='1.0-shadow'; assert rob.get('affects_transfer_ranking') is False
           br=d.get('bench_replacement_model') or {}; assert br.get('version')=='1.0-shadow'; assert br.get('affects_transfer_ranking') is False
+          ab=d.get('absence_severity_model') or {}; assert ab.get('version')=='1.0-shadow'; assert ab.get('affects_transfer_ranking') is False
           pi=d.get('plan_intelligence') or {}; assert pi.get('version')=='1.0'; assert pi.get('rolling_plan') is True
           future=d.get('future') or []; assert len(future)>=2
           for r in future:
               x=r.get('plan_intelligence') or {}; assert x.get('version')=='1.0'; assert 0 <= int(x.get('free_transfers_after') or 0) <= 5
-          candidates=d.get('candidates') or []; assert int(rob.get('candidate_count') or 0)==len(candidates)
+          candidates=d.get('candidates') or []; assert int(rob.get('candidate_count') or 0)==len(candidates); assert int(ab.get('candidate_count') or 0)==len(candidates)
           for c in candidates:
               tv=c.get('timing_value_shadow') or {}; assert tv.get('version')=='1.0' and tv.get('affects_ranking') is False and tv.get('price_prediction') is False
               ov=c.get('option_value_shadow') or {}; assert ov.get('version')=='1.1' and ov.get('affects_ranking') is False
               rv=c.get('robustness_shadow') or {}; assert rv.get('version')=='1.0-shadow' and rv.get('affects_ranking') is False; assert rv.get('label') in ('ROBUST','BLANDET','FRAGIL')
               ba=c.get('bench_adjustment_shadow') or {}; assert ba.get('version')=='1.0' and ba.get('affects_ranking') is False
+              av=c.get('absence_severity_shadow') or {}; assert av.get('version')=='1.0-shadow' and av.get('affects_ranking') is False; assert av.get('severity') in ('HØY','MIDDELS','USIKKER','LAV')
           fg=d.get('final_transfer_gate') or {}; assert str(fg.get('version','')).startswith('2.'); assert fg.get('verdict') in ('GO','WAIT / RECHECK','NO-GO')
           assert fg.get('authoritative_headline')==d.get('headline')
           assert isinstance(fg.get('go_triggers') or [],list); assert isinstance(fg.get('recheck_conditions') or [],list); assert fg.get('next_action')
@@ -78,7 +82,7 @@ jobs:
           if not bool((d.get('decision_layer') or {}).get('approved_first_move')):
               assert fg.get('verdict')=='NO-GO'; assert duel.get('verdict')=='NO-GO'
           if fg.get('robustness')=='FRAGIL': assert fg.get('verdict')!='GO'
-          print('Final decision, duel, bench and plan sanity OK',fg,duel,pi,br)
+          print('Final decision, absence, duel, bench and plan sanity OK',fg,duel,pi,br,ab)
           PY
       - name: Evaluate and freeze evidence
         run: |
@@ -101,7 +105,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json option_value_snapshots/ option_value_backtest/ timing_snapshots/ timing_backtest/
-          git commit -m "Dashboard: enrich authoritative final decision"
+          git commit -m "Dashboard: enrich absence-aware final decision"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
