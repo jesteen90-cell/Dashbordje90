@@ -1,12 +1,18 @@
 {
-  "model_version": "3.4-fixture-outlook",
-  "generated_at": "2026-08-28T09:54:03.655322Z",
+  "model_version": "3.7-set-piece-projection",
+  "generated_at": "2026-08-28T10:08:26.675884Z",
   "gw": 2,
   "deadline_time": "2026-08-28T17:30:00Z",
   "headline": "GJØR BYTTET",
-  "summary": "Modell 3.4 kombinerer adaptiv lagstyrke, 3-GW fixture outlook, spiller-spesifikke historiske angrepspriorer, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.",
+  "summary": "Modell 3.7 kobler bekreftede strafferoller direkte inn i xP, optimizer og kaptein, i tillegg til adaptiv lagstyrke, recent-xGI og fler-GW transferplanlegging.",
   "source_snapshot_gw": 1,
   "free_transfers_assumed": 1,
+  "set_piece_model": {
+    "version": "2026-08-28-manual-v2",
+    "penalty_roles_loaded": 2,
+    "projection_integration": "pending",
+    "display_metadata_active": true
+  },
   "market_ensemble": {
     "weight_cap": 0.65,
     "weight_floor": 0.2,
@@ -428,6 +434,10 @@
       "expected_minutes": 57.0,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.981,
         "recent_multiplier": 0.979,
@@ -451,9 +461,10 @@
         "saves": 0.23,
         "defensive": 0,
         "bonus": 0.16,
+        "penalty": 0.05,
         "conceded": -0.29,
         "cards": 0,
-        "other_model_components": 0.06,
+        "other_model_components": 0.01,
         "displayed_sum": 2.15,
         "reconciled": true
       },
@@ -505,6 +516,10 @@
       "expected_minutes": 56.9,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.987,
         "recent_multiplier": 0.988,
@@ -528,6 +543,7 @@
         "saves": 0,
         "defensive": 0.08,
         "bonus": 0.15,
+        "penalty": 0.0,
         "conceded": -0.27,
         "cards": 0,
         "displayed_sum": 2.68,
@@ -581,6 +597,10 @@
       "expected_minutes": 63.6,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 1.0,
         "recent_multiplier": 1.005,
@@ -604,6 +624,7 @@
         "saves": 0,
         "defensive": 0.12,
         "bonus": 0.16,
+        "penalty": 0.0,
         "conceded": -0.33,
         "cards": 0,
         "displayed_sum": 2.54,
@@ -657,6 +678,10 @@
       "expected_minutes": 69.9,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.981,
         "recent_multiplier": 0.981,
@@ -680,6 +705,7 @@
         "saves": 0,
         "defensive": 0.21,
         "bonus": 0.18,
+        "penalty": 0.0,
         "conceded": -0.37,
         "cards": 0,
         "displayed_sum": 2.8,
@@ -733,6 +759,10 @@
       "expected_minutes": 81.3,
       "news": "",
       "change": "in",
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 1.03,
         "recent_multiplier": 1.052,
@@ -756,6 +786,7 @@
         "saves": 0,
         "defensive": 0.35,
         "bonus": 0.31,
+        "penalty": 0.0,
         "conceded": -0.43,
         "cards": 0,
         "displayed_sum": 3.98,
@@ -809,6 +840,10 @@
       "expected_minutes": 80.1,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.998,
         "recent_multiplier": 0.999,
@@ -832,6 +867,7 @@
         "saves": 0,
         "defensive": 0.11,
         "bonus": 0.32,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "other_model_components": 0.01,
@@ -886,6 +922,10 @@
       "expected_minutes": 64.2,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 1.002,
         "recent_multiplier": 1.005,
@@ -909,6 +949,7 @@
         "saves": 0,
         "defensive": 0.04,
         "bonus": 0.26,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "displayed_sum": 3.52,
@@ -962,6 +1003,10 @@
       "expected_minutes": 50.2,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.999,
         "recent_multiplier": 0.999,
@@ -985,6 +1030,7 @@
         "saves": 0,
         "defensive": 0.01,
         "bonus": 0.21,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "displayed_sum": 2.48,
@@ -1038,6 +1084,10 @@
       "expected_minutes": 69.2,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.997,
         "recent_multiplier": 1.005,
@@ -1061,6 +1111,7 @@
         "saves": 0,
         "defensive": 0.05,
         "bonus": 0.28,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "other_model_components": -0.01,
@@ -1082,9 +1133,9 @@
       "team": "Man City",
       "position": "FWD",
       "price": 15.5,
-      "xp": 4.91,
+      "xp": 4.89,
       "xp_low": 0,
-      "xp_high": 10.13,
+      "xp_high": 10.12,
       "risk": "middels",
       "volatility": 0.83,
       "fixture": "Crystal Palace (A)",
@@ -1094,27 +1145,31 @@
           "label": "CRY A",
           "difficulty": 3,
           "difficulty_basis": "opponent-defence",
-          "xp": 4.91
+          "xp": 4.89
         },
         {
           "gw": 3,
           "label": "COV H",
           "difficulty": 3,
           "difficulty_basis": "opponent-defence",
-          "xp": 5.44
+          "xp": 5.42
         },
         {
           "gw": 4,
           "label": "MAN A",
           "difficulty": 3,
           "difficulty_basis": "opponent-defence",
-          "xp": 4.92
+          "xp": 4.9
         }
       ],
       "availability": 1,
       "expected_minutes": 78.4,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0.95,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 1.013,
         "recent_multiplier": 1.025,
@@ -1138,10 +1193,11 @@
         "saves": 0,
         "defensive": 0.0,
         "bonus": 0.33,
+        "penalty": -0.02,
         "conceded": 0,
         "cards": 0,
         "other_model_components": 0.01,
-        "displayed_sum": 4.91,
+        "displayed_sum": 4.89,
         "reconciled": true
       },
       "captain": true,
@@ -1192,6 +1248,10 @@
       "expected_minutes": 74.6,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 1.013,
         "recent_multiplier": 1.02,
@@ -1215,6 +1275,7 @@
         "saves": 0,
         "defensive": 0.0,
         "bonus": 0.41,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "displayed_sum": 4.44,
@@ -1270,6 +1331,10 @@
       "expected_minutes": 59.6,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.981,
         "recent_multiplier": 0.979,
@@ -1293,6 +1358,7 @@
         "saves": 0,
         "defensive": 0.13,
         "bonus": 0.15,
+        "penalty": 0.0,
         "conceded": -0.3,
         "cards": 0,
         "other_model_components": 0.01,
@@ -1345,6 +1411,10 @@
       "expected_minutes": 0.0,
       "news": "Calf injury - Unknown return date",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.982,
         "recent_multiplier": 0.981,
@@ -1368,6 +1438,7 @@
         "saves": 0,
         "defensive": 0.0,
         "bonus": 0.0,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "displayed_sum": 0.0,
@@ -1419,6 +1490,10 @@
       "expected_minutes": 0.0,
       "news": "Foot injury - Unknown return date",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 0.993,
         "recent_multiplier": 0.994,
@@ -1442,6 +1517,7 @@
         "saves": 0,
         "defensive": 0.0,
         "bonus": 0.0,
+        "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
         "displayed_sum": 0.0,
@@ -1493,6 +1569,10 @@
       "expected_minutes": 0.0,
       "news": "",
       "change": null,
+      "set_piece_role": {
+        "penalty_taker_share": 0,
+        "source_version": "2026-08-28-manual-v2"
+      },
       "form": {
         "season_multiplier": 1.0,
         "recent_multiplier": 1.0,
@@ -1516,6 +1596,7 @@
         "saves": 0.0,
         "defensive": 0,
         "bonus": 0.0,
+        "penalty": 0.0,
         "conceded": 0.0,
         "cards": 0,
         "displayed_sum": 0.0,
@@ -1572,6 +1653,10 @@
           "expected_minutes": 76.1,
           "news": "",
           "change": "out",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
           "form": {
             "season_multiplier": 0.981,
             "recent_multiplier": 0.983,
@@ -1595,6 +1680,7 @@
             "saves": 0,
             "defensive": 0.26,
             "bonus": 0.2,
+            "penalty": 0.0,
             "conceded": -0.38,
             "cards": -0.42,
             "other_model_components": -0.01,
@@ -1647,6 +1733,10 @@
           "expected_minutes": 81.3,
           "news": "",
           "change": "in",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
           "form": {
             "season_multiplier": 1.03,
             "recent_multiplier": 1.052,
@@ -1670,6 +1760,7 @@
             "saves": 0,
             "defensive": 0.35,
             "bonus": 0.31,
+            "penalty": 0.0,
             "conceded": -0.43,
             "cards": 0,
             "displayed_sum": 3.98,
@@ -1724,6 +1815,10 @@
         "expected_minutes": 57.0,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.979,
@@ -1747,9 +1842,10 @@
           "saves": 0.23,
           "defensive": 0,
           "bonus": 0.16,
+          "penalty": 0.05,
           "conceded": -0.29,
           "cards": 0,
-          "other_model_components": 0.06,
+          "other_model_components": 0.01,
           "displayed_sum": 2.15,
           "reconciled": true
         },
@@ -1803,6 +1899,10 @@
         "expected_minutes": 76.1,
         "news": "",
         "change": "out",
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.983,
@@ -1826,6 +1926,7 @@
           "saves": 0,
           "defensive": 0.26,
           "bonus": 0.2,
+          "penalty": 0.0,
           "conceded": -0.38,
           "cards": -0.42,
           "other_model_components": -0.01,
@@ -1882,6 +1983,10 @@
         "expected_minutes": 56.9,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.987,
           "recent_multiplier": 0.988,
@@ -1905,6 +2010,7 @@
           "saves": 0,
           "defensive": 0.08,
           "bonus": 0.15,
+          "penalty": 0.0,
           "conceded": -0.27,
           "cards": 0,
           "displayed_sum": 2.68,
@@ -1960,6 +2066,10 @@
         "expected_minutes": 63.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.0,
           "recent_multiplier": 1.005,
@@ -1983,6 +2093,7 @@
           "saves": 0,
           "defensive": 0.12,
           "bonus": 0.16,
+          "penalty": 0.0,
           "conceded": -0.33,
           "cards": 0,
           "displayed_sum": 2.54,
@@ -2038,6 +2149,10 @@
         "expected_minutes": 80.1,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.998,
           "recent_multiplier": 0.999,
@@ -2061,6 +2176,7 @@
           "saves": 0,
           "defensive": 0.11,
           "bonus": 0.32,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "other_model_components": 0.01,
@@ -2117,6 +2233,10 @@
         "expected_minutes": 64.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.002,
           "recent_multiplier": 1.005,
@@ -2140,6 +2260,7 @@
           "saves": 0,
           "defensive": 0.04,
           "bonus": 0.26,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 3.52,
@@ -2195,6 +2316,10 @@
         "expected_minutes": 50.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.999,
           "recent_multiplier": 0.999,
@@ -2218,6 +2343,7 @@
           "saves": 0,
           "defensive": 0.01,
           "bonus": 0.21,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 2.48,
@@ -2273,6 +2399,10 @@
         "expected_minutes": 0.0,
         "news": "Calf injury - Unknown return date",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.982,
           "recent_multiplier": 0.981,
@@ -2296,6 +2426,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.0,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 0.0,
@@ -2351,6 +2482,10 @@
         "expected_minutes": 0.0,
         "news": "Foot injury - Unknown return date",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.993,
           "recent_multiplier": 0.994,
@@ -2374,6 +2509,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.0,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 0.0,
@@ -2396,9 +2532,9 @@
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 4.91,
+        "xp": 4.89,
         "xp_low": 0,
-        "xp_high": 10.13,
+        "xp_high": 10.12,
         "risk": "middels",
         "volatility": 0.83,
         "fixture": "Crystal Palace (A)",
@@ -2408,27 +2544,31 @@
             "label": "CRY A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.91
+            "xp": 4.89
           },
           {
             "gw": 3,
             "label": "COV H",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 5.44
+            "xp": 5.42
           },
           {
             "gw": 4,
             "label": "MAN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.92
+            "xp": 4.9
           }
         ],
         "availability": 1,
         "expected_minutes": 78.4,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0.95,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.013,
           "recent_multiplier": 1.025,
@@ -2452,10 +2592,11 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.33,
+          "penalty": -0.02,
           "conceded": 0,
           "cards": 0,
           "other_model_components": 0.01,
-          "displayed_sum": 4.91,
+          "displayed_sum": 4.89,
           "reconciled": true
         },
         "captain": true,
@@ -2508,6 +2649,10 @@
         "expected_minutes": 74.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.013,
           "recent_multiplier": 1.02,
@@ -2531,6 +2676,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.41,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 4.44,
@@ -2588,6 +2734,10 @@
         "expected_minutes": 57.0,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.979,
@@ -2611,9 +2761,10 @@
           "saves": 0.23,
           "defensive": 0,
           "bonus": 0.16,
+          "penalty": 0.05,
           "conceded": -0.29,
           "cards": 0,
-          "other_model_components": 0.06,
+          "other_model_components": 0.01,
           "displayed_sum": 2.15,
           "reconciled": true
         },
@@ -2665,6 +2816,10 @@
         "expected_minutes": 56.9,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.987,
           "recent_multiplier": 0.988,
@@ -2688,6 +2843,7 @@
           "saves": 0,
           "defensive": 0.08,
           "bonus": 0.15,
+          "penalty": 0.0,
           "conceded": -0.27,
           "cards": 0,
           "displayed_sum": 2.68,
@@ -2741,6 +2897,10 @@
         "expected_minutes": 63.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.0,
           "recent_multiplier": 1.005,
@@ -2764,6 +2924,7 @@
           "saves": 0,
           "defensive": 0.12,
           "bonus": 0.16,
+          "penalty": 0.0,
           "conceded": -0.33,
           "cards": 0,
           "displayed_sum": 2.54,
@@ -2817,6 +2978,10 @@
         "expected_minutes": 69.9,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.981,
@@ -2840,6 +3005,7 @@
           "saves": 0,
           "defensive": 0.21,
           "bonus": 0.18,
+          "penalty": 0.0,
           "conceded": -0.37,
           "cards": 0,
           "displayed_sum": 2.8,
@@ -2893,6 +3059,10 @@
         "expected_minutes": 81.3,
         "news": "",
         "change": "in",
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.03,
           "recent_multiplier": 1.052,
@@ -2916,6 +3086,7 @@
           "saves": 0,
           "defensive": 0.35,
           "bonus": 0.31,
+          "penalty": 0.0,
           "conceded": -0.43,
           "cards": 0,
           "displayed_sum": 3.98,
@@ -2969,6 +3140,10 @@
         "expected_minutes": 80.1,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.998,
           "recent_multiplier": 0.999,
@@ -2992,6 +3167,7 @@
           "saves": 0,
           "defensive": 0.11,
           "bonus": 0.32,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "other_model_components": 0.01,
@@ -3046,6 +3222,10 @@
         "expected_minutes": 64.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.002,
           "recent_multiplier": 1.005,
@@ -3069,6 +3249,7 @@
           "saves": 0,
           "defensive": 0.04,
           "bonus": 0.26,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 3.52,
@@ -3122,6 +3303,10 @@
         "expected_minutes": 50.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.999,
           "recent_multiplier": 0.999,
@@ -3145,6 +3330,7 @@
           "saves": 0,
           "defensive": 0.01,
           "bonus": 0.21,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 2.48,
@@ -3198,6 +3384,10 @@
         "expected_minutes": 69.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.997,
           "recent_multiplier": 1.005,
@@ -3221,6 +3411,7 @@
           "saves": 0,
           "defensive": 0.05,
           "bonus": 0.28,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "other_model_components": -0.01,
@@ -3242,9 +3433,9 @@
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 4.91,
+        "xp": 4.89,
         "xp_low": 0,
-        "xp_high": 10.13,
+        "xp_high": 10.12,
         "risk": "middels",
         "volatility": 0.83,
         "fixture": "Crystal Palace (A)",
@@ -3254,27 +3445,31 @@
             "label": "CRY A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.91
+            "xp": 4.89
           },
           {
             "gw": 3,
             "label": "COV H",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 5.44
+            "xp": 5.42
           },
           {
             "gw": 4,
             "label": "MAN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.92
+            "xp": 4.9
           }
         ],
         "availability": 1,
         "expected_minutes": 78.4,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0.95,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.013,
           "recent_multiplier": 1.025,
@@ -3298,10 +3493,11 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.33,
+          "penalty": -0.02,
           "conceded": 0,
           "cards": 0,
           "other_model_components": 0.01,
-          "displayed_sum": 4.91,
+          "displayed_sum": 4.89,
           "reconciled": true
         },
         "captain": true,
@@ -3352,6 +3548,10 @@
         "expected_minutes": 74.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.013,
           "recent_multiplier": 1.02,
@@ -3375,6 +3575,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.41,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 4.44,
@@ -3433,6 +3634,10 @@
           "expected_minutes": 76.1,
           "news": "",
           "change": "out",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
           "form": {
             "season_multiplier": 0.981,
             "recent_multiplier": 0.983,
@@ -3456,6 +3661,7 @@
             "saves": 0,
             "defensive": 0.26,
             "bonus": 0.2,
+            "penalty": 0.0,
             "conceded": -0.38,
             "cards": -0.42,
             "other_model_components": -0.01,
@@ -3508,6 +3714,10 @@
           "expected_minutes": 81.3,
           "news": "",
           "change": "in",
+          "set_piece_role": {
+            "penalty_taker_share": 0,
+            "source_version": "2026-08-28-manual-v2"
+          },
           "form": {
             "season_multiplier": 1.03,
             "recent_multiplier": 1.052,
@@ -3531,6 +3741,7 @@
             "saves": 0,
             "defensive": 0.35,
             "bonus": 0.31,
+            "penalty": 0.0,
             "conceded": -0.43,
             "cards": 0,
             "displayed_sum": 3.98,
@@ -3639,12 +3850,12 @@
     {
       "gw": 2,
       "captain": "Haaland",
-      "captain_xp": 4.91,
+      "captain_xp": 4.89,
       "captain_range": [
         0,
-        10.13
+        10.12
       ],
-      "xi_xp": 37.75,
+      "xi_xp": 37.73,
       "action": {
         "gw": 2,
         "action": "transfer",
@@ -3670,12 +3881,12 @@
     {
       "gw": 3,
       "captain": "Haaland",
-      "captain_xp": 5.44,
+      "captain_xp": 5.42,
       "captain_range": [
         0,
-        11.14
+        11.12
       ],
-      "xi_xp": 40.69,
+      "xi_xp": 40.67,
       "action": {
         "gw": 3,
         "action": "transfer",
@@ -3701,12 +3912,12 @@
     {
       "gw": 4,
       "captain": "Haaland",
-      "captain_xp": 4.92,
+      "captain_xp": 4.9,
       "captain_range": [
         0,
-        10.15
+        10.13
       ],
-      "xi_xp": 40.84,
+      "xi_xp": 40.82,
       "action": {
         "gw": 4,
         "action": "transfer",
@@ -3732,12 +3943,12 @@
     {
       "gw": 5,
       "captain": "Haaland",
-      "captain_xp": 5.29,
+      "captain_xp": 5.27,
       "captain_range": [
         0,
-        10.87
+        10.85
       ],
-      "xi_xp": 43.46,
+      "xi_xp": 43.44,
       "action": {
         "gw": 5,
         "action": "transfer",
@@ -3810,6 +4021,10 @@
             "expected_minutes": 0.0,
             "news": "Calf injury - Unknown return date",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.982,
               "recent_multiplier": 0.981,
@@ -3833,6 +4048,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.0,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 0.0,
@@ -3884,6 +4100,10 @@
             "expected_minutes": 69.2,
             "news": "",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.983,
               "recent_multiplier": 0.984,
@@ -3907,6 +4127,7 @@
               "saves": 0,
               "defensive": 0.06,
               "bonus": 0.28,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 3.27,
@@ -3969,6 +4190,10 @@
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.993,
               "recent_multiplier": 0.994,
@@ -3992,6 +4217,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.0,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 0.0,
@@ -4043,6 +4269,10 @@
             "expected_minutes": 68.3,
             "news": "",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 1.013,
               "recent_multiplier": 1.023,
@@ -4066,6 +4296,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.29,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 3.21,
@@ -4128,6 +4359,10 @@
             "expected_minutes": 0.0,
             "news": "Calf injury - Unknown return date",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.982,
               "recent_multiplier": 0.981,
@@ -4151,6 +4386,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.0,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 0.0,
@@ -4202,6 +4438,10 @@
             "expected_minutes": 69.2,
             "news": "",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.988,
               "recent_multiplier": 1,
@@ -4225,6 +4465,7 @@
               "saves": 0,
               "defensive": 0.04,
               "bonus": 0.28,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "other_model_components": 0.01,
@@ -4288,6 +4529,10 @@
             "expected_minutes": 0.0,
             "news": "Calf injury - Unknown return date",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.982,
               "recent_multiplier": 0.981,
@@ -4311,6 +4556,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.0,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 0.0,
@@ -4362,6 +4608,10 @@
             "expected_minutes": 69.2,
             "news": "",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.979,
               "recent_multiplier": 1,
@@ -4385,6 +4635,7 @@
               "saves": 0,
               "defensive": 0.06,
               "bonus": 0.28,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 3.23,
@@ -4449,6 +4700,10 @@
             "expected_minutes": 0.0,
             "news": "Foot injury - Unknown return date",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.993,
               "recent_multiplier": 0.994,
@@ -4472,6 +4727,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.0,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 0.0,
@@ -4523,6 +4779,10 @@
             "expected_minutes": 60.0,
             "news": "",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.994,
               "recent_multiplier": 0.989,
@@ -4546,6 +4806,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.25,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "other_model_components": 0.01,
@@ -4609,6 +4870,10 @@
             "expected_minutes": 0.0,
             "news": "Calf injury - Unknown return date",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.982,
               "recent_multiplier": 0.981,
@@ -4632,6 +4897,7 @@
               "saves": 0,
               "defensive": 0.0,
               "bonus": 0.0,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 0.0,
@@ -4683,6 +4949,10 @@
             "expected_minutes": 69.2,
             "news": "",
             "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
             "form": {
               "season_multiplier": 0.979,
               "recent_multiplier": 1,
@@ -4706,6 +4976,7 @@
               "saves": 0,
               "defensive": 0.05,
               "bonus": 0.28,
+              "penalty": 0.0,
               "conceded": 0,
               "cards": 0,
               "displayed_sum": 3.22,
@@ -4738,24 +5009,18 @@
     "attackers": "opponent-defence",
     "home_away_adjusted": true
   },
-  "set_piece_model": {
-    "version": "2026-08-28-manual-v1",
-    "penalty_roles_loaded": 2,
-    "projection_integration": "pending",
-    "display_metadata_active": true
-  },
   "captain_comparison": [
     {
       "id": 411,
       "name": "Haaland",
       "team": "Man City",
       "position": "FWD",
-      "xp": 4.91,
-      "ceiling": 10.13,
+      "xp": 4.89,
+      "ceiling": 10.12,
       "expected_minutes": 78.0,
       "availability": 1.0,
-      "score": 5.555,
-      "p10_plus": 0.1646,
+      "score": 5.539,
+      "p10_plus": 0.1643,
       "p15_plus": 0.0579,
       "p_goal_2plus": 0.1272,
       "p_multi_return": 0.1847,
@@ -4961,11 +5226,11 @@
       "id": 411,
       "name": "Haaland",
       "team": "Man City",
-      "v3_score": 5.555,
-      "v4_score": 6.188,
-      "v41_score": 6.3805,
-      "elite_prior": 0.9739,
-      "haul_bonus": 0.1925,
+      "v3_score": 5.539,
+      "v4_score": 6.172,
+      "v41_score": 6.3643,
+      "elite_prior": 0.9738,
+      "haul_bonus": 0.1923,
       "haul_probabilities": {
         "goal_lambda": 0.616,
         "assist_lambda": 0.1658,
@@ -4973,12 +5238,12 @@
         "p_goal_2": 0.1272,
         "p_goal_3": 0.0247,
         "p_multi_return": 0.1847,
-        "p10": 0.1646,
+        "p10": 0.1643,
         "p15": 0.0579,
         "history_weight": 0.8889
       },
-      "xp": 4.91,
-      "ceiling": 10.13,
+      "xp": 4.89,
+      "ceiling": 10.12,
       "expected_minutes": 78.0,
       "prev_minutes": 2953.0,
       "prev_points": 239.0
@@ -5006,11 +5271,11 @@
       "id": 411,
       "name": "Haaland",
       "team": "Man City",
-      "xp": 4.91,
+      "xp": 4.89,
       "expected_minutes": 78.4,
       "availability": 1.0,
-      "model_score": 5.555,
-      "p10_plus": 0.1646,
+      "model_score": 5.539,
+      "p10_plus": 0.1643,
       "p15_plus": 0.0579,
       "p_goal_2plus": 0.1272,
       "p_multi_return": 0.1847
@@ -5028,13 +5293,13 @@
       "p_goal_2plus": 0.0163,
       "p_multi_return": 0.1552
     },
-    "score_gap": 0.048,
-    "xp_gap": 0.01,
-    "haul10_gap": 0.0433,
+    "score_gap": 0.032,
+    "xp_gap": -0.01,
+    "haul10_gap": 0.043,
     "confidence": {
-      "score": 67,
+      "score": 66,
       "level": "LAV",
-      "raw": 1.387,
+      "raw": 1.309,
       "input_quality": "MEDIUM"
     },
     "input_quality": {
@@ -5094,6 +5359,10 @@
         "expected_minutes": 57.0,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.979,
@@ -5117,9 +5386,10 @@
           "saves": 0.23,
           "defensive": 0,
           "bonus": 0.16,
+          "penalty": 0.05,
           "conceded": -0.29,
           "cards": 0,
-          "other_model_components": 0.06,
+          "other_model_components": 0.01,
           "displayed_sum": 2.15,
           "reconciled": true
         },
@@ -5173,6 +5443,10 @@
         "expected_minutes": 76.1,
         "news": "",
         "change": "out",
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.983,
@@ -5196,6 +5470,7 @@
           "saves": 0,
           "defensive": 0.26,
           "bonus": 0.2,
+          "penalty": 0.0,
           "conceded": -0.38,
           "cards": -0.42,
           "other_model_components": -0.01,
@@ -5252,6 +5527,10 @@
         "expected_minutes": 56.9,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.987,
           "recent_multiplier": 0.988,
@@ -5275,6 +5554,7 @@
           "saves": 0,
           "defensive": 0.08,
           "bonus": 0.15,
+          "penalty": 0.0,
           "conceded": -0.27,
           "cards": 0,
           "displayed_sum": 2.68,
@@ -5330,6 +5610,10 @@
         "expected_minutes": 63.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.0,
           "recent_multiplier": 1.005,
@@ -5353,6 +5637,7 @@
           "saves": 0,
           "defensive": 0.12,
           "bonus": 0.16,
+          "penalty": 0.0,
           "conceded": -0.33,
           "cards": 0,
           "displayed_sum": 2.54,
@@ -5408,6 +5693,10 @@
         "expected_minutes": 80.1,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.998,
           "recent_multiplier": 0.999,
@@ -5431,6 +5720,7 @@
           "saves": 0,
           "defensive": 0.11,
           "bonus": 0.32,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "other_model_components": 0.01,
@@ -5487,6 +5777,10 @@
         "expected_minutes": 64.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.002,
           "recent_multiplier": 1.005,
@@ -5510,6 +5804,7 @@
           "saves": 0,
           "defensive": 0.04,
           "bonus": 0.26,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 3.52,
@@ -5565,6 +5860,10 @@
         "expected_minutes": 50.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.999,
           "recent_multiplier": 0.999,
@@ -5588,6 +5887,7 @@
           "saves": 0,
           "defensive": 0.01,
           "bonus": 0.21,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 2.48,
@@ -5643,6 +5943,10 @@
         "expected_minutes": 0.0,
         "news": "Calf injury - Unknown return date",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.982,
           "recent_multiplier": 0.981,
@@ -5666,6 +5970,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.0,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 0.0,
@@ -5721,6 +6026,10 @@
         "expected_minutes": 0.0,
         "news": "Foot injury - Unknown return date",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.993,
           "recent_multiplier": 0.994,
@@ -5744,6 +6053,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.0,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 0.0,
@@ -5766,9 +6076,9 @@
         "team": "Man City",
         "position": "FWD",
         "price": 15.5,
-        "xp": 4.91,
+        "xp": 4.89,
         "xp_low": 0,
-        "xp_high": 10.13,
+        "xp_high": 10.12,
         "risk": "middels",
         "volatility": 0.83,
         "fixture": "Crystal Palace (A)",
@@ -5778,27 +6088,31 @@
             "label": "CRY A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.91
+            "xp": 4.89
           },
           {
             "gw": 3,
             "label": "COV H",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 5.44
+            "xp": 5.42
           },
           {
             "gw": 4,
             "label": "MAN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.92
+            "xp": 4.9
           }
         ],
         "availability": 1,
         "expected_minutes": 78.4,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0.95,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.013,
           "recent_multiplier": 1.025,
@@ -5822,10 +6136,11 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.33,
+          "penalty": -0.02,
           "conceded": 0,
           "cards": 0,
           "other_model_components": 0.01,
-          "displayed_sum": 4.91,
+          "displayed_sum": 4.89,
           "reconciled": true
         },
         "captain": true,
@@ -5878,6 +6193,10 @@
         "expected_minutes": 74.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.013,
           "recent_multiplier": 1.02,
@@ -5901,6 +6220,7 @@
           "saves": 0,
           "defensive": 0.0,
           "bonus": 0.41,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "displayed_sum": 4.44,
@@ -5958,6 +6278,10 @@
         "expected_minutes": 0.0,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 1.0,
           "recent_multiplier": 1.0,
@@ -5981,6 +6305,7 @@
           "saves": 0.0,
           "defensive": 0,
           "bonus": 0.0,
+          "penalty": 0.0,
           "conceded": 0.0,
           "cards": 0,
           "displayed_sum": 0.0,
@@ -6036,6 +6361,10 @@
         "expected_minutes": 59.6,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.979,
@@ -6059,6 +6388,7 @@
           "saves": 0,
           "defensive": 0.13,
           "bonus": 0.15,
+          "penalty": 0.0,
           "conceded": -0.3,
           "cards": 0,
           "other_model_components": 0.01,
@@ -6115,6 +6445,10 @@
         "expected_minutes": 69.2,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.997,
           "recent_multiplier": 1.005,
@@ -6138,6 +6472,7 @@
           "saves": 0,
           "defensive": 0.05,
           "bonus": 0.28,
+          "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
           "other_model_components": -0.01,
@@ -6194,6 +6529,10 @@
         "expected_minutes": 69.9,
         "news": "",
         "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
         "form": {
           "season_multiplier": 0.981,
           "recent_multiplier": 0.981,
@@ -6217,6 +6556,7 @@
           "saves": 0,
           "defensive": 0.21,
           "bonus": 0.18,
+          "penalty": 0.0,
           "conceded": -0.37,
           "cards": 0,
           "displayed_sum": 2.8,
