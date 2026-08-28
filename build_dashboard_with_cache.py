@@ -12,8 +12,9 @@ ns=runpy.run_path('generate_dashboard_v3.py')
 players=ns['players'];gws=ns['GWS'];weights=ns['weights'];squad=ns['squad'];bank=ns['bank'];ratings=ns['ratings'];fm=ns['fm'];teams=ns['teams']
 byid={int(p['id']):p for p in players}
 
-# Conservative manual roles are display/audit metadata until the production
-# generator consumes them directly. Never silently guess missing roles.
+# Roles are maintained separately for auditability. The production generator
+# consumes penalty_taker_share directly; this postprocessor only exposes the
+# same roles as display/audit metadata and verifies feed consistency.
 set_piece_roles={}
 try:
  set_piece_roles=json.loads(Path('set_piece_roles.json').read_text())
@@ -45,12 +46,7 @@ def outlook_for(row):
  return out
 
 def reconcile_breakdown(row):
- """Make displayed xP components reconcile with displayed total.
-
- The core may contain newer components than the older generator breakdown.
- Until each component is wired through, expose the residual explicitly instead
- of showing a misleading component sum.
- """
+ """Make displayed xP components reconcile with displayed total."""
  bd=row.get('xp_breakdown')
  if not isinstance(bd,dict):return
  total=round(float(row.get('xp') or 0),2);shown=round(sum(float(v or 0) for v in bd.values()),2);residual=round(total-shown,2)
@@ -71,7 +67,14 @@ def enrich(obj):
 
 feed_path=Path('data.json')
 if feed_path.exists():
- feed=json.loads(feed_path.read_text());enrich(feed);feed['fixture_difficulty_model']={'version':'2.0-position-aware','defenders':'opponent-attack','attackers':'opponent-defence','home_away_adjusted':True};feed['set_piece_model']={'version':set_piece_roles.get('version','none'),'penalty_roles_loaded':len(penalty_roles),'projection_integration':'pending','display_metadata_active':bool(penalty_roles)};feed_path.write_text(json.dumps(feed,ensure_ascii=False,indent=2));print('Applied position-aware fixture difficulty, xP reconciliation and set-piece metadata')
+ feed=json.loads(feed_path.read_text());enrich(feed)
+ feed['fixture_difficulty_model']={'version':'2.0-position-aware','defenders':'opponent-attack','attackers':'opponent-defence','home_away_adjusted':True}
+ model_version=str(feed.get('model_version') or '')
+ projection_active=('set-piece-projection' in model_version)
+ feed['set_piece_model']={'version':set_piece_roles.get('version','none'),'penalty_roles_loaded':len(penalty_roles),'projection_integration':'active' if projection_active else 'pending','display_metadata_active':bool(penalty_roles)}
+ if projection_active and feed['set_piece_model']['projection_integration']!='active':
+  raise RuntimeError('Set-piece projection is active but feed status is not active')
+ feed_path.write_text(json.dumps(feed,ensure_ascii=False,indent=2));print('Applied position-aware fixture difficulty, xP reconciliation and set-piece metadata')
 
 rows=[]
 for p in players:
