@@ -47,23 +47,30 @@ def uncertainty_sanity():
 
 
 def attacking_evidence_sanity():
-    # Recent evidence may help, but is bounded and cannot turn one match into a huge sample.
     assert attack_evidence_minutes(90,90,.20) < 100
     assert attack_evidence_minutes(90,900,1.0) <= 216
     assert attack_evidence_minutes(3000,900,1.0) <= 1800
-    b={'goal90':.50,'assist90':.20}
-    season={'multiplier':1.10}
-    recent_low={'multiplier':1.20,'confidence':.10,'minutes':90}
-    recent_high={'multiplier':1.20,'confidence':.80,'minutes':720}
-    low,m1=blend_rates(b,season,recent_low,attack_share=.40,enabled=True)
-    high,m2=blend_rates(b,season,recent_high,attack_share=.40,enabled=True)
-    # Confidence gates overlap; we no longer multiply 1.10*1.20 directly.
+    b={'goal90':.50,'assist90':.20};season={'multiplier':1.10};recent_low={'multiplier':1.20,'confidence':.10,'minutes':90};recent_high={'multiplier':1.20,'confidence':.80,'minutes':720}
+    low,m1=blend_rates(b,season,recent_low,attack_share=.40,enabled=True);high,m2=blend_rates(b,season,recent_high,attack_share=.40,enabled=True)
     assert 1.10 < m1 < m2 < 1.20,(m1,m2)
     assert low['recent_minutes']==90 and abs(low['recent_confidence']-.10)<1e-9
     assert high['goal90'] > low['goal90']
     early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=1.0,assist90=.4,prev_minutes=3000,prev_goal90=.55,prev_assist90=.15,recent_minutes=90,recent_confidence=.20))
     assert 90 < early['attack_evidence_minutes'] < 100,early
     assert early['goal90_used'] < .70,early
+
+
+def defensive_exposure_sanity():
+    common={'position':2,'minutes_history':900,'start_rate':1.0,'sub_rate':0,'prev_minutes':3000,'opponent_goal_lambda':1.35}
+    full=project(base(**common,avg_start_mins=90))
+    early_sub=project(base(**common,avg_start_mins=70))
+    # Reaching 60 then leaving early reduces on-pitch goal exposure, so conditional
+    # clean-sheet probability should be higher than for a 90-minute player.
+    assert early_sub['defensive_exposure'] < full['defensive_exposure'],(early_sub,full)
+    assert early_sub['cs_probability'] > full['cs_probability'],(early_sub,full)
+    # But conceded deductions still exist below 60/90; they are no longer tied only to p60.
+    cameo=project(base(position=2,minutes_history=900,start_rate=.15,avg_start_mins=55,sub_rate=.55,avg_sub_mins=25,prev_minutes=500,opponent_goal_lambda=2.2))
+    assert cameo['conceded'] < 0,cameo
 
 
 def main():
@@ -74,7 +81,7 @@ def main():
     unknown_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=.3,assist90=.1));established_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000,goal90=.3,assist90=.1));assert established_early['xmins']>=76 and established_early['xmins']>=unknown_early['xmins']+8 and established_early['p_start']>.84
     generic=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0));elite=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0,prev_minutes=3000,prev_goal90=.90,prev_assist90=.12));assert elite['goal_prior_used']>generic['goal_prior_used']+.20 and elite['goals']>generic['goals']+.35
     faded=project(base(minutes_history=2700,start_rate=1,avg_start_mins=90,goal90=.31,prev_minutes=3000,prev_goal90=.90));assert abs(faded['goal90_used']-.31)<abs(elite['goal90_used']-.31)
-    strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();pipeline_sanity()
-    print('live model sanity passed',{'ghost_xmins':ghost['xmins'],'unknown_early_xmins':round(unknown_early['xmins'],1),'established_early_xmins':round(established_early['xmins'],1),'position_aware_fdr':True,'bench_resilience':True,'captain_optimizer_aligned':True,'role_uncertainty':True,'attack_evidence':True,'form_overlap_guard':True})
+    strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();pipeline_sanity()
+    print('live model sanity passed',{'position_aware_fdr':True,'bench_resilience':True,'captain_optimizer_aligned':True,'role_uncertainty':True,'attack_evidence':True,'form_overlap_guard':True,'defensive_exposure':True})
 
 if __name__=='__main__':main()
