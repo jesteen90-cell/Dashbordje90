@@ -56,7 +56,7 @@ jobs:
           assert tr.get('promote') is True, 'transfer strategy not promoted'
           print('Validated Model 3.0 inputs present')
           PY
-      - name: Build validated Model 3.0 dashboard feed
+      - name: Build validated dashboard feed
         env:
           FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
           FPL_FREE_TRANSFERS: ${{ secrets.FPL_FREE_TRANSFERS }}
@@ -70,19 +70,24 @@ jobs:
           import json
           d=json.load(open('data.json'))
           assert d.get('model_version')=='3.0-validated', d.get('model_version')
-          assert d.get('decision_layer',{}).get('version')=='4.0-risk-aware'
+          dl=d.get('decision_layer',{})
+          assert dl.get('version')=='4.1-explainable', dl.get('version')
+          assert dl.get('explainability') is True
+          assert dl.get('captain_comparison') is True
           assert d.get('deadline_time')
           assert len(d.get('comparison',{}).get('current_xi',[]))==11
           assert len(d.get('lineup',[]))==11
           assert d.get('recent_form',{}).get('promoted') is True
           assert d.get('captain_model',{}).get('promoted') is True
+          assert d.get('decision_explanation',{}).get('decision') in ('BANK','BYTT')
+          assert len(d.get('captain_comparison',[]))>=3
           for p in d.get('lineup',[]):
             if float(p.get('availability',0))>=.99:
               assert float(p.get('expected_minutes',0))>0,(p.get('name'),p.get('expected_minutes'))
           bench=d.get('bench',[])
           if bench:
             assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
-          print('Model 3.0 + decision layer 4.0 sanity check passed:', d.get('generated_at'))
+          print('Model 3.0 + decision layer 4.1 sanity check passed:', d.get('generated_at'))
           PY
       - name: Publish updated feed
         run: |
