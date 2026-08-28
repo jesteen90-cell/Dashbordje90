@@ -1,3 +1,5 @@
+from pathlib import Path
+import py_compile
 from model_v2_core import project, stabilized_role
 
 
@@ -12,25 +14,41 @@ def base(**kw):
     d.update(kw);return d
 
 
+def pipeline_sanity():
+    # Compile every top-level Python module without executing network/env side effects.
+    for p in Path('.').glob('*.py'):
+        py_compile.compile(str(p), doraise=True)
+
+    opt=Path('transfer_optimizer_v2.py').read_text(encoding='utf-8')
+    assert 'from captain_horizon_v1 import horizon_values' in opt
+    assert "'captain_horizon_search':True" in opt
+
+    dl=Path('decision_layer_v4.py').read_text(encoding='utf-8')
+    assert 'def select_squad_view' in dl
+    assert "data['lineup']=target_xi" in dl
+    assert "data['bench']=reorder_bench(bench)" in dl
+
+    ui=Path('captain_explain_ui.js').read_text(encoding='utf-8')
+    assert "typeof D==='undefined'" in ui
+    assert '!window.D' not in ui
+    assert 'Captain confidence' in ui
+
+
 def main():
-    # A player with no season minutes and no observed role must not become a
-    # synthetic starter merely because the season is young.
     sr,sub=stabilized_role(0,0,0,4)
     assert sr==0 and sub==0,(sr,sub)
     ghost=project(base())
     assert ghost['xmins']==0,ghost
     assert ghost['total']==0,ghost
 
-    # A player who has actually appeared should get a conservative stabilizer;
-    # one short appearance must not collapse the next-GW expectation to zero.
     seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5,goal90=.3,assist90=.1))
     assert 15 < seen['xmins'] < 70,seen
     assert seen['total'] > 0,seen
 
-    # Fully available established starter should remain comfortably above a
-    # fringe player's role expectation.
     starter=project(base(minutes_history=180,start_rate=1,sub_rate=0,goal90=.3,assist90=.1))
     assert starter['xmins'] > seen['xmins'],(starter,seen)
-    print('live model sanity passed', {'ghost_xmins':ghost['xmins'],'seen_xmins':round(seen['xmins'],1),'starter_xmins':round(starter['xmins'],1)})
+
+    pipeline_sanity()
+    print('live model + pipeline sanity passed', {'ghost_xmins':ghost['xmins'],'seen_xmins':round(seen['xmins'],1),'starter_xmins':round(starter['xmins'],1)})
 
 if __name__=='__main__':main()
