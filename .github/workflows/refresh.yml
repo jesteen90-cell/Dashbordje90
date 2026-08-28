@@ -7,6 +7,7 @@ on:
     paths:
       - "generate_dashboard_v3.py"
       - "decision_layer_v4.py"
+      - "freeze_snapshot.py"
       - "model_v2_core.py"
       - "model_live_sanity.py"
       - "team_strength_v2.py"
@@ -89,14 +90,16 @@ jobs:
             assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
           print('Model 3.0 + decision layer 4.1 sanity check passed:', d.get('generated_at'))
           PY
-      - name: Publish updated feed
+      - name: Freeze first valid pre-deadline snapshot
+        run: python freeze_snapshot.py
+      - name: Publish updated feed and snapshot
         run: |
-          if git diff --quiet -- data.json; then
-            echo "No dashboard change."
+          if git diff --quiet -- data.json snapshots/; then
+            echo "No dashboard or snapshot change."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git commit -m "Dashboard: refresh Model 3.0 analysis"
+          git add data.json snapshots/
+          git commit -m "Dashboard: refresh analysis and freeze snapshot"
           git push
