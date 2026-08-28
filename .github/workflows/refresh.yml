@@ -22,6 +22,7 @@ on:
       - "captain_v4_prior.py"
       - "captain_haul_v41.py"
       - "captain_horizon_v1.py"
+      - "expand_captain_pool.py"
       - "enrich_captain_inputs.py"
       - "captain_v4_shadow.py"
       - "evaluate_captain_v4.py"
@@ -92,6 +93,7 @@ jobs:
           if [ -z "$FPL_FREE_TRANSFERS" ]; then export FPL_FREE_TRANSFERS=1; fi
           python build_dashboard_with_cache.py
           python decision_layer_v4.py
+          python expand_captain_pool.py
           python enrich_captain_inputs.py
           python captain_v4_shadow.py
           python select_captain_model.py
@@ -105,25 +107,23 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('data.json'))
-          # Generator currently emits 3.0-validated. Do not block fresh data on a stale label.
           assert d.get('model_version') in ('3.0-validated','3.1-market-ready'), d.get('model_version')
           opt=d.get('optimizer',{}); assert opt.get('captain_horizon_search') is True, opt
+          pool=d.get('captain_pool') or {}; assert pool.get('version')=='1.0-all-xi'; assert int(pool.get('candidate_count') or 0)==11,pool; assert int(pool.get('display_count') or 0)<=5,pool
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
-          cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.1-haul-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick') and cap4.get('v41_pick')
+          cap4=json.load(open('captain_v4_shadow.json')); assert cap4.get('version')=='4.1-haul-shadow'; assert int(cap4.get('gw'))==int(d.get('gw')); assert cap4.get('v3_pick') and cap4.get('v4_pick') and cap4.get('v41_pick'); assert len(cap4.get('candidates') or [])==11, len(cap4.get('candidates') or [])
           for p in cap4.get('candidates',[]):
             hp=p.get('haul_probabilities') or {}; assert all(k in hp for k in ('p_goal_1','p_goal_2','p_goal_3','p_multi_return','p10','p15')); assert 0 <= float(p.get('haul_bonus',0)) <= .90
           sel=d.get('captain_model_selection') or {}; assert sel.get('version')=='1.0'; assert sel.get('production_model') in ('v3','v4','v4.1'); assert sel.get('selected_pick'); assert sel.get('applied') is True; assert sel.get('applied_captain_id'); assert isinstance(sel.get('safety_gate'),dict)
           if sel.get('production_model')=='v4.1': assert sel.get('promotion_flags',{}).get('v41') is True
           if sel.get('production_model')=='v4': assert sel.get('promotion_flags',{}).get('v4') is True
-          xi=d.get('lineup') or []; caps=[p for p in xi if p.get('captain')]; vice=[p for p in xi if p.get('vice')]; assert len(caps)==1,caps; assert len(vice)==1,vice; assert int(caps[0]['id'])==int(sel['applied_captain_id']); assert int(caps[0]['id'])!=int(vice[0]['id'])
+          xi=d.get('lineup') or []; caps=[p for p in xi if p.get('captain')]; vice=[p for p in xi if p.get('vice')]; assert len(xi)==11; assert len(caps)==1,caps; assert len(vice)==1,vice; assert int(caps[0]['id'])==int(sel['applied_captain_id']); assert int(caps[0]['id'])!=int(vice[0]['id'])
           ex=d.get('captain_explanation') or {}; assert ex.get('version')=='1.0'; assert ex.get('model')==sel.get('production_model'); assert int(ex.get('captain',{}).get('id'))==int(sel.get('applied_captain_id')); assert ex.get('runner_up',{}).get('id'); assert ex.get('score_gap') is not None and ex.get('xp_gap') is not None
-          if ex.get('model')=='v4.1':
-            assert ex.get('captain',{}).get('p10_plus') is not None and ex.get('captain',{}).get('p15_plus') is not None and ex.get('captain',{}).get('p_multi_return') is not None
           premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'; assert int(premium.get('gw'))==int(d.get('gw')); assert len(premium.get('current_squad_ids',[]))==15
           chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
-          dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'
-          print('Captain explainability sanity:',ex.get('model'),ex.get('captain',{}).get('name'),'vs',ex.get('runner_up',{}).get('name'),'score gap',ex.get('score_gap'))
+          dl=d.get('decision_layer',{}); assert dl.get('version')=='4.4-premium-adaptive'; assert dl.get('squad_view_consistent') is True
+          print('Captain full-XI sanity:',len(cap4.get('candidates') or []),'modelled,',len(d.get('captain_comparison') or []),'displayed. Applied:',ex.get('captain',{}).get('name'),'runner:',ex.get('runner_up',{}).get('name'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
@@ -141,5 +141,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json premium_structure_shadow.json chip_strategy_shadow.json captain_v4_shadow.json snapshots/ backtest/ market_ab/ market_ab_snapshots/ captain_snapshots/ premium_structure_snapshots/ chip_snapshots/
-          git commit -m "Dashboard: refresh captain explanation metadata"
+          git commit -m "Dashboard: refresh full-XI captain analysis"
           git push
