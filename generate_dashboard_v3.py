@@ -48,7 +48,6 @@ for f in fixtures:
  g=f.get('event')
  if g not in fm:continue
  fid=int(f.get('id') or 0);h=int(f['team_h']);a=int(f['team_a']);hatk,alam=fixture_factors(ratings,h,a,True);aatk,hlam=fixture_factors(ratings,a,h,False)
- # Market home_xg is the away team's opponent-goal lambda; market away_xg is the home team's opponent-goal lambda.
  hlam2,wh,mh=blend_lambda(hlam,fid,True,market);alam2,wa,ma=blend_lambda(alam,fid,False,market)
  if wh or wa:market_blends.append({'fixture_id':fid,'gw':g,'home_team':h,'away_team':a,'internal_home_xg':round(hlam,3),'internal_away_xg':round(alam,3),'market_home_xg':mh,'market_away_xg':ma,'home_weight':round(wh,3),'away_weight':round(wa,3),'ensemble_home_xg':round(hlam2,3),'ensemble_away_xg':round(alam2,3)})
  fm[g].setdefault(h,[]).append({'home':1,'opp':a,'attack':hatk,'opp_lambda':alam2});fm[g].setdefault(a,[]).append({'home':0,'opp':h,'attack':aatk,'opp_lambda':hlam2})
@@ -58,29 +57,31 @@ for g in finished+[x for x in range(TARGET-1,0,-1) if x not in finished]:
  if s and len(s.get('picks',[]))==15:snapshot,snapshot_gw=s,g;break
 if not snapshot:raise RuntimeError('No public squad snapshot')
 squad=[byid[int(x['element'])] for x in snapshot['picks']];bank=int(snapshot.get('entry_history',{}).get('bank') or 0);free_transfers=max(1,min(5,int(os.environ.get('FPL_FREE_TRANSFERS','1'))))
-squad_ids={int(p['id']) for p in squad};ranked=sorted(players,key=lambda p:n(p.get('total_points'))+2*n(p.get('form'))+n(p.get('selected_by_percent'))*.15,reverse=True);history_ids=squad_ids|{int(p['id']) for p in ranked[:140]};recent={}
+squad_ids={int(p['id']) for p in squad};ranked=sorted(players,key=lambda p:n(p.get('total_points'))+2*n(p.get('form'))+n(p.get('selected_by_percent'))*.15,reverse=True);history_ids=squad_ids|{int(p['id']) for p in ranked[:140]};recent={};previous={}
 
 def fetch_recent(pid):
- s=get(f'element-summary/{pid}/',True)
- return pid,recent_signal((s or {}).get('history',[]),params=recent_cfg)
+ s=get(f'element-summary/{pid}/',True) or {}
+ past=s.get('history_past') or [];prev=past[-1] if past else {}
+ pm=n(prev.get('minutes')); previous_row={'minutes':pm,'goal90':n(prev.get('goals_scored'))*90/max(pm,1) if pm else 0,'assist90':n(prev.get('assists'))*90/max(pm,1) if pm else 0}
+ return pid,recent_signal(s.get('history',[]),params=recent_cfg),previous_row
 with ThreadPoolExecutor(max_workers=12) as ex:
  futures=[ex.submit(fetch_recent,pid) for pid in history_ids]
  for fut in as_completed(futures):
-  try:pid,val=fut.result();recent[pid]=val
+  try:pid,val,prev=fut.result();recent[pid]=val;previous[pid]=prev
   except Exception:pass
-print(f'Loaded recent-form history for {len(recent)}/{len(history_ids)} players')
+print(f'Loaded recent/history priors for {len(recent)}/{len(history_ids)} players')
 
 def availability(p):
  if p.get('status') in ('u','s'):return 0
  c=p.get('chance_of_playing_next_round');return clamp(n(c)/100) if c is not None else (.55 if p.get('status') in ('i','d') else 1)
 
 def core_input(p,f):
- pos=int(p['element_type']);hist=n(p.get('minutes'));starts=n(p.get('starts'));rounds=max(TARGET-1,1);avg_start=78 if starts<=0 else clamp(hist/max(starts,1),55,88);res=max(0,hist-starts*avg_start);sub_apps=res/18 if res else 0;scale=90/max(hist,180)
- base={'position':pos,'availability':availability(p),'start_rate':clamp(starts/rounds),'avg_start_mins':avg_start,'sub_rate':clamp(sub_apps/rounds,0,.6),'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':f['opp_lambda'],'attack_multiplier':f['attack']}
+ pos=int(p['element_type']);hist=n(p.get('minutes'));starts=n(p.get('starts'));rounds=max(TARGET-1,1);avg_start=78 if starts<=0 else clamp(hist/max(starts,1),55,88);res=max(0,hist-starts*avg_start);sub_apps=res/18 if res else 0;scale=90/max(hist,180);prev=previous.get(int(p['id']),{})
+ base={'position':pos,'availability':availability(p),'start_rate':clamp(starts/rounds),'avg_start_mins':avg_start,'sub_rate':clamp(sub_apps/rounds,0,.6),'avg_sub_mins':18,'minutes_history':hist,'goal90':n(p.get('goals_scored'))*scale,'assist90':n(p.get('assists'))*scale,'prev_minutes':n(prev.get('minutes')),'prev_goal90':n(prev.get('goal90')),'prev_assist90':n(prev.get('assist90')),'save90':n(p.get('saves'))*scale,'defcon90':n(p.get('defensive_contribution'))*scale,'bonus90':n(p.get('bonus'))*scale,'yellow90':n(p.get('yellow_cards'))*scale,'red90':n(p.get('red_cards'))*scale,'opponent_goal_lambda':f['opp_lambda'],'attack_multiplier':f['attack']}
  sf=form_signal(p);rf=recent.get(int(p['id']),{'multiplier':1,'confidence':0});adjusted,_=blend_rates(base,sf,rf,attack_share=float(recent_cfg.get('attack_share',.40)),enabled=bool(recent_cfg.get('promoted')));return adjusted
 
 def project(p,g):
- cs=[core_project(core_input(p,f)) for f in fm.get(g,{}).get(int(p['team']),[])];keys=('total','xmins','appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards','cs_probability')
+ cs=[core_project(core_input(p,f)) for f in fm.get(g,{}).get(int(p['team']),[])];keys=('total','xmins','appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards','cs_probability','goal90_used','assist90_used','goal_prior_used','assist_prior_used')
  if not cs:return {**{k:0 for k in keys},'variance':0,'sd':0,'p10':0,'p90':0,'volatility':0,'attack_multiplier':0}
  out={k:sum(c.get(k,0) for c in cs) for k in keys};out['variance']=sum(c.get('variance',0) for c in cs);out['sd']=math.sqrt(max(0,out['variance']));out['p10']=max(0,out['total']-Z80*out['sd']);out['p90']=max(out['p10'],out['total']+Z80*out['sd']);out['volatility']=out['sd']/max(out['total'],1);fs=fm.get(g,{}).get(int(p['team']),[]);out['attack_multiplier']=sum(f['attack'] for f in fs)/len(fs) if fs else 0;return out
 
@@ -107,8 +108,8 @@ def lineup(sq,g):
 def risk_label(c):
  v=c.get('volatility',0);return 'lav' if v<.65 else ('middels' if v<1.05 else 'høy')
 def row(p,g,change=None):
- fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g];f=p['_form'];rf=p['_recent']
- return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'xp_low':round(c['p10'],2),'xp_high':round(c['p90'],2),'risk':risk_label(c),'volatility':round(c['volatility'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'form':{'season_multiplier':round(f['multiplier'],3),'recent_multiplier':round(rf['multiplier'],3),'recent_xgi90':round(rf['xgi90'],3),'recent_minutes':round(rf['minutes'],0),'recent_matches':rf['matches'],'recent_confidence':round(rf['confidence'],3)},'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
+ fs=fm.get(g,{}).get(int(p['team']),[]);fixture='BLANK' if not fs else ' + '.join(f"{teams.get(f['opp'],'?')} ({'H' if f['home'] else 'A'})" for f in fs);c=p['_proj'][g];f=p['_form'];rf=p['_recent'];prev=previous.get(int(p['id']),{})
+ return {'id':int(p['id']),'name':p['web_name'],'team_id':int(p['team']),'team':teams[int(p['team'])],'position':POS[int(p['element_type'])],'price':round(n(p['now_cost'])/10,1),'xp':round(c['total'],2),'xp_low':round(c['p10'],2),'xp_high':round(c['p90'],2),'risk':risk_label(c),'volatility':round(c['volatility'],2),'fixture':fixture,'availability':round(availability(p),3),'expected_minutes':round(c['xmins'],1),'news':p.get('news') or '','change':change,'form':{'season_multiplier':round(f['multiplier'],3),'recent_multiplier':round(rf['multiplier'],3),'recent_xgi90':round(rf['xgi90'],3),'recent_minutes':round(rf['minutes'],0),'recent_matches':rf['matches'],'recent_confidence':round(rf['confidence'],3)},'historical_prior':{'prev_minutes':round(n(prev.get('minutes')),0),'prev_goal90':round(n(prev.get('goal90')),3),'prev_assist90':round(n(prev.get('assist90')),3),'goal_prior_used':round(c.get('goal_prior_used',0),3),'assist_prior_used':round(c.get('assist_prior_used',0),3)},'xp_breakdown':{k:round(c.get(k,0),2) for k in ('appearance','goals','assists','clean_sheet','saves','defensive','bonus','conceded','cards')}}
 def apply_move(sq,m):
  if not m or m.get('action')!='transfer':return list(sq)
  out=list(sq)
@@ -133,5 +134,5 @@ for outp in squad:
   if not legal(ns):continue
   hg=sum((inn['_x'][g]-outp['_x'][g])*weights[g] for g in GWS);cands.append({'status':'VURDERES' if hg>.5 else 'SVAK','edge':round(hg-.45,2),'short_gain':round(sum(inn['_x'][g]-outp['_x'][g] for g in GWS[:3]),2),'horizon_gain':round(hg,2),'gate_misses':[] if hg>1 else ['Fordelen er liten sammenlignet med fleksibiliteten i å spare et gratisbytte'],'pairs':[{'out':row(outp,TARGET),'in':row(inn,TARGET)}]})
 cands.sort(key=lambda x:x['horizon_gain'],reverse=True);cands=cands[:10];headline='GJØR BYTTET' if go else ('SPAR BYTTET' if first.get('action')=='bank' else 'VENT / BANK');strength_public={str(t):{'team':teams[t],**{k:round(v,3) for k,v in r.items()}} for t,r in ratings.items()}
-data={'model_version':'3.1-market-ready','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell 3.1 kombinerer intern lagstyrke med valgfri, konservativ bookmaker-xG ensemblekalibrering, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'market_ensemble':{**market_status,'active':bool(market_blends),'blend_count':len(market_blends),'method':'internal team-strength prior + confidence-bounded market xG'},'market_fixture_blends':market_blends,'team_strength':strength_public,'lineup':xi_rows(aft if go else cur,outs,ins),'bench':[row(p,TARGET) for p in (after if go else squad) if p not in (aft if go else cur)['xi']],'comparison':{'status':'GJØR DET' if go else 'BANK','changes':[{'out':row(byid[a],TARGET,'out'),'in':row(byid[b],TARGET,'in')} for a,b in first_pairs],'current_xi':xi_rows(cur,outs,ins),'transfer_xi':xi_rows(aft,outs,ins)},'recommendation':{'transfers':[public_move(first)] if go else []},'optimizer':{'weighted_gain':round(gain,2),'plan':[public_move(m) for m in plan]},'future':future,'candidates':cands,'recent_form':{'promoted':bool(recent_cfg.get('promoted'))},'captain_model':{'promoted':bool(cap_cfg.get('promote'))}}
-OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Wrote',OUT,'market active=',bool(market_blends))
+data={'model_version':'3.2-history-prior','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell 3.2 kombinerer intern lagstyrke, spiller-spesifikke historiske angrepspriorer, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'market_ensemble':{**market_status,'active':bool(market_blends),'blend_count':len(market_blends),'method':'internal team-strength prior + confidence-bounded market xG'},'market_fixture_blends':market_blends,'team_strength':strength_public,'lineup':xi_rows(aft if go else cur,outs,ins),'bench':[row(p,TARGET) for p in (after if go else squad) if p not in (aft if go else cur)['xi']],'comparison':{'status':'GJØR DET' if go else 'BANK','changes':[{'out':row(byid[a],TARGET,'out'),'in':row(byid[b],TARGET,'in')} for a,b in first_pairs],'current_xi':xi_rows(cur,outs,ins),'transfer_xi':xi_rows(aft,outs,ins)},'recommendation':{'transfers':[public_move(first)] if go else []},'optimizer':{'weighted_gain':round(gain,2),'plan':[public_move(m) for m in plan]},'future':future,'candidates':cands,'recent_form':{'promoted':bool(recent_cfg.get('promoted'))},'captain_model':{'promoted':bool(cap_cfg.get('promote'))},'historical_attack_prior':{'version':'1.0-prev-season-fade','coverage':len(previous),'requested':len(history_ids)}}
+OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Wrote',OUT,'history priors=',len(previous),'market active=',bool(market_blends))
