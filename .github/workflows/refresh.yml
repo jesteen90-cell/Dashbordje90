@@ -29,6 +29,7 @@ on:
       - "evaluate_captain_v4.py"
       - "select_captain_model.py"
       - "apply_captain_selection.py"
+      - "captain_explain_ui.js"
       - "freeze_captain_v4.py"
       - "market_odds.json"
       - "decision_layer_v4.py"
@@ -128,14 +129,16 @@ jobs:
           if sel.get('production_model')=='v4.1': assert sel.get('promotion_flags',{}).get('v41') is True
           if sel.get('production_model')=='v4': assert sel.get('promotion_flags',{}).get('v4') is True
           xi=d.get('lineup') or []; caps=[p for p in xi if p.get('captain')]; vice=[p for p in xi if p.get('vice')]; assert len(xi)==11; assert len(caps)==1; assert len(vice)==1; assert int(caps[0]['id'])==int(sel['applied_captain_id']); assert int(caps[0]['id'])!=int(vice[0]['id'])
-          ex=d.get('captain_explanation') or {}; assert ex.get('version') in ('1.0','1.1-confidence-data'); assert ex.get('model')==sel.get('production_model'); assert int(ex.get('captain',{}).get('id'))==int(sel.get('applied_captain_id')); assert ex.get('runner_up',{}).get('id'); assert ex.get('score_gap') is not None and ex.get('xp_gap') is not None
-          if ex.get('version')=='1.1-confidence-data':
+          ex=d.get('captain_explanation') or {}; assert ex.get('version') in ('1.0','1.1-confidence-data','1.2-confidence-quality'); assert ex.get('model')==sel.get('production_model'); assert int(ex.get('captain',{}).get('id'))==int(sel.get('applied_captain_id')); assert ex.get('runner_up',{}).get('id'); assert ex.get('score_gap') is not None and ex.get('xp_gap') is not None
+          if ex.get('version') in ('1.1-confidence-data','1.2-confidence-quality'):
             conf=ex.get('confidence') or {}; assert conf.get('level') in ('LAV','MIDDELS','HØY'); assert 0<=int(conf.get('score'))<=100
+          if ex.get('version')=='1.2-confidence-quality':
+            iq=ex.get('input_quality') or {}; assert iq.get('level') in ('LOW','MEDIUM','HIGH'); assert isinstance(iq.get('team_prior_available'),bool); assert isinstance(iq.get('market_active'),bool)
           premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'; assert int(premium.get('gw'))==int(d.get('gw')); assert len(premium.get('current_squad_ids',[]))==15
           chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'; assert chip.get('fixture_count_model',{}).get('version')=='1.0-exact'; assert int(chip.get('gw'))==int(d.get('gw')); assert chip.get('mode')=='shadow_only'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
           dl=d.get('decision_layer',{}); assert dl.get('version') in ('4.4-premium-adaptive','4.5-squad-consistent'); assert dl.get('squad_view_consistent') is True
-          print('Captain/history-prior sanity:',ex.get('captain',{}).get('name'),'confidence:',(ex.get('confidence') or {}).get('level'),'diag leader:',diag.get('leader',{}).get('name'))
+          print('Captain/history-prior sanity:',ex.get('captain',{}).get('name'),'confidence:',(ex.get('confidence') or {}).get('level'),'quality:',(ex.get('input_quality') or {}).get('level'),'diag leader:',diag.get('leader',{}).get('name'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
