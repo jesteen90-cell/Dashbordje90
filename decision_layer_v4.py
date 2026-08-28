@@ -4,8 +4,9 @@ import json
 from pathlib import Path
 
 PATH = Path("data.json")
+SCORECARD = Path("backtest/scorecard.json")
 FT_FLEX_VALUE = 0.45
-DO_THRESHOLD = 1.15
+BASE_DO_THRESHOLD = 1.15
 CONSIDER_THRESHOLD = 0.35
 
 
@@ -14,6 +15,71 @@ def n(v, default=0.0):
         return float(v)
     except (TypeError, ValueError):
         return default
+
+
+def adaptive_threshold():
+    """Use completed frozen backtests only after enough samples exist.
+
+    The adjustment is deliberately small and bounded to avoid chasing noise.
+    """
+    threshold = BASE_DO_THRESHOLD
+    feedback = {
+        "enabled": False,
+        "base_threshold": BASE_DO_THRESHOLD,
+        "effective_threshold": BASE_DO_THRESHOLD,
+        "evaluated_gws": 0,
+        "reasons": [],
+    }
+    if not SCORECARD.exists():
+        return threshold, feedback
+    try:
+        score = json.loads(SCORECARD.read_text(encoding="utf-8"))
+    except Exception:
+        return threshold, feedback
+
+    samples = int(score.get("evaluated_gws") or 0)
+    feedback["evaluated_gws"] = samples
+    if samples < 4 or not score.get("adaptive_feedback_ready"):
+        feedback["reasons"].append("Minst 4 ferdige frozen-snapshot GWs kreves før automatisk kalibrering")
+        return threshold, feedback
+
+    adjustment = 0.0
+    bytt_samples = int(score.get("bytt_samples") or 0)
+    bytt_win = score.get("bytt_win_rate")
+    regret = n(score.get("mean_decision_regret"))
+    coverage = n(score.get("interval_80_coverage"), 0.8)
+
+    if bytt_samples >= 2 and bytt_win is not None:
+        bw = n(bytt_win)
+        if bw < 0.45:
+            adjustment += 0.18
+            feedback["reasons"].append("Historiske BYTT-beslutninger har vunnet for sjelden")
+        elif bw > 0.70:
+            adjustment -= 0.10
+            feedback["reasons"].append("Historiske BYTT-beslutninger har vært robuste")
+
+    if regret > 0.75:
+        adjustment += 0.10
+        feedback["reasons"].append("Alternativet har i snitt slått valgt beslutning for mye")
+    elif regret < -0.50:
+        adjustment -= 0.06
+        feedback["reasons"].append("Valgt beslutning har i snitt slått alternativet tydelig")
+
+    if coverage < 0.65:
+        adjustment += 0.08
+        feedback["reasons"].append("Usikkerhetsintervallene har vært for optimistiske")
+
+    threshold = max(0.90, min(1.45, BASE_DO_THRESHOLD + adjustment))
+    feedback.update({
+        "enabled": True,
+        "effective_threshold": round(threshold, 2),
+        "adjustment": round(threshold - BASE_DO_THRESHOLD, 2),
+        "bytt_samples": bytt_samples,
+        "bytt_win_rate": bytt_win,
+        "mean_decision_regret": score.get("mean_decision_regret"),
+        "interval_80_coverage": score.get("interval_80_coverage"),
+    })
+    return threshold, feedback
 
 
 def risk_penalty(player):
@@ -25,7 +91,7 @@ def risk_penalty(player):
             + max(0.0, volatility - 1.05) * 0.30)
 
 
-def candidate_quality(candidate):
+def candidate_quality(candidate, do_threshold):
     pair = (candidate.get("pairs") or [{}])[0]
     outgoing, incoming = pair.get("out") or {}, pair.get("in") or {}
     horizon, short = n(candidate.get("horizon_gain")), n(candidate.get("short_gain"))
@@ -38,7 +104,7 @@ def candidate_quality(candidate):
     if horizon <= FT_FLEX_VALUE: reasons.append("Langsiktig gevinst dekker ikke verdien av å beholde fleksibilitet")
     if n(incoming.get("expected_minutes"), 90) < 65: reasons.append("For lavt forventet minuttgrunnlag")
     if n(incoming.get("availability"), 1) < 0.85: reasons.append("Tilgjengeligheten er for usikker")
-    status = "GJØR DET" if score >= DO_THRESHOLD and not reasons else "VURDERES" if score >= CONSIDER_THRESHOLD else "SVAK"
+    status = "GJØR DET" if score >= do_threshold and not reasons else "VURDERES" if score >= CONSIDER_THRESHOLD else "SVAK"
     return round(score, 2), status, reasons
 
 
@@ -50,7 +116,7 @@ def reorder_bench(bench):
     return outfield + keepers
 
 
-def hard_gate_first_move(data):
+def hard_gate_first_move(data, do_threshold):
     comparison = data.get("comparison") or {}
     changes = comparison.get("changes") or []
     gain = n((data.get("optimizer") or {}).get("weighted_gain"))
@@ -60,7 +126,7 @@ def hard_gate_first_move(data):
         incoming = change.get("in") or {}
         if n(incoming.get("availability"), 1) < 0.85: reasons.append(f"{incoming.get('name','Spilleren')} har usikker tilgjengelighet")
         if n(incoming.get("expected_minutes"), 90) < 65: reasons.append(f"{incoming.get('name','Spilleren')} har for lavt forventet minuttall")
-    if gain < DO_THRESHOLD: reasons.append(f"Netto modellfordel {gain:.2f} er under beslutningsterskelen {DO_THRESHOLD:.2f}")
+    if gain < do_threshold: reasons.append(f"Netto modellfordel {gain:.2f} er under beslutningsterskelen {do_threshold:.2f}")
     return not reasons, reasons
 
 
@@ -79,14 +145,14 @@ def captain_comparison(lineup):
     rows = []
     for p in lineup:
         xp = n(p.get("xp")); mins = n(p.get("expected_minutes"), 90); avail = n(p.get("availability"), 1)
-        low, high = n(p.get("xp_low"), xp), n(p.get("xp_high"), xp)
+        high = n(p.get("xp_high"), xp)
         ceiling = max(xp, high)
         score = xp*0.70 + ceiling*0.20 + (mins/90)*0.06 + avail*0.04
         rows.append({"id":p.get("id"),"name":p.get("name"),"team":p.get("team"),"xp":round(xp,2),"ceiling":round(ceiling,2),"expected_minutes":round(mins,0),"availability":round(avail,2),"score":round(score,3),"captain":bool(p.get("captain")),"vice":bool(p.get("vice"))})
     return sorted(rows, key=lambda x:x["score"], reverse=True)[:5]
 
 
-def explain_decision(data, approved, blockers):
+def explain_decision(data, approved, blockers, do_threshold):
     cmp = data.get("comparison") or {}; changes = cmp.get("changes") or []
     opt = data.get("optimizer") or {}; gain = n(opt.get("weighted_gain"))
     best = (data.get("candidates") or [{}])[0]
@@ -96,36 +162,49 @@ def explain_decision(data, approved, blockers):
         names = ", ".join(f"{(c.get('out') or {}).get('name','?')} → {(c.get('in') or {}).get('name','?')}" for c in changes)
         reasons.append(f"Første trekk modellen vurderer er {names}.")
     reasons.append(f"Estimert gevinst: {short:+.2f} xP neste 3 GW og {horizon:+.2f} xP over planhorisonten.")
-    reasons.append(f"Gratisbytte-fleksibilitet verdsettes til {FT_FLEX_VALUE:.2f} xP; robust BYTT-terskel er {DO_THRESHOLD:.2f}.")
+    reasons.append(f"Gratisbytte-fleksibilitet verdsettes til {FT_FLEX_VALUE:.2f} xP; robust BYTT-terskel er {do_threshold:.2f}.")
     if blockers: reasons.extend(blockers[:2])
     else: reasons.append("Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket.")
-    distance = round(DO_THRESHOLD - gain, 2)
+    distance = round(do_threshold - gain, 2)
     trigger = "Anbefalingen er robust nok nå." if approved else f"Trenger omtrent {max(0,distance):.2f} mer netto modellfordel, eller at en blokkering forsvinner, før BYTT godkjennes."
-    return {"decision":"BYTT" if approved else "BANK","why":reasons[:5],"weighted_gain":round(gain,2),"threshold":DO_THRESHOLD,"distance_to_switch":max(0,distance),"switch_trigger":trigger,"horizon_3gw":round(short,2),"horizon_plan":round(horizon,2)}
+    return {"decision":"BYTT" if approved else "BANK","why":reasons[:5],"weighted_gain":round(gain,2),"threshold":round(do_threshold,2),"distance_to_switch":max(0,distance),"switch_trigger":trigger,"horizon_3gw":round(short,2),"horizon_plan":round(horizon,2)}
 
 
 def main():
     data = json.loads(PATH.read_text(encoding="utf-8"))
+    do_threshold, feedback = adaptive_threshold()
     candidates = data.get("candidates") or []
     for c in candidates:
-        score,status,reasons = candidate_quality(c); c["edge"],c["status"] = score,status
+        score,status,reasons = candidate_quality(c, do_threshold); c["edge"],c["status"] = score,status
         c["gate_misses"] = list(dict.fromkeys(reasons + list(c.get("gate_misses") or [])))[:3]
     candidates.sort(key=lambda c:(n(c.get("edge")),n(c.get("horizon_gain"))), reverse=True)
     strong=[c for c in candidates if c.get("status")!="SVAK"]; data["candidates"] = strong[:6] if strong else candidates[:4]
     data["bench"] = reorder_bench(data.get("bench") or [])
     for lineup in [data.get("lineup") or [], (data.get("comparison") or {}).get("current_xi") or [], (data.get("comparison") or {}).get("transfer_xi") or []]: choose_safer_vice(lineup)
-    approved, blockers = hard_gate_first_move(data)
+    approved, blockers = hard_gate_first_move(data, do_threshold)
     comparison=data.get("comparison") or {}
     if comparison.get("changes"): comparison["status"]="GJØR DET" if approved else "BANK"
     data["comparison"]=comparison
     data["headline"]="GJØR BYTTET" if approved else "SPAR BYTTET"
-    data.setdefault("recommendation",{})["transfers"] = comparison.get("changes") or [] if approved else []
+    data.setdefault("recommendation",{})["transfers"] = (comparison.get("changes") or []) if approved else []
     lineup = comparison.get("transfer_xi") if approved else comparison.get("current_xi")
     lineup = lineup or data.get("lineup") or []
     data["captain_comparison"] = captain_comparison(lineup)
-    data["decision_explanation"] = explain_decision(data, approved, blockers)
-    data["decision_layer"]={"version":"4.1-explainable","approved_first_move":approved,"threshold":DO_THRESHOLD,"blockers":blockers,"candidate_count":len(data.get("candidates") or []),"bench_ordering":"outfield by availability/minutes/xP; goalkeeper last","explainability":True,"captain_comparison":True}
+    data["decision_explanation"] = explain_decision(data, approved, blockers, do_threshold)
+    data["decision_layer"]={
+        "version":"4.2-backtest-adaptive",
+        "approved_first_move":approved,
+        "threshold":round(do_threshold,2),
+        "base_threshold":BASE_DO_THRESHOLD,
+        "adaptive_feedback":feedback,
+        "blockers":blockers,
+        "candidate_count":len(data.get("candidates") or []),
+        "bench_ordering":"outfield by availability/minutes/xP; goalkeeper last",
+        "explainability":True,
+        "captain_comparison":True,
+        "backtest_adaptive":True,
+    }
     PATH.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding="utf-8")
-    print("Decision layer 4.1 applied", "APPROVE" if approved else "BANK")
+    print("Decision layer 4.2 applied", "APPROVE" if approved else "BANK", f"threshold={do_threshold:.2f}")
 
 if __name__ == "__main__": main()
