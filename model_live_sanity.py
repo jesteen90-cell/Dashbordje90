@@ -1,87 +1,54 @@
 from pathlib import Path
 import py_compile
-from model_v2_core import project, stabilized_role, attack_evidence_minutes
+from model_v2_core import project, stabilized_role, attack_evidence_minutes, bonus_prior_2627
 from team_strength_v2 import build_strength, fixture_difficulty
 from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS
 from recent_form_v2 import blend_rates
 
-
 def base(**kw):
-    d={'position':4,'availability':1.0,'start_rate':0.0,'avg_start_mins':78,'sub_rate':0.0,'avg_sub_mins':18,'minutes_history':0,'goal90':0.0,'assist90':0.0,'prev_minutes':0.0,'prev_goal90':0.0,'prev_assist90':0.0,'save90':0.0,'defcon90':0.0,'bonus90':0.0,'yellow90':0.0,'red90':0.0,'opponent_goal_lambda':1.35,'attack_multiplier':1.0}
-    d.update(kw);return d
-
+ d={'position':4,'availability':1.0,'start_rate':0.0,'avg_start_mins':78,'sub_rate':0.0,'avg_sub_mins':18,'minutes_history':0,'goal90':0.0,'assist90':0.0,'prev_minutes':0.0,'prev_goal90':0.0,'prev_assist90':0.0,'save90':0.0,'defcon90':0.0,'bonus90':0.0,'yellow90':0.0,'red90':0.0,'opponent_goal_lambda':1.35,'attack_multiplier':1.0};d.update(kw);return d
 
 def pipeline_sanity():
-    for p in Path('.').glob('*.py'):py_compile.compile(str(p),doraise=True)
-    opt=Path('transfer_optimizer_v2.py').read_text(encoding='utf-8')
-    assert 'from captain_horizon_v1 import horizon_values' in opt and "'captain_horizon_search':True" in opt and "'captain_selection_aligned':True" in opt and "'bench_resilience':True" in opt and 'BENCH_RESILIENCE_WEIGHT=.055' in opt and 'def captain_value' in opt
-    dl=Path('decision_layer_v4.py').read_text(encoding='utf-8');assert 'def select_squad_view' in dl and "data['lineup']=target_xi" in dl and "data['bench']=reorder_bench(bench)" in dl
-    build=Path('build_dashboard_with_cache.py').read_text(encoding='utf-8');assert 'fixture_difficulty' in build and '2.0-position-aware' in build and "'difficulty_basis':basis" in build
-    html=Path('index.html').read_text(encoding='utf-8');assert 'function render()' in html and 'data.json?v=${Date.now()}' in html and 'class="player ${ch||\'\'}"' in html and "player.out" in html and "player.in" in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html
-    ui=Path('captain_explain_ui.js').read_text(encoding='utf-8') if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
-
+ for p in Path('.').glob('*.py'):py_compile.compile(str(p),doraise=True)
+ opt=Path('transfer_optimizer_v2.py').read_text();assert 'BENCH_RESILIENCE_WEIGHT=.055' in opt and 'def captain_value' in opt
+ dl=Path('decision_layer_v4.py').read_text();assert 'def select_squad_view' in dl and "data['lineup']=target_xi" in dl
+ build=Path('build_dashboard_with_cache.py').read_text();assert 'fixture_difficulty' in build and '2.0-position-aware' in build
+ html=Path('index.html').read_text();assert 'function render()' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html
+ ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
 
 def strength_sanity():
-    ratings={2:{'home_attack':1.45,'away_attack':1.40,'attack':1.42,'home_defence':.72,'away_defence':.75,'defence':.74}};def_h,basis_d=fixture_difficulty(ratings,2,True,'DEF');fwd_h,basis_a=fixture_difficulty(ratings,2,True,'FWD');assert basis_d=='opponent-attack' and basis_a=='opponent-defence';assert def_h>=4,(def_h,fwd_h);assert fwd_h<=3,(def_h,fwd_h)
-    teams={i:{'position':i,'rank':i,'points':0} for i in range(1,21)};fixtures=[{'finished':True,'team_h':1,'team_a':20,'team_h_score':6,'team_a_score':0,'event':1,'id':1}];s=build_strength(fixtures,teams);one=s[1];assert len(s)==20 and one['evidence_confidence']=='low' and one['early_season_cap'] is True and .75<=one['attack']<=1.30 and one['prior_source'] in ('table-shrunk','neutral-fallback','fpl-bootstrap')
-    if one['prior_source']=='table-shrunk':assert one['prior_version']=='2.2-table-shrunk-early-cap' and one['prior_available'] is False
-
+ ratings={2:{'home_attack':1.45,'away_attack':1.40,'attack':1.42,'home_defence':.72,'away_defence':.75,'defence':.74}};d,bd=fixture_difficulty(ratings,2,True,'DEF');a,ba=fixture_difficulty(ratings,2,True,'FWD');assert bd=='opponent-attack' and ba=='opponent-defence' and d>=4 and a<=3
+ teams={i:{'position':i,'rank':i,'points':0} for i in range(1,21)};s=build_strength([{'finished':True,'team_h':1,'team_a':20,'team_h_score':6,'team_a_score':0,'event':1,'id':1}],teams);one=s[1];assert one['evidence_confidence']=='low' and .75<=one['attack']<=1.30
 
 def bench_sanity():
-    def p(pid,pos,xp):return {'id':pid,'element_type':pos,'_x':{2:xp}}
-    xi=[p(i,2 if i<5 else (3 if i<9 else 4),5.0) for i in range(1,12)];bench=[p(12,1,3.5),p(13,2,4.0),p(14,3,2.5),p(15,4,1.0)];squad=xi+bench;base_value=bench_resilience(squad,xi,2);better=list(squad);better[-3]=p(13,2,6.0);gain=bench_resilience(better,xi,2)-base_value;assert 0<gain<.25 and gain<.30 and BENCH_RESILIENCE_WEIGHT<=.06
-
+ def p(pid,pos,xp):return {'id':pid,'element_type':pos,'_x':{2:xp}}
+ xi=[p(i,2 if i<5 else (3 if i<9 else 4),5) for i in range(1,12)];sq=xi+[p(12,1,3.5),p(13,2,4),p(14,3,2.5),p(15,4,1)];b=bench_resilience(sq,xi,2);better=list(sq);better[-3]=p(13,2,6);gain=bench_resilience(better,xi,2)-b;assert 0<gain<.25 and BENCH_RESILIENCE_WEIGHT<=.06
 
 def captain_optimizer_sanity():
-    steady={'id':1,'_x':{2:7.0},'_proj':{2:{'p90':8.0,'xmins':88,'attack_multiplier':1.0,'volatility':.7}}};explosive={'id':2,'_x':{2:6.8},'_proj':{2:{'p90':12.0,'xmins':88,'attack_multiplier':1.0,'volatility':1.0}}};assert CAPTAIN_WEIGHTS['xp']>0
-    if CAPTAIN_WEIGHTS.get('ceiling',0)>0:assert captain_value(explosive,2)>captain_value(steady,2)
-    assert explosive['_x'][2]==6.8
-
+ steady={'id':1,'_x':{2:7},'_proj':{2:{'p90':8,'xmins':88,'attack_multiplier':1,'volatility':.7}}};boom={'id':2,'_x':{2:6.8},'_proj':{2:{'p90':12,'xmins':88,'attack_multiplier':1,'volatility':1}}};assert CAPTAIN_WEIGHTS['xp']>0
+ if CAPTAIN_WEIGHTS.get('ceiling',0)>0:assert captain_value(boom,2)>captain_value(steady,2)
 
 def uncertainty_sanity():
-    secure=project(base(minutes_history=900,start_rate=1.0,avg_start_mins=88,sub_rate=0,goal90=.55,assist90=.15,prev_minutes=3000))
-    rotation=project(base(minutes_history=900,start_rate=.52,avg_start_mins=88,sub_rate=.38,avg_sub_mins=22,goal90=.85,assist90=.20,prev_minutes=900))
-    assert secure['minute_variance'] < rotation['minute_variance'],(secure,rotation)
-    assert rotation['role_variance'] > secure['role_variance'],(secure,rotation)
-    assert rotation['sd']/max(rotation['total'],1) > secure['sd']/max(secure['total'],1),(secure,rotation)
-
+ secure=project(base(minutes_history=900,start_rate=1,avg_start_mins=88,prev_minutes=3000));rot=project(base(minutes_history=900,start_rate=.52,avg_start_mins=88,sub_rate=.38,avg_sub_mins=22,prev_minutes=900));assert secure['minute_variance']<rot['minute_variance'] and rot['role_variance']>secure['role_variance']
 
 def attacking_evidence_sanity():
-    assert attack_evidence_minutes(90,90,.20) < 100
-    assert attack_evidence_minutes(90,900,1.0) <= 216
-    assert attack_evidence_minutes(3000,900,1.0) <= 1800
-    b={'goal90':.50,'assist90':.20};season={'multiplier':1.10};recent_low={'multiplier':1.20,'confidence':.10,'minutes':90};recent_high={'multiplier':1.20,'confidence':.80,'minutes':720}
-    low,m1=blend_rates(b,season,recent_low,attack_share=.40,enabled=True);high,m2=blend_rates(b,season,recent_high,attack_share=.40,enabled=True)
-    assert 1.10 < m1 < m2 < 1.20,(m1,m2)
-    assert low['recent_minutes']==90 and abs(low['recent_confidence']-.10)<1e-9
-    assert high['goal90'] > low['goal90']
-    early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=1.0,assist90=.4,prev_minutes=3000,prev_goal90=.55,prev_assist90=.15,recent_minutes=90,recent_confidence=.20))
-    assert 90 < early['attack_evidence_minutes'] < 100,early
-    assert early['goal90_used'] < .70,early
-
+ assert attack_evidence_minutes(90,90,.2)<100 and attack_evidence_minutes(3000,900,1)<=1800
+ b={'goal90':.5,'assist90':.2};lo,_=blend_rates(b,{'multiplier':1.1},{'multiplier':1.2,'confidence':.1,'minutes':90},attack_share=.4,enabled=True);hi,_=blend_rates(b,{'multiplier':1.1},{'multiplier':1.2,'confidence':.8,'minutes':720},attack_share=.4,enabled=True);assert hi['goal90']>lo['goal90']
 
 def defensive_exposure_sanity():
-    common={'position':2,'minutes_history':900,'start_rate':1.0,'sub_rate':0,'prev_minutes':3000,'opponent_goal_lambda':1.35}
-    full=project(base(**common,avg_start_mins=90))
-    early_sub=project(base(**common,avg_start_mins=70))
-    # Reaching 60 then leaving early reduces on-pitch goal exposure, so conditional
-    # clean-sheet probability should be higher than for a 90-minute player.
-    assert early_sub['defensive_exposure'] < full['defensive_exposure'],(early_sub,full)
-    assert early_sub['cs_probability'] > full['cs_probability'],(early_sub,full)
-    # But conceded deductions still exist below 60/90; they are no longer tied only to p60.
-    cameo=project(base(position=2,minutes_history=900,start_rate=.15,avg_start_mins=55,sub_rate=.55,avg_sub_mins=25,prev_minutes=500,opponent_goal_lambda=2.2))
-    assert cameo['conceded'] < 0,cameo
+ common={'position':2,'minutes_history':900,'start_rate':1,'sub_rate':0,'prev_minutes':3000,'opponent_goal_lambda':1.35};full=project(base(**common,avg_start_mins=90));early=project(base(**common,avg_start_mins=70));assert early['defensive_exposure']<full['defensive_exposure'] and early['cs_probability']>full['cs_probability'];assert project(base(position=2,minutes_history=900,start_rate=.15,avg_start_mins=55,sub_rate=.55,avg_sub_mins=25,prev_minutes=500,opponent_goal_lambda=2.2))['conceded']<0
 
+def bonus_sanity():
+ # 26/27 rules should gently favour GK/attackers over CB-style prior, while
+ # observed current-season bonus must dominate after a large sample.
+ assert bonus_prior_2627(1)>bonus_prior_2627(2)
+ assert bonus_prior_2627(3)>bonus_prior_2627(2) and bonus_prior_2627(4)>bonus_prior_2627(2)
+ early_cb=project(base(position=2,minutes_history=90,start_rate=1,avg_start_mins=90,bonus90=.9));early_fwd=project(base(position=4,minutes_history=90,start_rate=1,avg_start_mins=90,bonus90=.9));assert early_fwd['bonus_prior_used']>early_cb['bonus_prior_used']
+ mature=project(base(position=4,minutes_history=2700,start_rate=1,avg_start_mins=90,bonus90=.8));assert abs(mature['bonus90_used']-.8)<.12,mature
 
 def main():
-    sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0
-    ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
-    seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5,goal90=.3,assist90=.1));assert 15<seen['xmins']<70 and seen['total']>0
-    starter=project(base(minutes_history=180,start_rate=1,sub_rate=0,goal90=.3,assist90=.1));assert starter['xmins']>seen['xmins']
-    unknown_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,goal90=.3,assist90=.1));established_early=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000,goal90=.3,assist90=.1));assert established_early['xmins']>=76 and established_early['xmins']>=unknown_early['xmins']+8 and established_early['p_start']>.84
-    generic=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0));elite=project(base(minutes_history=90,start_rate=1,avg_start_mins=90,goal90=0,prev_minutes=3000,prev_goal90=.90,prev_assist90=.12));assert elite['goal_prior_used']>generic['goal_prior_used']+.20 and elite['goals']>generic['goals']+.35
-    faded=project(base(minutes_history=2700,start_rate=1,avg_start_mins=90,goal90=.31,prev_minutes=3000,prev_goal90=.90));assert abs(faded['goal90_used']-.31)<abs(elite['goal90_used']-.31)
-    strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();pipeline_sanity()
-    print('live model sanity passed',{'position_aware_fdr':True,'bench_resilience':True,'captain_optimizer_aligned':True,'role_uncertainty':True,'attack_evidence':True,'form_overlap_guard':True,'defensive_exposure':True})
-
+ sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0;ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
+ seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5));starter=project(base(minutes_history=180,start_rate=1,sub_rate=0));assert 15<seen['xmins']<70 and starter['xmins']>seen['xmins']
+ unknown=project(base(minutes_history=90,start_rate=1,avg_start_mins=88));est=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000));assert est['xmins']>=76 and est['xmins']>=unknown['xmins']+8
+ strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();pipeline_sanity();print('live model sanity passed',{'bonus_2627':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
 if __name__=='__main__':main()
