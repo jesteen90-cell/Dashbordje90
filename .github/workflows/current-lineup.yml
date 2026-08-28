@@ -1,0 +1,64 @@
+name: Current Squad and Optimal XI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "current_squad_sync_v1.py"
+      - "optimal_lineup_v1.py"
+      - ".github/workflows/current-lineup.yml"
+  workflow_run:
+    workflows: ["Enrich Budget Option Timing Robustness Final Gate Plan Bench Regret Confidence Lock"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dashboard-current-lineup
+  cancel-in-progress: true
+
+jobs:
+  current-lineup:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Reconstruct current owned squad and optimize XI
+        env:
+          FPL_TEAM_ID: ${{ secrets.FPL_TEAM_ID }}
+        run: |
+          test -n "$FPL_TEAM_ID" || { echo "Missing FPL_TEAM_ID"; exit 1; }
+          python current_squad_sync_v1.py
+          python optimal_lineup_v1.py
+      - name: Sanity-check current squad and optimal XI
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('data.json'))
+          cs=d.get('current_squad') or {}; assert cs.get('version')=='1.0-official-transfers'; assert len(cs.get('players') or [])==15; assert len(set(cs.get('owned_ids') or []))==15
+          ol=d.get('optimal_current_lineup') or {}; assert ol.get('version')=='1.0-xp-legal-xi'; xi=ol.get('lineup') or []; bench=ol.get('bench') or []; assert len(xi)==11 and len(bench)==4
+          ids={int(p['id']) for p in cs['players']}; assert {int(p['id']) for p in xi+bench}==ids
+          counts={p:sum(1 for x in xi if x.get('position')==p) for p in ('GK','DEF','MID','FWD')}
+          assert counts['GK']==1 and counts['DEF']>=3 and counts['MID']>=2 and counts['FWD']>=1,counts
+          assert int(ol.get('captain_id')) in {int(p['id']) for p in xi}; assert int(ol.get('vice_id')) in {int(p['id']) for p in xi}; assert int(ol.get('captain_id'))!=int(ol.get('vice_id'))
+          print('Current squad + optimal XI sanity OK',cs.get('transfer_count_current_gw'),ol.get('formation'),ol.get('expected_team_score'),ol.get('captain'),ol.get('vice'))
+          PY
+      - name: Publish current squad and optimal XI
+        run: |
+          if git diff --quiet -- data.json; then echo "No current-squad change."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Dashboard: sync current squad and optimal XI"
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
