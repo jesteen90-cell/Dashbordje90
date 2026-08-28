@@ -29,11 +29,16 @@ def best_xi(squad,gw):
 def gw_value(squad,gw):
     o=best_xi(squad,gw);return o['raw']+(float(o['captain']['_x'].get(gw,0)) if o['captain'] else 0)
 
-def _incoming_pools(players,squad,gws,weights,per_pos=10):
+def _incoming_pools(players,squad,gws,weights,per_pos=12):
     owned={int(p['id']) for p in squad};pools={}
     for pos in POS_COUNTS:
         xs=[p for p in players if int(p['element_type'])==pos and int(p['id']) not in owned]
-        xs.sort(key=lambda p:sum(float(p['_x'].get(g,0))*weights.get(g,1) for g in gws),reverse=True)
+        # Horizon score remains primary, but the best single-GW ceiling gets a
+        # small boost so short-term fixture swings are less likely to be pruned.
+        def pool_score(p):
+            vals=[float(p['_x'].get(g,0))*weights.get(g,1) for g in gws]
+            return sum(vals)+0.18*max(vals,default=0)
+        xs.sort(key=pool_score,reverse=True)
         pools[pos]=xs[:per_pos]
     return pools
 
@@ -48,46 +53,51 @@ def _one_transfer_states(st,pools):
             out.append((ns,budget-int(buy['now_cost']),[(int(sell['id']),int(buy['id']))]))
     return out
 
-def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=45,per_pos=10,save_ft_value=.45,max_saved_ft=5,hit_cost=4.0,max_transfers_per_gw=2):
+def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=70,per_pos=12,save_ft_value=.45,max_saved_ft=5,hit_cost=4.0,max_transfers_per_gw=2):
     """Fast beam-search transfer planner across multiple GWs.
 
-    Same decision semantics as the validated planner, but bounded search width,
-    cached XI values and pruned two-transfer branches make it suitable for a
-    live dashboard refresh.
+    Bounded multi-GW search with cached XI values. Saved-transfer flexibility is
+    valued when the FT balance changes rather than rewarded repeatedly every GW;
+    this avoids an artificial bias toward banking transfers.
     """
     assert legal(squad)
-    beam_width=max(20,min(int(beam_width),45));per_pos=max(7,min(int(per_pos),10))
+    beam_width=max(24,min(int(beam_width),70));per_pos=max(8,min(int(per_pos),12))
     pools=_incoming_pools(players,squad,gws,weights,per_pos)
     cache={}
     def cv(sq,gw):
         key=(gw,tuple(sorted(int(p['id']) for p in sq)))
         if key not in cache:cache[key]=gw_value(sq,gw)
         return cache[key]
-    beam=[{'squad':list(squad),'bank':int(bank),'ft':max(1,min(max_saved_ft,int(free_transfers))),'score':0.0,'moves':[],'hits':0}]
+    start_ft=max(1,min(max_saved_ft,int(free_transfers)))
+    beam=[{'squad':list(squad),'bank':int(bank),'ft':start_ft,'score':0.0,'moves':[],'hits':0}]
     for gw in gws:
         nxt=[]
         for st in beam:
-            nft=min(max_saved_ft,st['ft']+1);val=cv(st['squad'],gw)*weights.get(gw,1)+save_ft_value*nft
+            nft=min(max_saved_ft,st['ft']+1)
+            flex_delta=save_ft_value*(nft-st['ft'])
+            val=cv(st['squad'],gw)*weights.get(gw,1)+flex_delta
             nxt.append({**st,'ft':nft,'score':st['score']+val,'moves':st['moves']+[{'gw':gw,'action':'bank','transfers':0,'hit':0}]})
             first=_one_transfer_states(st,pools)
             for ns,nb,pairs in first:
                 k=1;hit=max(0,k-st['ft'])*hit_cost;nft=min(max_saved_ft,max(0,st['ft']-k)+1)
-                val=cv(ns,gw)*weights.get(gw,1)-hit+save_ft_value*nft
+                flex_delta=save_ft_value*(nft-st['ft'])
+                val=cv(ns,gw)*weights.get(gw,1)-hit+flex_delta
                 nxt.append({'squad':ns,'bank':nb,'ft':nft,'score':st['score']+val,'hits':st['hits']+int(hit),'moves':st['moves']+[{'gw':gw,'action':'transfer','pairs':pairs,'transfers':1,'hit':int(hit)}]})
             if max_transfers_per_gw>=2 and first:
-                ranked=sorted(first,key=lambda x:cv(x[0],gw),reverse=True)[:5]
+                ranked=sorted(first,key=lambda x:cv(x[0],gw),reverse=True)[:7]
                 for ns1,nb1,p1 in ranked:
                     owned={int(p['id']) for p in ns1}
-                    sell_candidates=sorted(ns1,key=lambda p:sum(float(p['_x'].get(g,0))*weights.get(g,1) for g in gws))[:7]
+                    sell_candidates=sorted(ns1,key=lambda p:sum(float(p['_x'].get(g,0))*weights.get(g,1) for g in gws))[:8]
                     for sell in sell_candidates:
                         if int(sell['id'])==p1[0][1]:continue
                         budget=nb1+int(sell['now_cost'])
-                        for buy in pools[int(sell['element_type'])][:5]:
+                        for buy in pools[int(sell['element_type'])][:6]:
                             if int(buy['id']) in owned or int(buy['now_cost'])>budget:continue
                             ns2=[p for p in ns1 if int(p['id'])!=int(sell['id'])]+[buy]
                             if not legal(ns2):continue
                             k=2;hit=max(0,k-st['ft'])*hit_cost;nft=min(max_saved_ft,max(0,st['ft']-k)+1);nb=budget-int(buy['now_cost'])
-                            val=cv(ns2,gw)*weights.get(gw,1)-hit+save_ft_value*nft
+                            flex_delta=save_ft_value*(nft-st['ft'])
+                            val=cv(ns2,gw)*weights.get(gw,1)-hit+flex_delta
                             nxt.append({'squad':ns2,'bank':nb,'ft':nft,'score':st['score']+val,'hits':st['hits']+int(hit),'moves':st['moves']+[{'gw':gw,'action':'transfer','pairs':p1+[(int(sell['id']),int(buy['id']))],'transfers':2,'hit':int(hit)}]})
         dedup={}
         for st in nxt:
@@ -95,4 +105,6 @@ def optimize(players,squad,bank,gws,weights,free_transfers=1,beam_width=45,per_p
             if key not in dedup or st['score']>dedup[key]['score']:dedup[key]=st
         beam=sorted(dedup.values(),key=lambda s:s['score'],reverse=True)[:beam_width]
     best=beam[0];baseline=sum(cv(squad,g)*weights.get(g,1) for g in gws)
+    # Compare like-for-like: model score already contains hits and the net change
+    # in saved-FT flexibility from the starting state.
     return {'score':best['score'],'baseline_score':baseline,'gain':best['score']-baseline,'bank':best['bank'],'free_transfers':best['ft'],'hit_points':best['hits'],'moves':best['moves'],'squad':best['squad'],'cache_entries':len(cache)}
