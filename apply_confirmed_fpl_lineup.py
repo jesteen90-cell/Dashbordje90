@@ -60,5 +60,6 @@ def main():
     # official history or a GW-scoped user-confirmed pre-deadline override.
     runpy.run_path('current_squad_sync_v1.py',run_name='__main__')
     runpy.run_path('optimal_lineup_v1.py',run_name='__main__')
+    runpy.run_path('post_transfer_state_v1.py',run_name='__main__')
 
 if __name__=='__main__': main()
