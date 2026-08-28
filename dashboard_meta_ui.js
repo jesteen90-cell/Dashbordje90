@@ -1,1 +1,29 @@
-(()=>{async function run(){try{const r=await fetch(`data.json?meta=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const d=await r.json(),el=document.getElementById('teamId');if(el)el.textContent=d.fpl_team_id?`FPL-lag #${d.fpl_team_id}`:'FPL-lag: ikke tilgjengelig';}catch(_e){}}run();})();
+(()=>{
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const fmt=v=>{const n=Number(v);return Number.isFinite(n)?`${n>=0?'+':''}${n.toFixed(2)} p`:'—'};
+const money=v=>{const n=Number(v);return Number.isFinite(n)?`£${n.toFixed(1)}m`:'—'};
+function duelHtml(d){
+ const duel=d.final_transfer_duel||{}; if(duel.version!=='2.0-bench-aware')return'';
+ const verdict=duel.verdict||'—', confidence=Math.round(Number(duel.confidence||0)*100);
+ const rows=(duel.rows||[]).map(r=>{
+   const bank=r.kind==='bank', cover=r.bench_adjustment_applied&&r.bench_cover?`<div class="muted">Benkedekning: ${esc(r.bench_cover)} (${Number(r.bench_cover_expected||0).toFixed(1)} forventede p)</div>`:'';
+   return `<article class="card" style="margin-top:8px"><div class="planrow"><div><div class="eyebrow">${bank?'BASELINE':`KANDIDAT #${r.rank}`}</div><b>${esc(r.label)}</b></div><span class="status ${bank?'consider':r.rank===1?'do':'consider'}">${bank?'SPAR FT':esc(r.status||'VURDERES')}</span></div>${cover}<div class="stats"><div class="stat"><b>${fmt(r.next_gw_gain_after_bench)}</b><span>gevinst neste runde etter benk</span></div><div class="stat"><b>${fmt(r.three_gw_gain_after_bench)}</b><span>gevinst neste 3 runder</span></div><div class="stat"><b>${fmt(r.plan_gain_after_bench)}</b><span>gevinst i planhorisonten</span></div></div><div class="planMeta" style="margin-top:8px">Robusthet: ${esc(r.robustness||'—')} · Timing: ${esc(r.timing||'—')} · Bank etter: ${money(r.bank_after)}</div></article>`;
+ }).join('');
+ const warnings=[...(duel.blockers||[]),...(duel.warnings||[])];
+ return `<div class="section" id="finalDuelSection"><h2>Siste transferduell</h2><div class="card"><div class="decisionTop"><div><div class="eyebrow">#1 vs #2 vs spar gratisbyttet</div><div class="decisionWord" style="font-size:22px">${esc(verdict)}</div></div><span class="badge ${verdict==='GO'?'go':'bank'}">${confidence}% sikkerhet</span></div><div class="muted" style="margin-top:7px">Benkekorrigert sammenligning. Et skadebytte får ikke lenger hele gevinsten mot 0 poeng dersom en benkespiller ellers ville kommet inn.</div>${warnings.length?`<div class="why" style="margin-top:9px">${warnings.map(x=>`<div class="whyItem">${esc(x)}</div>`).join('')}</div>`:''}</div>${rows}</div>`;
+}
+function planCard(x){
+ const a=x.action||{},pi=x.plan_intelligence||{},score=Number(x.xi_xp||pi.expected_team_score||0),bankBefore=Number(pi.bank_before),bankAfter=Number(pi.bank_after),hit=Number(a.hit||0),transfer=a.action==='transfer';
+ const pairs=(a.pairs||[]).map(p=>`<div class="move"><div class="swap outSwap"><b>${esc((p.out||{}).name||'?')}</b><div class="muted">UT · ${esc((p.out||{}).team||'')}</div></div><div class="arrow">→</div><div class="swap inSwap"><b>${esc((p.in||{}).name||'?')}</b><div class="muted">INN · ${esc((p.in||{}).team||'')}</div></div></div>`).join('');
+ const why=(pi.why||[]).map(v=>`<div class="whyItem">${esc(v)}</div>`).join('');
+ const trig=(pi.change_triggers||[]).map(v=>`<div class="whyItem">${esc(v)}</div>`).join('');
+ return `<article class="card"><div class="planrow"><div><div class="eyebrow">Runde ${esc(x.gw)}</div><b>${esc(a.label||'Spar gratisbyttet')}</b></div><div style="text-align:right"><b>Forventet lagscore: ${score.toFixed(1)} p</b><div class="muted">for startelleveren denne runden</div></div></div>${pairs}<div class="miniStats"><div class="mini"><b>${esc(pi.free_transfers_before??'—')} → ${esc(pi.free_transfers_after??'—')}</b><span>gratisbytter før → etter</span></div><div class="mini"><b>${money(bankBefore)} → ${money(bankAfter)}</b><span>bank før → etter</span></div><div class="mini"><b>${hit?`-${hit} p`:'0 p'}</b><span>poengkostnad</span></div></div><div class="planMeta" style="margin-top:9px">Kaptein: ${esc(x.captain||'—')} · Plansikkerhet: ${esc(pi.confidence||'—')}</div>${why?`<div class="why" style="margin-top:9px"><div class="eyebrow">Hvorfor ligger dette i planen?</div>${why}</div>`:''}${trig?`<div class="why" style="margin-top:9px"><div class="eyebrow">Hva kan endre planen?</div>${trig}</div>`:''}<div class="trigger"><b>Rullerende plan</b><br>${esc(pi.note||'Planen bygges på nytt når ferske data kommer.')}</div></article>`;
+}
+async function run(){try{
+ const r=await fetch(`data.json?meta=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const d=await r.json();
+ const el=document.getElementById('teamId');if(el)el.textContent=d.fpl_team_id?`FPL-lag #${d.fpl_team_id}`:'FPL-lag: ikke tilgjengelig';
+ const decision=document.getElementById('decision'); if(decision&&!document.getElementById('finalDuelSection')){const html=duelHtml(d);if(html)decision.insertAdjacentHTML('afterbegin',html)}
+ const future=document.getElementById('future');if(future&&(d.future||[]).some(x=>x.plan_intelligence)){future.innerHTML=(d.future||[]).map(planCard).join('')}
+}catch(_e){}}
+run();
+})();
