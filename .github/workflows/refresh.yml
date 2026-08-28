@@ -113,12 +113,17 @@ jobs:
           import json
           d=json.load(open('data.json'))
           pri=json.load(open('team_strength_prior.json')); assert pri.get('version') in ('1.0-fpl-bootstrap','1.1-fpl-bootstrap-safe'); assert len(pri.get('teams') or {})==20
-          assert d.get('model_version') in ('3.0-validated','3.1-market-ready','3.2-history-prior','3.3-fixture-strength-v2'), d.get('model_version')
-          if d.get('model_version') in ('3.2-history-prior','3.3-fixture-strength-v2'):
+          assert d.get('model_version') in ('3.0-validated','3.1-market-ready','3.2-history-prior','3.3-fixture-strength-v2','3.4-fixture-outlook'), d.get('model_version')
+          if d.get('model_version') in ('3.2-history-prior','3.3-fixture-strength-v2','3.4-fixture-outlook'):
             hp=d.get('historical_attack_prior') or {}; assert hp.get('version')=='1.0-prev-season-fade'; assert int(hp.get('coverage') or 0)>0
-          if d.get('model_version')=='3.3-fixture-strength-v2':
+          if d.get('model_version') in ('3.3-fixture-strength-v2','3.4-fixture-outlook'):
             sm=d.get('team_strength_model') or {}; assert sm.get('version')=='2.1-adaptive-early-season'; assert sm.get('prior_sources'); ts=d.get('team_strength') or {}; assert len(ts)==20
             assert all(0<=float((r or {}).get('evidence_share',0))<=1 for r in ts.values()); assert all((r or {}).get('prior_source') in ('fpl-bootstrap','table-shrunk','neutral-fallback') for r in ts.values())
+          if d.get('model_version')=='3.4-fixture-outlook':
+            rows=(d.get('lineup') or [])+(d.get('bench') or []); assert rows
+            assert all(isinstance(p.get('fixture_outlook'),list) for p in rows)
+            assert all(1<=int(f.get('difficulty'))<=5 for p in rows for f in p.get('fixture_outlook',[]))
+            assert all(len(p.get('fixture_outlook') or [])>=3 for p in rows), 'Each squad player needs at least 3 fixture entries'
           opt=d.get('optimizer',{}); assert opt.get('captain_horizon_search') is True, opt
           pool=d.get('captain_pool') or {}; assert pool.get('version')=='1.0-all-xi'; assert int(pool.get('candidate_count') or 0)==11,pool; assert int(pool.get('display_count') or 0)<=5,pool
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
