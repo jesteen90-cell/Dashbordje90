@@ -7,6 +7,7 @@ import requests
 from model_v2_core import project as core_project
 from transfer_optimizer_v2 import optimize as optimize_transfers,legal
 from team_strength_v2 import build_strength,fixture_factors
+from market_ensemble_v1 import load_market,blend_lambda
 from player_form_v2 import form_signal
 from recent_form_v2 import recent_signal,blend_rates,load_tuned_params
 BASE='https://fantasy.premierleague.com/api';TEAM_ID=int(os.environ['FPL_TEAM_ID']);OUT=Path('data.json');DEFAULT_WEIGHTS=[1,.9,.8,.7,.62,.55];POS={1:'GK',2:'DEF',3:'MID',4:'FWD'};Z80=1.2815515655446004
@@ -39,15 +40,18 @@ def captain_params():
   d=json.loads(p.read_text());return {'promote':bool(d.get('promote')),'weights':d.get('weights') or {'xp':1,'ceiling':0,'minutes':0,'attack':0,'volatility_penalty':0}}
  except:return {'promote':False,'weights':{'xp':1,'ceiling':0,'minutes':0,'attack':0,'volatility_penalty':0}}
 
-boot=get('bootstrap-static/');fixtures=get('fixtures/');players=boot['elements'];events=boot['events'];teams={int(t['id']):t['name'] for t in boot['teams']};byid={int(p['id']):p for p in players};ratings=build_strength(fixtures,teams);recent_cfg=load_tuned_params();cap_cfg=captain_params()
+boot=get('bootstrap-static/');fixtures=get('fixtures/');players=boot['elements'];events=boot['events'];teams={int(t['id']):t['name'] for t in boot['teams']};byid={int(p['id']):p for p in players};ratings=build_strength(fixtures,teams);recent_cfg=load_tuned_params();cap_cfg=captain_params();market,market_status=load_market()
 now=datetime.now(timezone.utc);future=[e for e in events if dt(e.get('deadline_time')) and dt(e['deadline_time'])>now and not e.get('finished')];event=min(future,key=lambda e:dt(e['deadline_time'])) if future else next((e for e in events if e.get('is_next')),None)
 if not event:raise RuntimeError('No upcoming FPL deadline')
-TARGET=int(event['id']);deadline=event['deadline_time'];W=strategy_weights();GWS=list(range(TARGET,min(38,TARGET+len(W)-1)+1));weights={g:W[i] for i,g in enumerate(GWS)};fm={g:{} for g in GWS}
+TARGET=int(event['id']);deadline=event['deadline_time'];W=strategy_weights();GWS=list(range(TARGET,min(38,TARGET+len(W)-1)+1));weights={g:W[i] for i,g in enumerate(GWS)};fm={g:{} for g in GWS};market_blends=[]
 for f in fixtures:
  g=f.get('event')
  if g not in fm:continue
- for team,opp,home in ((int(f['team_h']),int(f['team_a']),1),(int(f['team_a']),int(f['team_h']),0)):
-  atk,lam=fixture_factors(ratings,team,opp,bool(home));fm[g].setdefault(team,[]).append({'home':home,'opp':opp,'attack':atk,'opp_lambda':lam})
+ fid=int(f.get('id') or 0);h=int(f['team_h']);a=int(f['team_a']);hatk,alam=fixture_factors(ratings,h,a,True);aatk,hlam=fixture_factors(ratings,a,h,False)
+ # Market home_xg is the away team's opponent-goal lambda; market away_xg is the home team's opponent-goal lambda.
+ hlam2,wh,mh=blend_lambda(hlam,fid,True,market);alam2,wa,ma=blend_lambda(alam,fid,False,market)
+ if wh or wa:market_blends.append({'fixture_id':fid,'gw':g,'home_team':h,'away_team':a,'internal_home_xg':round(hlam,3),'internal_away_xg':round(alam,3),'market_home_xg':mh,'market_away_xg':ma,'home_weight':round(wh,3),'away_weight':round(wa,3),'ensemble_home_xg':round(hlam2,3),'ensemble_away_xg':round(alam2,3)})
+ fm[g].setdefault(h,[]).append({'home':1,'opp':a,'attack':hatk,'opp_lambda':alam2});fm[g].setdefault(a,[]).append({'home':0,'opp':h,'attack':aatk,'opp_lambda':hlam2})
 finished=sorted((int(e['id']) for e in events if e.get('finished')),reverse=True);snapshot=snapshot_gw=None
 for g in finished+[x for x in range(TARGET-1,0,-1) if x not in finished]:
  s=get(f'entry/{TEAM_ID}/event/{g}/picks/',True)
@@ -129,5 +133,5 @@ for outp in squad:
   if not legal(ns):continue
   hg=sum((inn['_x'][g]-outp['_x'][g])*weights[g] for g in GWS);cands.append({'status':'VURDERES' if hg>.5 else 'SVAK','edge':round(hg-.45,2),'short_gain':round(sum(inn['_x'][g]-outp['_x'][g] for g in GWS[:3]),2),'horizon_gain':round(hg,2),'gate_misses':[] if hg>1 else ['Fordelen er liten sammenlignet med fleksibiliteten i å spare et gratisbytte'],'pairs':[{'out':row(outp,TARGET),'in':row(inn,TARGET)}]})
 cands.sort(key=lambda x:x['horizon_gain'],reverse=True);cands=cands[:10];headline='GJØR BYTTET' if go else ('SPAR BYTTET' if first.get('action')=='bank' else 'VENT / BANK');strength_public={str(t):{'team':teams[t],**{k:round(v,3) for k,v in r.items()}} for t,r in ratings.items()}
-data={'model_version':'3.0-validated','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell 3.0 kombinerer holdout-validert xP, dynamisk lagstyrke, godkjent recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'recent_form':{'promoted':bool(recent_cfg.get('promoted')),'params':{k:recent_cfg.get(k) for k in ('last_n','decay','strength','attack_share','prior')}},'captain_model':{'promoted':bool(cap_cfg.get('promote')),'weights':cap_cfg.get('weights')},'recent_form_players_loaded':len(recent),'team_strength':strength_public,'optimizer':{'horizon_gws':GWS,'weights':[weights[g] for g in GWS],'weighted_gain':round(gain,2),'bank_after':round(opt['bank']/10,1),'free_transfers_after':opt['free_transfers'],'hit_points':opt.get('hit_points',0),'plan':[public_move(m) for m in plan]},'recommendation':{'edge':round(gain,2),'transfers':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs] if go else []},'comparison':{'status':'GJØR DET' if go else 'BANK','changes':[{'out':row(byid[o],TARGET),'in':row(byid[i],TARGET)} for o,i in first_pairs],'current_xi':xi_rows(cur,outs=outs),'transfer_xi':xi_rows(aft,ins=ins)},'lineup':xi_rows(aft if go else cur,ins=ins if go else set()),'bench':[row(p,TARGET) for p in (after if go else squad) if p['id'] not in {x['id'] for x in (aft if go else cur)['xi']}],'candidates':cands,'future':future}
-OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Model 3.0 validated feed complete')
+data={'model_version':'3.1-market-ready','generated_at':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'gw':TARGET,'deadline_time':deadline,'headline':headline,'summary':'Modell 3.1 kombinerer intern lagstyrke med valgfri, konservativ bookmaker-xG ensemblekalibrering, recent-xGI, Captain v3, usikkerhet og fler-GW transferplanlegging.','source_snapshot_gw':snapshot_gw,'free_transfers_assumed':free_transfers,'market_ensemble':{**market_status,'active':bool(market_blends),'blend_count':len(market_blends),'method':'internal team-strength prior + confidence-bounded market xG'},'market_fixture_blends':market_blends,'team_strength':strength_public,'lineup':xi_rows(aft if go else cur,outs,ins),'bench':[row(p,TARGET) for p in (after if go else squad) if p not in (aft if go else cur)['xi']],'comparison':{'status':'GJØR DET' if go else 'BANK','changes':[{'out':row(byid[a],TARGET,'out'),'in':row(byid[b],TARGET,'in')} for a,b in first_pairs],'current_xi':xi_rows(cur,outs,ins),'transfer_xi':xi_rows(aft,outs,ins)},'recommendation':{'transfers':[public_move(first)] if go else []},'optimizer':{'weighted_gain':round(gain,2),'plan':[public_move(m) for m in plan]},'future':future,'candidates':cands,'recent_form':{'promoted':bool(recent_cfg.get('promoted'))},'captain_model':{'promoted':bool(cap_cfg.get('promote'))}}
+OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8');print('Wrote',OUT,'market active=',bool(market_blends))
