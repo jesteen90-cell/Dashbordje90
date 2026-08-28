@@ -1,4 +1,4 @@
-name: Enrich Budget and Option Value
+name: Enrich Budget Option and Timing
 
 on:
   workflow_dispatch:
@@ -7,6 +7,7 @@ on:
     paths:
       - "budget_intelligence_v1.py"
       - "transfer_option_value_v1.py"
+      - "transfer_timing_v1.py"
       - "freeze_option_value.py"
       - "evaluate_option_value.py"
       - ".github/workflows/option-value.yml"
@@ -37,9 +38,11 @@ jobs:
         run: pip install requests
       - name: Build budget intelligence shadow
         run: python budget_intelligence_v1.py
+      - name: Build deadline timing shadow
+        run: python transfer_timing_v1.py
       - name: Build transfer option value shadow
         run: python transfer_option_value_v1.py
-      - name: Sanity-check option value feed
+      - name: Sanity-check budget option and timing feed
         run: |
           python - <<'PY'
           import json
@@ -56,6 +59,11 @@ jobs:
           assert len(pool.get('owned_ids') or [])==15
           assert len(pool.get('players') or [])>=15
           assert len(pool.get('gws') or [])>=2
+          timing=d.get('transfer_timing') or {}
+          assert timing.get('version')=='1.0-shadow', timing
+          assert timing.get('affects_transfer_ranking') is False
+          assert timing.get('price_prediction') is False
+          assert float(timing.get('hours_to_deadline') or 0)>=0
           tov=d.get('transfer_option_value') or {}
           assert tov.get('version')=='1.1-shadow', tov.get('version')
           assert tov.get('source')=='data.json transfer_option_pool'
@@ -65,13 +73,19 @@ jobs:
           assert int(base.get('affordable_upgrade_paths') or 0)>=0
           candidates=d.get('candidates') or []
           for c in candidates:
+              tv=c.get('timing_value_shadow') or {}
+              assert tv.get('version')=='1.0'
+              assert tv.get('affects_ranking') is False
+              assert tv.get('price_prediction') is False
+              assert 0<=float(tv.get('lock_risk') or 0)<=1
+              assert 0<=float(tv.get('information_value') or 0)<=1
               ov=c.get('option_value_shadow') or {}
               assert ov.get('version')=='1.1'
               assert ov.get('affects_ranking') is False
               assert float(ov.get('total',0)) >= 0
               assert int(ov.get('affordable_upgrade_paths') or 0) >= 0
               assert 1 <= int(ov.get('future_free_transfers') or 0) <= 5
-          print('Budget/option sanity OK',bi.get('flexibility'),base,'pool',len(pool.get('players') or []),'candidates',len(candidates))
+          print('Budget/option/timing sanity OK',bi.get('flexibility'),base,'pool',len(pool.get('players') or []),'candidates',len(candidates))
           PY
       - name: Evaluate completed option-value snapshots
         run: python evaluate_option_value.py
@@ -92,11 +106,11 @@ jobs:
           PY
       - name: Publish enriched feed and option evidence
         run: |
-          if git diff --quiet -- data.json option_value_snapshots/ option_value_backtest/; then echo "No budget/option change."; exit 0; fi
+          if git diff --quiet -- data.json option_value_snapshots/ option_value_backtest/; then echo "No budget/option/timing change."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json option_value_snapshots/ option_value_backtest/
-          git commit -m "Dashboard: enrich and evaluate option value"
+          git commit -m "Dashboard: enrich budget option and timing"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
