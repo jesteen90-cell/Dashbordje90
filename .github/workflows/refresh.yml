@@ -12,6 +12,7 @@ on:
       - "freeze_market_ab.py"
       - "evaluate_market_ab.py"
       - "captain_v4_prior.py"
+      - "captain_horizon_v1.py"
       - "enrich_captain_inputs.py"
       - "captain_v4_shadow.py"
       - "evaluate_captain_v4.py"
@@ -86,6 +87,7 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open('data.json')); assert d.get('model_version')=='3.1-market-ready'
+          opt=d.get('optimizer',{}); assert opt.get('captain_horizon_search') is True, opt
           assert d.get('captain_v4_inputs',{}).get('enriched') is True
           for p in d.get('captain_comparison',[]):
             assert p.get('season_minutes') is not None and p.get('season_xg') is not None and p.get('season_xa') is not None
@@ -99,7 +101,7 @@ jobs:
           params=json.load(open('market_ab/params.json')); assert params.get('version')=='1.2-player-share'; assert 'promote_player_share' in params
           shadow=json.load(open('market_ab_shadow.json')); assert int(shadow.get('gw'))==int(d.get('gw')); assert shadow.get('version')=='1.2-player-share'
           for p in shadow.get('players',[]): assert 'share_ensemble_xp' in p and 'goal_share' in p and 'assist_share' in p
-          print('Captain v4 + player-share sanity passed',capscore.get('evaluated_gws'),capscore.get('v4_delta_points'),ab.get('active_gws'))
+          print('Captain horizon + Captain v4 + player-share sanity passed',capscore.get('evaluated_gws'),capscore.get('v4_delta_points'),ab.get('active_gws'))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
