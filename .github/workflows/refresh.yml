@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "generate_dashboard_v3.py"
+      - "decision_layer_v4.py"
       - "model_v2_core.py"
       - "model_live_sanity.py"
       - "team_strength_v2.py"
@@ -62,22 +63,26 @@ jobs:
         run: |
           if [ -z "$FPL_FREE_TRANSFERS" ]; then export FPL_FREE_TRANSFERS=1; fi
           python generate_dashboard_v3.py
+          python decision_layer_v4.py
       - name: Sanity-check generated feed
         run: |
           python - <<'PY'
           import json
           d=json.load(open('data.json'))
           assert d.get('model_version')=='3.0-validated', d.get('model_version')
+          assert d.get('decision_layer',{}).get('version')=='4.0-risk-aware'
           assert d.get('deadline_time')
           assert len(d.get('comparison',{}).get('current_xi',[]))==11
           assert len(d.get('lineup',[]))==11
           assert d.get('recent_form',{}).get('promoted') is True
           assert d.get('captain_model',{}).get('promoted') is True
-          # No healthy player in the selected XI should be projected for zero minutes.
           for p in d.get('lineup',[]):
             if float(p.get('availability',0))>=.99:
               assert float(p.get('expected_minutes',0))>0,(p.get('name'),p.get('expected_minutes'))
-          print('Model 3.0 feed sanity check passed:', d.get('generated_at'))
+          bench=d.get('bench',[])
+          if bench:
+            assert bench[-1].get('position')=='GK', 'Goalkeeper should be last on bench'
+          print('Model 3.0 + decision layer 4.0 sanity check passed:', d.get('generated_at'))
           PY
       - name: Publish updated feed
         run: |
