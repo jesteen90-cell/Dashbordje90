@@ -49,6 +49,18 @@ def main():
  d['captain_model_selection']['applied_captain_name']=cap_row.get('name')
  d['captain_model_selection']['applied_vice_id']=vice_id
  d['captain_model_selection']['safety_gate']={'captain_min_minutes':60,'captain_min_availability':0.75,'vice_min_minutes':55,'vice_min_availability':0.75,'selected_pick_safe':safe}
+ # Keep the full model pool in shadow/backtest, but present only five cards in the UI.
+ display=[]
+ for r in ranked:
+  pid=int(r.get('id') or 0);p=byid.get(pid)
+  if not p:continue
+  display.append({'id':pid,'name':p.get('name'),'team':p.get('team'),'position':p.get('position'),'xp':round(n(p.get('xp')),2),'ceiling':round(n(p.get('xp_high'),p.get('xp')),2),'expected_minutes':round(n(p.get('expected_minutes')),0),'availability':round(n(p.get('availability'),1),2),'score':round(n(r.get(key)),3),'captain':pid==cap_id,'vice':pid==vice_id})
+  if len(display)>=5:break
+ # Always surface the actual captain if a fallback/safety gate moved him outside model top five.
+ if cap_id and all(int(x.get('id') or 0)!=cap_id for x in display) and cap_row:
+  display[-1:] = [{'id':cap_id,'name':cap_row.get('name'),'team':cap_row.get('team'),'position':cap_row.get('position'),'xp':round(n(cap_row.get('xp')),2),'ceiling':round(n(cap_row.get('xp_high'),cap_row.get('xp')),2),'expected_minutes':round(n(cap_row.get('expected_minutes')),0),'availability':round(n(cap_row.get('availability'),1),2),'score':round(n(cap_shadow.get(key)),3),'captain':True,'vice':cap_id==vice_id}]
+ d['captain_comparison']=display
+ d['captain_pool']['display_count']=len(display) if isinstance(d.get('captain_pool'),dict) else len(display)
  # Compatibility metadata: transfer_optimizer_v2 actively uses captain_horizon_v1 in candidate pruning.
  d.setdefault('optimizer',{})['captain_horizon_search']=True
  dl=d.get('decision_layer') or {}
@@ -58,5 +70,5 @@ def main():
   dl['squad_view_consistent']=True
   d['decision_layer']=dl
  DATA.write_text(json.dumps(d,ensure_ascii=False,indent=2))
- print('Applied captain:',cap_row.get('name'),'model=',model,'safe=',safe,'runner=',runner.get('name'))
+ print('Applied captain:',cap_row.get('name'),'model=',model,'safe=',safe,'runner=',runner.get('name'),'pool=',len(ranked),'display=',len(display))
 if __name__=='__main__':main()
