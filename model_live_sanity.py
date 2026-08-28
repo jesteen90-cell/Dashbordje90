@@ -26,6 +26,10 @@ def pipeline_sanity():
     assert 'def select_squad_view' in dl
     assert "data['lineup']=target_xi" in dl
     assert "data['bench']=reorder_bench(bench)" in dl
+    build=Path('build_dashboard_with_cache.py').read_text(encoding='utf-8')
+    assert 'fixture_difficulty' in build
+    assert '2.0-position-aware' in build
+    assert "'difficulty_basis':basis" in build
     html=Path('index.html').read_text(encoding='utf-8')
     assert 'function render()' in html
     assert 'data.json?v=${Date.now()}' in html
