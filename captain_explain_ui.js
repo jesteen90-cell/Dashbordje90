@@ -5,7 +5,7 @@
     if(!row || row.p10_plus==null) return '';
     return `<div class="haulStrip" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px"><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p10_plus)}</b><span style="font-size:7px;color:#aaa2ba">10+</span></div><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p15_plus)}</b><span style="font-size:7px;color:#aaa2ba">15+</span></div><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p_goal_2plus)}</b><span style="font-size:7px;color:#aaa2ba">2+ mål</span></div><div style="text-align:center;padding:5px 2px;border-radius:8px;background:#0002"><b style="display:block;font-size:11px">${pct(row.p_multi_return)}</b><span style="font-size:7px;color:#aaa2ba">multi</span></div></div>`;
   }
-  function confidence(e){
+  function fallbackConfidence(e){
     const c=e.captain||{},r=e.runner_up||{};
     const scoreGap=Number(e.score_gap||0),xpGap=Number(e.xp_gap||0);
     const haulGap=(c.p10_plus!=null&&r.p10_plus!=null)?Number(c.p10_plus)-Number(r.p10_plus):0;
@@ -18,8 +18,15 @@
     s+=(avail>=.95?.8:avail>=.85?.45:avail>=.75?.1:-1);
     if(!e.selected_pick_safe)s-=2;
     const level=s>=3.2?'HØY':s>=1.5?'MIDDELS':'LAV';
+    return {score:Math.round(Math.max(0,Math.min(100,50+s*12))),level,haulGap};
+  }
+  function confidence(e){
+    const fb=fallbackConfidence(e),server=e.confidence||{};
+    const level=['LAV','MIDDELS','HØY'].includes(server.level)?server.level:fb.level;
+    const score=Number.isFinite(Number(server.score))?Math.max(0,Math.min(100,Math.round(Number(server.score)))):fb.score;
     const label=level==='HØY'?'Sterkt kapteinsvalg':level==='MIDDELS'?'Godt, men ikke klart':'Tett kapteinskamp';
-    return {score:Math.round(Math.max(0,Math.min(100,50+s*12))),level,label,haulGap};
+    const haulGap=e.haul10_gap!=null?Number(e.haul10_gap):fb.haulGap;
+    return {score,level,label,haulGap};
   }
   function addCardHaul(e){
     const rows=[e.captain||{},e.runner_up||{}];
