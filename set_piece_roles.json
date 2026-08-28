@@ -1,9 +1,15 @@
 {
-  "version": "2026-08-28-manual-v1",
-  "source": "FPL set-piece taker ranking; conservative manual priors",
+  "version": "2026-08-28-manual-v2",
+  "source": "Official FPL set-piece taker ranking; conservative role priors",
   "penalties": {
     "Erling Haaland": 0.95,
     "Bruno Fernandes": 0.95
   },
-  "notes": "Only high-confidence roles are included. Missing players default to zero rather than being guessed. Extend as roles are confirmed."
+  "direct_free_kicks": {
+    "Bruno Fernandes": 0.85
+  },
+  "corners_indirect_free_kicks": {
+    "Bruno Fernandes": 0.80
+  },
+  "notes": "Only high-confidence roles are included. Missing players default to zero. Role priors are metadata until their projection component is explicitly modelled and regression-tested."
 }
