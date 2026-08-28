@@ -38,6 +38,6 @@ def main():
   else:
    vals={'home_attack':1.0,'away_attack':1.0,'home_defence':1.0,'away_defence':1.0}
   rows[tid]={'name':t.get('name'),**vals}
- OUT.write_text(json.dumps({'version':'1.1-fpl-bootstrap-safe','source':'FPL bootstrap team strengths','available':available,'teams':rows},ensure_ascii=False,indent=2))
+ OUT.write_text(json.dumps({'version':'1.0-fpl-bootstrap','source':'FPL bootstrap team strengths','safe_fallback':True,'available':available,'teams':rows},ensure_ascii=False,indent=2))
  print('Team strength priors',len(rows),'available=',available)
 if __name__=='__main__':main()
