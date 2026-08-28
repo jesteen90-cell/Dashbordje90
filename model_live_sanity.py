@@ -1,6 +1,6 @@
 from pathlib import Path
 import py_compile
-from model_v2_core import project, stabilized_role, attack_evidence_minutes, bonus_prior_2627
+from model_v2_core import project, stabilized_role, attack_evidence_minutes, bonus_prior_2627, defcon_threshold_probability
 from team_strength_v2 import build_strength, fixture_difficulty
 from transfer_optimizer_v2 import bench_resilience, BENCH_RESILIENCE_WEIGHT, captain_value, CAPTAIN_WEIGHTS
 from recent_form_v2 import blend_rates
@@ -39,16 +39,22 @@ def defensive_exposure_sanity():
  common={'position':2,'minutes_history':900,'start_rate':1,'sub_rate':0,'prev_minutes':3000,'opponent_goal_lambda':1.35};full=project(base(**common,avg_start_mins=90));early=project(base(**common,avg_start_mins=70));assert early['defensive_exposure']<full['defensive_exposure'] and early['cs_probability']>full['cs_probability'];assert project(base(position=2,minutes_history=900,start_rate=.15,avg_start_mins=55,sub_rate=.55,avg_sub_mins=25,prev_minutes=500,opponent_goal_lambda=2.2))['conceded']<0
 
 def bonus_sanity():
- # 26/27 rules should gently favour GK/attackers over CB-style prior, while
- # observed current-season bonus must dominate after a large sample.
- assert bonus_prior_2627(1)>bonus_prior_2627(2)
- assert bonus_prior_2627(3)>bonus_prior_2627(2) and bonus_prior_2627(4)>bonus_prior_2627(2)
+ assert bonus_prior_2627(1)>bonus_prior_2627(2);assert bonus_prior_2627(3)>bonus_prior_2627(2) and bonus_prior_2627(4)>bonus_prior_2627(2)
  early_cb=project(base(position=2,minutes_history=90,start_rate=1,avg_start_mins=90,bonus90=.9));early_fwd=project(base(position=4,minutes_history=90,start_rate=1,avg_start_mins=90,bonus90=.9));assert early_fwd['bonus_prior_used']>early_cb['bonus_prior_used']
  mature=project(base(position=4,minutes_history=2700,start_rate=1,avg_start_mins=90,bonus90=.8));assert abs(mature['bonus90_used']-.8)<.12,mature
+
+def defcon_sanity():
+ # Threshold probability must be monotonic and bounded. Overdispersion should
+ # keep realistic upside for below-threshold averages without making a player
+ # near-certain merely because his mean sits around the cut-off.
+ for pos,thr in ((2,10),(3,12),(4,12)):
+  lo=defcon_threshold_probability(thr*.55,thr,pos);mid=defcon_threshold_probability(thr,thr,pos);hi=defcon_threshold_probability(thr*1.7,thr,pos)
+  assert 0<lo<mid<hi<1,(pos,lo,mid,hi);assert mid<.75,(pos,mid)
+ cb=project(base(position=2,minutes_history=900,start_rate=1,avg_start_mins=90,prev_minutes=3000,defcon90=10));dm=project(base(position=3,minutes_history=900,start_rate=1,avg_start_mins=90,prev_minutes=3000,defcon90=12));assert 0<cb['defcon_probability']<1 and 0<dm['defcon_probability']<1
 
 def main():
  sr,sub=stabilized_role(0,0,0,4);assert sr==0 and sub==0;ghost=project(base());assert ghost['xmins']==0 and ghost['total']==0
  seen=project(base(minutes_history=43,start_rate=0,sub_rate=.5));starter=project(base(minutes_history=180,start_rate=1,sub_rate=0));assert 15<seen['xmins']<70 and starter['xmins']>seen['xmins']
  unknown=project(base(minutes_history=90,start_rate=1,avg_start_mins=88));est=project(base(minutes_history=90,start_rate=1,avg_start_mins=88,prev_minutes=3000));assert est['xmins']>=76 and est['xmins']>=unknown['xmins']+8
- strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();pipeline_sanity();print('live model sanity passed',{'bonus_2627':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
+ strength_sanity();bench_sanity();captain_optimizer_sanity();uncertainty_sanity();attacking_evidence_sanity();defensive_exposure_sanity();bonus_sanity();defcon_sanity();pipeline_sanity();print('live model sanity passed',{'bonus_2627':True,'defcon_overdispersion':True,'position_aware_fdr':True,'bench_resilience':True,'role_uncertainty':True,'defensive_exposure':True})
 if __name__=='__main__':main()
