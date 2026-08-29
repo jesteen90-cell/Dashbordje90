@@ -317,6 +317,32 @@
       "prev_points": 143.0
     },
     {
+      "id": 496,
+      "name": "Kinsky",
+      "team": "Spurs",
+      "v3_score": 2.911,
+      "v4_score": 3.0625,
+      "v41_score": 3.0627,
+      "elite_prior": 0.2332,
+      "haul_bonus": 0.0001,
+      "haul_probabilities": {
+        "goal_lambda": 0.01,
+        "assist_lambda": 0.01,
+        "p_goal_1": 0.01,
+        "p_goal_2": 0.0,
+        "p_goal_3": 0.0,
+        "p_multi_return": 0.0002,
+        "p10": 0.0001,
+        "p15": 0.0,
+        "history_weight": 0.8421
+      },
+      "xp": 2.46,
+      "ceiling": 5.59,
+      "expected_minutes": 47.0,
+      "prev_minutes": 630.0,
+      "prev_points": 20.0
+    },
+    {
       "id": 8,
       "name": "Calafiori",
       "team": "Arsenal",
@@ -341,32 +367,6 @@
       "expected_minutes": 45.0,
       "prev_minutes": 1697.0,
       "prev_points": 109.0
-    },
-    {
-      "id": 496,
-      "name": "Kinsky",
-      "team": "Spurs",
-      "v3_score": 2.581,
-      "v4_score": 2.7272,
-      "v41_score": 2.7274,
-      "elite_prior": 0.225,
-      "haul_bonus": 0.0001,
-      "haul_probabilities": {
-        "goal_lambda": 0.01,
-        "assist_lambda": 0.01,
-        "p_goal_1": 0.01,
-        "p_goal_2": 0.0,
-        "p_goal_3": 0.0,
-        "p_multi_return": 0.0002,
-        "p10": 0.0001,
-        "p15": 0.0,
-        "history_weight": 0.8501
-      },
-      "xp": 2.14,
-      "ceiling": 5.07,
-      "expected_minutes": 44.0,
-      "prev_minutes": 630.0,
-      "prev_points": 20.0
     }
   ],
   "guardrail": "Historical prior is bounded and fades as current-season evidence grows; production promotion still requires frozen regret evidence."
