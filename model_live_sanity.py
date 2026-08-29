@@ -17,7 +17,10 @@ def pipeline_sanity():
  gen=Path('generate_dashboard_v3.py').read_text();assert "'penalty_taker_share':penalty_share(p)" in gen and "'projection_integration':'active'" in gen and "'bonus','penalty','conceded'" in gen
  assert 'availability_for_gw' in gen and "'budget':{" in gen and "'3.8-availability-recovery-set-piece-projection'" in gen and "'selling_price'" in gen
  roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
- html=Path('index.html').read_text();app=Path('app.js').read_text();assert '<script src="app.js"></script>' in html and 'Siste bekreftede FPL-startellever' in html and 'Siste bekreftede FPL-benk' in html and 'function render()' in app and 'function kit(' in app
+ html=Path('index.html').read_text();app=Path('app.js').read_text();lineup=Path('current_lineup_ui.js').read_text()
+ assert 'src="app.js?v=' in html and 'id="after" class="pitch"' in html and 'id="bench" class="bench"' in html and 'Se forrige bekreftede FPL-lag' in html
+ assert 'function render()' in app and 'function kit(' in app and 'function pitch(' in app and 'function benchHtml(' in app
+ assert "querySelectorAll('.kit').length===11" in lineup and 'renderVisualOptimal' in lineup
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
 
 def transfer_planner_sanity():
