@@ -1,9 +1,9 @@
 {
   "model_version": "3.8-availability-recovery-set-piece-projection",
-  "generated_at": "2026-08-31T19:44:28.538428Z",
+  "generated_at": "2026-08-31T19:59:17.487178Z",
   "gw": 3,
   "deadline_time": "2026-09-04T17:30:00Z",
-  "headline": "IKKE GJØR BYTTET",
+  "headline": "GJØR BYTTET",
   "summary": "Modell 3.8 kombinerer GW-spesifikk skade/recovery, live salgspriser når FPL leverer dem, bekreftede strafferoller, adaptiv lagstyrke, recent-xGI og fler-GW transferplanlegging.",
   "source_snapshot_gw": 1,
   "free_transfers_assumed": 1,
@@ -495,44 +495,44 @@
       }
     },
     {
-      "id": 418,
-      "name": "Maguire",
-      "team_id": 16,
-      "team": "Man Utd",
+      "id": 4,
+      "name": "Gabriel",
+      "team_id": 1,
+      "team": "Arsenal",
       "position": "DEF",
-      "price": 5.0,
-      "selling_price": 5.0,
-      "xp": 2.63,
+      "price": 8.0,
+      "selling_price": 8.0,
+      "xp": 3.29,
       "xp_low": 0,
-      "xp_high": 5.99,
+      "xp_high": 7.32,
       "risk": "middels",
-      "volatility": 1.0,
-      "fixture": "Everton (A)",
+      "volatility": 0.96,
+      "fixture": "Chelsea (H)",
       "fixture_outlook": [
         {
           "gw": 3,
-          "label": "EVE A",
-          "difficulty": 4,
+          "label": "CHE H",
+          "difficulty": 3,
           "difficulty_basis": "opponent-attack",
-          "xp": 2.63
+          "xp": 3.29
         },
         {
           "gw": 4,
-          "label": "MAN H",
+          "label": "SUN A",
           "difficulty": 3,
           "difficulty_basis": "opponent-attack",
-          "xp": 3.0
+          "xp": 3.17
         },
         {
           "gw": 5,
-          "label": "FUL A",
-          "difficulty": 3,
+          "label": "BRI A",
+          "difficulty": 4,
           "difficulty_basis": "opponent-attack",
-          "xp": 2.78
+          "xp": 2.91
         }
       ],
       "availability": 1.0,
-      "expected_minutes": 70.2,
+      "expected_minutes": 59.5,
       "news": "",
       "change": null,
       "set_piece_role": {
@@ -540,32 +540,33 @@
         "source_version": "2026-08-28-manual-v2"
       },
       "form": {
-        "season_multiplier": 0.983,
-        "recent_multiplier": 0.988,
-        "recent_xgi90": 0.227,
-        "recent_minutes": 180.0,
+        "season_multiplier": 0.975,
+        "recent_multiplier": 0.98,
+        "recent_xgi90": 0.103,
+        "recent_minutes": 135.0,
         "recent_matches": 2,
-        "recent_confidence": 0.333
+        "recent_confidence": 0.273
       },
       "historical_prior": {
-        "prev_minutes": 1649.0,
-        "prev_goal90": 0.055,
-        "prev_assist90": 0.109,
-        "goal_prior_used": 0.055,
-        "assist_prior_used": 0.099
+        "prev_minutes": 2750.0,
+        "prev_goal90": 0.098,
+        "prev_assist90": 0.164,
+        "goal_prior_used": 0.088,
+        "assist_prior_used": 0.143
       },
       "xp_breakdown": {
-        "appearance": 1.67,
-        "goals": 0.16,
-        "assists": 0.3,
-        "clean_sheet": 0.6,
+        "appearance": 1.76,
+        "goals": 0.35,
+        "assists": 0.29,
+        "clean_sheet": 1.18,
         "saves": 0,
-        "defensive": 0.18,
-        "bonus": 0.16,
+        "defensive": 0.11,
+        "bonus": 0.2,
         "penalty": 0.0,
-        "conceded": -0.44,
-        "cards": 0,
-        "displayed_sum": 2.63,
+        "conceded": -0.26,
+        "cards": -0.33,
+        "other_model_components": -0.01,
+        "displayed_sum": 3.29,
         "reconciled": true
       },
       "captain": false,
@@ -741,44 +742,44 @@
       }
     },
     {
-      "id": 388,
-      "name": "Guéhi",
-      "team_id": 15,
-      "team": "Man City",
+      "id": 279,
+      "name": "Ajayi",
+      "team_id": 11,
+      "team": "Hull City",
       "position": "DEF",
-      "price": 6.0,
+      "price": 4.0,
       "selling_price": null,
-      "xp": 4.85,
+      "xp": 4.32,
       "xp_low": 0,
-      "xp_high": 10.12,
+      "xp_high": 9.05,
       "risk": "middels",
-      "volatility": 0.85,
-      "fixture": "Coventry City (H)",
+      "volatility": 0.86,
+      "fixture": "Aston Villa (H)",
       "fixture_outlook": [
         {
           "gw": 3,
-          "label": "COV H",
+          "label": "AST H",
           "difficulty": 2,
           "difficulty_basis": "opponent-attack",
-          "xp": 4.85
+          "xp": 4.32
         },
         {
           "gw": 4,
-          "label": "MAN A",
+          "label": "CHE A",
           "difficulty": 3,
           "difficulty_basis": "opponent-attack",
-          "xp": 4.26
+          "xp": 3.64
         },
         {
           "gw": 5,
-          "label": "SUN H",
+          "label": "NEW A",
           "difficulty": 3,
           "difficulty_basis": "opponent-attack",
-          "xp": 4.65
+          "xp": 3.63
         }
       ],
       "availability": 1.0,
-      "expected_minutes": 82.1,
+      "expected_minutes": 68.0,
       "news": "",
       "change": "in",
       "set_piece_role": {
@@ -786,33 +787,33 @@
         "source_version": "2026-08-28-manual-v2"
       },
       "form": {
-        "season_multiplier": 1.008,
-        "recent_multiplier": 1.024,
-        "recent_xgi90": 0.588,
-        "recent_minutes": 180.0,
+        "season_multiplier": 0.99,
+        "recent_multiplier": 0.994,
+        "recent_xgi90": 0.283,
+        "recent_minutes": 153.0,
         "recent_matches": 2,
-        "recent_confidence": 0.333
+        "recent_confidence": 0.298
       },
       "historical_prior": {
-        "prev_minutes": 3150.0,
-        "prev_goal90": 0.086,
-        "prev_assist90": 0.143,
-        "goal_prior_used": 0.079,
-        "assist_prior_used": 0.129
+        "prev_minutes": 2779.0,
+        "prev_goal90": 0.065,
+        "prev_assist90": 0.032,
+        "goal_prior_used": 0.062,
+        "assist_prior_used": 0.044
       },
       "xp_breakdown": {
-        "appearance": 1.92,
-        "goals": 1.02,
-        "assists": 0.34,
-        "clean_sheet": 1.16,
+        "appearance": 1.8,
+        "goals": 0.71,
+        "assists": 0.1,
+        "clean_sheet": 1.39,
         "saves": 0,
-        "defensive": 0.35,
-        "bonus": 0.37,
+        "defensive": 0.23,
+        "bonus": 0.29,
         "penalty": 0.0,
-        "conceded": -0.32,
+        "conceded": -0.22,
         "cards": 0,
-        "other_model_components": 0.01,
-        "displayed_sum": 4.85,
+        "other_model_components": 0.02,
+        "displayed_sum": 4.32,
         "reconciled": true
       },
       "captain": false,
@@ -1070,44 +1071,44 @@
       }
     },
     {
-      "id": 94,
-      "name": "Schade",
-      "team_id": 4,
-      "team": "Brentford",
+      "id": 480,
+      "name": "Gibbs-White",
+      "team_id": 18,
+      "team": "Nott'm Forest",
       "position": "MID",
-      "price": 6.0,
+      "price": 7.9,
       "selling_price": null,
-      "xp": 4.77,
+      "xp": 5.17,
       "xp_low": 0,
-      "xp_high": 9.83,
+      "xp_high": 10.51,
       "risk": "middels",
-      "volatility": 0.83,
-      "fixture": "Sunderland (H)",
+      "volatility": 0.81,
+      "fixture": "Spurs (H)",
       "fixture_outlook": [
         {
           "gw": 3,
-          "label": "SUN H",
+          "label": "SPU H",
           "difficulty": 3,
           "difficulty_basis": "opponent-defence",
-          "xp": 4.77
+          "xp": 5.17
         },
         {
           "gw": 4,
-          "label": "BOU A",
+          "label": "AST A",
           "difficulty": 3,
           "difficulty_basis": "opponent-defence",
-          "xp": 4.4
+          "xp": 5.16
         },
         {
           "gw": 5,
-          "label": "CHE H",
+          "label": "COV H",
           "difficulty": 3,
           "difficulty_basis": "opponent-defence",
-          "xp": 4.68
+          "xp": 5.17
         }
       ],
       "availability": 1.0,
-      "expected_minutes": 78.6,
+      "expected_minutes": 81.7,
       "news": "",
       "change": "in",
       "set_piece_role": {
@@ -1115,32 +1116,33 @@
         "source_version": "2026-08-28-manual-v2"
       },
       "form": {
-        "season_multiplier": 0.996,
-        "recent_multiplier": 1.005,
-        "recent_xgi90": 0.399,
-        "recent_minutes": 177.0,
+        "season_multiplier": 0.997,
+        "recent_multiplier": 1.018,
+        "recent_xgi90": 0.53,
+        "recent_minutes": 180.0,
         "recent_matches": 2,
-        "recent_confidence": 0.33
+        "recent_confidence": 0.333
       },
       "historical_prior": {
-        "prev_minutes": 2744.0,
-        "prev_goal90": 0.262,
-        "prev_assist90": 0.164,
-        "goal_prior_used": 0.247,
-        "assist_prior_used": 0.168
+        "prev_minutes": 3101.0,
+        "prev_goal90": 0.435,
+        "prev_assist90": 0.116,
+        "goal_prior_used": 0.382,
+        "assist_prior_used": 0.13
       },
       "xp_breakdown": {
-        "appearance": 1.82,
-        "goals": 1.52,
-        "assists": 0.43,
+        "appearance": 1.91,
+        "goals": 1.77,
+        "assists": 0.52,
         "clean_sheet": 0.28,
         "saves": 0,
-        "defensive": 0.17,
-        "bonus": 0.55,
+        "defensive": 0.11,
+        "bonus": 0.57,
         "penalty": 0.0,
         "conceded": 0,
         "cards": 0,
-        "displayed_sum": 4.77,
+        "other_model_components": 0.01,
+        "displayed_sum": 5.17,
         "reconciled": true
       },
       "captain": false,
@@ -1318,44 +1320,44 @@
   ],
   "bench": [
     {
-      "id": 8,
-      "name": "Calafiori",
-      "team_id": 1,
-      "team": "Arsenal",
+      "id": 418,
+      "name": "Maguire",
+      "team_id": 16,
+      "team": "Man Utd",
       "position": "DEF",
-      "price": 5.6,
-      "selling_price": 5.6,
-      "xp": 2.2,
+      "price": 5.0,
+      "selling_price": 5.0,
+      "xp": 2.63,
       "xp_low": 0,
-      "xp_high": 5.37,
-      "risk": "høy",
-      "volatility": 1.12,
-      "fixture": "Chelsea (H)",
+      "xp_high": 5.99,
+      "risk": "middels",
+      "volatility": 1.0,
+      "fixture": "Everton (A)",
       "fixture_outlook": [
         {
           "gw": 3,
-          "label": "CHE H",
-          "difficulty": 3,
+          "label": "EVE A",
+          "difficulty": 4,
           "difficulty_basis": "opponent-attack",
-          "xp": 2.2
+          "xp": 2.63
         },
         {
           "gw": 4,
-          "label": "SUN A",
+          "label": "MAN H",
           "difficulty": 3,
           "difficulty_basis": "opponent-attack",
-          "xp": 2.13
+          "xp": 3.0
         },
         {
           "gw": 5,
-          "label": "BRI A",
-          "difficulty": 4,
+          "label": "FUL A",
+          "difficulty": 3,
           "difficulty_basis": "opponent-attack",
-          "xp": 1.98
+          "xp": 2.78
         }
       ],
       "availability": 1.0,
-      "expected_minutes": 44.6,
+      "expected_minutes": 70.2,
       "news": "",
       "change": null,
       "set_piece_role": {
@@ -1363,32 +1365,32 @@
         "source_version": "2026-08-28-manual-v2"
       },
       "form": {
-        "season_multiplier": 0.985,
-        "recent_multiplier": 0.989,
-        "recent_xgi90": 0.199,
-        "recent_minutes": 120.0,
+        "season_multiplier": 0.983,
+        "recent_multiplier": 0.988,
+        "recent_xgi90": 0.227,
+        "recent_minutes": 180.0,
         "recent_matches": 2,
-        "recent_confidence": 0.25
+        "recent_confidence": 0.333
       },
       "historical_prior": {
-        "prev_minutes": 1697.0,
-        "prev_goal90": 0.053,
-        "prev_assist90": 0.106,
-        "goal_prior_used": 0.054,
-        "assist_prior_used": 0.097
+        "prev_minutes": 1649.0,
+        "prev_goal90": 0.055,
+        "prev_assist90": 0.109,
+        "goal_prior_used": 0.055,
+        "assist_prior_used": 0.099
       },
       "xp_breakdown": {
-        "appearance": 1.21,
+        "appearance": 1.67,
         "goals": 0.16,
-        "assists": 0.26,
-        "clean_sheet": 0.63,
+        "assists": 0.3,
+        "clean_sheet": 0.6,
         "saves": 0,
-        "defensive": 0.01,
-        "bonus": 0.11,
+        "defensive": 0.18,
+        "bonus": 0.16,
         "penalty": 0.0,
-        "conceded": -0.18,
+        "conceded": -0.44,
         "cards": 0,
-        "displayed_sum": 2.2,
+        "displayed_sum": 2.63,
         "reconciled": true
       },
       "set_pieces": {
@@ -1643,44 +1645,44 @@
     "changes": [
       {
         "out": {
-          "id": 557,
-          "name": "Tzolis",
+          "id": 8,
+          "name": "Calafiori",
           "team_id": 1,
           "team": "Arsenal",
-          "position": "MID",
-          "price": 6.5,
-          "selling_price": 6.5,
-          "xp": 1.75,
+          "position": "DEF",
+          "price": 5.6,
+          "selling_price": 5.6,
+          "xp": 2.55,
           "xp_low": 0,
-          "xp_high": 4.44,
+          "xp_high": 5.98,
           "risk": "høy",
-          "volatility": 1.2,
+          "volatility": 1.05,
           "fixture": "Chelsea (H)",
           "fixture_outlook": [
             {
               "gw": 3,
               "label": "CHE H",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 1.75
+              "difficulty_basis": "opponent-attack",
+              "xp": 2.55
             },
             {
               "gw": 4,
               "label": "SUN A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 1.66
+              "difficulty_basis": "opponent-attack",
+              "xp": 2.46
             },
             {
               "gw": 5,
               "label": "BRI A",
-              "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 1.58
+              "difficulty": 4,
+              "difficulty_basis": "opponent-attack",
+              "xp": 2.29
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 40.6,
+          "expected_minutes": 47.5,
           "news": "",
           "change": "out",
           "set_piece_role": {
@@ -1688,33 +1690,32 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 0.993,
-            "recent_multiplier": 0.993,
-            "recent_xgi90": 0.255,
-            "recent_minutes": 115.0,
+            "season_multiplier": 0.983,
+            "recent_multiplier": 0.988,
+            "recent_xgi90": 0.198,
+            "recent_minutes": 125.0,
             "recent_matches": 2,
-            "recent_confidence": 0.242
+            "recent_confidence": 0.258
           },
           "historical_prior": {
-            "prev_minutes": 326.0,
-            "prev_goal90": 0.0,
-            "prev_assist90": 0.0,
-            "goal_prior_used": 0.147,
-            "assist_prior_used": 0.132
+            "prev_minutes": 1697.0,
+            "prev_goal90": 0.053,
+            "prev_assist90": 0.106,
+            "goal_prior_used": 0.054,
+            "assist_prior_used": 0.097
           },
           "xp_breakdown": {
-            "appearance": 1.08,
-            "goals": 0.34,
+            "appearance": 1.35,
+            "goals": 0.17,
             "assists": 0.28,
-            "clean_sheet": 0.11,
+            "clean_sheet": 0.81,
             "saves": 0,
-            "defensive": 0.0,
-            "bonus": 0.16,
+            "defensive": 0.02,
+            "bonus": 0.12,
             "penalty": 0.0,
-            "conceded": 0,
-            "cards": -0.23,
-            "other_model_components": 0.01,
-            "displayed_sum": 1.75,
+            "conceded": -0.2,
+            "cards": 0,
+            "displayed_sum": 2.55,
             "reconciled": true
           },
           "set_pieces": {
@@ -1724,44 +1725,44 @@
           }
         },
         "in": {
-          "id": 94,
-          "name": "Schade",
-          "team_id": 4,
-          "team": "Brentford",
-          "position": "MID",
-          "price": 6.0,
+          "id": 279,
+          "name": "Ajayi",
+          "team_id": 11,
+          "team": "Hull City",
+          "position": "DEF",
+          "price": 4.0,
           "selling_price": null,
-          "xp": 4.77,
+          "xp": 4.32,
           "xp_low": 0,
-          "xp_high": 9.83,
+          "xp_high": 9.05,
           "risk": "middels",
-          "volatility": 0.83,
-          "fixture": "Sunderland (H)",
+          "volatility": 0.86,
+          "fixture": "Aston Villa (H)",
           "fixture_outlook": [
             {
               "gw": 3,
-              "label": "SUN H",
-              "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 4.77
+              "label": "AST H",
+              "difficulty": 2,
+              "difficulty_basis": "opponent-attack",
+              "xp": 4.32
             },
             {
               "gw": 4,
-              "label": "BOU A",
+              "label": "CHE A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 4.4
+              "difficulty_basis": "opponent-attack",
+              "xp": 3.64
             },
             {
               "gw": 5,
-              "label": "CHE H",
+              "label": "NEW A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 4.68
+              "difficulty_basis": "opponent-attack",
+              "xp": 3.63
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 78.6,
+          "expected_minutes": 68.0,
           "news": "",
           "change": "in",
           "set_piece_role": {
@@ -1769,32 +1770,33 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 0.996,
-            "recent_multiplier": 1.005,
-            "recent_xgi90": 0.399,
-            "recent_minutes": 177.0,
+            "season_multiplier": 0.99,
+            "recent_multiplier": 0.994,
+            "recent_xgi90": 0.283,
+            "recent_minutes": 153.0,
             "recent_matches": 2,
-            "recent_confidence": 0.33
+            "recent_confidence": 0.298
           },
           "historical_prior": {
-            "prev_minutes": 2744.0,
-            "prev_goal90": 0.262,
-            "prev_assist90": 0.164,
-            "goal_prior_used": 0.247,
-            "assist_prior_used": 0.168
+            "prev_minutes": 2779.0,
+            "prev_goal90": 0.065,
+            "prev_assist90": 0.032,
+            "goal_prior_used": 0.062,
+            "assist_prior_used": 0.044
           },
           "xp_breakdown": {
-            "appearance": 1.82,
-            "goals": 1.52,
-            "assists": 0.43,
-            "clean_sheet": 0.28,
+            "appearance": 1.8,
+            "goals": 0.71,
+            "assists": 0.1,
+            "clean_sheet": 1.39,
             "saves": 0,
-            "defensive": 0.17,
-            "bonus": 0.55,
+            "defensive": 0.23,
+            "bonus": 0.29,
             "penalty": 0.0,
-            "conceded": 0,
+            "conceded": -0.22,
             "cards": 0,
-            "displayed_sum": 4.77,
+            "other_model_components": 0.02,
+            "displayed_sum": 4.32,
             "reconciled": true
           },
           "set_pieces": {
@@ -1806,44 +1808,44 @@
       },
       {
         "out": {
-          "id": 4,
-          "name": "Gabriel",
+          "id": 557,
+          "name": "Tzolis",
           "team_id": 1,
           "team": "Arsenal",
-          "position": "DEF",
-          "price": 8.0,
-          "selling_price": 8.0,
-          "xp": 2.98,
+          "position": "MID",
+          "price": 6.5,
+          "selling_price": 6.5,
+          "xp": 1.97,
           "xp_low": 0,
-          "xp_high": 6.85,
-          "risk": "middels",
-          "volatility": 1.01,
+          "xp_high": 4.81,
+          "risk": "høy",
+          "volatility": 1.13,
           "fixture": "Chelsea (H)",
           "fixture_outlook": [
             {
               "gw": 3,
               "label": "CHE H",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 2.98
+              "difficulty_basis": "opponent-defence",
+              "xp": 1.97
             },
             {
               "gw": 4,
               "label": "SUN A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 2.87
+              "difficulty_basis": "opponent-defence",
+              "xp": 1.87
             },
             {
               "gw": 5,
               "label": "BRI A",
-              "difficulty": 4,
-              "difficulty_basis": "opponent-attack",
-              "xp": 2.64
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 1.78
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 56.2,
+          "expected_minutes": 43.4,
           "news": "",
           "change": "out",
           "set_piece_role": {
@@ -1851,32 +1853,33 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 0.976,
-            "recent_multiplier": 0.98,
-            "recent_xgi90": 0.1,
-            "recent_minutes": 130.0,
+            "season_multiplier": 0.992,
+            "recent_multiplier": 0.992,
+            "recent_xgi90": 0.244,
+            "recent_minutes": 120.0,
             "recent_matches": 2,
-            "recent_confidence": 0.265
+            "recent_confidence": 0.25
           },
           "historical_prior": {
-            "prev_minutes": 2750.0,
-            "prev_goal90": 0.098,
-            "prev_assist90": 0.164,
-            "goal_prior_used": 0.088,
-            "assist_prior_used": 0.143
+            "prev_minutes": 326.0,
+            "prev_goal90": 0.0,
+            "prev_assist90": 0.0,
+            "goal_prior_used": 0.147,
+            "assist_prior_used": 0.132
           },
           "xp_breakdown": {
-            "appearance": 1.61,
-            "goals": 0.33,
-            "assists": 0.27,
-            "clean_sheet": 1.02,
+            "appearance": 1.21,
+            "goals": 0.36,
+            "assists": 0.3,
+            "clean_sheet": 0.16,
             "saves": 0,
-            "defensive": 0.07,
-            "bonus": 0.23,
+            "defensive": 0.0,
+            "bonus": 0.17,
             "penalty": 0.0,
-            "conceded": -0.24,
-            "cards": -0.31,
-            "displayed_sum": 2.98,
+            "conceded": 0,
+            "cards": -0.24,
+            "other_model_components": 0.01,
+            "displayed_sum": 1.97,
             "reconciled": true
           },
           "set_pieces": {
@@ -1886,44 +1889,44 @@
           }
         },
         "in": {
-          "id": 388,
-          "name": "Guéhi",
-          "team_id": 15,
-          "team": "Man City",
-          "position": "DEF",
-          "price": 6.0,
+          "id": 480,
+          "name": "Gibbs-White",
+          "team_id": 18,
+          "team": "Nott'm Forest",
+          "position": "MID",
+          "price": 7.9,
           "selling_price": null,
-          "xp": 4.85,
+          "xp": 5.17,
           "xp_low": 0,
-          "xp_high": 10.12,
+          "xp_high": 10.51,
           "risk": "middels",
-          "volatility": 0.85,
-          "fixture": "Coventry City (H)",
+          "volatility": 0.81,
+          "fixture": "Spurs (H)",
           "fixture_outlook": [
             {
               "gw": 3,
-              "label": "COV H",
-              "difficulty": 2,
-              "difficulty_basis": "opponent-attack",
-              "xp": 4.85
+              "label": "SPU H",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.17
             },
             {
               "gw": 4,
-              "label": "MAN A",
+              "label": "AST A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 4.26
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.16
             },
             {
               "gw": 5,
-              "label": "SUN H",
+              "label": "COV H",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 4.65
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.17
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 82.1,
+          "expected_minutes": 81.7,
           "news": "",
           "change": "in",
           "set_piece_role": {
@@ -1931,33 +1934,33 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 1.008,
-            "recent_multiplier": 1.024,
-            "recent_xgi90": 0.588,
+            "season_multiplier": 0.997,
+            "recent_multiplier": 1.018,
+            "recent_xgi90": 0.53,
             "recent_minutes": 180.0,
             "recent_matches": 2,
             "recent_confidence": 0.333
           },
           "historical_prior": {
-            "prev_minutes": 3150.0,
-            "prev_goal90": 0.086,
-            "prev_assist90": 0.143,
-            "goal_prior_used": 0.079,
-            "assist_prior_used": 0.129
+            "prev_minutes": 3101.0,
+            "prev_goal90": 0.435,
+            "prev_assist90": 0.116,
+            "goal_prior_used": 0.382,
+            "assist_prior_used": 0.13
           },
           "xp_breakdown": {
-            "appearance": 1.92,
-            "goals": 1.02,
-            "assists": 0.34,
-            "clean_sheet": 1.16,
+            "appearance": 1.91,
+            "goals": 1.77,
+            "assists": 0.52,
+            "clean_sheet": 0.28,
             "saves": 0,
-            "defensive": 0.35,
-            "bonus": 0.37,
+            "defensive": 0.11,
+            "bonus": 0.57,
             "penalty": 0.0,
-            "conceded": -0.32,
+            "conceded": 0,
             "cards": 0,
             "other_model_components": 0.01,
-            "displayed_sum": 4.85,
+            "displayed_sum": 5.17,
             "reconciled": true
           },
           "set_pieces": {
@@ -2061,11 +2064,11 @@
         "position": "DEF",
         "price": 8.0,
         "selling_price": 8.0,
-        "xp": 2.98,
+        "xp": 3.29,
         "xp_low": 0,
-        "xp_high": 6.85,
+        "xp_high": 7.32,
         "risk": "middels",
-        "volatility": 1.01,
+        "volatility": 0.96,
         "fixture": "Chelsea (H)",
         "fixture_outlook": [
           {
@@ -2073,38 +2076,38 @@
             "label": "CHE H",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.98
+            "xp": 3.29
           },
           {
             "gw": 4,
             "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.87
+            "xp": 3.17
           },
           {
             "gw": 5,
             "label": "BRI A",
             "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.64
+            "xp": 2.91
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 56.2,
+        "expected_minutes": 59.5,
         "news": "",
-        "change": "out",
+        "change": null,
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.976,
+          "season_multiplier": 0.975,
           "recent_multiplier": 0.98,
-          "recent_xgi90": 0.1,
-          "recent_minutes": 130.0,
+          "recent_xgi90": 0.103,
+          "recent_minutes": 135.0,
           "recent_matches": 2,
-          "recent_confidence": 0.265
+          "recent_confidence": 0.273
         },
         "historical_prior": {
           "prev_minutes": 2750.0,
@@ -2114,17 +2117,18 @@
           "assist_prior_used": 0.143
         },
         "xp_breakdown": {
-          "appearance": 1.61,
-          "goals": 0.33,
-          "assists": 0.27,
-          "clean_sheet": 1.02,
+          "appearance": 1.76,
+          "goals": 0.35,
+          "assists": 0.29,
+          "clean_sheet": 1.18,
           "saves": 0,
-          "defensive": 0.07,
-          "bonus": 0.23,
+          "defensive": 0.11,
+          "bonus": 0.2,
           "penalty": 0.0,
-          "conceded": -0.24,
-          "cards": -0.31,
-          "displayed_sum": 2.98,
+          "conceded": -0.26,
+          "cards": -0.33,
+          "other_model_components": -0.01,
+          "displayed_sum": 3.29,
           "reconciled": true
         },
         "captain": false,
@@ -2145,11 +2149,11 @@
         "position": "DEF",
         "price": 5.6,
         "selling_price": 5.6,
-        "xp": 2.2,
+        "xp": 2.55,
         "xp_low": 0,
-        "xp_high": 5.37,
+        "xp_high": 5.98,
         "risk": "høy",
-        "volatility": 1.12,
+        "volatility": 1.05,
         "fixture": "Chelsea (H)",
         "fixture_outlook": [
           {
@@ -2157,38 +2161,38 @@
             "label": "CHE H",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.2
+            "xp": 2.55
           },
           {
             "gw": 4,
             "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.13
+            "xp": 2.46
           },
           {
             "gw": 5,
             "label": "BRI A",
             "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 1.98
+            "xp": 2.29
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 44.6,
+        "expected_minutes": 47.5,
         "news": "",
-        "change": null,
+        "change": "out",
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.985,
-          "recent_multiplier": 0.989,
-          "recent_xgi90": 0.199,
-          "recent_minutes": 120.0,
+          "season_multiplier": 0.983,
+          "recent_multiplier": 0.988,
+          "recent_xgi90": 0.198,
+          "recent_minutes": 125.0,
           "recent_matches": 2,
-          "recent_confidence": 0.25
+          "recent_confidence": 0.258
         },
         "historical_prior": {
           "prev_minutes": 1697.0,
@@ -2198,26 +2202,26 @@
           "assist_prior_used": 0.097
         },
         "xp_breakdown": {
-          "appearance": 1.21,
-          "goals": 0.16,
-          "assists": 0.26,
-          "clean_sheet": 0.63,
+          "appearance": 1.35,
+          "goals": 0.17,
+          "assists": 0.28,
+          "clean_sheet": 0.81,
           "saves": 0,
-          "defensive": 0.01,
-          "bonus": 0.11,
+          "defensive": 0.02,
+          "bonus": 0.12,
           "penalty": 0.0,
-          "conceded": -0.18,
+          "conceded": -0.2,
           "cards": 0,
-          "displayed_sum": 2.2,
+          "displayed_sum": 2.55,
           "reconciled": true
         },
+        "captain": false,
+        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
-        "captain": false,
-        "vice": false,
         "confirmed_position": 3,
         "confirmed_multiplier": 1
       },
@@ -2295,13 +2299,13 @@
           "displayed_sum": 2.63,
           "reconciled": true
         },
-        "captain": false,
-        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
+        "captain": false,
+        "vice": false,
         "confirmed_position": 4,
         "confirmed_multiplier": 1
       },
@@ -2917,44 +2921,44 @@
         }
       },
       {
-        "id": 418,
-        "name": "Maguire",
-        "team_id": 16,
-        "team": "Man Utd",
+        "id": 4,
+        "name": "Gabriel",
+        "team_id": 1,
+        "team": "Arsenal",
         "position": "DEF",
-        "price": 5.0,
-        "selling_price": 5.0,
-        "xp": 2.63,
+        "price": 8.0,
+        "selling_price": 8.0,
+        "xp": 3.29,
         "xp_low": 0,
-        "xp_high": 5.99,
+        "xp_high": 7.32,
         "risk": "middels",
-        "volatility": 1.0,
-        "fixture": "Everton (A)",
+        "volatility": 0.96,
+        "fixture": "Chelsea (H)",
         "fixture_outlook": [
           {
             "gw": 3,
-            "label": "EVE A",
-            "difficulty": 4,
+            "label": "CHE H",
+            "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.63
+            "xp": 3.29
           },
           {
             "gw": 4,
-            "label": "MAN H",
+            "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 3.0
+            "xp": 3.17
           },
           {
             "gw": 5,
-            "label": "FUL A",
-            "difficulty": 3,
+            "label": "BRI A",
+            "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.78
+            "xp": 2.91
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 70.2,
+        "expected_minutes": 59.5,
         "news": "",
         "change": null,
         "set_piece_role": {
@@ -2962,32 +2966,33 @@
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.983,
-          "recent_multiplier": 0.988,
-          "recent_xgi90": 0.227,
-          "recent_minutes": 180.0,
+          "season_multiplier": 0.975,
+          "recent_multiplier": 0.98,
+          "recent_xgi90": 0.103,
+          "recent_minutes": 135.0,
           "recent_matches": 2,
-          "recent_confidence": 0.333
+          "recent_confidence": 0.273
         },
         "historical_prior": {
-          "prev_minutes": 1649.0,
-          "prev_goal90": 0.055,
-          "prev_assist90": 0.109,
-          "goal_prior_used": 0.055,
-          "assist_prior_used": 0.099
+          "prev_minutes": 2750.0,
+          "prev_goal90": 0.098,
+          "prev_assist90": 0.164,
+          "goal_prior_used": 0.088,
+          "assist_prior_used": 0.143
         },
         "xp_breakdown": {
-          "appearance": 1.67,
-          "goals": 0.16,
-          "assists": 0.3,
-          "clean_sheet": 0.6,
+          "appearance": 1.76,
+          "goals": 0.35,
+          "assists": 0.29,
+          "clean_sheet": 1.18,
           "saves": 0,
-          "defensive": 0.18,
-          "bonus": 0.16,
+          "defensive": 0.11,
+          "bonus": 0.2,
           "penalty": 0.0,
-          "conceded": -0.44,
-          "cards": 0,
-          "displayed_sum": 2.63,
+          "conceded": -0.26,
+          "cards": -0.33,
+          "other_model_components": -0.01,
+          "displayed_sum": 3.29,
           "reconciled": true
         },
         "captain": false,
@@ -3163,44 +3168,44 @@
         }
       },
       {
-        "id": 388,
-        "name": "Guéhi",
-        "team_id": 15,
-        "team": "Man City",
+        "id": 279,
+        "name": "Ajayi",
+        "team_id": 11,
+        "team": "Hull City",
         "position": "DEF",
-        "price": 6.0,
+        "price": 4.0,
         "selling_price": null,
-        "xp": 4.85,
+        "xp": 4.32,
         "xp_low": 0,
-        "xp_high": 10.12,
+        "xp_high": 9.05,
         "risk": "middels",
-        "volatility": 0.85,
-        "fixture": "Coventry City (H)",
+        "volatility": 0.86,
+        "fixture": "Aston Villa (H)",
         "fixture_outlook": [
           {
             "gw": 3,
-            "label": "COV H",
+            "label": "AST H",
             "difficulty": 2,
             "difficulty_basis": "opponent-attack",
-            "xp": 4.85
+            "xp": 4.32
           },
           {
             "gw": 4,
-            "label": "MAN A",
+            "label": "CHE A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 4.26
+            "xp": 3.64
           },
           {
             "gw": 5,
-            "label": "SUN H",
+            "label": "NEW A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 4.65
+            "xp": 3.63
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 82.1,
+        "expected_minutes": 68.0,
         "news": "",
         "change": "in",
         "set_piece_role": {
@@ -3208,33 +3213,33 @@
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 1.008,
-          "recent_multiplier": 1.024,
-          "recent_xgi90": 0.588,
-          "recent_minutes": 180.0,
+          "season_multiplier": 0.99,
+          "recent_multiplier": 0.994,
+          "recent_xgi90": 0.283,
+          "recent_minutes": 153.0,
           "recent_matches": 2,
-          "recent_confidence": 0.333
+          "recent_confidence": 0.298
         },
         "historical_prior": {
-          "prev_minutes": 3150.0,
-          "prev_goal90": 0.086,
-          "prev_assist90": 0.143,
-          "goal_prior_used": 0.079,
-          "assist_prior_used": 0.129
+          "prev_minutes": 2779.0,
+          "prev_goal90": 0.065,
+          "prev_assist90": 0.032,
+          "goal_prior_used": 0.062,
+          "assist_prior_used": 0.044
         },
         "xp_breakdown": {
-          "appearance": 1.92,
-          "goals": 1.02,
-          "assists": 0.34,
-          "clean_sheet": 1.16,
+          "appearance": 1.8,
+          "goals": 0.71,
+          "assists": 0.1,
+          "clean_sheet": 1.39,
           "saves": 0,
-          "defensive": 0.35,
-          "bonus": 0.37,
+          "defensive": 0.23,
+          "bonus": 0.29,
           "penalty": 0.0,
-          "conceded": -0.32,
+          "conceded": -0.22,
           "cards": 0,
-          "other_model_components": 0.01,
-          "displayed_sum": 4.85,
+          "other_model_components": 0.02,
+          "displayed_sum": 4.32,
           "reconciled": true
         },
         "captain": false,
@@ -3492,44 +3497,44 @@
         }
       },
       {
-        "id": 94,
-        "name": "Schade",
-        "team_id": 4,
-        "team": "Brentford",
+        "id": 480,
+        "name": "Gibbs-White",
+        "team_id": 18,
+        "team": "Nott'm Forest",
         "position": "MID",
-        "price": 6.0,
+        "price": 7.9,
         "selling_price": null,
-        "xp": 4.77,
+        "xp": 5.17,
         "xp_low": 0,
-        "xp_high": 9.83,
+        "xp_high": 10.51,
         "risk": "middels",
-        "volatility": 0.83,
-        "fixture": "Sunderland (H)",
+        "volatility": 0.81,
+        "fixture": "Spurs (H)",
         "fixture_outlook": [
           {
             "gw": 3,
-            "label": "SUN H",
+            "label": "SPU H",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.77
+            "xp": 5.17
           },
           {
             "gw": 4,
-            "label": "BOU A",
+            "label": "AST A",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.4
+            "xp": 5.16
           },
           {
             "gw": 5,
-            "label": "CHE H",
+            "label": "COV H",
             "difficulty": 3,
             "difficulty_basis": "opponent-defence",
-            "xp": 4.68
+            "xp": 5.17
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 78.6,
+        "expected_minutes": 81.7,
         "news": "",
         "change": "in",
         "set_piece_role": {
@@ -3537,32 +3542,33 @@
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.996,
-          "recent_multiplier": 1.005,
-          "recent_xgi90": 0.399,
-          "recent_minutes": 177.0,
+          "season_multiplier": 0.997,
+          "recent_multiplier": 1.018,
+          "recent_xgi90": 0.53,
+          "recent_minutes": 180.0,
           "recent_matches": 2,
-          "recent_confidence": 0.33
+          "recent_confidence": 0.333
         },
         "historical_prior": {
-          "prev_minutes": 2744.0,
-          "prev_goal90": 0.262,
-          "prev_assist90": 0.164,
-          "goal_prior_used": 0.247,
-          "assist_prior_used": 0.168
+          "prev_minutes": 3101.0,
+          "prev_goal90": 0.435,
+          "prev_assist90": 0.116,
+          "goal_prior_used": 0.382,
+          "assist_prior_used": 0.13
         },
         "xp_breakdown": {
-          "appearance": 1.82,
-          "goals": 1.52,
-          "assists": 0.43,
+          "appearance": 1.91,
+          "goals": 1.77,
+          "assists": 0.52,
           "clean_sheet": 0.28,
           "saves": 0,
-          "defensive": 0.17,
-          "bonus": 0.55,
+          "defensive": 0.11,
+          "bonus": 0.57,
           "penalty": 0.0,
           "conceded": 0,
           "cards": 0,
-          "displayed_sum": 4.77,
+          "other_model_components": 0.01,
+          "displayed_sum": 5.17,
           "reconciled": true
         },
         "captain": false,
@@ -3743,44 +3749,44 @@
     "transfers": [
       {
         "out": {
-          "id": 557,
-          "name": "Tzolis",
+          "id": 8,
+          "name": "Calafiori",
           "team_id": 1,
           "team": "Arsenal",
-          "position": "MID",
-          "price": 6.5,
-          "selling_price": 6.5,
-          "xp": 1.75,
+          "position": "DEF",
+          "price": 5.6,
+          "selling_price": 5.6,
+          "xp": 2.55,
           "xp_low": 0,
-          "xp_high": 4.44,
+          "xp_high": 5.98,
           "risk": "høy",
-          "volatility": 1.2,
+          "volatility": 1.05,
           "fixture": "Chelsea (H)",
           "fixture_outlook": [
             {
               "gw": 3,
               "label": "CHE H",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 1.75
+              "difficulty_basis": "opponent-attack",
+              "xp": 2.55
             },
             {
               "gw": 4,
               "label": "SUN A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 1.66
+              "difficulty_basis": "opponent-attack",
+              "xp": 2.46
             },
             {
               "gw": 5,
               "label": "BRI A",
-              "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 1.58
+              "difficulty": 4,
+              "difficulty_basis": "opponent-attack",
+              "xp": 2.29
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 40.6,
+          "expected_minutes": 47.5,
           "news": "",
           "change": "out",
           "set_piece_role": {
@@ -3788,33 +3794,32 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 0.993,
-            "recent_multiplier": 0.993,
-            "recent_xgi90": 0.255,
-            "recent_minutes": 115.0,
+            "season_multiplier": 0.983,
+            "recent_multiplier": 0.988,
+            "recent_xgi90": 0.198,
+            "recent_minutes": 125.0,
             "recent_matches": 2,
-            "recent_confidence": 0.242
+            "recent_confidence": 0.258
           },
           "historical_prior": {
-            "prev_minutes": 326.0,
-            "prev_goal90": 0.0,
-            "prev_assist90": 0.0,
-            "goal_prior_used": 0.147,
-            "assist_prior_used": 0.132
+            "prev_minutes": 1697.0,
+            "prev_goal90": 0.053,
+            "prev_assist90": 0.106,
+            "goal_prior_used": 0.054,
+            "assist_prior_used": 0.097
           },
           "xp_breakdown": {
-            "appearance": 1.08,
-            "goals": 0.34,
+            "appearance": 1.35,
+            "goals": 0.17,
             "assists": 0.28,
-            "clean_sheet": 0.11,
+            "clean_sheet": 0.81,
             "saves": 0,
-            "defensive": 0.0,
-            "bonus": 0.16,
+            "defensive": 0.02,
+            "bonus": 0.12,
             "penalty": 0.0,
-            "conceded": 0,
-            "cards": -0.23,
-            "other_model_components": 0.01,
-            "displayed_sum": 1.75,
+            "conceded": -0.2,
+            "cards": 0,
+            "displayed_sum": 2.55,
             "reconciled": true
           },
           "set_pieces": {
@@ -3824,44 +3829,44 @@
           }
         },
         "in": {
-          "id": 94,
-          "name": "Schade",
-          "team_id": 4,
-          "team": "Brentford",
-          "position": "MID",
-          "price": 6.0,
+          "id": 279,
+          "name": "Ajayi",
+          "team_id": 11,
+          "team": "Hull City",
+          "position": "DEF",
+          "price": 4.0,
           "selling_price": null,
-          "xp": 4.77,
+          "xp": 4.32,
           "xp_low": 0,
-          "xp_high": 9.83,
+          "xp_high": 9.05,
           "risk": "middels",
-          "volatility": 0.83,
-          "fixture": "Sunderland (H)",
+          "volatility": 0.86,
+          "fixture": "Aston Villa (H)",
           "fixture_outlook": [
             {
               "gw": 3,
-              "label": "SUN H",
-              "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 4.77
+              "label": "AST H",
+              "difficulty": 2,
+              "difficulty_basis": "opponent-attack",
+              "xp": 4.32
             },
             {
               "gw": 4,
-              "label": "BOU A",
+              "label": "CHE A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 4.4
+              "difficulty_basis": "opponent-attack",
+              "xp": 3.64
             },
             {
               "gw": 5,
-              "label": "CHE H",
+              "label": "NEW A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-defence",
-              "xp": 4.68
+              "difficulty_basis": "opponent-attack",
+              "xp": 3.63
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 78.6,
+          "expected_minutes": 68.0,
           "news": "",
           "change": "in",
           "set_piece_role": {
@@ -3869,32 +3874,33 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 0.996,
-            "recent_multiplier": 1.005,
-            "recent_xgi90": 0.399,
-            "recent_minutes": 177.0,
+            "season_multiplier": 0.99,
+            "recent_multiplier": 0.994,
+            "recent_xgi90": 0.283,
+            "recent_minutes": 153.0,
             "recent_matches": 2,
-            "recent_confidence": 0.33
+            "recent_confidence": 0.298
           },
           "historical_prior": {
-            "prev_minutes": 2744.0,
-            "prev_goal90": 0.262,
-            "prev_assist90": 0.164,
-            "goal_prior_used": 0.247,
-            "assist_prior_used": 0.168
+            "prev_minutes": 2779.0,
+            "prev_goal90": 0.065,
+            "prev_assist90": 0.032,
+            "goal_prior_used": 0.062,
+            "assist_prior_used": 0.044
           },
           "xp_breakdown": {
-            "appearance": 1.82,
-            "goals": 1.52,
-            "assists": 0.43,
-            "clean_sheet": 0.28,
+            "appearance": 1.8,
+            "goals": 0.71,
+            "assists": 0.1,
+            "clean_sheet": 1.39,
             "saves": 0,
-            "defensive": 0.17,
-            "bonus": 0.55,
+            "defensive": 0.23,
+            "bonus": 0.29,
             "penalty": 0.0,
-            "conceded": 0,
+            "conceded": -0.22,
             "cards": 0,
-            "displayed_sum": 4.77,
+            "other_model_components": 0.02,
+            "displayed_sum": 4.32,
             "reconciled": true
           },
           "set_pieces": {
@@ -3906,44 +3912,44 @@
       },
       {
         "out": {
-          "id": 4,
-          "name": "Gabriel",
+          "id": 557,
+          "name": "Tzolis",
           "team_id": 1,
           "team": "Arsenal",
-          "position": "DEF",
-          "price": 8.0,
-          "selling_price": 8.0,
-          "xp": 2.98,
+          "position": "MID",
+          "price": 6.5,
+          "selling_price": 6.5,
+          "xp": 1.97,
           "xp_low": 0,
-          "xp_high": 6.85,
-          "risk": "middels",
-          "volatility": 1.01,
+          "xp_high": 4.81,
+          "risk": "høy",
+          "volatility": 1.13,
           "fixture": "Chelsea (H)",
           "fixture_outlook": [
             {
               "gw": 3,
               "label": "CHE H",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 2.98
+              "difficulty_basis": "opponent-defence",
+              "xp": 1.97
             },
             {
               "gw": 4,
               "label": "SUN A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 2.87
+              "difficulty_basis": "opponent-defence",
+              "xp": 1.87
             },
             {
               "gw": 5,
               "label": "BRI A",
-              "difficulty": 4,
-              "difficulty_basis": "opponent-attack",
-              "xp": 2.64
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 1.78
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 56.2,
+          "expected_minutes": 43.4,
           "news": "",
           "change": "out",
           "set_piece_role": {
@@ -3951,32 +3957,33 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 0.976,
-            "recent_multiplier": 0.98,
-            "recent_xgi90": 0.1,
-            "recent_minutes": 130.0,
+            "season_multiplier": 0.992,
+            "recent_multiplier": 0.992,
+            "recent_xgi90": 0.244,
+            "recent_minutes": 120.0,
             "recent_matches": 2,
-            "recent_confidence": 0.265
+            "recent_confidence": 0.25
           },
           "historical_prior": {
-            "prev_minutes": 2750.0,
-            "prev_goal90": 0.098,
-            "prev_assist90": 0.164,
-            "goal_prior_used": 0.088,
-            "assist_prior_used": 0.143
+            "prev_minutes": 326.0,
+            "prev_goal90": 0.0,
+            "prev_assist90": 0.0,
+            "goal_prior_used": 0.147,
+            "assist_prior_used": 0.132
           },
           "xp_breakdown": {
-            "appearance": 1.61,
-            "goals": 0.33,
-            "assists": 0.27,
-            "clean_sheet": 1.02,
+            "appearance": 1.21,
+            "goals": 0.36,
+            "assists": 0.3,
+            "clean_sheet": 0.16,
             "saves": 0,
-            "defensive": 0.07,
-            "bonus": 0.23,
+            "defensive": 0.0,
+            "bonus": 0.17,
             "penalty": 0.0,
-            "conceded": -0.24,
-            "cards": -0.31,
-            "displayed_sum": 2.98,
+            "conceded": 0,
+            "cards": -0.24,
+            "other_model_components": 0.01,
+            "displayed_sum": 1.97,
             "reconciled": true
           },
           "set_pieces": {
@@ -3986,44 +3993,44 @@
           }
         },
         "in": {
-          "id": 388,
-          "name": "Guéhi",
-          "team_id": 15,
-          "team": "Man City",
-          "position": "DEF",
-          "price": 6.0,
+          "id": 480,
+          "name": "Gibbs-White",
+          "team_id": 18,
+          "team": "Nott'm Forest",
+          "position": "MID",
+          "price": 7.9,
           "selling_price": null,
-          "xp": 4.85,
+          "xp": 5.17,
           "xp_low": 0,
-          "xp_high": 10.12,
+          "xp_high": 10.51,
           "risk": "middels",
-          "volatility": 0.85,
-          "fixture": "Coventry City (H)",
+          "volatility": 0.81,
+          "fixture": "Spurs (H)",
           "fixture_outlook": [
             {
               "gw": 3,
-              "label": "COV H",
-              "difficulty": 2,
-              "difficulty_basis": "opponent-attack",
-              "xp": 4.85
+              "label": "SPU H",
+              "difficulty": 3,
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.17
             },
             {
               "gw": 4,
-              "label": "MAN A",
+              "label": "AST A",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 4.26
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.16
             },
             {
               "gw": 5,
-              "label": "SUN H",
+              "label": "COV H",
               "difficulty": 3,
-              "difficulty_basis": "opponent-attack",
-              "xp": 4.65
+              "difficulty_basis": "opponent-defence",
+              "xp": 5.17
             }
           ],
           "availability": 1.0,
-          "expected_minutes": 82.1,
+          "expected_minutes": 81.7,
           "news": "",
           "change": "in",
           "set_piece_role": {
@@ -4031,33 +4038,33 @@
             "source_version": "2026-08-28-manual-v2"
           },
           "form": {
-            "season_multiplier": 1.008,
-            "recent_multiplier": 1.024,
-            "recent_xgi90": 0.588,
+            "season_multiplier": 0.997,
+            "recent_multiplier": 1.018,
+            "recent_xgi90": 0.53,
             "recent_minutes": 180.0,
             "recent_matches": 2,
             "recent_confidence": 0.333
           },
           "historical_prior": {
-            "prev_minutes": 3150.0,
-            "prev_goal90": 0.086,
-            "prev_assist90": 0.143,
-            "goal_prior_used": 0.079,
-            "assist_prior_used": 0.129
+            "prev_minutes": 3101.0,
+            "prev_goal90": 0.435,
+            "prev_assist90": 0.116,
+            "goal_prior_used": 0.382,
+            "assist_prior_used": 0.13
           },
           "xp_breakdown": {
-            "appearance": 1.92,
-            "goals": 1.02,
-            "assists": 0.34,
-            "clean_sheet": 1.16,
+            "appearance": 1.91,
+            "goals": 1.77,
+            "assists": 0.52,
+            "clean_sheet": 0.28,
             "saves": 0,
-            "defensive": 0.35,
-            "bonus": 0.37,
+            "defensive": 0.11,
+            "bonus": 0.57,
             "penalty": 0.0,
-            "conceded": -0.32,
+            "conceded": 0,
             "cards": 0,
             "other_model_components": 0.01,
-            "displayed_sum": 4.85,
+            "displayed_sum": 5.17,
             "reconciled": true
           },
           "set_pieces": {
@@ -4070,7 +4077,7 @@
     ]
   },
   "optimizer": {
-    "weighted_gain": 16.38,
+    "weighted_gain": 13.98,
     "plan": [
       {
         "gw": 3,
@@ -4080,6 +4087,21 @@
         "pairs": [
           {
             "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal",
+              "price": 5.6,
+              "selling_price": 5.6
+            },
+            "in": {
+              "id": 279,
+              "name": "Ajayi",
+              "team": "Hull City",
+              "price": 4.0
+            }
+          },
+          {
+            "out": {
               "id": 557,
               "name": "Tzolis",
               "team": "Arsenal",
@@ -4087,12 +4109,45 @@
               "selling_price": 6.5
             },
             "in": {
-              "id": 94,
-              "name": "Schade",
-              "team": "Brentford",
-              "price": 6.0
+              "id": 480,
+              "name": "Gibbs-White",
+              "team": "Nott'm Forest",
+              "price": 7.9
             }
-          },
+          }
+        ],
+        "label": "Calafiori → Ajayi + Tzolis → Gibbs-White (-4)"
+      },
+      {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 496,
+              "name": "Kinsky",
+              "team": "Spurs",
+              "price": 4.5,
+              "selling_price": 4.5
+            },
+            "in": {
+              "id": 57,
+              "name": "Petrović",
+              "team": "Bournemouth",
+              "price": 4.5
+            }
+          }
+        ],
+        "label": "Kinsky → Petrović"
+      },
+      {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
           {
             "out": {
               "id": 4,
@@ -4109,10 +4164,10 @@
             }
           }
         ],
-        "label": "Tzolis → Schade + Gabriel → Guéhi (-4)"
+        "label": "Gabriel → Guéhi"
       },
       {
-        "gw": 4,
+        "gw": 6,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -4126,62 +4181,14 @@
               "selling_price": 5.0
             },
             "in": {
-              "id": 40,
-              "name": "Rogers",
-              "team": "Chelsea",
-              "price": 7.5
+              "id": 94,
+              "name": "Schade",
+              "team": "Brentford",
+              "price": 6.0
             }
           }
         ],
-        "label": "I.Sangaré → Rogers"
-      },
-      {
-        "gw": 5,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd",
-              "price": 8.0,
-              "selling_price": 8.0
-            },
-            "in": {
-              "id": 480,
-              "name": "Gibbs-White",
-              "team": "Nott'm Forest",
-              "price": 7.9
-            }
-          }
-        ],
-        "label": "Cunha → Gibbs-White"
-      },
-      {
-        "gw": 6,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 496,
-              "name": "Kinsky",
-              "team": "Spurs",
-              "price": 4.5,
-              "selling_price": 4.5
-            },
-            "in": {
-              "id": 572,
-              "name": "Tzolakis",
-              "team": "Hull City",
-              "price": 4.5
-            }
-          }
-        ],
-        "label": "Kinsky → Tzolakis"
+        "label": "I.Sangaré → Schade"
       }
     ],
     "selling_price_aware": true,
@@ -4197,14 +4204,29 @@
         0.03,
         12.6
       ],
-      "xi_xp": 45.28,
-      "bank": 2.5,
+      "xi_xp": 45.81,
+      "bank": 0.2,
       "action": {
         "gw": 3,
         "action": "transfer",
         "transfers": 2,
         "hit": 4,
         "pairs": [
+          {
+            "out": {
+              "id": 8,
+              "name": "Calafiori",
+              "team": "Arsenal",
+              "price": 5.6,
+              "selling_price": 5.6
+            },
+            "in": {
+              "id": 279,
+              "name": "Ajayi",
+              "team": "Hull City",
+              "price": 4.0
+            }
+          },
           {
             "out": {
               "id": 557,
@@ -4214,12 +4236,67 @@
               "selling_price": 6.5
             },
             "in": {
-              "id": 94,
-              "name": "Schade",
-              "team": "Brentford",
-              "price": 6.0
+              "id": 480,
+              "name": "Gibbs-White",
+              "team": "Nott'm Forest",
+              "price": 7.9
             }
-          },
+          }
+        ],
+        "label": "Calafiori → Ajayi + Tzolis → Gibbs-White (-4)"
+      }
+    },
+    {
+      "gw": 4,
+      "captain": "B.Fernandes",
+      "captain_xp": 6.64,
+      "captain_range": [
+        0.07,
+        13.21
+      ],
+      "xi_xp": 46.93,
+      "bank": 0.2,
+      "action": {
+        "gw": 4,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
+          {
+            "out": {
+              "id": 496,
+              "name": "Kinsky",
+              "team": "Spurs",
+              "price": 4.5,
+              "selling_price": 4.5
+            },
+            "in": {
+              "id": 57,
+              "name": "Petrović",
+              "team": "Bournemouth",
+              "price": 4.5
+            }
+          }
+        ],
+        "label": "Kinsky → Petrović"
+      }
+    },
+    {
+      "gw": 5,
+      "captain": "B.Fernandes",
+      "captain_xp": 6.5,
+      "captain_range": [
+        0.03,
+        12.97
+      ],
+      "xi_xp": 48.34,
+      "bank": 2.2,
+      "action": {
+        "gw": 5,
+        "action": "transfer",
+        "transfers": 1,
+        "hit": 0,
+        "pairs": [
           {
             "out": {
               "id": 4,
@@ -4236,42 +4313,21 @@
             }
           }
         ],
-        "label": "Tzolis → Schade + Gabriel → Guéhi (-4)"
-      },
-      "plan_intelligence": {
-        "version": "1.0",
-        "free_transfers_before": 1,
-        "free_transfers_used": 1,
-        "free_transfers_after": 1,
-        "bank_before": 0.0,
-        "bank_after": 2.5,
-        "bank_change": 2.5,
-        "expected_team_score": 45.3,
-        "confidence": "LAVERE",
-        "why": [
-          "Planlagt Tzolis → Schade for å forbedre fler-runders forventet verdi.",
-          "Planlagt Gabriel → Guéhi for å forbedre fler-runders forventet verdi.",
-          "Trekket koster 4 poeng og må derfor gi ekstra stor fler-runders gevinst.",
-          "Trekket frigjør omtrent £2.5m til senere oppgraderinger."
-        ],
-        "change_triggers": [
-          "Planen revurderes hvis forventede minutter, skadebildet eller priser endrer seg før den aktuelle fristen."
-        ],
-        "note": "Dette er en rullerende plan, ikke et løfte. Den bygges på nytt når ferske data kommer."
+        "label": "Gabriel → Guéhi"
       }
     },
     {
-      "gw": 4,
+      "gw": 6,
       "captain": "B.Fernandes",
-      "captain_xp": 6.64,
+      "captain_xp": 7.12,
       "captain_range": [
-        0.07,
-        13.21
+        0.18,
+        14.06
       ],
-      "xi_xp": 47.11,
-      "bank": 0.0,
+      "xi_xp": 50.77,
+      "bank": 1.2,
       "action": {
-        "gw": 4,
+        "gw": 6,
         "action": "transfer",
         "transfers": 1,
         "hit": 0,
@@ -4285,140 +4341,14 @@
               "selling_price": 5.0
             },
             "in": {
-              "id": 40,
-              "name": "Rogers",
-              "team": "Chelsea",
-              "price": 7.5
+              "id": 94,
+              "name": "Schade",
+              "team": "Brentford",
+              "price": 6.0
             }
           }
         ],
-        "label": "I.Sangaré → Rogers"
-      },
-      "plan_intelligence": {
-        "version": "1.0",
-        "free_transfers_before": 1,
-        "free_transfers_used": 1,
-        "free_transfers_after": 1,
-        "bank_before": 2.5,
-        "bank_after": 0.0,
-        "bank_change": -2.5,
-        "expected_team_score": 47.1,
-        "confidence": "MIDDELS",
-        "why": [
-          "Planlagt I.Sangaré → Rogers for å forbedre fler-runders forventet verdi.",
-          "Trekket bruker omtrent £2.5m av bankreserven."
-        ],
-        "change_triggers": [
-          "Planen revurderes hvis forventede minutter, skadebildet eller priser endrer seg før den aktuelle fristen."
-        ],
-        "note": "Dette er en rullerende plan, ikke et løfte. Den bygges på nytt når ferske data kommer."
-      }
-    },
-    {
-      "gw": 5,
-      "captain": "B.Fernandes",
-      "captain_xp": 6.5,
-      "captain_range": [
-        0.03,
-        12.97
-      ],
-      "xi_xp": 49.03,
-      "bank": 0.1,
-      "action": {
-        "gw": 5,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 428,
-              "name": "Cunha",
-              "team": "Man Utd",
-              "price": 8.0,
-              "selling_price": 8.0
-            },
-            "in": {
-              "id": 480,
-              "name": "Gibbs-White",
-              "team": "Nott'm Forest",
-              "price": 7.9
-            }
-          }
-        ],
-        "label": "Cunha → Gibbs-White"
-      },
-      "plan_intelligence": {
-        "version": "1.0",
-        "free_transfers_before": 1,
-        "free_transfers_used": 1,
-        "free_transfers_after": 1,
-        "bank_before": 0.0,
-        "bank_after": 0.1,
-        "bank_change": 0.1,
-        "expected_team_score": 49.0,
-        "confidence": "MIDDELS",
-        "why": [
-          "Planlagt Cunha → Gibbs-White for å forbedre fler-runders forventet verdi.",
-          "Trekket frigjør omtrent £0.1m til senere oppgraderinger."
-        ],
-        "change_triggers": [
-          "Planen revurderes hvis forventede minutter, skadebildet eller priser endrer seg før den aktuelle fristen."
-        ],
-        "note": "Dette er en rullerende plan, ikke et løfte. Den bygges på nytt når ferske data kommer."
-      }
-    },
-    {
-      "gw": 6,
-      "captain": "B.Fernandes",
-      "captain_xp": 7.12,
-      "captain_range": [
-        0.18,
-        14.06
-      ],
-      "xi_xp": 50.92,
-      "bank": 0.1,
-      "action": {
-        "gw": 6,
-        "action": "transfer",
-        "transfers": 1,
-        "hit": 0,
-        "pairs": [
-          {
-            "out": {
-              "id": 496,
-              "name": "Kinsky",
-              "team": "Spurs",
-              "price": 4.5,
-              "selling_price": 4.5
-            },
-            "in": {
-              "id": 572,
-              "name": "Tzolakis",
-              "team": "Hull City",
-              "price": 4.5
-            }
-          }
-        ],
-        "label": "Kinsky → Tzolakis"
-      },
-      "plan_intelligence": {
-        "version": "1.0",
-        "free_transfers_before": 1,
-        "free_transfers_used": 1,
-        "free_transfers_after": 1,
-        "bank_before": 0.1,
-        "bank_after": 0.1,
-        "bank_change": 0.0,
-        "expected_team_score": 50.9,
-        "confidence": "MIDDELS",
-        "why": [
-          "Planlagt Kinsky → Tzolakis for å forbedre fler-runders forventet verdi."
-        ],
-        "change_triggers": [
-          "Planen revurderes hvis forventede minutter, skadebildet eller priser endrer seg før den aktuelle fristen."
-        ],
-        "note": "Dette er en rullerende plan, ikke et løfte. Den bygges på nytt når ferske data kommer."
+        "label": "I.Sangaré → Schade"
       }
     }
   ],
@@ -4603,18 +4533,18 @@
         "incoming": {
           "score": 0.348,
           "label": "kjøpspress",
-          "net_transfers": 34776,
-          "transfers_in": 63250,
-          "transfers_out": 28474,
+          "net_transfers": 34811,
+          "transfers_in": 63389,
+          "transfers_out": 28578,
           "cost_change_event": 0,
           "prediction": false
         },
         "outgoing": {
-          "score": -0.195,
+          "score": -0.196,
           "label": "rolig",
-          "net_transfers": -19547,
-          "transfers_in": 252,
-          "transfers_out": 19799,
+          "net_transfers": -19610,
+          "transfers_in": 253,
+          "transfers_out": 19863,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -4622,174 +4552,7 @@
       },
       "timing_notes": [
         "nesten ingen bankreserve etter byttet"
-      ],
-      "timing_value_shadow": {
-        "version": "1.0",
-        "label": "VENT PÅ MER INFO",
-        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-        "hours_to_deadline": 93.8,
-        "affordability_fragility": 1.0,
-        "incoming_price_pressure_risk": 0.348,
-        "outgoing_price_pressure_risk": 0.195,
-        "lock_risk": 0.325,
-        "information_value": 0.904,
-        "net_early_action_case": -0.579,
-        "price_prediction": false,
-        "affects_ranking": false
-      },
-      "option_value_shadow": {
-        "version": "1.1",
-        "total": 1.05,
-        "vs_bank": -0.45,
-        "components": {
-          "bank_value": 0.0,
-          "free_transfer_value": 0.45,
-          "upgrade_surface_value": 0.6
-        },
-        "future_free_transfers": 1,
-        "affordable_upgrade_paths": 9,
-        "top_upgrade_paths": [
-          {
-            "out_id": 557,
-            "out_name": "Tzolis",
-            "in_id": 236,
-            "in_name": "Dewsbury-Hall",
-            "gain": 6.58,
-            "cost": 6.5
-          },
-          {
-            "out_id": 488,
-            "out_name": "I.Sangaré",
-            "in_id": 127,
-            "in_name": "Gomez",
-            "gain": 5.96,
-            "cost": 5.0
-          },
-          {
-            "out_id": 8,
-            "out_name": "Calafiori",
-            "in_id": 88,
-            "in_name": "Kayode",
-            "gain": 3.95,
-            "cost": 4.6
-          },
-          {
-            "out_id": 4,
-            "out_name": "Gabriel",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 3.41,
-            "cost": 6.0
-          },
-          {
-            "out_id": 496,
-            "out_name": "Kinsky",
-            "in_id": 57,
-            "in_name": "Petrović",
-            "gain": 2.85,
-            "cost": 4.5
-          }
-        ],
-        "affects_ranking": false
-      },
-      "robustness_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "label": "ROBUST",
-        "score": 0.572,
-        "weighted_gain": {
-          "gw1": 3.664,
-          "gw3": 8.477,
-          "plan": 9.871
-        },
-        "spread": 6.207,
-        "rule": "Must not replace validated ranking; pre-deadline disagreement warning only."
-      },
-      "bench_adjustment_shadow": {
-        "version": "1.0",
-        "applied": true,
-        "affects_ranking": false,
-        "bench_cover_player": "Slater",
-        "bench_cover_expected": 3.52,
-        "raw_next_gw_gain": 3.66,
-        "bench_adjusted_next_gw_gain": 0.14,
-        "adjustment": -3.52,
-        "bench_adjusted_short_gain": 5.97,
-        "bench_adjusted_horizon_gain": 6.35,
-        "note": "Skadebytter sammenlignes mot forventet autosub-verdi når utgående spiller sannsynligvis ikke spiller."
-      },
-      "absence_severity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "severity": "USIKKER",
-        "replacement_urgency": "LAV/MIDDELS",
-        "availability_used": 100.0,
-        "expected_minutes_used": 0.0,
-        "bench_adjusted_next_gw_gain": 0.14,
-        "reason": "Det er usikkerhet rundt tilgjengelighet/minutter. Vent på ferskere lagnytt når timing tillater det."
-      },
-      "transfer_necessity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 1.83,
-        "label": "LUKSUSBYTTE",
-        "reasons": [
-          "Benken dekker neste runde så godt at hasteverdien faller.",
-          "Benkekorrigert 3-GW-gevinst er +6.0 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "bench_adjusted_next_gw_gain": 0.14,
-        "three_gw_gain": 5.97,
-        "plan_gain": 6.35
-      },
-      "transfer_regret_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "regret_make_transfer": 0.95,
-        "regret_save_ft": 0.8,
-        "regret_gap_save_minus_make": -0.15,
-        "verdict": "SPAR FT HAR LAVERE ANGERRISIKO",
-        "inputs": {
-          "bench_adjusted_next_gw_gain": 0.14,
-          "three_gw_gain": 5.97,
-          "plan_gain": 6.35,
-          "necessity": "LUKSUSBYTTE",
-          "information_value": 0.9,
-          "budget_lock_risk": 0.33,
-          "robustness": "ROBUST"
-        }
-      },
-      "decision_confidence_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 0.68,
-        "components": {
-          "kortsiktig_sportslig": 0.72,
-          "langsiktig_verdi": 0.89,
-          "spilletid_og_fravaer": 0.6,
-          "benkedekning": 0.51,
-          "robusthet": 0.9,
-          "budsjett_og_pris": 0.81,
-          "ft_fleksibilitet": 0.48,
-          "informasjonsklarhet": 0.48,
-          "angerrisiko": 0.64,
-          "datakvalitet": 0.45
-        },
-        "weakest": [
-          {
-            "key": "datakvalitet",
-            "score": 0.45
-          },
-          {
-            "key": "informasjonsklarhet",
-            "score": 0.48
-          },
-          {
-            "key": "ft_fleksibilitet",
-            "score": 0.48
-          }
-        ]
-      }
+      ]
     },
     {
       "status": "GJØR DET",
@@ -4969,20 +4732,20 @@
       },
       "market_timing": {
         "incoming": {
-          "score": -0.429,
+          "score": -0.426,
           "label": "salgspress",
-          "net_transfers": -58645,
-          "transfers_in": 68390,
-          "transfers_out": 127035,
+          "net_transfers": -58579,
+          "transfers_in": 68824,
+          "transfers_out": 127403,
           "cost_change_event": 0,
           "prediction": false
         },
         "outgoing": {
-          "score": -0.195,
+          "score": -0.196,
           "label": "rolig",
-          "net_transfers": -19547,
-          "transfers_in": 252,
-          "transfers_out": 19799,
+          "net_transfers": -19610,
+          "transfers_in": 253,
+          "transfers_out": 19863,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -4990,543 +4753,7 @@
       },
       "timing_notes": [
         "nesten ingen bankreserve etter byttet"
-      ],
-      "timing_value_shadow": {
-        "version": "1.0",
-        "label": "VENT PÅ MER INFO",
-        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-        "hours_to_deadline": 93.8,
-        "affordability_fragility": 1.0,
-        "incoming_price_pressure_risk": 0.0,
-        "outgoing_price_pressure_risk": 0.195,
-        "lock_risk": 0.074,
-        "information_value": 0.904,
-        "net_early_action_case": -0.83,
-        "price_prediction": false,
-        "affects_ranking": false
-      },
-      "option_value_shadow": {
-        "version": "1.1",
-        "total": 1.05,
-        "vs_bank": -0.45,
-        "components": {
-          "bank_value": 0.0,
-          "free_transfer_value": 0.45,
-          "upgrade_surface_value": 0.6
-        },
-        "future_free_transfers": 1,
-        "affordable_upgrade_paths": 9,
-        "top_upgrade_paths": [
-          {
-            "out_id": 557,
-            "out_name": "Tzolis",
-            "in_id": 236,
-            "in_name": "Dewsbury-Hall",
-            "gain": 6.58,
-            "cost": 6.5
-          },
-          {
-            "out_id": 488,
-            "out_name": "I.Sangaré",
-            "in_id": 127,
-            "in_name": "Gomez",
-            "gain": 5.96,
-            "cost": 5.0
-          },
-          {
-            "out_id": 8,
-            "out_name": "Calafiori",
-            "in_id": 88,
-            "in_name": "Kayode",
-            "gain": 3.95,
-            "cost": 4.6
-          },
-          {
-            "out_id": 4,
-            "out_name": "Gabriel",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 3.41,
-            "cost": 6.0
-          },
-          {
-            "out_id": 496,
-            "out_name": "Kinsky",
-            "in_id": 57,
-            "in_name": "Petrović",
-            "gain": 2.85,
-            "cost": 4.5
-          }
-        ],
-        "affects_ranking": false
-      },
-      "robustness_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "label": "ROBUST",
-        "score": 0.56,
-        "weighted_gain": {
-          "gw1": 3.321,
-          "gw3": 8.456,
-          "plan": 9.828
-        },
-        "spread": 6.507,
-        "rule": "Must not replace validated ranking; pre-deadline disagreement warning only."
-      },
-      "bench_adjustment_shadow": {
-        "version": "1.0",
-        "applied": true,
-        "affects_ranking": false,
-        "bench_cover_player": "Slater",
-        "bench_cover_expected": 3.52,
-        "raw_next_gw_gain": 3.32,
-        "bench_adjusted_next_gw_gain": -0.2,
-        "adjustment": -3.52,
-        "bench_adjusted_short_gain": 6.0,
-        "bench_adjusted_horizon_gain": 6.31,
-        "note": "Skadebytter sammenlignes mot forventet autosub-verdi når utgående spiller sannsynligvis ikke spiller."
-      },
-      "absence_severity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "severity": "USIKKER",
-        "replacement_urgency": "LAV",
-        "availability_used": 100.0,
-        "expected_minutes_used": 0.0,
-        "bench_adjusted_next_gw_gain": -0.2,
-        "reason": "Det er usikkerhet rundt tilgjengelighet/minutter. Vent på ferskere lagnytt når timing tillater det. Benken dekker neste runde godt nok til at hastebehovet reduseres."
-      },
-      "transfer_necessity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 1.11,
-        "label": "SPAR FT",
-        "reasons": [
-          "Benken dekker neste runde så godt at hasteverdien faller.",
-          "Benkekorrigert 3-GW-gevinst er +6.0 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "bench_adjusted_next_gw_gain": -0.2,
-        "three_gw_gain": 6.0,
-        "plan_gain": 6.31
-      },
-      "transfer_regret_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "regret_make_transfer": 0.95,
-        "regret_save_ft": 0.73,
-        "regret_gap_save_minus_make": -0.22,
-        "verdict": "SPAR FT HAR LAVERE ANGERRISIKO",
-        "inputs": {
-          "bench_adjusted_next_gw_gain": -0.2,
-          "three_gw_gain": 6.0,
-          "plan_gain": 6.31,
-          "necessity": "SPAR FT",
-          "information_value": 0.9,
-          "budget_lock_risk": 0.07,
-          "robustness": "ROBUST"
-        }
-      },
-      "decision_confidence_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 0.67,
-        "components": {
-          "kortsiktig_sportslig": 0.69,
-          "langsiktig_verdi": 0.89,
-          "spilletid_og_fravaer": 0.6,
-          "benkedekning": 0.5,
-          "robusthet": 0.9,
-          "budsjett_og_pris": 0.88,
-          "ft_fleksibilitet": 0.3,
-          "informasjonsklarhet": 0.48,
-          "angerrisiko": 0.62,
-          "datakvalitet": 0.45
-        },
-        "weakest": [
-          {
-            "key": "ft_fleksibilitet",
-            "score": 0.3
-          },
-          {
-            "key": "datakvalitet",
-            "score": 0.45
-          },
-          {
-            "key": "informasjonsklarhet",
-            "score": 0.48
-          }
-        ]
-      }
-    },
-    {
-      "status": "GJØR DET",
-      "edge": 9.64,
-      "short_gain": 9.23,
-      "horizon_gain": 9.74,
-      "bank_after": 0.0,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 557,
-            "name": "Tzolis",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "MID",
-            "price": 6.5,
-            "selling_price": 6.5,
-            "xp": 1.75,
-            "xp_low": 0,
-            "xp_high": 4.44,
-            "risk": "høy",
-            "volatility": 1.2,
-            "fixture": "Chelsea (H)",
-            "fixture_outlook": [
-              {
-                "gw": 3,
-                "label": "CHE H",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 1.75
-              },
-              {
-                "gw": 4,
-                "label": "SUN A",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 1.66
-              },
-              {
-                "gw": 5,
-                "label": "BRI A",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 1.58
-              }
-            ],
-            "availability": 1.0,
-            "expected_minutes": 40.6,
-            "news": "",
-            "change": null,
-            "set_piece_role": {
-              "penalty_taker_share": 0,
-              "source_version": "2026-08-28-manual-v2"
-            },
-            "form": {
-              "season_multiplier": 0.993,
-              "recent_multiplier": 0.993,
-              "recent_xgi90": 0.255,
-              "recent_minutes": 115.0,
-              "recent_matches": 2,
-              "recent_confidence": 0.242
-            },
-            "historical_prior": {
-              "prev_minutes": 326.0,
-              "prev_goal90": 0.0,
-              "prev_assist90": 0.0,
-              "goal_prior_used": 0.147,
-              "assist_prior_used": 0.132
-            },
-            "xp_breakdown": {
-              "appearance": 1.08,
-              "goals": 0.34,
-              "assists": 0.28,
-              "clean_sheet": 0.11,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.16,
-              "penalty": 0.0,
-              "conceded": 0,
-              "cards": -0.23,
-              "other_model_components": 0.01,
-              "displayed_sum": 1.75,
-              "reconciled": true
-            },
-            "set_pieces": {
-              "penalty_taker_share": 0.0,
-              "penalty_role": "unknown",
-              "source": "none"
-            }
-          },
-          "in": {
-            "id": 236,
-            "name": "Dewsbury-Hall",
-            "team_id": 9,
-            "team": "Everton",
-            "position": "MID",
-            "price": 6.5,
-            "selling_price": null,
-            "xp": 4.91,
-            "xp_low": 0,
-            "xp_high": 10.03,
-            "risk": "middels",
-            "volatility": 0.81,
-            "fixture": "Man Utd (H)",
-            "fixture_outlook": [
-              {
-                "gw": 3,
-                "label": "MAN H",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 4.91
-              },
-              {
-                "gw": 4,
-                "label": "SPU A",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 4.59
-              },
-              {
-                "gw": 5,
-                "label": "IPS H",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 4.72
-              }
-            ],
-            "availability": 1.0,
-            "expected_minutes": 78.3,
-            "news": "",
-            "change": null,
-            "set_piece_role": {
-              "penalty_taker_share": 0,
-              "source_version": "2026-08-28-manual-v2"
-            },
-            "form": {
-              "season_multiplier": 0.985,
-              "recent_multiplier": 0.99,
-              "recent_xgi90": 0.253,
-              "recent_minutes": 180.0,
-              "recent_matches": 2,
-              "recent_confidence": 0.333
-            },
-            "historical_prior": {
-              "prev_minutes": 2629.0,
-              "prev_goal90": 0.274,
-              "prev_assist90": 0.24,
-              "goal_prior_used": 0.255,
-              "assist_prior_used": 0.224
-            },
-            "xp_breakdown": {
-              "appearance": 1.84,
-              "goals": 1.5,
-              "assists": 0.55,
-              "clean_sheet": 0.3,
-              "saves": 0,
-              "defensive": 0.16,
-              "bonus": 0.55,
-              "penalty": 0.0,
-              "conceded": 0,
-              "cards": 0,
-              "other_model_components": 0.01,
-              "displayed_sum": 4.91,
-              "reconciled": true
-            },
-            "set_pieces": {
-              "penalty_taker_share": 0.0,
-              "penalty_role": "unknown",
-              "source": "none"
-            }
-          }
-        }
-      ],
-      "budget_flexibility": {
-        "grade": "LAV",
-        "score": 0.15,
-        "note": "Lite eller ingen reserve til neste trekk."
-      },
-      "market_timing": {
-        "incoming": {
-          "score": -0.116,
-          "label": "rolig",
-          "net_transfers": -11561,
-          "transfers_in": 23423,
-          "transfers_out": 34984,
-          "cost_change_event": 0,
-          "prediction": false
-        },
-        "outgoing": {
-          "score": -0.017,
-          "label": "rolig",
-          "net_transfers": -1698,
-          "transfers_in": 65572,
-          "transfers_out": 67270,
-          "cost_change_event": 0,
-          "prediction": false
-        },
-        "shadow_only": true
-      },
-      "timing_notes": [
-        "nesten ingen bankreserve etter byttet"
-      ],
-      "timing_value_shadow": {
-        "version": "1.0",
-        "label": "VENT PÅ MER INFO",
-        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-        "hours_to_deadline": 93.8,
-        "affordability_fragility": 1.0,
-        "incoming_price_pressure_risk": 0.0,
-        "outgoing_price_pressure_risk": 0.017,
-        "lock_risk": 0.006,
-        "information_value": 0.872,
-        "net_early_action_case": -0.866,
-        "price_prediction": false,
-        "affects_ranking": false
-      },
-      "option_value_shadow": {
-        "version": "1.1",
-        "total": 1.05,
-        "vs_bank": -0.45,
-        "components": {
-          "bank_value": 0.0,
-          "free_transfer_value": 0.45,
-          "upgrade_surface_value": 0.6
-        },
-        "future_free_transfers": 1,
-        "affordable_upgrade_paths": 9,
-        "top_upgrade_paths": [
-          {
-            "out_id": 465,
-            "out_name": "Osula",
-            "in_id": 346,
-            "in_name": "Calvert-Lewin",
-            "gain": 6.51,
-            "cost": 6.0
-          },
-          {
-            "out_id": 488,
-            "out_name": "I.Sangaré",
-            "in_id": 127,
-            "in_name": "Gomez",
-            "gain": 5.96,
-            "cost": 5.0
-          },
-          {
-            "out_id": 8,
-            "out_name": "Calafiori",
-            "in_id": 88,
-            "in_name": "Kayode",
-            "gain": 3.95,
-            "cost": 4.6
-          },
-          {
-            "out_id": 4,
-            "out_name": "Gabriel",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 3.41,
-            "cost": 6.0
-          },
-          {
-            "out_id": 496,
-            "out_name": "Kinsky",
-            "in_id": 57,
-            "in_name": "Petrović",
-            "gain": 2.85,
-            "cost": 4.5
-          }
-        ],
-        "affects_ranking": false
-      },
-      "robustness_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "label": "ROBUST",
-        "score": 0.557,
-        "weighted_gain": {
-          "gw1": 3.16,
-          "gw3": 8.152,
-          "plan": 9.737
-        },
-        "spread": 6.577,
-        "rule": "Must not replace validated ranking; pre-deadline disagreement warning only."
-      },
-      "bench_adjustment_shadow": {
-        "version": "1.0",
-        "applied": false,
-        "affects_ranking": false,
-        "bench_cover_player": null,
-        "bench_cover_expected": 0.0,
-        "raw_next_gw_gain": 3.16,
-        "bench_adjusted_next_gw_gain": 3.16,
-        "adjustment": 0.0,
-        "bench_adjusted_short_gain": 9.23,
-        "bench_adjusted_horizon_gain": 9.74,
-        "note": "Skadebytter sammenlignes mot forventet autosub-verdi når utgående spiller sannsynligvis ikke spiller."
-      },
-      "absence_severity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "severity": "USIKKER",
-        "replacement_urgency": "LAV/MIDDELS",
-        "availability_used": 100.0,
-        "expected_minutes_used": 0.0,
-        "bench_adjusted_next_gw_gain": 3.16,
-        "reason": "Det er usikkerhet rundt tilgjengelighet/minutter. Vent på ferskere lagnytt når timing tillater det."
-      },
-      "transfer_necessity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 4.79,
-        "label": "FORNUFTIG",
-        "reasons": [
-          "Benkekorrigert 3-GW-gevinst er +9.2 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "bench_adjusted_next_gw_gain": 3.16,
-        "three_gw_gain": 9.23,
-        "plan_gain": 9.74
-      },
-      "transfer_regret_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "regret_make_transfer": 0.55,
-        "regret_save_ft": 0.83,
-        "regret_gap_save_minus_make": 0.28,
-        "verdict": "BYTT HAR LAVERE ANGERRISIKO",
-        "inputs": {
-          "bench_adjusted_next_gw_gain": 3.16,
-          "three_gw_gain": 9.23,
-          "plan_gain": 9.74,
-          "necessity": "FORNUFTIG",
-          "information_value": 0.87,
-          "budget_lock_risk": 0.01,
-          "robustness": "ROBUST"
-        }
-      },
-      "decision_confidence_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 0.82,
-        "components": {
-          "kortsiktig_sportslig": 1,
-          "langsiktig_verdi": 1,
-          "spilletid_og_fravaer": 0.6,
-          "benkedekning": 0.83,
-          "robusthet": 0.9,
-          "budsjett_og_pris": 0.9,
-          "ft_fleksibilitet": 0.72,
-          "informasjonsklarhet": 0.49,
-          "angerrisiko": 0.86,
-          "datakvalitet": 0.45
-        },
-        "weakest": [
-          {
-            "key": "datakvalitet",
-            "score": 0.45
-          },
-          {
-            "key": "informasjonsklarhet",
-            "score": 0.49
-          },
-          {
-            "key": "spilletid_og_fravaer",
-            "score": 0.6
-          }
-        ]
-      }
+      ]
     },
     {
       "status": "GJØR DET",
@@ -5708,18 +4935,18 @@
         "incoming": {
           "score": 0.075,
           "label": "rolig",
-          "net_transfers": 7505,
-          "transfers_in": 10663,
-          "transfers_out": 3158,
+          "net_transfers": 7539,
+          "transfers_in": 10713,
+          "transfers_out": 3174,
           "cost_change_event": 0,
           "prediction": false
         },
         "outgoing": {
-          "score": -0.122,
+          "score": -0.123,
           "label": "rolig",
-          "net_transfers": -12247,
+          "net_transfers": -12281,
           "transfers_in": 112,
-          "transfers_out": 12359,
+          "transfers_out": 12393,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -5727,539 +4954,7 @@
       },
       "timing_notes": [
         "nesten ingen bankreserve etter byttet"
-      ],
-      "timing_value_shadow": {
-        "version": "1.0",
-        "label": "VENT PÅ MER INFO",
-        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-        "hours_to_deadline": 93.8,
-        "affordability_fragility": 1.0,
-        "incoming_price_pressure_risk": 0.075,
-        "outgoing_price_pressure_risk": 0.122,
-        "lock_risk": 0.1,
-        "information_value": 0.904,
-        "net_early_action_case": -0.804,
-        "price_prediction": false,
-        "affects_ranking": false
-      },
-      "option_value_shadow": {
-        "version": "1.1",
-        "total": 1.05,
-        "vs_bank": -0.45,
-        "components": {
-          "bank_value": 0.0,
-          "free_transfer_value": 0.45,
-          "upgrade_surface_value": 0.6
-        },
-        "future_free_transfers": 1,
-        "affordable_upgrade_paths": 9,
-        "top_upgrade_paths": [
-          {
-            "out_id": 557,
-            "out_name": "Tzolis",
-            "in_id": 236,
-            "in_name": "Dewsbury-Hall",
-            "gain": 6.58,
-            "cost": 6.5
-          },
-          {
-            "out_id": 465,
-            "out_name": "Osula",
-            "in_id": 346,
-            "in_name": "Calvert-Lewin",
-            "gain": 6.51,
-            "cost": 6.0
-          },
-          {
-            "out_id": 8,
-            "out_name": "Calafiori",
-            "in_id": 88,
-            "in_name": "Kayode",
-            "gain": 3.95,
-            "cost": 4.6
-          },
-          {
-            "out_id": 4,
-            "out_name": "Gabriel",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 3.41,
-            "cost": 6.0
-          },
-          {
-            "out_id": 496,
-            "out_name": "Kinsky",
-            "in_id": 57,
-            "in_name": "Petrović",
-            "gain": 2.85,
-            "cost": 4.5
-          }
-        ],
-        "affects_ranking": false
-      },
-      "robustness_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "label": "ROBUST",
-        "score": 0.587,
-        "weighted_gain": {
-          "gw1": 3.826,
-          "gw3": 8.293,
-          "plan": 9.661
-        },
-        "spread": 5.835,
-        "rule": "Must not replace validated ranking; pre-deadline disagreement warning only."
-      },
-      "bench_adjustment_shadow": {
-        "version": "1.0",
-        "applied": true,
-        "affects_ranking": false,
-        "bench_cover_player": "Slater",
-        "bench_cover_expected": 3.52,
-        "raw_next_gw_gain": 3.83,
-        "bench_adjusted_next_gw_gain": 0.31,
-        "adjustment": -3.52,
-        "bench_adjusted_short_gain": 5.69,
-        "bench_adjusted_horizon_gain": 6.14,
-        "note": "Skadebytter sammenlignes mot forventet autosub-verdi når utgående spiller sannsynligvis ikke spiller."
-      },
-      "absence_severity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "severity": "USIKKER",
-        "replacement_urgency": "LAV/MIDDELS",
-        "availability_used": 100.0,
-        "expected_minutes_used": 0.0,
-        "bench_adjusted_next_gw_gain": 0.31,
-        "reason": "Det er usikkerhet rundt tilgjengelighet/minutter. Vent på ferskere lagnytt når timing tillater det."
-      },
-      "transfer_necessity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 3.02,
-        "label": "LUKSUSBYTTE",
-        "reasons": [
-          "Benkekorrigert 3-GW-gevinst er +5.7 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "bench_adjusted_next_gw_gain": 0.31,
-        "three_gw_gain": 5.69,
-        "plan_gain": 6.14
-      },
-      "transfer_regret_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "regret_make_transfer": 0.79,
-        "regret_save_ft": 0.77,
-        "regret_gap_save_minus_make": -0.02,
-        "verdict": "ANGERRISIKOEN ER NESTEN LIK",
-        "inputs": {
-          "bench_adjusted_next_gw_gain": 0.31,
-          "three_gw_gain": 5.69,
-          "plan_gain": 6.14,
-          "necessity": "LUKSUSBYTTE",
-          "information_value": 0.9,
-          "budget_lock_risk": 0.1,
-          "robustness": "ROBUST"
-        }
-      },
-      "decision_confidence_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 0.71,
-        "components": {
-          "kortsiktig_sportslig": 0.73,
-          "langsiktig_verdi": 0.88,
-          "spilletid_og_fravaer": 0.6,
-          "benkedekning": 0.73,
-          "robusthet": 0.9,
-          "budsjett_og_pris": 0.87,
-          "ft_fleksibilitet": 0.48,
-          "informasjonsklarhet": 0.48,
-          "angerrisiko": 0.72,
-          "datakvalitet": 0.45
-        },
-        "weakest": [
-          {
-            "key": "datakvalitet",
-            "score": 0.45
-          },
-          {
-            "key": "informasjonsklarhet",
-            "score": 0.48
-          },
-          {
-            "key": "ft_fleksibilitet",
-            "score": 0.48
-          }
-        ]
-      }
-    },
-    {
-      "status": "GJØR DET",
-      "edge": 9.39,
-      "short_gain": 8.87,
-      "horizon_gain": 9.49,
-      "bank_after": 0.5,
-      "gate_misses": [],
-      "pairs": [
-        {
-          "out": {
-            "id": 557,
-            "name": "Tzolis",
-            "team_id": 1,
-            "team": "Arsenal",
-            "position": "MID",
-            "price": 6.5,
-            "selling_price": 6.5,
-            "xp": 1.75,
-            "xp_low": 0,
-            "xp_high": 4.44,
-            "risk": "høy",
-            "volatility": 1.2,
-            "fixture": "Chelsea (H)",
-            "fixture_outlook": [
-              {
-                "gw": 3,
-                "label": "CHE H",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 1.75
-              },
-              {
-                "gw": 4,
-                "label": "SUN A",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 1.66
-              },
-              {
-                "gw": 5,
-                "label": "BRI A",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 1.58
-              }
-            ],
-            "availability": 1.0,
-            "expected_minutes": 40.6,
-            "news": "",
-            "change": null,
-            "set_piece_role": {
-              "penalty_taker_share": 0,
-              "source_version": "2026-08-28-manual-v2"
-            },
-            "form": {
-              "season_multiplier": 0.993,
-              "recent_multiplier": 0.993,
-              "recent_xgi90": 0.255,
-              "recent_minutes": 115.0,
-              "recent_matches": 2,
-              "recent_confidence": 0.242
-            },
-            "historical_prior": {
-              "prev_minutes": 326.0,
-              "prev_goal90": 0.0,
-              "prev_assist90": 0.0,
-              "goal_prior_used": 0.147,
-              "assist_prior_used": 0.132
-            },
-            "xp_breakdown": {
-              "appearance": 1.08,
-              "goals": 0.34,
-              "assists": 0.28,
-              "clean_sheet": 0.11,
-              "saves": 0,
-              "defensive": 0.0,
-              "bonus": 0.16,
-              "penalty": 0.0,
-              "conceded": 0,
-              "cards": -0.23,
-              "other_model_components": 0.01,
-              "displayed_sum": 1.75,
-              "reconciled": true
-            },
-            "set_pieces": {
-              "penalty_taker_share": 0.0,
-              "penalty_role": "unknown",
-              "source": "none"
-            }
-          },
-          "in": {
-            "id": 94,
-            "name": "Schade",
-            "team_id": 4,
-            "team": "Brentford",
-            "position": "MID",
-            "price": 6.0,
-            "selling_price": null,
-            "xp": 4.77,
-            "xp_low": 0,
-            "xp_high": 9.83,
-            "risk": "middels",
-            "volatility": 0.83,
-            "fixture": "Sunderland (H)",
-            "fixture_outlook": [
-              {
-                "gw": 3,
-                "label": "SUN H",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 4.77
-              },
-              {
-                "gw": 4,
-                "label": "BOU A",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 4.4
-              },
-              {
-                "gw": 5,
-                "label": "CHE H",
-                "difficulty": 3,
-                "difficulty_basis": "opponent-defence",
-                "xp": 4.68
-              }
-            ],
-            "availability": 1.0,
-            "expected_minutes": 78.6,
-            "news": "",
-            "change": null,
-            "set_piece_role": {
-              "penalty_taker_share": 0,
-              "source_version": "2026-08-28-manual-v2"
-            },
-            "form": {
-              "season_multiplier": 0.996,
-              "recent_multiplier": 1.005,
-              "recent_xgi90": 0.399,
-              "recent_minutes": 177.0,
-              "recent_matches": 2,
-              "recent_confidence": 0.33
-            },
-            "historical_prior": {
-              "prev_minutes": 2744.0,
-              "prev_goal90": 0.262,
-              "prev_assist90": 0.164,
-              "goal_prior_used": 0.247,
-              "assist_prior_used": 0.168
-            },
-            "xp_breakdown": {
-              "appearance": 1.82,
-              "goals": 1.52,
-              "assists": 0.43,
-              "clean_sheet": 0.28,
-              "saves": 0,
-              "defensive": 0.17,
-              "bonus": 0.55,
-              "penalty": 0.0,
-              "conceded": 0,
-              "cards": 0,
-              "displayed_sum": 4.77,
-              "reconciled": true
-            },
-            "set_pieces": {
-              "penalty_taker_share": 0.0,
-              "penalty_role": "unknown",
-              "source": "none"
-            }
-          }
-        }
-      ],
-      "budget_flexibility": {
-        "grade": "MIDDELS",
-        "score": 0.45,
-        "note": "Noe spillerom, men fortsatt ganske låst."
-      },
-      "market_timing": {
-        "incoming": {
-          "score": 0.141,
-          "label": "rolig",
-          "net_transfers": 14061,
-          "transfers_in": 29509,
-          "transfers_out": 15448,
-          "cost_change_event": 0,
-          "prediction": false
-        },
-        "outgoing": {
-          "score": -0.017,
-          "label": "rolig",
-          "net_transfers": -1698,
-          "transfers_in": 65572,
-          "transfers_out": 67270,
-          "cost_change_event": 0,
-          "prediction": false
-        },
-        "shadow_only": true
-      },
-      "timing_notes": [],
-      "timing_value_shadow": {
-        "version": "1.0",
-        "label": "VENT PÅ MER INFO",
-        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-        "hours_to_deadline": 93.8,
-        "affordability_fragility": 0.1,
-        "incoming_price_pressure_risk": 0.141,
-        "outgoing_price_pressure_risk": 0.017,
-        "lock_risk": 0.011,
-        "information_value": 0.872,
-        "net_early_action_case": -0.861,
-        "price_prediction": false,
-        "affects_ranking": false
-      },
-      "option_value_shadow": {
-        "version": "1.1",
-        "total": 1.13,
-        "vs_bank": -0.37,
-        "components": {
-          "bank_value": 0.08,
-          "free_transfer_value": 0.45,
-          "upgrade_surface_value": 0.6
-        },
-        "future_free_transfers": 1,
-        "affordable_upgrade_paths": 11,
-        "top_upgrade_paths": [
-          {
-            "out_id": 497,
-            "out_name": "Dubravka",
-            "in_id": 57,
-            "in_name": "Petrović",
-            "gain": 8.41,
-            "cost": 4.5
-          },
-          {
-            "out_id": 488,
-            "out_name": "I.Sangaré",
-            "in_id": 86,
-            "in_name": "Lewis-Potter",
-            "gain": 6.97,
-            "cost": 5.5
-          },
-          {
-            "out_id": 465,
-            "out_name": "Osula",
-            "in_id": 346,
-            "in_name": "Calvert-Lewin",
-            "gain": 6.51,
-            "cost": 6.0
-          },
-          {
-            "out_id": 8,
-            "out_name": "Calafiori",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 5.07,
-            "cost": 6.0
-          },
-          {
-            "out_id": 4,
-            "out_name": "Gabriel",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 3.41,
-            "cost": 6.0
-          }
-        ],
-        "affects_ranking": false
-      },
-      "robustness_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "label": "ROBUST",
-        "score": 0.561,
-        "weighted_gain": {
-          "gw1": 3.022,
-          "gw3": 7.816,
-          "plan": 9.487
-        },
-        "spread": 6.465,
-        "rule": "Must not replace validated ranking; pre-deadline disagreement warning only."
-      },
-      "bench_adjustment_shadow": {
-        "version": "1.0",
-        "applied": false,
-        "affects_ranking": false,
-        "bench_cover_player": null,
-        "bench_cover_expected": 0.0,
-        "raw_next_gw_gain": 3.02,
-        "bench_adjusted_next_gw_gain": 3.02,
-        "adjustment": 0.0,
-        "bench_adjusted_short_gain": 8.87,
-        "bench_adjusted_horizon_gain": 9.49,
-        "note": "Skadebytter sammenlignes mot forventet autosub-verdi når utgående spiller sannsynligvis ikke spiller."
-      },
-      "absence_severity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "severity": "USIKKER",
-        "replacement_urgency": "LAV/MIDDELS",
-        "availability_used": 100.0,
-        "expected_minutes_used": 0.0,
-        "bench_adjusted_next_gw_gain": 3.02,
-        "reason": "Det er usikkerhet rundt tilgjengelighet/minutter. Vent på ferskere lagnytt når timing tillater det."
-      },
-      "transfer_necessity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 4.72,
-        "label": "FORNUFTIG",
-        "reasons": [
-          "Benkekorrigert 3-GW-gevinst er +8.9 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "bench_adjusted_next_gw_gain": 3.02,
-        "three_gw_gain": 8.87,
-        "plan_gain": 9.49
-      },
-      "transfer_regret_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "regret_make_transfer": 0.55,
-        "regret_save_ft": 0.83,
-        "regret_gap_save_minus_make": 0.28,
-        "verdict": "BYTT HAR LAVERE ANGERRISIKO",
-        "inputs": {
-          "bench_adjusted_next_gw_gain": 3.02,
-          "three_gw_gain": 8.87,
-          "plan_gain": 9.49,
-          "necessity": "FORNUFTIG",
-          "information_value": 0.87,
-          "budget_lock_risk": 0.01,
-          "robustness": "ROBUST"
-        }
-      },
-      "decision_confidence_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 0.82,
-        "components": {
-          "kortsiktig_sportslig": 1,
-          "langsiktig_verdi": 1,
-          "spilletid_og_fravaer": 0.6,
-          "benkedekning": 0.83,
-          "robusthet": 0.9,
-          "budsjett_og_pris": 0.9,
-          "ft_fleksibilitet": 0.72,
-          "informasjonsklarhet": 0.49,
-          "angerrisiko": 0.86,
-          "datakvalitet": 0.45
-        },
-        "weakest": [
-          {
-            "key": "datakvalitet",
-            "score": 0.45
-          },
-          {
-            "key": "informasjonsklarhet",
-            "score": 0.49
-          },
-          {
-            "key": "spilletid_og_fravaer",
-            "score": 0.6
-          }
-        ]
-      }
+      ]
     },
     {
       "status": "GJØR DET",
@@ -6439,20 +5134,20 @@
       },
       "market_timing": {
         "incoming": {
-          "score": 0.273,
+          "score": 0.275,
           "label": "kjøpspress",
-          "net_transfers": 27341,
-          "transfers_in": 44015,
-          "transfers_out": 16674,
+          "net_transfers": 27490,
+          "transfers_in": 44282,
+          "transfers_out": 16792,
           "cost_change_event": 0,
           "prediction": false
         },
         "outgoing": {
-          "score": -0.122,
+          "score": -0.123,
           "label": "rolig",
-          "net_transfers": -12247,
+          "net_transfers": -12281,
           "transfers_in": 112,
-          "transfers_out": 12359,
+          "transfers_out": 12393,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -6460,174 +5155,411 @@
       },
       "timing_notes": [
         "nesten ingen bankreserve etter byttet"
-      ],
-      "timing_value_shadow": {
-        "version": "1.0",
-        "label": "VENT PÅ MER INFO",
-        "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-        "hours_to_deadline": 93.8,
-        "affordability_fragility": 1.0,
-        "incoming_price_pressure_risk": 0.273,
-        "outgoing_price_pressure_risk": 0.122,
-        "lock_risk": 0.243,
-        "information_value": 0.904,
-        "net_early_action_case": -0.661,
-        "price_prediction": false,
-        "affects_ranking": false
-      },
-      "option_value_shadow": {
-        "version": "1.1",
-        "total": 1.05,
-        "vs_bank": -0.45,
-        "components": {
-          "bank_value": 0.0,
-          "free_transfer_value": 0.45,
-          "upgrade_surface_value": 0.6
-        },
-        "future_free_transfers": 1,
-        "affordable_upgrade_paths": 9,
-        "top_upgrade_paths": [
-          {
-            "out_id": 557,
-            "out_name": "Tzolis",
-            "in_id": 236,
-            "in_name": "Dewsbury-Hall",
-            "gain": 6.58,
-            "cost": 6.5
+      ]
+    },
+    {
+      "status": "GJØR DET",
+      "edge": 8.95,
+      "short_gain": 8.6,
+      "horizon_gain": 9.05,
+      "bank_after": 0.0,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 557,
+            "name": "Tzolis",
+            "team_id": 1,
+            "team": "Arsenal",
+            "position": "MID",
+            "price": 6.5,
+            "selling_price": 6.5,
+            "xp": 1.97,
+            "xp_low": 0,
+            "xp_high": 4.81,
+            "risk": "høy",
+            "volatility": 1.13,
+            "fixture": "Chelsea (H)",
+            "fixture_outlook": [
+              {
+                "gw": 3,
+                "label": "CHE H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 1.97
+              },
+              {
+                "gw": 4,
+                "label": "SUN A",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 1.87
+              },
+              {
+                "gw": 5,
+                "label": "BRI A",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 1.78
+              }
+            ],
+            "availability": 1.0,
+            "expected_minutes": 43.4,
+            "news": "",
+            "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
+            "form": {
+              "season_multiplier": 0.992,
+              "recent_multiplier": 0.992,
+              "recent_xgi90": 0.244,
+              "recent_minutes": 120.0,
+              "recent_matches": 2,
+              "recent_confidence": 0.25
+            },
+            "historical_prior": {
+              "prev_minutes": 326.0,
+              "prev_goal90": 0.0,
+              "prev_assist90": 0.0,
+              "goal_prior_used": 0.147,
+              "assist_prior_used": 0.132
+            },
+            "xp_breakdown": {
+              "appearance": 1.21,
+              "goals": 0.36,
+              "assists": 0.3,
+              "clean_sheet": 0.16,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.17,
+              "penalty": 0.0,
+              "conceded": 0,
+              "cards": -0.24,
+              "other_model_components": 0.01,
+              "displayed_sum": 1.97,
+              "reconciled": true
+            },
+            "set_pieces": {
+              "penalty_taker_share": 0.0,
+              "penalty_role": "unknown",
+              "source": "none"
+            }
           },
-          {
-            "out_id": 465,
-            "out_name": "Osula",
-            "in_id": 346,
-            "in_name": "Calvert-Lewin",
-            "gain": 6.51,
-            "cost": 6.0
-          },
-          {
-            "out_id": 8,
-            "out_name": "Calafiori",
-            "in_id": 88,
-            "in_name": "Kayode",
-            "gain": 3.95,
-            "cost": 4.6
-          },
-          {
-            "out_id": 4,
-            "out_name": "Gabriel",
-            "in_id": 388,
-            "in_name": "Guéhi",
-            "gain": 3.41,
-            "cost": 6.0
-          },
-          {
-            "out_id": 496,
-            "out_name": "Kinsky",
-            "in_id": 57,
-            "in_name": "Petrović",
-            "gain": 2.85,
-            "cost": 4.5
+          "in": {
+            "id": 236,
+            "name": "Dewsbury-Hall",
+            "team_id": 9,
+            "team": "Everton",
+            "position": "MID",
+            "price": 6.5,
+            "selling_price": null,
+            "xp": 4.91,
+            "xp_low": 0,
+            "xp_high": 10.03,
+            "risk": "middels",
+            "volatility": 0.81,
+            "fixture": "Man Utd (H)",
+            "fixture_outlook": [
+              {
+                "gw": 3,
+                "label": "MAN H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 4.91
+              },
+              {
+                "gw": 4,
+                "label": "SPU A",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 4.59
+              },
+              {
+                "gw": 5,
+                "label": "IPS H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 4.72
+              }
+            ],
+            "availability": 1.0,
+            "expected_minutes": 78.3,
+            "news": "",
+            "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
+            "form": {
+              "season_multiplier": 0.985,
+              "recent_multiplier": 0.99,
+              "recent_xgi90": 0.253,
+              "recent_minutes": 180.0,
+              "recent_matches": 2,
+              "recent_confidence": 0.333
+            },
+            "historical_prior": {
+              "prev_minutes": 2629.0,
+              "prev_goal90": 0.274,
+              "prev_assist90": 0.24,
+              "goal_prior_used": 0.255,
+              "assist_prior_used": 0.224
+            },
+            "xp_breakdown": {
+              "appearance": 1.84,
+              "goals": 1.5,
+              "assists": 0.55,
+              "clean_sheet": 0.3,
+              "saves": 0,
+              "defensive": 0.16,
+              "bonus": 0.55,
+              "penalty": 0.0,
+              "conceded": 0,
+              "cards": 0,
+              "other_model_components": 0.01,
+              "displayed_sum": 4.91,
+              "reconciled": true
+            },
+            "set_pieces": {
+              "penalty_taker_share": 0.0,
+              "penalty_role": "unknown",
+              "source": "none"
+            }
           }
-        ],
-        "affects_ranking": false
-      },
-      "robustness_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "label": "ROBUST",
-        "score": 0.582,
-        "weighted_gain": {
-          "gw1": 3.525,
-          "gw3": 8.169,
-          "plan": 9.487
-        },
-        "spread": 5.962,
-        "rule": "Must not replace validated ranking; pre-deadline disagreement warning only."
-      },
-      "bench_adjustment_shadow": {
-        "version": "1.0",
-        "applied": true,
-        "affects_ranking": false,
-        "bench_cover_player": "Slater",
-        "bench_cover_expected": 3.52,
-        "raw_next_gw_gain": 3.52,
-        "bench_adjusted_next_gw_gain": 0.0,
-        "adjustment": -3.52,
-        "bench_adjusted_short_gain": 5.6,
-        "bench_adjusted_horizon_gain": 5.97,
-        "note": "Skadebytter sammenlignes mot forventet autosub-verdi når utgående spiller sannsynligvis ikke spiller."
-      },
-      "absence_severity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "severity": "USIKKER",
-        "replacement_urgency": "LAV",
-        "availability_used": 100.0,
-        "expected_minutes_used": 0.0,
-        "bench_adjusted_next_gw_gain": 0.0,
-        "reason": "Det er usikkerhet rundt tilgjengelighet/minutter. Vent på ferskere lagnytt når timing tillater det. Benken dekker neste runde godt nok til at hastebehovet reduseres."
-      },
-      "transfer_necessity_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 1.09,
-        "label": "SPAR FT",
-        "reasons": [
-          "Benken dekker neste runde så godt at hasteverdien faller.",
-          "Benkekorrigert 3-GW-gevinst er +5.6 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "bench_adjusted_next_gw_gain": 0.0,
-        "three_gw_gain": 5.6,
-        "plan_gain": 5.97
-      },
-      "transfer_regret_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "regret_make_transfer": 0.95,
-        "regret_save_ft": 0.75,
-        "regret_gap_save_minus_make": -0.2,
-        "verdict": "SPAR FT HAR LAVERE ANGERRISIKO",
-        "inputs": {
-          "bench_adjusted_next_gw_gain": 0.0,
-          "three_gw_gain": 5.6,
-          "plan_gain": 5.97,
-          "necessity": "SPAR FT",
-          "information_value": 0.9,
-          "budget_lock_risk": 0.24,
-          "robustness": "ROBUST"
         }
+      ],
+      "budget_flexibility": {
+        "grade": "LAV",
+        "score": 0.15,
+        "note": "Lite eller ingen reserve til neste trekk."
       },
-      "decision_confidence_shadow": {
-        "version": "1.0-shadow",
-        "affects_ranking": false,
-        "score": 0.66,
-        "components": {
-          "kortsiktig_sportslig": 0.7,
-          "langsiktig_verdi": 0.87,
-          "spilletid_og_fravaer": 0.6,
-          "benkedekning": 0.5,
-          "robusthet": 0.9,
-          "budsjett_og_pris": 0.83,
-          "ft_fleksibilitet": 0.3,
-          "informasjonsklarhet": 0.48,
-          "angerrisiko": 0.63,
-          "datakvalitet": 0.45
+      "market_timing": {
+        "incoming": {
+          "score": -0.116,
+          "label": "rolig",
+          "net_transfers": -11603,
+          "transfers_in": 23529,
+          "transfers_out": 35132,
+          "cost_change_event": 0,
+          "prediction": false
         },
-        "weakest": [
-          {
-            "key": "ft_fleksibilitet",
-            "score": 0.3
+        "outgoing": {
+          "score": -0.027,
+          "label": "rolig",
+          "net_transfers": -2700,
+          "transfers_in": 65763,
+          "transfers_out": 68463,
+          "cost_change_event": 0,
+          "prediction": false
+        },
+        "shadow_only": true
+      },
+      "timing_notes": [
+        "nesten ingen bankreserve etter byttet"
+      ]
+    },
+    {
+      "status": "GJØR DET",
+      "edge": 8.89,
+      "short_gain": 8.76,
+      "horizon_gain": 8.99,
+      "bank_after": 0.0,
+      "gate_misses": [],
+      "pairs": [
+        {
+          "out": {
+            "id": 488,
+            "name": "I.Sangaré",
+            "team_id": 18,
+            "team": "Nott'm Forest",
+            "position": "MID",
+            "price": 5.0,
+            "selling_price": 5.0,
+            "xp": 0,
+            "xp_low": 0,
+            "xp_high": 0.76,
+            "risk": "lav",
+            "volatility": 0.59,
+            "fixture": "Spurs (H)",
+            "fixture_outlook": [
+              {
+                "gw": 3,
+                "label": "SPU H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 0.0
+              },
+              {
+                "gw": 4,
+                "label": "AST A",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 0.59
+              },
+              {
+                "gw": 5,
+                "label": "COV H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 1.04
+              }
+            ],
+            "availability": 0.0,
+            "expected_minutes": 0.0,
+            "news": "Calf injury - Unknown return date",
+            "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
+            "form": {
+              "season_multiplier": 0.982,
+              "recent_multiplier": 0.981,
+              "recent_xgi90": 0.035,
+              "recent_minutes": 90.0,
+              "recent_matches": 2,
+              "recent_confidence": 0.2
+            },
+            "historical_prior": {
+              "prev_minutes": 2073.0,
+              "prev_goal90": 0.087,
+              "prev_assist90": 0.087,
+              "goal_prior_used": 0.121,
+              "assist_prior_used": 0.115
+            },
+            "xp_breakdown": {
+              "appearance": 0.0,
+              "goals": 0.0,
+              "assists": 0.0,
+              "clean_sheet": 0.0,
+              "saves": 0,
+              "defensive": 0.0,
+              "bonus": 0.0,
+              "penalty": 0.0,
+              "conceded": 0,
+              "cards": 0,
+              "displayed_sum": 0.0,
+              "reconciled": true
+            },
+            "set_pieces": {
+              "penalty_taker_share": 0.0,
+              "penalty_role": "unknown",
+              "source": "none"
+            }
           },
-          {
-            "key": "datakvalitet",
-            "score": 0.45
-          },
-          {
-            "key": "informasjonsklarhet",
-            "score": 0.48
+          "in": {
+            "id": 246,
+            "name": "Röhl",
+            "team_id": 9,
+            "team": "Everton",
+            "position": "MID",
+            "price": 5.0,
+            "selling_price": null,
+            "xp": 3.58,
+            "xp_low": 0,
+            "xp_high": 7.56,
+            "risk": "middels",
+            "volatility": 0.87,
+            "fixture": "Man Utd (H)",
+            "fixture_outlook": [
+              {
+                "gw": 3,
+                "label": "MAN H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 3.58
+              },
+              {
+                "gw": 4,
+                "label": "SPU A",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 3.36
+              },
+              {
+                "gw": 5,
+                "label": "IPS H",
+                "difficulty": 3,
+                "difficulty_basis": "opponent-defence",
+                "xp": 3.45
+              }
+            ],
+            "availability": 1.0,
+            "expected_minutes": 72.8,
+            "news": "",
+            "change": null,
+            "set_piece_role": {
+              "penalty_taker_share": 0,
+              "source_version": "2026-08-28-manual-v2"
+            },
+            "form": {
+              "season_multiplier": 0.967,
+              "recent_multiplier": 1,
+              "recent_xgi90": 0,
+              "recent_minutes": 0,
+              "recent_matches": 0,
+              "recent_confidence": 0
+            },
+            "historical_prior": {
+              "prev_minutes": 0,
+              "prev_goal90": 0,
+              "prev_assist90": 0,
+              "goal_prior_used": 0.2,
+              "assist_prior_used": 0.18
+            },
+            "xp_breakdown": {
+              "appearance": 1.71,
+              "goals": 0.78,
+              "assists": 0.42,
+              "clean_sheet": 0.28,
+              "saves": 0,
+              "defensive": 0.12,
+              "bonus": 0.27,
+              "penalty": 0.0,
+              "conceded": 0,
+              "cards": 0,
+              "displayed_sum": 3.58,
+              "reconciled": true
+            },
+            "set_pieces": {
+              "penalty_taker_share": 0.0,
+              "penalty_role": "unknown",
+              "source": "none"
+            }
           }
-        ]
-      }
+        }
+      ],
+      "budget_flexibility": {
+        "grade": "LAV",
+        "score": 0.15,
+        "note": "Lite eller ingen reserve til neste trekk."
+      },
+      "market_timing": {
+        "incoming": {
+          "score": -0.002,
+          "label": "rolig",
+          "net_transfers": -165,
+          "transfers_in": 231,
+          "transfers_out": 396,
+          "cost_change_event": 0,
+          "prediction": false
+        },
+        "outgoing": {
+          "score": -0.123,
+          "label": "rolig",
+          "net_transfers": -12281,
+          "transfers_in": 112,
+          "transfers_out": 12393,
+          "cost_change_event": 0,
+          "prediction": false
+        },
+        "shadow_only": true
+      },
+      "timing_notes": [
+        "nesten ingen bankreserve etter byttet"
+      ]
     }
   ],
   "recent_form": {
@@ -6656,12 +5588,12 @@
         "team": 1,
         "element_type": 1,
         "now_cost": 60,
-        "horizon": 9.008,
+        "horizon": 10.068,
         "xp": {
-          "3": 2.783,
-          "4": 2.753,
-          "5": 2.582,
-          "6": 3.018
+          "3": 3.111,
+          "4": 3.075,
+          "5": 2.874,
+          "6": 3.389
         }
       },
       {
@@ -6698,12 +5630,12 @@
         "team": 1,
         "element_type": 2,
         "now_cost": 80,
-        "horizon": 9.396,
+        "horizon": 10.396,
         "xp": {
-          "3": 2.978,
-          "4": 2.868,
-          "5": 2.641,
-          "6": 3.093
+          "3": 3.291,
+          "4": 3.172,
+          "5": 2.914,
+          "6": 3.442
         }
       },
       {
@@ -6712,12 +5644,12 @@
         "team": 1,
         "element_type": 2,
         "now_cost": 56,
-        "horizon": 6.966,
+        "horizon": 8.068,
         "xp": {
-          "3": 2.204,
-          "4": 2.129,
-          "5": 1.981,
-          "6": 2.267
+          "3": 2.548,
+          "4": 2.465,
+          "5": 2.289,
+          "6": 2.642
         }
       },
       {
@@ -6768,12 +5700,12 @@
         "team": 1,
         "element_type": 4,
         "now_cost": 75,
-        "horizon": 8.286,
+        "horizon": 8.952,
         "xp": {
-          "3": 2.706,
-          "4": 2.538,
-          "5": 2.4,
-          "6": 2.493
+          "3": 2.921,
+          "4": 2.742,
+          "5": 2.596,
+          "6": 2.695
         }
       },
       {
@@ -6880,12 +5812,12 @@
         "team": 1,
         "element_type": 3,
         "now_cost": 65,
-        "horizon": 5.416,
+        "horizon": 6.107,
         "xp": {
-          "3": 1.748,
-          "4": 1.659,
-          "5": 1.576,
-          "6": 1.655
+          "3": 1.966,
+          "4": 1.871,
+          "5": 1.778,
+          "6": 1.874
         }
       },
       {
@@ -7160,12 +6092,12 @@
         "team": 2,
         "element_type": 1,
         "now_cost": 50,
-        "horizon": 3.64,
+        "horizon": 3.616,
         "xp": {
-          "3": 1.058,
-          "4": 1.174,
-          "5": 1.112,
-          "6": 1.153
+          "3": 1.051,
+          "4": 1.166,
+          "5": 1.104,
+          "6": 1.145
         }
       },
       {
@@ -8121,20 +7053,6 @@
         }
       },
       {
-        "id": 362,
-        "name": "Jacquet",
-        "team": 14,
-        "element_type": 2,
-        "now_cost": 50,
-        "horizon": 9.571,
-        "xp": {
-          "3": 2.796,
-          "4": 3.067,
-          "5": 2.918,
-          "6": 3.043
-        }
-      },
-      {
         "id": 367,
         "name": "Gakpo",
         "team": 14,
@@ -8745,7 +7663,7 @@
     "mode": "shadow",
     "affects_transfer_ranking": false,
     "squad_source": "confirmed_fpl + bootstrap-static",
-    "squad_players_found": 15,
+    "squad_players_found": 11,
     "bank": 0.0,
     "flexibility": {
       "grade": "LAV",
@@ -8765,9 +7683,9 @@
         "signal": {
           "score": 0.348,
           "label": "kjøpspress",
-          "net_transfers": 34776,
-          "transfers_in": 63250,
-          "transfers_out": 28474,
+          "net_transfers": 34811,
+          "transfers_in": 63389,
+          "transfers_out": 28578,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -8778,11 +7696,11 @@
         "id": 127,
         "name": "Gomez",
         "signal": {
-          "score": 0.273,
+          "score": 0.275,
           "label": "kjøpspress",
-          "net_transfers": 27341,
-          "transfers_in": 44015,
-          "transfers_out": 16674,
+          "net_transfers": 27490,
+          "transfers_in": 44282,
+          "transfers_out": 16792,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -8793,16 +7711,16 @@
         "id": 94,
         "name": "Schade",
         "signal": {
-          "score": 0.141,
+          "score": 0.142,
           "label": "rolig",
-          "net_transfers": 14061,
-          "transfers_in": 29509,
-          "transfers_out": 15448,
+          "net_transfers": 14189,
+          "transfers_in": 29710,
+          "transfers_out": 15521,
           "cost_change_event": 0,
           "prediction": false
         },
         "bank_after": 0.5,
-        "horizon_gain": 9.49
+        "horizon_gain": 8.8
       },
       {
         "id": 286,
@@ -8810,9 +7728,9 @@
         "signal": {
           "score": 0.075,
           "label": "rolig",
-          "net_transfers": 7505,
-          "transfers_in": 10663,
-          "transfers_out": 3158,
+          "net_transfers": 7539,
+          "transfers_in": 10713,
+          "transfers_out": 3174,
           "cost_change_event": 0,
           "prediction": false
         },
@@ -8820,19 +7738,19 @@
         "horizon_gain": 9.66
       },
       {
-        "id": 236,
-        "name": "Dewsbury-Hall",
+        "id": 246,
+        "name": "Röhl",
         "signal": {
-          "score": -0.116,
+          "score": -0.002,
           "label": "rolig",
-          "net_transfers": -11561,
-          "transfers_in": 23423,
-          "transfers_out": 34984,
+          "net_transfers": -165,
+          "transfers_in": 231,
+          "transfers_out": 396,
           "cost_change_event": 0,
           "prediction": false
         },
         "bank_after": 0.0,
-        "horizon_gain": 9.74
+        "horizon_gain": 8.99
       }
     ],
     "note": "Prispress brukes kun som timing-/tie-break-informasjon. Forventede poeng og fler-GW-plan har prioritet."
@@ -8890,36 +7808,36 @@
       "vice": false
     },
     {
-      "id": 388,
-      "name": "Guéhi",
-      "team": "Man City",
-      "position": "DEF",
-      "xp": 4.85,
-      "ceiling": 10.12,
+      "id": 480,
+      "name": "Gibbs-White",
+      "team": "Nott'm Forest",
+      "position": "MID",
+      "xp": 5.17,
+      "ceiling": 10.51,
       "expected_minutes": 82.0,
       "availability": 1.0,
-      "score": 5.514,
-      "p10_plus": 0.0653,
-      "p15_plus": 0.0051,
-      "p_goal_2plus": 0.0119,
-      "p_multi_return": 0.0312,
+      "score": 5.815,
+      "p10_plus": 0.1192,
+      "p15_plus": 0.0255,
+      "p_goal_2plus": 0.0576,
+      "p_multi_return": 0.0972,
       "captain": false,
       "vice": false
     },
     {
-      "id": 94,
-      "name": "Schade",
-      "team": "Brentford",
-      "position": "MID",
-      "xp": 4.77,
-      "ceiling": 9.83,
-      "expected_minutes": 79.0,
+      "id": 279,
+      "name": "Ajayi",
+      "team": "Hull City",
+      "position": "DEF",
+      "xp": 4.32,
+      "ceiling": 9.05,
+      "expected_minutes": 68.0,
       "availability": 1.0,
-      "score": 5.397,
-      "p10_plus": 0.0715,
-      "p15_plus": 0.0122,
-      "p_goal_2plus": 0.0281,
-      "p_multi_return": 0.0503,
+      "score": 4.919,
+      "p10_plus": 0.0284,
+      "p15_plus": 0.0024,
+      "p_goal_2plus": 0.0056,
+      "p_multi_return": 0.0073,
       "captain": false,
       "vice": false
     }
@@ -8927,13 +7845,13 @@
   "decision_explanation": {
     "decision": "BYTT",
     "why": [
-      "Første trekk modellen vurderer er Tzolis → Schade, Gabriel → Guéhi.",
+      "Første trekk modellen vurderer er Calafiori → Ajayi, Tzolis → Gibbs-White.",
       "Estimert gevinst: +9.49 xP neste 3 GW og +9.87 xP over planhorisonten.",
       "Datakvalitet 0.45 (svak tabellprior, market av) løfter BYTT-kravet med 0.18 xP.",
       "Gratisbytte-fleksibilitet verdsettes til 0.45 xP; robust BYTT-terskel er 1.33.",
       "Ingen harde minutt- eller tilgjengelighetsblokker stopper trekket."
     ],
-    "weighted_gain": 16.38,
+    "weighted_gain": 13.98,
     "threshold": 1.33,
     "distance_to_switch": 0,
     "switch_trigger": "Anbefalingen er robust nok nå.",
@@ -9239,11 +8157,11 @@
         "position": "DEF",
         "price": 8.0,
         "selling_price": 8.0,
-        "xp": 2.98,
+        "xp": 3.29,
         "xp_low": 0,
-        "xp_high": 6.85,
+        "xp_high": 7.32,
         "risk": "middels",
-        "volatility": 1.01,
+        "volatility": 0.96,
         "fixture": "Chelsea (H)",
         "fixture_outlook": [
           {
@@ -9251,38 +8169,38 @@
             "label": "CHE H",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.98
+            "xp": 3.29
           },
           {
             "gw": 4,
             "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.87
+            "xp": 3.17
           },
           {
             "gw": 5,
             "label": "BRI A",
             "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.64
+            "xp": 2.91
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 56.2,
+        "expected_minutes": 59.5,
         "news": "",
-        "change": "out",
+        "change": null,
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.976,
+          "season_multiplier": 0.975,
           "recent_multiplier": 0.98,
-          "recent_xgi90": 0.1,
-          "recent_minutes": 130.0,
+          "recent_xgi90": 0.103,
+          "recent_minutes": 135.0,
           "recent_matches": 2,
-          "recent_confidence": 0.265
+          "recent_confidence": 0.273
         },
         "historical_prior": {
           "prev_minutes": 2750.0,
@@ -9292,17 +8210,18 @@
           "assist_prior_used": 0.143
         },
         "xp_breakdown": {
-          "appearance": 1.61,
-          "goals": 0.33,
-          "assists": 0.27,
-          "clean_sheet": 1.02,
+          "appearance": 1.76,
+          "goals": 0.35,
+          "assists": 0.29,
+          "clean_sheet": 1.18,
           "saves": 0,
-          "defensive": 0.07,
-          "bonus": 0.23,
+          "defensive": 0.11,
+          "bonus": 0.2,
           "penalty": 0.0,
-          "conceded": -0.24,
-          "cards": -0.31,
-          "displayed_sum": 2.98,
+          "conceded": -0.26,
+          "cards": -0.33,
+          "other_model_components": -0.01,
+          "displayed_sum": 3.29,
           "reconciled": true
         },
         "captain": false,
@@ -9323,11 +8242,11 @@
         "position": "DEF",
         "price": 5.6,
         "selling_price": 5.6,
-        "xp": 2.2,
+        "xp": 2.55,
         "xp_low": 0,
-        "xp_high": 5.37,
+        "xp_high": 5.98,
         "risk": "høy",
-        "volatility": 1.12,
+        "volatility": 1.05,
         "fixture": "Chelsea (H)",
         "fixture_outlook": [
           {
@@ -9335,38 +8254,38 @@
             "label": "CHE H",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.2
+            "xp": 2.55
           },
           {
             "gw": 4,
             "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.13
+            "xp": 2.46
           },
           {
             "gw": 5,
             "label": "BRI A",
             "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 1.98
+            "xp": 2.29
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 44.6,
+        "expected_minutes": 47.5,
         "news": "",
-        "change": null,
+        "change": "out",
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.985,
-          "recent_multiplier": 0.989,
-          "recent_xgi90": 0.199,
-          "recent_minutes": 120.0,
+          "season_multiplier": 0.983,
+          "recent_multiplier": 0.988,
+          "recent_xgi90": 0.198,
+          "recent_minutes": 125.0,
           "recent_matches": 2,
-          "recent_confidence": 0.25
+          "recent_confidence": 0.258
         },
         "historical_prior": {
           "prev_minutes": 1697.0,
@@ -9376,26 +8295,26 @@
           "assist_prior_used": 0.097
         },
         "xp_breakdown": {
-          "appearance": 1.21,
-          "goals": 0.16,
-          "assists": 0.26,
-          "clean_sheet": 0.63,
+          "appearance": 1.35,
+          "goals": 0.17,
+          "assists": 0.28,
+          "clean_sheet": 0.81,
           "saves": 0,
-          "defensive": 0.01,
-          "bonus": 0.11,
+          "defensive": 0.02,
+          "bonus": 0.12,
           "penalty": 0.0,
-          "conceded": -0.18,
+          "conceded": -0.2,
           "cards": 0,
-          "displayed_sum": 2.2,
+          "displayed_sum": 2.55,
           "reconciled": true
         },
+        "captain": false,
+        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
-        "captain": false,
-        "vice": false,
         "confirmed_position": 3,
         "confirmed_multiplier": 1
       },
@@ -9473,13 +8392,13 @@
           "displayed_sum": 2.63,
           "reconciled": true
         },
-        "captain": false,
-        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
+        "captain": false,
+        "vice": false,
         "confirmed_position": 4,
         "confirmed_multiplier": 1
       },
@@ -10547,6 +9466,94 @@
         "optimal_vice": false
       },
       {
+        "id": 4,
+        "name": "Gabriel",
+        "team_id": 1,
+        "team": "Arsenal",
+        "position": "DEF",
+        "price": 8.0,
+        "selling_price": 8.0,
+        "xp": 3.29,
+        "xp_low": 0,
+        "xp_high": 7.32,
+        "risk": "middels",
+        "volatility": 0.96,
+        "fixture": "CHE (H)",
+        "fixture_outlook": [
+          {
+            "gw": 3,
+            "label": "CHE H",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-attack",
+            "xp": 3.29
+          },
+          {
+            "gw": 4,
+            "label": "SUN A",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-attack",
+            "xp": 3.17
+          },
+          {
+            "gw": 5,
+            "label": "BRI A",
+            "difficulty": 4,
+            "difficulty_basis": "opponent-attack",
+            "xp": 2.91
+          }
+        ],
+        "availability": 1.0,
+        "expected_minutes": 59.5,
+        "news": "",
+        "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
+        "form": {
+          "season_multiplier": 0.975,
+          "recent_multiplier": 0.98,
+          "recent_xgi90": 0.103,
+          "recent_minutes": 135.0,
+          "recent_matches": 2,
+          "recent_confidence": 0.273
+        },
+        "historical_prior": {
+          "prev_minutes": 2750.0,
+          "prev_goal90": 0.098,
+          "prev_assist90": 0.164,
+          "goal_prior_used": 0.088,
+          "assist_prior_used": 0.143
+        },
+        "xp_breakdown": {
+          "appearance": 1.76,
+          "goals": 0.35,
+          "assists": 0.29,
+          "clean_sheet": 1.18,
+          "saves": 0,
+          "defensive": 0.11,
+          "bonus": 0.2,
+          "penalty": 0.0,
+          "conceded": -0.26,
+          "cards": -0.33,
+          "other_model_components": -0.01,
+          "displayed_sum": 3.29,
+          "reconciled": true
+        },
+        "captain": false,
+        "vice": false,
+        "set_pieces": {
+          "penalty_taker_share": 0.0,
+          "penalty_role": "unknown",
+          "source": "none"
+        },
+        "confirmed_position": 2,
+        "confirmed_multiplier": 1,
+        "optimal_start": true,
+        "optimal_captain": false,
+        "optimal_vice": false
+      },
+      {
         "id": 277,
         "name": "Egan",
         "team_id": 11,
@@ -10629,93 +9636,6 @@
         },
         "confirmed_position": 13,
         "confirmed_multiplier": 0,
-        "optimal_start": true,
-        "optimal_captain": false,
-        "optimal_vice": false
-      },
-      {
-        "id": 4,
-        "name": "Gabriel",
-        "team_id": 1,
-        "team": "Arsenal",
-        "position": "DEF",
-        "price": 8.0,
-        "selling_price": 8.0,
-        "xp": 2.98,
-        "xp_low": 0,
-        "xp_high": 6.85,
-        "risk": "middels",
-        "volatility": 1.01,
-        "fixture": "CHE (H)",
-        "fixture_outlook": [
-          {
-            "gw": 3,
-            "label": "CHE H",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-attack",
-            "xp": 2.98
-          },
-          {
-            "gw": 4,
-            "label": "SUN A",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-attack",
-            "xp": 2.87
-          },
-          {
-            "gw": 5,
-            "label": "BRI A",
-            "difficulty": 4,
-            "difficulty_basis": "opponent-attack",
-            "xp": 2.64
-          }
-        ],
-        "availability": 1.0,
-        "expected_minutes": 56.2,
-        "news": "",
-        "change": "out",
-        "set_piece_role": {
-          "penalty_taker_share": 0,
-          "source_version": "2026-08-28-manual-v2"
-        },
-        "form": {
-          "season_multiplier": 0.976,
-          "recent_multiplier": 0.98,
-          "recent_xgi90": 0.1,
-          "recent_minutes": 130.0,
-          "recent_matches": 2,
-          "recent_confidence": 0.265
-        },
-        "historical_prior": {
-          "prev_minutes": 2750.0,
-          "prev_goal90": 0.098,
-          "prev_assist90": 0.164,
-          "goal_prior_used": 0.088,
-          "assist_prior_used": 0.143
-        },
-        "xp_breakdown": {
-          "appearance": 1.61,
-          "goals": 0.33,
-          "assists": 0.27,
-          "clean_sheet": 1.02,
-          "saves": 0,
-          "defensive": 0.07,
-          "bonus": 0.23,
-          "penalty": 0.0,
-          "conceded": -0.24,
-          "cards": -0.31,
-          "displayed_sum": 2.98,
-          "reconciled": true
-        },
-        "captain": false,
-        "vice": false,
-        "set_pieces": {
-          "penalty_taker_share": 0.0,
-          "penalty_role": "unknown",
-          "source": "none"
-        },
-        "confirmed_position": 2,
-        "confirmed_multiplier": 1,
         "optimal_start": true,
         "optimal_captain": false,
         "optimal_vice": false
@@ -10881,13 +9801,13 @@
           "displayed_sum": 2.63,
           "reconciled": true
         },
-        "captain": false,
-        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
+        "captain": false,
+        "vice": false,
         "confirmed_position": 4,
         "confirmed_multiplier": 1,
         "optimal_start": true,
@@ -10902,11 +9822,11 @@
         "position": "DEF",
         "price": 5.6,
         "selling_price": 5.6,
-        "xp": 2.2,
+        "xp": 2.55,
         "xp_low": 0,
-        "xp_high": 5.37,
+        "xp_high": 5.98,
         "risk": "høy",
-        "volatility": 1.12,
+        "volatility": 1.05,
         "fixture": "CHE (H)",
         "fixture_outlook": [
           {
@@ -10914,38 +9834,38 @@
             "label": "CHE H",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.2
+            "xp": 2.55
           },
           {
             "gw": 4,
             "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.13
+            "xp": 2.46
           },
           {
             "gw": 5,
             "label": "BRI A",
             "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 1.98
+            "xp": 2.29
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 44.6,
+        "expected_minutes": 47.5,
         "news": "",
-        "change": null,
+        "change": "out",
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.985,
-          "recent_multiplier": 0.989,
-          "recent_xgi90": 0.199,
-          "recent_minutes": 120.0,
+          "season_multiplier": 0.983,
+          "recent_multiplier": 0.988,
+          "recent_xgi90": 0.198,
+          "recent_minutes": 125.0,
           "recent_matches": 2,
-          "recent_confidence": 0.25
+          "recent_confidence": 0.258
         },
         "historical_prior": {
           "prev_minutes": 1697.0,
@@ -10955,26 +9875,26 @@
           "assist_prior_used": 0.097
         },
         "xp_breakdown": {
-          "appearance": 1.21,
-          "goals": 0.16,
-          "assists": 0.26,
-          "clean_sheet": 0.63,
+          "appearance": 1.35,
+          "goals": 0.17,
+          "assists": 0.28,
+          "clean_sheet": 0.81,
           "saves": 0,
-          "defensive": 0.01,
-          "bonus": 0.11,
+          "defensive": 0.02,
+          "bonus": 0.12,
           "penalty": 0.0,
-          "conceded": -0.18,
+          "conceded": -0.2,
           "cards": 0,
-          "displayed_sum": 2.2,
+          "displayed_sum": 2.55,
           "reconciled": true
         },
+        "captain": false,
+        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
-        "captain": false,
-        "vice": false,
         "confirmed_position": 3,
         "confirmed_multiplier": 1,
         "optimal_start": false,
@@ -11249,7 +10169,7 @@
         "team": "Arsenal",
         "position": "MID",
         "price": 6.5,
-        "xp": 1.75,
+        "xp": 1.97,
         "xp_low": 0,
         "xp_high": 0,
         "risk": "ukjent",
@@ -11570,7 +10490,7 @@
     "gw": 3,
     "source_current_squad_version": "1.2-since-confirmed-snapshot",
     "formation": "4-3-3",
-    "expected_team_score": 42.3,
+    "expected_team_score": 42.61,
     "lineup": [
       {
         "id": 411,
@@ -12024,6 +10944,94 @@
         "optimal_vice": false
       },
       {
+        "id": 4,
+        "name": "Gabriel",
+        "team_id": 1,
+        "team": "Arsenal",
+        "position": "DEF",
+        "price": 8.0,
+        "selling_price": 8.0,
+        "xp": 3.29,
+        "xp_low": 0,
+        "xp_high": 7.32,
+        "risk": "middels",
+        "volatility": 0.96,
+        "fixture": "CHE (H)",
+        "fixture_outlook": [
+          {
+            "gw": 3,
+            "label": "CHE H",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-attack",
+            "xp": 3.29
+          },
+          {
+            "gw": 4,
+            "label": "SUN A",
+            "difficulty": 3,
+            "difficulty_basis": "opponent-attack",
+            "xp": 3.17
+          },
+          {
+            "gw": 5,
+            "label": "BRI A",
+            "difficulty": 4,
+            "difficulty_basis": "opponent-attack",
+            "xp": 2.91
+          }
+        ],
+        "availability": 1.0,
+        "expected_minutes": 59.5,
+        "news": "",
+        "change": null,
+        "set_piece_role": {
+          "penalty_taker_share": 0,
+          "source_version": "2026-08-28-manual-v2"
+        },
+        "form": {
+          "season_multiplier": 0.975,
+          "recent_multiplier": 0.98,
+          "recent_xgi90": 0.103,
+          "recent_minutes": 135.0,
+          "recent_matches": 2,
+          "recent_confidence": 0.273
+        },
+        "historical_prior": {
+          "prev_minutes": 2750.0,
+          "prev_goal90": 0.098,
+          "prev_assist90": 0.164,
+          "goal_prior_used": 0.088,
+          "assist_prior_used": 0.143
+        },
+        "xp_breakdown": {
+          "appearance": 1.76,
+          "goals": 0.35,
+          "assists": 0.29,
+          "clean_sheet": 1.18,
+          "saves": 0,
+          "defensive": 0.11,
+          "bonus": 0.2,
+          "penalty": 0.0,
+          "conceded": -0.26,
+          "cards": -0.33,
+          "other_model_components": -0.01,
+          "displayed_sum": 3.29,
+          "reconciled": true
+        },
+        "captain": false,
+        "vice": false,
+        "set_pieces": {
+          "penalty_taker_share": 0.0,
+          "penalty_role": "unknown",
+          "source": "none"
+        },
+        "confirmed_position": 2,
+        "confirmed_multiplier": 1,
+        "optimal_start": true,
+        "optimal_captain": false,
+        "optimal_vice": false
+      },
+      {
         "id": 277,
         "name": "Egan",
         "team_id": 11,
@@ -12106,93 +11114,6 @@
         },
         "confirmed_position": 13,
         "confirmed_multiplier": 0,
-        "optimal_start": true,
-        "optimal_captain": false,
-        "optimal_vice": false
-      },
-      {
-        "id": 4,
-        "name": "Gabriel",
-        "team_id": 1,
-        "team": "Arsenal",
-        "position": "DEF",
-        "price": 8.0,
-        "selling_price": 8.0,
-        "xp": 2.98,
-        "xp_low": 0,
-        "xp_high": 6.85,
-        "risk": "middels",
-        "volatility": 1.01,
-        "fixture": "CHE (H)",
-        "fixture_outlook": [
-          {
-            "gw": 3,
-            "label": "CHE H",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-attack",
-            "xp": 2.98
-          },
-          {
-            "gw": 4,
-            "label": "SUN A",
-            "difficulty": 3,
-            "difficulty_basis": "opponent-attack",
-            "xp": 2.87
-          },
-          {
-            "gw": 5,
-            "label": "BRI A",
-            "difficulty": 4,
-            "difficulty_basis": "opponent-attack",
-            "xp": 2.64
-          }
-        ],
-        "availability": 1.0,
-        "expected_minutes": 56.2,
-        "news": "",
-        "change": "out",
-        "set_piece_role": {
-          "penalty_taker_share": 0,
-          "source_version": "2026-08-28-manual-v2"
-        },
-        "form": {
-          "season_multiplier": 0.976,
-          "recent_multiplier": 0.98,
-          "recent_xgi90": 0.1,
-          "recent_minutes": 130.0,
-          "recent_matches": 2,
-          "recent_confidence": 0.265
-        },
-        "historical_prior": {
-          "prev_minutes": 2750.0,
-          "prev_goal90": 0.098,
-          "prev_assist90": 0.164,
-          "goal_prior_used": 0.088,
-          "assist_prior_used": 0.143
-        },
-        "xp_breakdown": {
-          "appearance": 1.61,
-          "goals": 0.33,
-          "assists": 0.27,
-          "clean_sheet": 1.02,
-          "saves": 0,
-          "defensive": 0.07,
-          "bonus": 0.23,
-          "penalty": 0.0,
-          "conceded": -0.24,
-          "cards": -0.31,
-          "displayed_sum": 2.98,
-          "reconciled": true
-        },
-        "captain": false,
-        "vice": false,
-        "set_pieces": {
-          "penalty_taker_share": 0.0,
-          "penalty_role": "unknown",
-          "source": "none"
-        },
-        "confirmed_position": 2,
-        "confirmed_multiplier": 1,
         "optimal_start": true,
         "optimal_captain": false,
         "optimal_vice": false
@@ -12358,13 +11279,13 @@
           "displayed_sum": 2.63,
           "reconciled": true
         },
-        "captain": false,
-        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
+        "captain": false,
+        "vice": false,
         "confirmed_position": 4,
         "confirmed_multiplier": 1,
         "optimal_start": true,
@@ -12468,11 +11389,11 @@
         "position": "DEF",
         "price": 5.6,
         "selling_price": 5.6,
-        "xp": 2.2,
+        "xp": 2.55,
         "xp_low": 0,
-        "xp_high": 5.37,
+        "xp_high": 5.98,
         "risk": "høy",
-        "volatility": 1.12,
+        "volatility": 1.05,
         "fixture": "CHE (H)",
         "fixture_outlook": [
           {
@@ -12480,38 +11401,38 @@
             "label": "CHE H",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.2
+            "xp": 2.55
           },
           {
             "gw": 4,
             "label": "SUN A",
             "difficulty": 3,
             "difficulty_basis": "opponent-attack",
-            "xp": 2.13
+            "xp": 2.46
           },
           {
             "gw": 5,
             "label": "BRI A",
             "difficulty": 4,
             "difficulty_basis": "opponent-attack",
-            "xp": 1.98
+            "xp": 2.29
           }
         ],
         "availability": 1.0,
-        "expected_minutes": 44.6,
+        "expected_minutes": 47.5,
         "news": "",
-        "change": null,
+        "change": "out",
         "set_piece_role": {
           "penalty_taker_share": 0,
           "source_version": "2026-08-28-manual-v2"
         },
         "form": {
-          "season_multiplier": 0.985,
-          "recent_multiplier": 0.989,
-          "recent_xgi90": 0.199,
-          "recent_minutes": 120.0,
+          "season_multiplier": 0.983,
+          "recent_multiplier": 0.988,
+          "recent_xgi90": 0.198,
+          "recent_minutes": 125.0,
           "recent_matches": 2,
-          "recent_confidence": 0.25
+          "recent_confidence": 0.258
         },
         "historical_prior": {
           "prev_minutes": 1697.0,
@@ -12521,26 +11442,26 @@
           "assist_prior_used": 0.097
         },
         "xp_breakdown": {
-          "appearance": 1.21,
-          "goals": 0.16,
-          "assists": 0.26,
-          "clean_sheet": 0.63,
+          "appearance": 1.35,
+          "goals": 0.17,
+          "assists": 0.28,
+          "clean_sheet": 0.81,
           "saves": 0,
-          "defensive": 0.01,
-          "bonus": 0.11,
+          "defensive": 0.02,
+          "bonus": 0.12,
           "penalty": 0.0,
-          "conceded": -0.18,
+          "conceded": -0.2,
           "cards": 0,
-          "displayed_sum": 2.2,
+          "displayed_sum": 2.55,
           "reconciled": true
         },
+        "captain": false,
+        "vice": false,
         "set_pieces": {
           "penalty_taker_share": 0.0,
           "penalty_role": "unknown",
           "source": "none"
         },
-        "captain": false,
-        "vice": false,
         "confirmed_position": 3,
         "confirmed_multiplier": 1,
         "optimal_start": false,
@@ -12554,7 +11475,7 @@
         "team": "Arsenal",
         "position": "MID",
         "price": 6.5,
-        "xp": 1.75,
+        "xp": 1.97,
         "xp_low": 0,
         "xp_high": 0,
         "risk": "ukjent",
@@ -12772,453 +11693,5 @@
     "version": "1.0",
     "active": false,
     "reason": "No completed current-GW transfer requiring post-transfer re-optimization."
-  },
-  "transfer_timing": {
-    "version": "1.0-shadow",
-    "mode": "shadow",
-    "hours_to_deadline": 93.8,
-    "affects_transfer_ranking": false,
-    "price_prediction": false,
-    "method": "price-pressure risk x affordability fragility versus information value",
-    "candidates": [
-      {
-        "candidate_index": 0,
-        "label": "Osula → Gonzalo",
-        "timing": {
-          "version": "1.0",
-          "label": "VENT PÅ MER INFO",
-          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-          "hours_to_deadline": 93.8,
-          "affordability_fragility": 1.0,
-          "incoming_price_pressure_risk": 0.348,
-          "outgoing_price_pressure_risk": 0.195,
-          "lock_risk": 0.325,
-          "information_value": 0.904,
-          "net_early_action_case": -0.579,
-          "price_prediction": false,
-          "affects_ranking": false
-        }
-      },
-      {
-        "candidate_index": 1,
-        "label": "Osula → Calvert-Lewin",
-        "timing": {
-          "version": "1.0",
-          "label": "VENT PÅ MER INFO",
-          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-          "hours_to_deadline": 93.8,
-          "affordability_fragility": 1.0,
-          "incoming_price_pressure_risk": 0.0,
-          "outgoing_price_pressure_risk": 0.195,
-          "lock_risk": 0.074,
-          "information_value": 0.904,
-          "net_early_action_case": -0.83,
-          "price_prediction": false,
-          "affects_ranking": false
-        }
-      },
-      {
-        "candidate_index": 2,
-        "label": "Tzolis → Dewsbury-Hall",
-        "timing": {
-          "version": "1.0",
-          "label": "VENT PÅ MER INFO",
-          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-          "hours_to_deadline": 93.8,
-          "affordability_fragility": 1.0,
-          "incoming_price_pressure_risk": 0.0,
-          "outgoing_price_pressure_risk": 0.017,
-          "lock_risk": 0.006,
-          "information_value": 0.872,
-          "net_early_action_case": -0.866,
-          "price_prediction": false,
-          "affects_ranking": false
-        }
-      },
-      {
-        "candidate_index": 3,
-        "label": "I.Sangaré → Belloumi",
-        "timing": {
-          "version": "1.0",
-          "label": "VENT PÅ MER INFO",
-          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-          "hours_to_deadline": 93.8,
-          "affordability_fragility": 1.0,
-          "incoming_price_pressure_risk": 0.075,
-          "outgoing_price_pressure_risk": 0.122,
-          "lock_risk": 0.1,
-          "information_value": 0.904,
-          "net_early_action_case": -0.804,
-          "price_prediction": false,
-          "affects_ranking": false
-        }
-      },
-      {
-        "candidate_index": 4,
-        "label": "Tzolis → Schade",
-        "timing": {
-          "version": "1.0",
-          "label": "VENT PÅ MER INFO",
-          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-          "hours_to_deadline": 93.8,
-          "affordability_fragility": 0.1,
-          "incoming_price_pressure_risk": 0.141,
-          "outgoing_price_pressure_risk": 0.017,
-          "lock_risk": 0.011,
-          "information_value": 0.872,
-          "net_early_action_case": -0.861,
-          "price_prediction": false,
-          "affects_ranking": false
-        }
-      },
-      {
-        "candidate_index": 5,
-        "label": "I.Sangaré → Gomez",
-        "timing": {
-          "version": "1.0",
-          "label": "VENT PÅ MER INFO",
-          "note": "Informasjonsverdien er høyere enn prisrisikoen akkurat nå.",
-          "hours_to_deadline": 93.8,
-          "affordability_fragility": 1.0,
-          "incoming_price_pressure_risk": 0.273,
-          "outgoing_price_pressure_risk": 0.122,
-          "lock_risk": 0.243,
-          "information_value": 0.904,
-          "net_early_action_case": -0.661,
-          "price_prediction": false,
-          "affects_ranking": false
-        }
-      }
-    ],
-    "note": "Timing-signalet avgjør når et ellers godt bytte eventuelt bør gjøres. Det skal ikke gjøre et dårlig bytte godt, og det forsøker ikke å forutsi FPLs skjulte prisalgoritme."
-  },
-  "transfer_option_value": {
-    "version": "1.1-shadow",
-    "mode": "shadow",
-    "affects_transfer_ranking": false,
-    "source": "data.json transfer_option_pool",
-    "free_transfer_point_value": 0.45,
-    "bank_point_value_per_million": 0.16,
-    "bank_value_cap_million": 1.5,
-    "upgrade_threshold": 0.75,
-    "baseline_bank_action": {
-      "bank": 0.0,
-      "future_free_transfers": 2,
-      "option_value": 1.5,
-      "affordable_upgrade_paths": 10,
-      "top_upgrade_paths": [
-        {
-          "out_id": 557,
-          "out_name": "Tzolis",
-          "in_id": 236,
-          "in_name": "Dewsbury-Hall",
-          "gain": 6.58,
-          "cost": 6.5
-        },
-        {
-          "out_id": 465,
-          "out_name": "Osula",
-          "in_id": 346,
-          "in_name": "Calvert-Lewin",
-          "gain": 6.51,
-          "cost": 6.0
-        },
-        {
-          "out_id": 488,
-          "out_name": "I.Sangaré",
-          "in_id": 127,
-          "in_name": "Gomez",
-          "gain": 5.96,
-          "cost": 5.0
-        },
-        {
-          "out_id": 8,
-          "out_name": "Calafiori",
-          "in_id": 88,
-          "in_name": "Kayode",
-          "gain": 3.95,
-          "cost": 4.6
-        },
-        {
-          "out_id": 4,
-          "out_name": "Gabriel",
-          "in_id": 388,
-          "in_name": "Guéhi",
-          "gain": 3.41,
-          "cost": 6.0
-        }
-      ]
-    },
-    "candidates": [
-      {
-        "candidate_index": 0,
-        "label": "Osula → Gonzalo",
-        "horizon_gain": 9.87,
-        "bank_after": 0.0,
-        "option_value": 1.05,
-        "vs_bank": -0.45,
-        "upgrade_paths": 9
-      },
-      {
-        "candidate_index": 1,
-        "label": "Osula → Calvert-Lewin",
-        "horizon_gain": 9.83,
-        "bank_after": 0.0,
-        "option_value": 1.05,
-        "vs_bank": -0.45,
-        "upgrade_paths": 9
-      },
-      {
-        "candidate_index": 2,
-        "label": "Tzolis → Dewsbury-Hall",
-        "horizon_gain": 9.74,
-        "bank_after": 0.0,
-        "option_value": 1.05,
-        "vs_bank": -0.45,
-        "upgrade_paths": 9
-      },
-      {
-        "candidate_index": 3,
-        "label": "I.Sangaré → Belloumi",
-        "horizon_gain": 9.66,
-        "bank_after": 0.0,
-        "option_value": 1.05,
-        "vs_bank": -0.45,
-        "upgrade_paths": 9
-      },
-      {
-        "candidate_index": 4,
-        "label": "Tzolis → Schade",
-        "horizon_gain": 9.49,
-        "bank_after": 0.5,
-        "option_value": 1.13,
-        "vs_bank": -0.37,
-        "upgrade_paths": 11
-      },
-      {
-        "candidate_index": 5,
-        "label": "I.Sangaré → Gomez",
-        "horizon_gain": 9.49,
-        "bank_after": 0.0,
-        "option_value": 1.05,
-        "vs_bank": -0.45,
-        "upgrade_paths": 9
-      }
-    ],
-    "note": "Shadow-mål: verdien av bank, lagrede gratisbytter og realistiske oppgraderingsveier. Påvirker ikke anbefalingen før backtest viser gevinst."
-  },
-  "transfer_robustness": {
-    "version": "1.0-shadow",
-    "affects_transfer_ranking": false,
-    "candidate_count": 6,
-    "robust_count": 6,
-    "purpose": "Cross-horizon agreement check before committing a transfer."
-  },
-  "bench_replacement_model": {
-    "version": "1.0-shadow",
-    "affects_transfer_ranking": false,
-    "current_xi_players": 11,
-    "bench_players": 4,
-    "purpose": "Unngå at skadebytter overvurderes ved å sammenligne mot mulig benkeinnhopp."
-  },
-  "absence_severity_model": {
-    "version": "1.0-shadow",
-    "affects_transfer_ranking": false,
-    "candidate_count": 6,
-    "purpose": "Skiller bekreftet/langvarig fravær fra én kamp ute, tvil og vanlig minuttrisiko; brukes som sikkerhetsinformasjon."
-  },
-  "transfer_necessity_model": {
-    "version": "1.0-shadow",
-    "affects_transfer_ranking": false,
-    "candidate_count": 6,
-    "scale": [
-      "SPAR FT",
-      "LUKSUSBYTTE",
-      "FORNUFTIG",
-      "NØDVENDIG"
-    ],
-    "purpose": "Svar på om FT faktisk bør brukes, ikke bare hvilket bytte som rangeres høyest."
-  },
-  "transfer_regret_model": {
-    "version": "1.0-shadow",
-    "affects_transfer_ranking": false,
-    "candidate_count": 6,
-    "purpose": "Sammenligner risikoen for å angre på å gjøre byttet mot risikoen for å angre på å spare FT. Brukes som konservativt sikkerhets-/forklaringslag."
-  },
-  "decision_confidence_model": {
-    "version": "1.0-shadow",
-    "affects_transfer_ranking": false,
-    "candidate_count": 6,
-    "purpose": "Bryter total sikkerhet ned i sportslig verdi, fravær, benk, robusthet, økonomi, FT-fleksibilitet, informasjon, angerrisiko og datakvalitet."
-  },
-  "plan_intelligence": {
-    "version": "1.0",
-    "horizon_gws": [
-      3,
-      4,
-      5,
-      6
-    ],
-    "purpose": "Forklare den beste fler-GW-ruten, budsjett, FT og hva som kan endre planen.",
-    "rolling_plan": true,
-    "start_free_transfers": 1
-  },
-  "final_transfer_gate": {
-    "version": "2.3-regret-aware",
-    "production_approved": true,
-    "verdict": "NO-GO",
-    "authoritative_headline": "IKKE GJØR BYTTET",
-    "confidence": 0.45,
-    "production_margin_vs_bank": 15.05,
-    "early_season_uncertainty_penalty": 0.3,
-    "adjusted_margin_vs_bank": 14.75,
-    "candidate_1_vs_2_edge_gap": 0.04,
-    "robustness": "ROBUST",
-    "timing_recommendation": null,
-    "option_value_total": 1.05,
-    "bench_adjusted_next_gw_gain": 0.14,
-    "transfer_necessity": "LUKSUSBYTTE",
-    "transfer_necessity_score": 1.83,
-    "regret_make_transfer": 0.95,
-    "regret_save_ft": 0.8,
-    "regret_verdict": "SPAR FT HAR LAVERE ANGERRISIKO",
-    "blockers": [
-      "Angrerisikoen er klart høyere ved å gjøre byttet (95 %) enn ved å spare FT (80 %)."
-    ],
-    "warnings": [
-      "Trekket er et luksusbytte, ikke en nødvendig reparasjon.",
-      "Kandidat #1 og #2 ligger svært tett.",
-      "Det er høy verdi i å vente på mer lag-/skadeinformasjon.",
-      "Tidlig sesong: bare GW1 er tilgjengelig som ferskt resultatsnapshot, så beviskravet er høyere."
-    ],
-    "go_triggers": [
-      "Et luksusbytte krever tydelig merverdi mot SPAR FT før GO.",
-      "GO blir sterkere når kandidat #1 skiller minst +0,20 p fra #2.",
-      "GO krever at angrerisikoen ved BYTT ikke lenger er klart høyere enn ved SPAR FT."
-    ],
-    "recheck_conditions": [
-      "Kjør ny vurdering etter siste skade-/lagnytt før deadline.",
-      "Oppdater etter ny bekreftet informasjon om minutter, roller og skader."
-    ],
-    "next_action": "Ikke bruk gratisbyttet på dette trekket nå. Behold FT med mindre nye data endrer beslutningen.",
-    "rule": "Final Gate controls headline. Necessity, regret and other shadow layers may downgrade GO to WAIT/NO-GO, never promote a production-rejected transfer."
-  },
-  "final_transfer_duel": {
-    "version": "2.1-necessity-aware",
-    "affects_transfer_ranking": false,
-    "production_approved": true,
-    "verdict": "NO-GO",
-    "confidence": 0.45,
-    "rows": [
-      {
-        "kind": "transfer",
-        "rank": 1,
-        "label": "Osula → Gonzalo",
-        "production_edge": 9.77,
-        "next_gw_gain_raw": 3.66,
-        "next_gw_gain_after_bench": 0.14,
-        "three_gw_gain_after_bench": 5.97,
-        "plan_gain_after_bench": 6.35,
-        "bank_after": 0.0,
-        "bench_cover": "Slater",
-        "bench_cover_expected": 3.52,
-        "bench_adjustment_applied": true,
-        "robustness": "ROBUST",
-        "timing": "VENT PÅ MER INFO",
-        "option_value": 1.05,
-        "necessity": "LUKSUSBYTTE",
-        "necessity_score": 1.83,
-        "necessity_reasons": [
-          "Benken dekker neste runde så godt at hasteverdien faller.",
-          "Benkekorrigert 3-GW-gevinst er +6.0 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "status": "GJØR DET",
-        "gate_misses": []
-      },
-      {
-        "kind": "transfer",
-        "rank": 2,
-        "label": "Osula → Calvert-Lewin",
-        "production_edge": 9.73,
-        "next_gw_gain_raw": 3.32,
-        "next_gw_gain_after_bench": -0.2,
-        "three_gw_gain_after_bench": 6.0,
-        "plan_gain_after_bench": 6.31,
-        "bank_after": 0.0,
-        "bench_cover": "Slater",
-        "bench_cover_expected": 3.52,
-        "bench_adjustment_applied": true,
-        "robustness": "ROBUST",
-        "timing": "VENT PÅ MER INFO",
-        "option_value": 1.05,
-        "necessity": "SPAR FT",
-        "necessity_score": 1.11,
-        "necessity_reasons": [
-          "Benken dekker neste runde så godt at hasteverdien faller.",
-          "Benkekorrigert 3-GW-gevinst er +6.0 p.",
-          "Langsiktig gevinst er sterk nok til å være relevant selv om GW2-effekten er liten."
-        ],
-        "status": "GJØR DET",
-        "gate_misses": []
-      },
-      {
-        "kind": "bank",
-        "rank": 0,
-        "label": "SPAR GRATISBYTTET",
-        "production_edge": 0.0,
-        "next_gw_gain_raw": 0.0,
-        "next_gw_gain_after_bench": 0.0,
-        "three_gw_gain_after_bench": 0.0,
-        "plan_gain_after_bench": 0.0,
-        "bank_after": 0.0,
-        "bench_cover": null,
-        "bench_cover_expected": null,
-        "bench_adjustment_applied": false,
-        "robustness": "BASELINE",
-        "timing": "VENT / BEHOLD INFOFORDEL",
-        "option_value": 0.45,
-        "necessity": "BASELINE",
-        "necessity_score": 0.0,
-        "necessity_reasons": [
-          "Beholder gratisbyttet og maksimal fleksibilitet til neste runde."
-        ],
-        "status": "BASELINE",
-        "gate_misses": []
-      }
-    ],
-    "candidate_1_vs_2_bench_adjusted_plan_gap": 0.04,
-    "warnings": [
-      "Kandidat #1 er et luksusbytte og må slå SPAR FT med tydelig margin.",
-      "Benkedekningen spiser opp nesten hele gevinsten i neste runde.",
-      "Timinglaget anbefaler å vente på mer informasjon.",
-      "Kandidat #1 og #2 er nesten like etter benkekorreksjon."
-    ],
-    "blockers": [],
-    "explanation": "Sammenligner de to beste byttene mot å spare FT med benkedekning og byttenødvendighet inkludert.",
-    "rule": "Kan bare gjøre produksjonsbeslutningen mer konservativ; kan aldri promotere et avvist bytte."
-  },
-  "deadline_lock": {
-    "version": "1.0-predeadline",
-    "affects_transfer_ranking": false,
-    "production_approved": true,
-    "verdict": "LOCKED / NO-GO",
-    "headline": "IKKE GJØR BYTTET",
-    "confidence_score": 0.68,
-    "necessity": "LUKSUSBYTTE",
-    "regret_make_transfer": 0.95,
-    "regret_save_ft": 0.8,
-    "information_value": 0.9,
-    "budget_lock_risk": 0.33,
-    "blockers": [
-      "Final Gate har allerede satt NO-GO.",
-      "Angrerisikoen ved å gjøre byttet er klart høyere enn ved å spare."
-    ],
-    "warnings": [
-      "Angrerisikoen ved å gjøre byttet er høyere enn ved å spare.",
-      "Dette er fortsatt et luksusbytte.",
-      "Mer informasjon har høy verdi og prisrisikoen forsvarer ikke tidlig handling."
-    ],
-    "rule": "Deadline Lock may downgrade Final Gate but can never promote a production-rejected transfer."
   }
 }
