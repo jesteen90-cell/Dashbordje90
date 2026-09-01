@@ -17,10 +17,14 @@ def pipeline_sanity():
  gen=Path('generate_dashboard_v3.py').read_text();assert "'penalty_taker_share':penalty_share(p)" in gen and "'projection_integration':'active'" in gen and "'bonus','penalty','conceded'" in gen
  assert 'availability_for_gw' in gen and "'budget':{" in gen and "'3.8-availability-recovery-set-piece-projection'" in gen and "'selling_price'" in gen
  roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
- html=Path('index.html').read_text();app=Path('app.js').read_text();lineup=Path('current_lineup_ui.js').read_text();team_css=Path('team_ui.css').read_text()
+ html=Path('index.html').read_text();app=Path('app.js').read_text();budget_ui=Path('budget_ui.js').read_text();plan_ui=Path('plan_ui.js').read_text();meta_ui=Path('dashboard_meta_ui.js').read_text();lineup=Path('current_lineup_ui.js').read_text();team_css=Path('team_ui.css').read_text()
  assert 'src="app.js?v=' in html and 'href="team_ui.css?v=' in html and 'id="after" class="pitch"' in html and 'id="bench" class="bench"' in html and 'Se forrige bekreftede FPL-lag' in html
  assert 'function render()' in app and 'function kit(' in app and 'function pitch(' in app and 'function benchHtml(' in app
  assert 'D.final_transfer_gate' in app and "D.gameweek||D.gw" in app and "if(mp)mp.textContent" in app and "box.classList.add('show')" in app
+ assert 'function displayPrice(' in app and 'money(displayPrice(p))' in app and "q('#snapshot').textContent=statusText()" in app
+ assert 'bestMove=(first.pairs||[]).length?first:plan0' in budget_ui and "d.current_transfer_state?.free_transfers_remaining" in budget_ui and "isRecommended=d.final_transfer_gate?.verdict==='GO'" in budget_ui
+ assert "'VENT – IKKE BYTT ENNÅ'" in plan_ui and 'planIsConsistent(D)' in plan_ui and 'lockedFutureCard(D,s)' in plan_ui and 'Bare kortet merket GJØR NÅ' in plan_ui
+ assert 'function planCard(' not in meta_ui and "Samordner planen med endelig anbefaling" in app
  assert "querySelectorAll('.kit').length===11" in lineup and 'renderVisualOptimal' in lineup
  assert '#team .pitch .row.n5' in team_css and 'grid-template-columns:repeat(5,minmax(0,1fr))' in team_css
  pages=Path('.github/workflows/pages.yml').read_text();assert 'workflow_run:' in pages and 'Refresh FPL Dashboard' in pages and 'github.event.workflow_run.conclusion' in pages
