@@ -31,6 +31,11 @@ on:
       - "select_captain_model.py"
       - "apply_captain_selection.py"
       - "apply_confirmed_fpl_lineup.py"
+      - "manual_confirmed_lineup_gw2.json"
+      - "current_squad_sync_v1.py"
+      - "post_transfer_state_v1.py"
+      - "optimal_lineup_v1.py"
+      - "post_transfer_plan_v1.py"
       - "captain_explain_ui.js"
       - "freeze_captain_v4.py"
       - "market_odds.json"
@@ -141,8 +146,16 @@ jobs:
           sel=d.get('captain_model_selection') or {}; assert sel.get('version')=='1.0'; assert sel.get('applied') is True; assert sel.get('applied_captain_id')
           xi=d.get('lineup') or []; caps=[p for p in xi if p.get('captain')]; vice=[p for p in xi if p.get('vice')]; assert len(xi)==11; assert len(caps)==1; assert len(vice)==1; assert int(caps[0]['id'])==int(sel['applied_captain_id'])
           ex=d.get('captain_explanation') or {}; assert ex.get('version') in ('1.0','1.1-confidence-data','1.2-confidence-quality','1.3-confidence-source-quality'); assert int(ex.get('captain',{}).get('id'))==int(sel.get('applied_captain_id'))
-          confirmed=d.get('confirmed_fpl') or {}; assert confirmed.get('source')=='official-picks-api'; assert confirmed.get('exact_order') is True; assert len(confirmed.get('lineup') or [])==11; assert len(confirmed.get('bench') or [])==4; assert len([p for p in confirmed['lineup'] if p.get('captain')])==1; assert len([p for p in confirmed['lineup'] if p.get('vice')])==1; assert [p['id'] for p in (d.get('comparison') or {}).get('current_xi',[])]==[p['id'] for p in confirmed['lineup']]
-          assert all(str(p.get('team') or '').strip() not in ('','?','Ukjent lag') for p in confirmed['lineup']+confirmed['bench']), 'Confirmed FPL player missing team name'
+          confirmed=d.get('confirmed_fpl') or {}; source=confirmed.get('source'); assert source in ('official-picks-api','user-confirmed-screenshot-fallback'),source
+          assert confirmed.get('exact_order') is True; assert len(confirmed.get('lineup') or [])==11; assert len(confirmed.get('bench') or [])==4
+          all15=confirmed['lineup']+confirmed['bench']; assert len({int(p['id']) for p in all15})==15,'Confirmed squad duplicate IDs'
+          assert len([p for p in confirmed['lineup'] if p.get('captain')])==1; assert len([p for p in confirmed['lineup'] if p.get('vice')])==1
+          assert [p['id'] for p in (d.get('comparison') or {}).get('current_xi',[])]==[p['id'] for p in confirmed['lineup']]
+          assert all(str(p.get('team') or '').strip() not in ('','?','Ukjent lag') for p in all15), 'Confirmed FPL player missing team name'
+          if source=='user-confirmed-screenshot-fallback': assert confirmed.get('temporary_until_official_snapshot') is True and int(confirmed.get('gw') or 0)==int(d.get('source_snapshot_gw') or 0)
+          cs=d.get('current_squad') or {}; assert str(cs.get('version','')).startswith('1.'); assert len(cs.get('players') or [])==15; assert len(set(cs.get('owned_ids') or []))==15
+          ol=d.get('optimal_current_lineup') or {}; assert len(ol.get('lineup') or [])==11; assert len(ol.get('bench') or [])==4; assert len({int(p['id']) for p in (ol.get('lineup') or [])+(ol.get('bench') or [])})==15
+          cts=d.get('current_transfer_state') or {}; assert int(cts.get('gw') or 0)==int(d.get('gw') or 0); assert int(cts.get('completed_transfers') or 0)>=0
           dl=d.get('decision_layer',{}); assert dl.get('version') in ('4.4-premium-adaptive','4.5-squad-consistent','4.6-input-quality-threshold'); assert dl.get('squad_view_consistent') is True
           if dl.get('version')=='4.6-input-quality-threshold':
             iq=dl.get('input_quality') or {}; assert 0<=float(iq.get('score',0))<=1; assert 0<=float(iq.get('threshold_penalty',0))<=.24; assert iq.get('strength_quality'); assert isinstance(iq.get('market_active'),bool); assert float(dl.get('threshold'))>=float(dl.get('base_threshold'))
@@ -150,7 +163,7 @@ jobs:
           premium=json.load(open('premium_structure_shadow.json')); assert premium.get('version')=='1.1-backtest-ready'
           chip=json.load(open('chip_strategy_shadow.json')); assert chip.get('version')=='1.4-exact-fixtures'
           cache=json.load(open('projection_cache.json')); assert len(cache.get('players',[]))>400; assert len(cache.get('squad_ids',[]))==15
-          print('Sanity OK:',d.get('model_version'),dl.get('version'),'budget',d.get('budget'),'threshold',dl.get('threshold'),'input quality',dl.get('input_quality'),'confirmed GW',confirmed.get('gw'))
+          print('Sanity OK:',d.get('model_version'),dl.get('version'),'budget',d.get('budget'),'threshold',dl.get('threshold'),'input quality',dl.get('input_quality'),'confirmed GW',confirmed.get('gw'),'source',source,'current squad',len(cs.get('players') or []),'optimal XI',len(ol.get('lineup') or []))
           PY
       - name: Freeze pre-deadline snapshots
         run: |
