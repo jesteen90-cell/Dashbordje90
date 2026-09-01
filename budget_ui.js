@@ -40,19 +40,19 @@
   async function run(){
     try{
       const r=await fetch(`data.json?budget=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;
-      const d=await r.json(),b=d.budget||{},bi=d.budget_intelligence||{},tov=d.transfer_option_value||{},ft=Number(d.free_transfers_assumed||0),cands=d.candidates||[],first=cands[0]||{},future=d.future||[],plan0=(d.optimizer?.plan||[])[0]||{};
+      const d=await r.json(),b=d.budget||{},bi=d.budget_intelligence||{},tov=d.transfer_option_value||{},ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),cands=d.candidates||[],first=cands[0]||{},future=d.future||[],plan0=(d.optimizer?.plan||[])[0]||{},bestMove=(first.pairs||[]).length?first:plan0,isRecommended=d.final_transfer_gate?.verdict==='GO',moveLabel=isRecommended?'anbefalt trekk':'beste vurderte trekk';
       const liveSale=b.selling_value_live===true;
       const teamValue=liveSale?b.squad_selling_value:b.squad_market_value;
       const teamLabel=liveSale?'faktisk salgsverdi':'lagverdi (markedspris)';
-      const cost=hitCost(plan0,ft);
+      const cost=hitCost(bestMove,ft);
       const hero=el('heroBudget');
-      if(hero)hero.innerHTML=tile(ft||'—','gratisbytte'+(ft===1?'':'r'),'good')+tile(`${cost} p`,'kostnad anbefalt trekk',cost?'warn':'good')+tile(money(b.bank),'i banken','money')+tile(money(teamValue),teamLabel);
+      if(hero)hero.innerHTML=tile(ft||'—','gratisbytte'+(ft===1?'':'r'),'good')+tile(`${cost} p`,`kostnad ${moveLabel}`,cost?'warn':'good')+tile(money(b.bank),'i banken','money')+tile(money(teamValue),teamLabel);
       const move=el('transferBudgetSummary');
       if(move){
         const after=Number(first.bank_after),hasAfter=Number.isFinite(after),flex=bi.flexibility||{},watch=(bi.watchlist||[])[0],base=tov.baseline_bank_action||{},ov=first.option_value_shadow||{};
         const watchText=watch?`${watch.name}: ${watch.signal?.label||'rolig'} · ${money(watch.bank_after)} etter byttet`:'Ingen tydelig prispress blant toppforslagene';
         const optionText=ov.version?`${optionGrade(Number(ov.vs_bank||0))} · ${Number(ov.affordable_upgrade_paths||0)} oppgraderingsveier`:`Spar byttet: ${Number(base.affordable_upgrade_paths||0)} oppgraderingsveier`;
-        move.innerHTML=`<div class="budgetCard"><div><div class="eyebrow">Nå</div><strong>${money(b.bank)}</strong><span>${ft||'—'} gratisbytte${ft===1?'':'r'} · anbefalt trekk koster ${cost} poeng</span></div><div><div class="eyebrow">Beste forslag</div><strong>${hasAfter?money(after):'—'}</strong><span>${hasAfter?'bank etter forslaget':'bank etter forslag beregnes når byttet er kjent'}</span></div><div><div class="eyebrow">Lagverdi</div><strong>${money(teamValue)}</strong><span>${teamLabel}${liveSale?'':' · salgsverdi kan være lavere'}</span></div></div><div class="budgetIntel"><div><b>Budsjettintelligens</b><span class="shadowTag">SHADOW</span></div><p>Fleksibilitet nå: <strong>${flex.grade||'—'}</strong> · ${flex.note||''}</p><p>Premium-bundet: <strong>${Number(bi.premium_share_pct||0).toFixed(1)}%</strong> (${money(bi.premium_locked_value)})</p><p>Prispress: ${watchText}</p><p>Fremtidig handlingsrom: <strong>${optionText}</strong></p><small>Shadow-feltene endrer ikke anbefalingen ennå. Poeng og fler-GW-plan har prioritet mens vi samler bevis.</small></div>`;
+        move.innerHTML=`<div class="budgetCard"><div><div class="eyebrow">Nå</div><strong>${money(b.bank)}</strong><span>${ft||'—'} gratisbytte${ft===1?'':'r'} · ${moveLabel} koster ${cost} poeng</span></div><div><div class="eyebrow">Beste forslag</div><strong>${hasAfter?money(after):'—'}</strong><span>${hasAfter?'bank etter forslaget':'bank etter forslag beregnes når byttet er kjent'}</span></div><div><div class="eyebrow">Lagverdi</div><strong>${money(teamValue)}</strong><span>${teamLabel}${liveSale?'':' · salgsverdi kan være lavere'}</span></div></div><div class="budgetIntel"><div><b>Budsjettintelligens</b><span class="shadowTag">SHADOW</span></div><p>Fleksibilitet nå: <strong>${flex.grade||'—'}</strong> · ${flex.note||''}</p><p>Premium-bundet: <strong>${Number(bi.premium_share_pct||0).toFixed(1)}%</strong> (${money(bi.premium_locked_value)})</p><p>Prispress: ${watchText}</p><p>Fremtidig handlingsrom: <strong>${optionText}</strong></p><small>Shadow-feltene endrer ikke anbefalingen ennå. Poeng og fler-GW-plan har prioritet mens vi samler bevis.</small></div>`;
       }
       const plan=el('planBudgetSummary');
       if(plan){
