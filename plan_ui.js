@@ -1,25 +1,28 @@
 (()=>{
 function e(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function cash(v){let n=Number(v);return Number.isFinite(n)?`£${n.toFixed(1)}m`:'—'}
-function postCard(x){
-  const pairs=x.pairs||[],isBank=x.action==='bank',move=pairs[0];
-  const action=isBank?'SPAR GRATISBYTTET':move?`${e(move.out_name)} → ${e(move.in_name)}`:'Ingen handling';
-  const why=isBank?'Beholder fleksibiliteten til neste deadline.':`Modellen ser dette som beste rute akkurat nå uten poengtrekk.`;
-  const change='Skader, minutter, prisendringer eller nye kampdata kan endre dette før runden.';
-  return `<article class="card planSimple"><div class="planRoundHead"><div><div class="eyebrow">Runde ${e(x.gw)}</div><div class="planRoundTitle">${action}</div></div><span class="planConfidence">RULLERENDE</span></div><div class="planMetricGrid compact"><div><b>${Number(x.expected_score_with_captain||0).toFixed(1)} p</b><span>forventet inkl. kaptein</span></div><div><b>${e(x.captain||'—')}</b><span>kaptein</span></div><div><b>${e(x.free_transfers_after)}</b><span>FT etter</span></div><div><b>${cash(x.bank_after)}</b><span>bank etter</span></div></div><div class="why"><div class="whyItem"><b>Hvorfor:</b> ${why}</div><div class="whyItem"><b>Kan endres hvis:</b> ${change}</div></div></article>`;
+function hitCost(pairs,ft){return Math.max(0,(pairs||[]).length-Number(ft||0))*4}
+function topMove(d){const row=(d.final_transfer_duel?.rows||[]).find(x=>x.kind==='transfer');if(row?.label)return row.label;const pair=d.candidates?.[0]?.pairs?.[0];return pair?`${pair.out?.name||'—'} → ${pair.in?.name||'—'}`:'Ingen konkret kandidat'}
+function pairSignature(pairs){return (pairs||[]).map(x=>`${Number(x.out?.id||0)}>${Number(x.in?.id||0)}`).sort().join('|')}
+function planIsConsistent(d){const chosen=pairSignature(d.candidates?.[0]?.pairs),planned=pairSignature(d.optimizer?.plan?.[0]?.pairs);return Boolean(chosen&&chosen===planned)}
+function decisionState(d){
+  const verdict=d.final_transfer_gate?.verdict||'NO-GO',ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),pairs=d.candidates?.[0]?.pairs||[],move=topMove(d),base=d.transfer_option_value?.baseline_bank_action||{},nextFt=Number(base.future_free_transfers||Math.min(5,ft+1));
+  if(verdict==='GO')return{word:`BYTT ${move}`,badge:'GJØR NÅ',cls:'go',cost:hitCost(pairs,ft),ft,nextFt,move,why:'Dette er det eneste byttet som er godkjent av den endelige vurderingen.'};
+  if(verdict==='WAIT / RECHECK')return{word:'VENT – IKKE BYTT ENNÅ',badge:'AKTIVT VALG',cls:'consider',cost:0,ft,nextFt,move,why:`${move} er bare beste kandidat. Det er ikke godkjent som et bytte du skal gjøre nå.`};
+  return{word:'SPAR GRATISBYTTET',badge:'AKTIVT VALG',cls:'weak',cost:0,ft,nextFt,move,why:'Ingen bytter har passert den endelige vurderingen.'};
 }
-function legacyCard(x){let a=x.action||{},score=Number(x.xi_xp||0);return `<article class="card"><div class="planrow"><div><div class="eyebrow">Runde ${e(x.gw)}</div><b>${e(a.label||'Ingen handling')}</b></div><div><b>${score.toFixed(1)} p</b><div class="muted">forventet lagscore</div></div></div><div class="planMeta">Kaptein: ${e(x.captain||'—')}</div></article>`}
+function currentCard(d,s){const warnings=d.final_transfer_gate?.warnings||[];return `<article class="card planSimple"><div class="planRoundHead"><div><div class="eyebrow">Det eneste du skal gjøre nå · Runde ${e(d.gameweek||d.gw||'—')}</div><div class="planRoundTitle">${e(s.word)}</div></div><span class="badge ${s.cls}">${e(s.badge)}</span></div><div class="planMetricGrid compact"><div><b>${s.ft}</b><span>gratisbytte nå</span></div><div><b>${s.cost} p</b><span>kostnad nå</span></div><div><b>${s.nextFt}</b><span>FT neste runde hvis du sparer</span></div></div><div class="why"><div class="whyItem"><b>Klart valg:</b> ${e(s.why)}</div>${warnings.slice(0,2).map(x=>`<div class="whyItem">${e(x)}</div>`).join('')}</div></article>`}
+function lockedFutureCard(d,s){const conditions=d.final_transfer_gate?.recheck_conditions||[];return `<article class="card planSimple"><div class="eyebrow">Videre sesongplan</div><div class="planRoundTitle">Oppdateres etter neste sjekk</div><div class="why"><div class="whyItem">Konkrete bytter for senere runder er skjult nå. De gamle forslagene forutsatte et annet valg i denne runden og skal derfor ikke følges.</div><div class="whyItem"><b>Hvorfor:</b> Å spare ${s.ft} FT gir ${s.nextFt} FT og mer informasjon ved neste deadline.</div>${conditions.slice(0,2).map(x=>`<div class="whyItem">${e(x)}</div>`).join('')}</div></article>`}
+function legacyCard(x){let a=x.action||{},score=Number(x.xi_xp||0);return `<article class="card"><div class="planrow"><div><div class="eyebrow">Foreløpig · Runde ${e(x.gw)}</div><b>${e(a.label||'Ingen handling')}</b></div><div><b>${score.toFixed(1)} p</b><div class="muted">forventet lagscore</div></div></div><div class="planMeta">Ikke gjør dette før runden nærmer seg · Kaptein: ${e(x.captain||'—')}</div></article>`}
+function postCard(x){const pairs=x.pairs||[],isBank=x.action==='bank',move=pairs[0],action=isBank?'SPAR GRATISBYTTET':move?`${e(move.out_name)} → ${e(move.in_name)}`:'Ingen handling';return `<article class="card planSimple"><div class="planRoundHead"><div><div class="eyebrow">Foreløpig · Runde ${e(x.gw)}</div><div class="planRoundTitle">${action}</div></div><span class="planConfidence">RULLERENDE</span></div><div class="planMetricGrid compact"><div><b>${Number(x.expected_score_with_captain||0).toFixed(1)} p</b><span>forventet inkl. kaptein</span></div><div><b>${e(x.captain||'—')}</b><span>kaptein</span></div><div><b>${e(x.free_transfers_after)}</b><span>FT etter</span></div><div><b>${cash(x.bank_after)}</b><span>bank etter</span></div></div><div class="why"><div class="whyItem">Dette er et foreløpig senere trekk og beregnes på nytt før deadline.</div></div></article>`}
+function summary(box,d,s){const bank=d.budget?.bank,third=s.badge==='GJØR NÅ'?`<div><div class="eyebrow">Bank etter</div><strong>${cash(d.candidates?.[0]?.bank_after)}</strong></div>`:`<div><div class="eyebrow">Neste runde</div><strong>${s.nextFt} FT</strong><span>hvis du følger valget og sparer</span></div>`;box.innerHTML=`<div class="budgetCard compact"><div><div class="eyebrow">Valget nå</div><strong>${e(s.word.split(' – ')[0])}</strong></div><div><div class="eyebrow">Kostnad nå</div><strong>${s.cost} p</strong></div>${third}<div><div class="eyebrow">Bank</div><strong>${cash(bank)}</strong></div></div>`}
 function renderPlan(){
-  if(typeof D==='undefined'||!D)return;
-  const box=document.querySelector('#future');if(!box)return;
+  if(typeof D==='undefined'||!D)return;const box=document.querySelector('#future'),sum=document.querySelector('#planBudgetSummary'),intro=document.querySelector('#plan .tabExplain span'),heading=document.querySelector('#plan h2');if(!box)return;
   const pp=D.post_transfer_plan||{};
-  if(pp.active&&Array.isArray(pp.steps)){
-    box.innerHTML=pp.steps.map(postCard).join('');
-    const intro=document.querySelector('#plan .tabExplain span');if(intro)intro.textContent='Dette er neste beste rute fra troppen du eier nå. Planen beregnes på nytt før hver deadline.';
-    const sum=document.querySelector('#planBudgetSummary');if(sum)sum.innerHTML=`<div class="squadBar"><div><b>GW${e(pp.starting_gw)}</b><span>PLAN STARTER</span></div><div><b>${e(pp.starting_free_transfers)} FT</b><span>VED START</span></div><div><b>${cash(pp.starting_bank)}</b><span>BANK</span></div></div>`;
-    return;
-  }
-  box.innerHTML=(D.future||[]).map(legacyCard).join('')||'<div class="card muted">Ingen fler-runders plan tilgjengelig.</div>';
+  if(pp.active&&Array.isArray(pp.steps)){box.innerHTML=pp.steps.map(postCard).join('');if(intro)intro.textContent='Laget er oppdatert. Alle senere trekk er foreløpige og beregnes på nytt før hver deadline.';if(heading)heading.textContent='Foreløpige senere runder';return}
+  const s=decisionState(D);if(sum)summary(sum,D,s);if(intro)intro.textContent='Plan følger alltid den endelige anbefalingen i Nå-fanen. Bare kortet merket GJØR NÅ er en handling.';if(heading)heading.textContent='Sesongplan';
+  if(D.final_transfer_gate?.verdict!=='GO'){box.innerHTML=currentCard(D,s)+lockedFutureCard(D,s);return}
+  const later=(D.future||[]).filter(x=>Number(x.gw)>Number(D.gameweek||D.gw||0));box.innerHTML=currentCard(D,s)+(planIsConsistent(D)?later.map(legacyCard).join(''):lockedFutureCard(D,s));
 }
 window.addEventListener('load',()=>setTimeout(renderPlan,350));
 })();
