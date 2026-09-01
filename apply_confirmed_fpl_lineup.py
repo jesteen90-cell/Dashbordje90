@@ -10,7 +10,7 @@ POS={1:'GK',2:'DEF',3:'MID',4:'FWD'}
 
 
 def get(path):
-    r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-confirmed-lineup/1.5'},timeout=18)
+    r=requests.get(f"{BASE}/{path.lstrip('/')}",headers={'Accept':'application/json','User-Agent':'fpl-autopilot-confirmed-lineup/1.6'},timeout=18)
     r.raise_for_status();return r.json()
 
 
@@ -33,13 +33,15 @@ def apply_automatic_subs(picks, automatic_subs):
 
 
 def norm(s): return str(s or '').strip().casefold().replace(' ','')
-def resolve_name(name, bootstrap):
+def resolve_name(name, bootstrap, preferred_ids=None):
     target=norm(name);matches=[]
     for pid,p in bootstrap.items():
         vals={norm(p.get('web_name')),norm(p.get('first_name')),norm(p.get('second_name')),norm((str(p.get('first_name') or '')+' '+str(p.get('second_name') or '')).strip())}
         if target in vals: matches.append(pid)
-    if len(matches)!=1: raise RuntimeError(f'Could not uniquely resolve lineup player {name!r}: {matches}')
-    return matches[0]
+    if len(matches)==1:return matches[0]
+    preferred=set(int(x) for x in (preferred_ids or []));pm=[pid for pid in matches if pid in preferred]
+    if len(pm)==1:return pm[0]
+    raise RuntimeError(f'Could not uniquely resolve lineup player {name!r}: matches={matches}, preferred={pm}')
 
 
 def apply_manual_snapshot_if_newer(data, bootstrap, team_names, rows, official_gw):
@@ -49,14 +51,19 @@ def apply_manual_snapshot_if_newer(data, bootstrap, team_names, rows, official_g
     if not ov.get('confirmed_by_user') or mgw<=official_gw: return data, official_gw, False
     names=list(ov.get('lineup') or [])+list(ov.get('bench') or [])
     if len(names)!=15: raise RuntimeError('Manual confirmed lineup must contain 15 players')
-    ids=[resolve_name(n,bootstrap) for n in names]
-    for pid in ids:
-        rows.setdefault(pid,fallback_row(pid,bootstrap,team_names))
-    cap=resolve_name(ov.get('captain'),bootstrap);vice=resolve_name(ov.get('vice_captain'),bootstrap)
+    preferred=set(rows)
+    ids=[]
+    for n in names:
+        pid=resolve_name(n,bootstrap,preferred)
+        ids.append(pid);preferred.add(pid)
+    if len(set(ids))!=15:raise RuntimeError('Manual confirmed lineup resolved duplicate player IDs')
+    for pid in ids: rows.setdefault(pid,fallback_row(pid,bootstrap,team_names))
+    cap=resolve_name(ov.get('captain'),bootstrap,set(ids));vice=resolve_name(ov.get('vice_captain'),bootstrap,set(ids))
     confirmed=[]
     for i,pid in enumerate(ids,1):
         r=dict(rows[pid]);bp=bootstrap.get(pid) or {};tid=int(r.get('team_id') or bp.get('team') or 0);r['team_id']=tid;r['team']=team_names.get(tid) or r.get('team') or 'Ukjent lag';r['captain']=pid==cap;r['vice']=pid==vice;r['confirmed_position']=i;r['confirmed_multiplier']=2 if pid==cap else (1 if i<=11 else 0);confirmed.append(r)
     xi=confirmed[:11];bench=confirmed[11:]
+    if len([p for p in xi if p.get('captain')])!=1 or len([p for p in xi if p.get('vice')])!=1:raise RuntimeError('Manual captain/vice invalid')
     data.setdefault('comparison',{})['current_xi']=xi
     data['confirmed_fpl']={'gw':mgw,'source':'user-confirmed-screenshot-fallback','view':'submitted-lineup','exact_order':True,'automatic_subs_applied':[],'lineup':xi,'bench':bench,'captain_id':cap,'vice_id':vice,'fallback_rows':[],'total_points':ov.get('total_points'),'temporary_until_official_snapshot':True}
     return data,mgw,True
