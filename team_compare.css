@@ -1,0 +1,20 @@
+#team.compareReady #legacyTeam{display:none}
+.teamHeader{padding:22px 18px 14px}
+.teamHeader h1{margin:6px 0 8px;font-size:30px;line-height:1.05;letter-spacing:-.04em}
+.teamHeader p,.lineupIntro p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
+.lineupTabs{position:sticky;top:8px;z-index:8;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 8px 16px;padding:6px;border:1px solid #ffffff18;border-radius:18px;background:#0b0614e8;backdrop-filter:blur(14px)}
+.lineupTabs button{min-height:48px;padding:7px 5px;border:0;border-radius:13px;background:transparent;color:#a99fb8;font:800 12px/1.15 inherit;cursor:pointer}
+.lineupTabs button.active{color:#fff;background:linear-gradient(135deg,#7139ff,#aa3cff);box-shadow:0 8px 24px #7b35ff3b}
+.lineupIntro{display:flex;justify-content:space-between;gap:14px;padding:4px 18px 12px}
+.lineupIntro span{font-size:11px;font-weight:850;letter-spacing:.13em;text-transform:uppercase;color:#bcaad3}
+.lineupIntro h2{margin:5px 0 6px;font-size:25px;letter-spacing:-.03em}
+.lineupMeta{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:0 18px 12px}
+.lineupMeta>div{min-width:0;padding:11px 8px;border:1px solid #ffffff12;border-radius:14px;background:#ffffff08;text-align:center}
+.lineupMeta span{display:block;margin-bottom:4px;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.lineupMeta b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.teamAction{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto;align-items:center;gap:8px;margin:0 18px 12px;padding:12px;border:1px solid #8c55ff4d;border-radius:16px;background:linear-gradient(135deg,#6131be29,#09dca014)}
+.teamAction>div{min-width:0}.teamAction span{display:block;color:#bdaed0;font-size:9px;font-weight:900;letter-spacing:.14em}.teamAction b{display:block;margin-top:3px;font-size:12px;line-height:1.2}.teamAction i{color:#b997ff;font-style:normal}.teamAction em{padding:6px 7px;border-radius:9px;background:#ffffff0d;color:#ffd767;font:800 11px inherit;white-space:nowrap}.teamAction.bank{display:flex;justify-content:space-between}.teamAction.bank span{font-size:11px;letter-spacing:0;text-transform:none}
+.lineupPitch.section{padding-top:0}.lineupPitch .pitch{margin-top:0}
+.benchLabel{display:flex;justify-content:space-between;align-items:end;padding:0 18px 9px}.benchLabel b{font-size:16px}.benchLabel span{color:var(--muted);font-size:10px}
+#teamCompare>.lineupStage>.bench{margin:0 18px 22px}
+@media(max-width:390px){.teamHeader h1{font-size:27px}.lineupTabs button{font-size:10.5px}.lineupMeta{margin-left:12px;margin-right:12px}.teamAction{margin-left:12px;margin-right:12px}.lineupIntro{padding-left:12px;padding-right:12px}}
