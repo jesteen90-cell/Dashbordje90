@@ -10,8 +10,9 @@ function transferHtml(action){
  return `<div class="teamAction"><div><span>UT</span><b>${pairs.map(x=>esc(x.out?.name||'—')).join(' + ')}</b></div><i>→</i><div><span>INN</span><b>${pairs.map(x=>esc(x.in?.name||'—')).join(' + ')}</b></div>${Number(action.hit||0)?`<em>−${Number(action.hit)} p</em>`:'<em>0 p</em>'}</div>`;
 }
 function metaHtml(view){
- const rows=view.lineup||[],captain=nameById(rows,view.captain_id)||rows.find(x=>x.captain)?.name,total=Number.isFinite(Number(view.expected_team_score))?view.expected_team_score:rows.reduce((sum,p)=>sum+Number(p.xp||0),0);
- return `<div class="lineupMeta"><div><span>Formasjon</span><b>${esc(view.formation||formation(rows))}</b></div><div><span>Kaptein</span><b>${esc(captain)} (C)</b></div><div><span>Forventet</span><b>${score(total)}</b></div></div>`;
+ const rows=view.lineup||[],captain=nameById(rows,view.captain_id)||rows.find(x=>x.captain)?.name,hasMetric=view.metricValue!==null&&view.metricValue!==undefined&&Number.isFinite(Number(view.metricValue)),total=hasMetric?view.metricValue:(Number.isFinite(Number(view.expected_team_score))?view.expected_team_score:rows.reduce((sum,p)=>sum+Number(p.xp||0),0));
+ const metric=hasMetric&&Number.isInteger(Number(total))?`${Number(total)} p`:score(total);
+ return `<div class="lineupMeta"><div><span>Formasjon</span><b>${esc(view.formation||formation(rows))}</b></div><div><span>Kaptein</span><b>${esc(captain)} (C)</b></div><div><span>${esc(view.metricLabel||'Forventet')}</span><b>${metric}</b></div></div>`;
 }
 function renderView(root,views,index,action){
  const view=views[index],lineup=visual(view.lineup,view),bench=visual(view.bench,view),incoming=new Set((action?.pairs||[]).map(x=>Number(x.in?.id))),outgoing=new Set((action?.pairs||[]).map(x=>Number(x.out?.id)));
@@ -24,8 +25,9 @@ async function run(){try{
  const confirmed=d.confirmed_fpl||{},current=d.optimal_current_lineup||{},selected=d.selected_package_lineup||{},action=d.action_package_selection?.selected||{pairs:[]},gw=Number(d.gameweek||d.gw||current.gw||0);
  if((confirmed.lineup||[]).length!==11||(current.lineup||[]).length!==11||(selected.lineup||[]).length!==11)return;
  const selectedBank=action.kind==='bank';
+ const confirmedByUser=String(confirmed.source||'').includes('user-confirmed');
  const views=[
-  {...confirmed,kicker:`Troppen nå · lagret GW${confirmed.gw||'—'}`,title:'Sist lagret i FPL',description:'Dette er lagbildet som faktisk er hentet fra FPL-kontoen din.'},
+  {...confirmed,kicker:`Troppen nå · bekreftet GW${confirmed.gw||'—'}`,title:'Laget du faktisk brukte',description:confirmedByUser?'Bekreftet fra GW2-bildet ditt. Poengene under er faktiske, ikke en prognose.':'Sist bekreftede lag fra FPL. Poengene under er faktiske, ikke en prognose.',metricLabel:`GW${confirmed.gw||'—'}-poeng`,metricValue:confirmed.total_points},
   {...current,kicker:`Neste runde · GW${gw}`,title:'Beste XI uten bytte',description:'Slik bør du stille med spillerne du allerede eier.'},
   {...selected,kicker:`Neste runde · GW${gw}`,title:selectedBank?'Beste XI når du sparer':'Beste XI med forslaget',description:selectedBank?'Motoren velger å spare. Laget er derfor det samme, men startelleveren er optimalisert.':'Dette er laget etter nøyaktig samme byttepakke som vurderes i Valget-fanen.'}
  ];

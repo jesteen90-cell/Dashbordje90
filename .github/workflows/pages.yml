@@ -3,10 +3,26 @@ name: Deploy dashboard
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "data.json"
+      - "premium_structure_shadow.json"
+      - "chip_strategy_shadow.json"
+      - "captain_v4_shadow.json"
+      - "captain_diagnostics.json"
+      - "snapshots/**"
+      - "backtest/**"
+      - "market_ab/**"
+      - "market_ab_snapshots/**"
+      - "captain_snapshots/**"
+      - "premium_structure_snapshots/**"
+      - "chip_snapshots/**"
+      - "option_value_snapshots/**"
+      - "option_value_backtest/**"
+      - "timing_snapshots/**"
+      - "timing_backtest/**"
   workflow_dispatch:
   workflow_run:
     workflows:
-      - Refresh FPL Dashboard
       - Enrich Budget Option Timing Robustness Final Gate Plan Bench Regret Confidence Lock
     types: [completed]
 

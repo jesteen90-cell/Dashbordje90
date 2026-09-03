@@ -28,7 +28,8 @@ def pipeline_sanity():
  assert "querySelectorAll('.kit').length===11" in lineup and 'renderVisualOptimal' in lineup
  assert '#team .pitch .row.n5' in team_css and 'grid-template-columns:repeat(5,minmax(0,1fr))' in team_css
  assert 'id="teamCompare"' in html and 'team_compare_ui.js?v=' in html and "d.action_package_selection?.selected" in team_compare and 'selected_package_lineup' in team_compare
- pages=Path('.github/workflows/pages.yml').read_text();assert 'workflow_run:' in pages and 'Refresh FPL Dashboard' in pages and 'github.event.workflow_run.conclusion' in pages
+ assert 'metricValue:confirmed.total_points' in team_compare and "metricLabel:`GW${confirmed.gw||'—'}-poeng`" in team_compare
+ pages=Path('.github/workflows/pages.yml').read_text();assert 'workflow_run:' in pages and 'paths-ignore:' in pages and '- Refresh FPL Dashboard' not in pages and 'Enrich Budget Option Timing Robustness Final Gate Plan Bench Regret Confidence Lock' in pages and 'github.event.workflow_run.conclusion' in pages
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
 
 def transfer_planner_sanity():
