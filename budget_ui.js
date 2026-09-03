@@ -40,11 +40,11 @@
   async function run(){
     try{
       const r=await fetch(`data.json?budget=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;
-      const d=await r.json(),b=d.budget||{},bi=d.budget_intelligence||{},tov=d.transfer_option_value||{},ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),cands=d.candidates||[],selectedIndex=Number(d.candidate_selection?.selected_candidate_index),first=(Number.isInteger(selectedIndex)&&selectedIndex>=0?cands[selectedIndex]:cands[0])||{},future=d.future||[],plan0=(d.optimizer?.plan||[])[0]||{},bestMove=(first.pairs||[]).length?first:plan0,isRecommended=(d.deadline_lock?.verdict==='UNLOCKED / GO'||(!d.deadline_lock?.verdict&&d.final_transfer_gate?.verdict==='GO')),moveLabel=isRecommended?'anbefalt trekk':'beste vurderte trekk';
+      const d=await r.json(),b=d.budget||{},bi=d.budget_intelligence||{},tov=d.transfer_option_value||{},ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),cands=d.candidates||[],first=d.action_package_selection?.selected||{},future=d.future||[],bestMove=first,isRecommended=(d.deadline_lock?.verdict==='UNLOCKED / GO'||(!d.deadline_lock?.verdict&&d.final_transfer_gate?.verdict==='GO')),moveLabel=isRecommended?'anbefalt pakke':'beste vurderte pakke';
       const liveSale=b.selling_value_live===true;
       const teamValue=liveSale?b.squad_selling_value:b.squad_market_value;
       const teamLabel=liveSale?'faktisk salgsverdi':'lagverdi (markedspris)';
-      const cost=hitCost(bestMove,ft);
+      const cost=Number(bestMove.hit??hitCost(bestMove,ft));
       const hero=el('heroBudget');
       if(hero)hero.innerHTML=tile(ft||'—','gratisbytte'+(ft===1?'':'r'),'good')+tile(`${cost} p`,`kostnad ${moveLabel}`,cost?'warn':'good')+tile(money(b.bank),'i banken','money')+tile(money(teamValue),teamLabel);
       const move=el('transferBudgetSummary');
