@@ -7,13 +7,20 @@ from pathlib import Path
 P=Path('data.json'); d=json.loads(P.read_text()); cands=d.get('candidates') or []
 prod=d.get('decision_layer') or {}; approved=bool(prod.get('approved_first_move'))
 threshold=float(prod.get('threshold') or 0); weighted=float((d.get('decision_explanation') or {}).get('weighted_gain') or 0); margin=weighted-threshold
-best=cands[0] if cands else {}; second=cands[1] if len(cands)>1 else {}
+selection=d.get('candidate_selection') or {}; selected_index=selection.get('selected_candidate_index')
+best=cands[int(selected_index)] if selected_index is not None and 0<=int(selected_index)<len(cands) else (cands[0] if cands else {})
+second=next((c for c in cands if c is not best),{})
 rob=best.get('robustness_shadow') or {}; timing=best.get('timing_value_shadow') or {}; option=best.get('option_value_shadow') or {}; bench=best.get('bench_adjustment_shadow') or {}; necessity=best.get('transfer_necessity_shadow') or {}; regret=best.get('transfer_regret_shadow') or {}
 source_gw=int(d.get('source_snapshot_gw') or 0); early_season=source_gw<=3; early_penalty=.30 if source_gw<=1 else .20 if source_gw==2 else .10 if source_gw==3 else 0
 adjusted_margin=margin-early_penalty
-best_edge=float(best.get('edge') or 0); second_edge=float(second.get('edge') or -99); separation=best_edge-second_edge if second else 99
+best_edge=float(best.get('edge') or 0); second_edge=float(second.get('edge') or -99)
+ranked_selection=selection.get('rows') or []
+separation=(float(ranked_selection[0].get('decision_score') or 0)-float(ranked_selection[1].get('decision_score') or 0)) if len(ranked_selection)>1 else (best_edge-second_edge if second else 99)
 blockers=[]; warnings=[]; go_triggers=[]; recheck=[]
 if not approved: blockers.append('Produksjonsmodellen godkjenner ikke første trekk.')
+if selection and not selection.get('agrees_with_optimizer_first_move'):
+ blockers.append('Den mest beslutningsklare kandidaten er ikke den samme som optimalisererens første trekk.')
+ recheck.append('Kjør ny optimalisering før et bytte kan godkjennes.')
 if rob.get('label')=='FRAGIL': blockers.append('Beste kandidat er negativ i minst én tidshorisont.')
 elif rob.get('label')=='BLANDET': warnings.append('Tidshorisontene er ikke helt enige.')
 necessity_label=necessity.get('label'); necessity_score=necessity.get('score')
