@@ -10,8 +10,8 @@ function transferHtml(action){
  return `<div class="teamAction"><div><span>UT</span><b>${pairs.map(x=>esc(x.out?.name||'—')).join(' + ')}</b></div><i>→</i><div><span>INN</span><b>${pairs.map(x=>esc(x.in?.name||'—')).join(' + ')}</b></div>${Number(action.hit||0)?`<em>−${Number(action.hit)} p</em>`:'<em>0 p</em>'}</div>`;
 }
 function metaHtml(view){
- const rows=view.lineup||[],captain=nameById(rows,view.captain_id)||rows.find(x=>x.captain)?.name;
- return `<div class="lineupMeta"><div><span>Formasjon</span><b>${esc(view.formation||formation(rows))}</b></div><div><span>Kaptein</span><b>${esc(captain)} (C)</b></div><div><span>Forventet</span><b>${score(view.expected_team_score)}</b></div></div>`;
+ const rows=view.lineup||[],captain=nameById(rows,view.captain_id)||rows.find(x=>x.captain)?.name,total=Number.isFinite(Number(view.expected_team_score))?view.expected_team_score:rows.reduce((sum,p)=>sum+Number(p.xp||0),0);
+ return `<div class="lineupMeta"><div><span>Formasjon</span><b>${esc(view.formation||formation(rows))}</b></div><div><span>Kaptein</span><b>${esc(captain)} (C)</b></div><div><span>Forventet</span><b>${score(total)}</b></div></div>`;
 }
 function renderView(root,views,index,action){
  const view=views[index],lineup=visual(view.lineup,view),bench=visual(view.bench,view),incoming=new Set((action?.pairs||[]).map(x=>Number(x.in?.id))),outgoing=new Set((action?.pairs||[]).map(x=>Number(x.out?.id)));
