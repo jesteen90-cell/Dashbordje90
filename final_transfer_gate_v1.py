@@ -7,7 +7,8 @@ from pathlib import Path
 P=Path('data.json'); d=json.loads(P.read_text()); cands=d.get('candidates') or []
 prod=d.get('decision_layer') or {}; approved=bool(prod.get('approved_first_move'))
 threshold=float(prod.get('threshold') or 0); weighted=float((d.get('decision_explanation') or {}).get('weighted_gain') or 0); margin=weighted-threshold
-selection=d.get('candidate_selection') or {}; selected_index=selection.get('selected_candidate_index')
+selection=d.get('candidate_selection') or {}; package_selection=d.get('action_package_selection') or {}; package=package_selection.get('selected') or {}
+selected_index=package.get('candidate_index',selection.get('selected_candidate_index'))
 best=cands[int(selected_index)] if selected_index is not None and 0<=int(selected_index)<len(cands) else (cands[0] if cands else {})
 second=next((c for c in cands if c is not best),{})
 rob=best.get('robustness_shadow') or {}; timing=best.get('timing_value_shadow') or {}; option=best.get('option_value_shadow') or {}; bench=best.get('bench_adjustment_shadow') or {}; necessity=best.get('transfer_necessity_shadow') or {}; regret=best.get('transfer_regret_shadow') or {}
@@ -17,17 +18,16 @@ best_edge=float(best.get('edge') or 0); second_edge=float(second.get('edge') or 
 ranked_selection=selection.get('rows') or []
 separation=(float(ranked_selection[0].get('decision_score') or 0)-float(ranked_selection[1].get('decision_score') or 0)) if len(ranked_selection)>1 else (best_edge-second_edge if second else 99)
 blockers=[]; warnings=[]; go_triggers=[]; recheck=[]
-if not approved: blockers.append('Produksjonsmodellen godkjenner ikke første trekk.')
-if selection and not selection.get('agrees_with_optimizer_first_move'):
- blockers.append('Den mest beslutningsklare kandidaten er ikke den samme som optimalisererens første trekk.')
- recheck.append('Kjør ny optimalisering før et bytte kan godkjennes.')
+if package.get('kind')=='bank': blockers.append('Felles sammenligning rangerer SPAR GRATISBYTTET høyest.')
+if not approved and package.get('kind')!='bank': blockers.append('Produksjonsmodellen godkjenner ikke den valgte byttepakken ennå.')
 if rob.get('label')=='FRAGIL': blockers.append('Beste kandidat er negativ i minst én tidshorisont.')
 elif rob.get('label')=='BLANDET': warnings.append('Tidshorisontene er ikke helt enige.')
 necessity_label=necessity.get('label'); necessity_score=necessity.get('score')
 if necessity_label=='SPAR FT': blockers.append('Nødvendighetsmodellen vurderer at gratisbyttet har større strategisk verdi enn dette trekket.'); go_triggers.append('GO krever at byttenødvendigheten løftes over SPAR FT.')
 elif necessity_label=='LUKSUSBYTTE': warnings.append('Trekket er et luksusbytte, ikke en nødvendig reparasjon.'); go_triggers.append('Et luksusbytte krever tydelig merverdi mot SPAR FT før GO.')
 elif necessity_label=='FORNUFTIG': warnings.append('Trekket er fornuftig, men ikke så nødvendig at andre varselsignaler kan ignoreres.')
-if adjusted_margin<.20: warnings.append('Fordelen over å spare byttet er for liten etter usikkerhetsmargin.'); go_triggers.append('GO krever justert fordel mot SPAR FT på minst +0,20 p.')
+package_score=float(package.get('score') or 0)
+if package.get('kind')!='bank' and package_score<.35: warnings.append('Fordelen over å spare byttet er for liten etter felles kostnads- og usikkerhetsjustering.'); go_triggers.append('GO krever tydelig positiv fordel mot SPAR FT på felles beslutningsflate.')
 if second and separation<.20: warnings.append('Kandidat #1 og #2 ligger svært tett.'); go_triggers.append('GO blir sterkere når kandidat #1 skiller minst +0,20 p fra #2.')
 info=float(timing.get('information_value') or 0); lock=float(timing.get('lock_risk') or 0)
 if info>=.65: warnings.append('Det er høy verdi i å vente på mer lag-/skadeinformasjon.'); recheck.append('Kjør ny vurdering etter siste skade-/lagnytt før deadline.')
@@ -62,5 +62,5 @@ if warnings: confidence=min(confidence,.74)
 if blockers: confidence=min(confidence,.45)
 headline={'GO':'GJØR BYTTET','WAIT / RECHECK':'VENT – SJEKK IGJEN','NO-GO':'IKKE GJØR BYTTET'}[verdict]
 next_action='Byttet har passert siste sikkerhetskontroll. Kontroller bare at ingen ny lagnyhet har kommet før bekreftelse.' if verdict=='GO' else ('Ikke bruk gratisbyttet på dette trekket nå. Behold FT med mindre nye data endrer beslutningen.' if verdict=='NO-GO' else 'Vent med å bekrefte. Kjør ny vurdering når recheck-punktene er oppdatert.')
-d['headline']=headline; d['final_transfer_gate']={'version':'2.3-regret-aware','production_approved':approved,'verdict':verdict,'authoritative_headline':headline,'confidence':round(confidence,2),'production_margin_vs_bank':round(margin,2),'early_season_uncertainty_penalty':early_penalty,'adjusted_margin_vs_bank':round(adjusted_margin,2),'candidate_1_vs_2_edge_gap':round(separation,2) if second else None,'robustness':rob.get('label'),'timing_recommendation':timing.get('recommendation'),'option_value_total':option.get('total'),'bench_adjusted_next_gw_gain':bench_gain,'transfer_necessity':necessity_label,'transfer_necessity_score':necessity_score,'regret_make_transfer':rmake,'regret_save_ft':rsave,'regret_verdict':rverdict,'blockers':blockers,'warnings':warnings,'go_triggers':go_triggers[:7],'recheck_conditions':recheck[:6],'next_action':next_action,'rule':'Final Gate controls headline. Necessity, regret and other shadow layers may downgrade GO to WAIT/NO-GO, never promote a production-rejected transfer.'}
+d['headline']=headline; d['final_transfer_gate']={'version':'2.4-package-aware','production_approved':approved,'verdict':verdict,'authoritative_headline':headline,'confidence':round(confidence,2),'selected_action_kind':package.get('kind'),'selected_action_label':package.get('label'),'selected_action_score':package_score,'selected_action_hit':package.get('hit',0),'production_margin_vs_bank':round(margin,2),'early_season_uncertainty_penalty':early_penalty,'adjusted_margin_vs_bank':round(adjusted_margin,2),'candidate_1_vs_2_edge_gap':round(separation,2) if second else None,'robustness':rob.get('label'),'timing_recommendation':timing.get('recommendation'),'option_value_total':option.get('total'),'bench_adjusted_next_gw_gain':bench_gain,'transfer_necessity':necessity_label,'transfer_necessity_score':necessity_score,'regret_make_transfer':rmake,'regret_save_ft':rsave,'regret_verdict':rverdict,'blockers':blockers,'warnings':warnings,'go_triggers':go_triggers[:7],'recheck_conditions':recheck[:6],'next_action':next_action,'rule':'The common action surface selects one package. Final Gate may downgrade it to WAIT/NO-GO, never promote a production-rejected transfer.'}
 P.write_text(json.dumps(d,ensure_ascii=False,indent=2)); print('Final transfer gate',d['final_transfer_gate'])
