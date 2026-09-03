@@ -17,7 +17,7 @@ def pipeline_sanity():
  gen=Path('generate_dashboard_v3.py').read_text();assert "'penalty_taker_share':penalty_share(p)" in gen and "'projection_integration':'active'" in gen and "'bonus','penalty','conceded'" in gen
  assert 'availability_for_gw' in gen and "'budget':{" in gen and "'3.8-availability-recovery-set-piece-projection'" in gen and "'selling_price'" in gen
  roles=Path('set_piece_roles.json').read_text();assert 'Erling Haaland' in roles and 'Bruno Fernandes' in roles
- html=Path('index.html').read_text();app=Path('app.js').read_text();budget_ui=Path('budget_ui.js').read_text();plan_ui=Path('plan_ui.js').read_text();meta_ui=Path('dashboard_meta_ui.js').read_text();lineup=Path('current_lineup_ui.js').read_text();team_css=Path('team_ui.css').read_text();team_compare=Path('team_compare_ui.js').read_text()
+ html=Path('index.html').read_text();app=Path('app.js').read_text();budget_ui=Path('budget_ui.js').read_text();plan_ui=Path('plan_ui.js').read_text();meta_ui=Path('dashboard_meta_ui.js').read_text();lineup=Path('current_lineup_ui.js').read_text();team_css=Path('team_ui.css').read_text();team_compare=Path('team_compare_ui.js').read_text();freshness=Path('freshness_ui.js').read_text()
  assert 'src="app.js?v=' in html and 'href="team_ui.css?v=' in html and 'id="after" class="pitch"' in html and 'id="bench" class="bench"' in html and 'Se forrige bekreftede FPL-lag' in html
  assert 'function render()' in app and 'function kit(' in app and 'function pitch(' in app and 'function benchHtml(' in app
  assert 'D.final_transfer_gate' in app and "D.gameweek||D.gw" in app and "if(mp)mp.textContent" in app and "box.classList.add('show')" in app
@@ -29,6 +29,7 @@ def pipeline_sanity():
  assert '#team .pitch .row.n5' in team_css and 'grid-template-columns:repeat(5,minmax(0,1fr))' in team_css
  assert 'id="teamCompare"' in html and 'team_compare_ui.js?v=' in html and "d.action_package_selection?.selected" in team_compare and 'selected_package_lineup' in team_compare
  assert 'metricValue:confirmed.total_points' in team_compare and "metricLabel:`GW${confirmed.gw||'—'}-poeng`" in team_compare
+ assert 'freshness_ui.js?v=' in html and 'freshness.css?v=' in html and 'Hent siste data' in freshness and 'Kjør ny analyse' in freshness and 'data.generated_at' in freshness and 'actions/workflows/refresh.yml' in freshness
  pages=Path('.github/workflows/pages.yml').read_text();assert 'workflow_run:' in pages and 'paths-ignore:' in pages and '- Refresh FPL Dashboard' not in pages and 'Enrich Budget Option Timing Robustness Final Gate Plan Bench Regret Confidence Lock' in pages and 'github.event.workflow_run.conclusion' in pages
  ui=Path('captain_explain_ui.js').read_text() if Path('captain_explain_ui.js').exists() else '';assert 'MutationObserver' not in ui
 
