@@ -48,7 +48,9 @@ def apply_manual_snapshot_if_newer(data, bootstrap, team_names, rows, official_g
     pth=Path('manual_confirmed_lineup_gw2.json')
     if not pth.exists(): return data, official_gw, False
     ov=json.loads(pth.read_text(encoding='utf-8'));mgw=int(ov.get('gw') or 0)
-    if not ov.get('confirmed_by_user') or mgw<=official_gw: return data, official_gw, False
+    # A user-confirmed screenshot for the same GW is authoritative when the
+    # public picks endpoint still shows a stale pre-autosub arrangement.
+    if not ov.get('confirmed_by_user') or mgw<official_gw: return data, official_gw, False
     names=list(ov.get('lineup') or [])+list(ov.get('bench') or [])
     if len(names)!=15: raise RuntimeError('Manual confirmed lineup must contain 15 players')
     preferred=set(rows)
