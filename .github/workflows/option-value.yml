@@ -13,6 +13,7 @@ on:
       - "transfer_necessity_v1.py"
       - "transfer_regret_v1.py"
       - "decision_confidence_v1.py"
+      - "candidate_selection_v1.py"
       - "deadline_lock_v1.py"
       - "final_transfer_gate_v1.py"
       - "final_transfer_duel_v2.py"
@@ -56,6 +57,7 @@ jobs:
           python transfer_necessity_v1.py
           python transfer_regret_v1.py
           python decision_confidence_v1.py
+          python candidate_selection_v1.py
           python plan_intelligence_v1.py
           python final_transfer_gate_v1.py
           python final_transfer_duel_v2.py
@@ -74,6 +76,7 @@ jobs:
           tn=d.get('transfer_necessity_model') or {}; assert tn.get('version')=='1.0-shadow'; assert tn.get('affects_transfer_ranking') is False
           rg=d.get('transfer_regret_model') or {}; assert rg.get('version')=='1.0-shadow'; assert rg.get('affects_transfer_ranking') is False
           dc=d.get('decision_confidence_model') or {}; assert dc.get('version')=='1.0-shadow'; assert dc.get('affects_transfer_ranking') is False
+          cs=d.get('candidate_selection') or {}; assert cs.get('version')=='1.0-decision-ready'; assert cs.get('automatic_go_requires_optimizer_agreement') is True; assert len(cs.get('rows') or [])==len(d.get('candidates') or [])
           pi=d.get('plan_intelligence') or {}; assert pi.get('version')=='1.0'; assert pi.get('rolling_plan') is True
           future=d.get('future') or []; assert len(future)>=2
           for r in future:
