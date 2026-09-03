@@ -6,7 +6,8 @@ import json
 from pathlib import Path
 P=Path('data.json'); d=json.loads(P.read_text()); cands=d.get('candidates') or []
 fg=d.get('final_transfer_gate') or {}; prod=d.get('decision_layer') or {}
-best=cands[0] if cands else {}
+selected_index=(d.get('candidate_selection') or {}).get('selected_candidate_index')
+best=cands[int(selected_index)] if selected_index is not None and 0<=int(selected_index)<len(cands) else (cands[0] if cands else {})
 conf=best.get('decision_confidence_shadow') or {}
 nec=best.get('transfer_necessity_shadow') or {}
 reg=best.get('transfer_regret_shadow') or {}
