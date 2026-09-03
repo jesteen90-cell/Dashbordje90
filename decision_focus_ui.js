@@ -1,0 +1,14 @@
+(()=>{
+const e=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const pct=v=>Number.isFinite(Number(v))?`${Math.round(Number(v)*100)} %`:'—';
+function chosen(d){const i=Number(d.candidate_selection?.selected_candidate_index);return Number.isInteger(i)&&i>=0?d.candidates?.[i]:d.candidates?.[0]}
+function moveLabel(d,c){return d.candidate_selection?.selected_label||(c?.pairs||[]).map(x=>`${x.out?.name||'—'} → ${x.in?.name||'—'}`).join(' + ')||'Ingen kandidat'}
+async function run(){try{
+ const r=await fetch(`data.json?focus=${Date.now()}`,{cache:'no-store'});if(!r.ok)return;const d=await r.json(),gate=d.final_transfer_gate||{},lock=d.deadline_lock?.verdict,verdict=lock==='UNLOCKED / GO'?'GO':lock==='UNLOCKED ONLY AFTER RECHECK'?'WAIT / RECHECK':lock==='LOCKED / NO-GO'?'NO-GO':gate.verdict||'NO-GO',c=chosen(d),sel=d.candidate_selection||{},row=(sel.rows||[]).find(x=>x.candidate_index===sel.selected_candidate_index)||{},ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),next=Math.min(5,ft+1),move=moveLabel(d,c),go=verdict==='GO',wait=verdict==='WAIT / RECHECK';
+ const summary=document.getElementById('summary');if(summary)summary.textContent=go?`Gjør bare ${move}. Trekket er godkjent på tvers av poeng, spilletid, benk og fleksibilitet.`:wait?`Ikke gjør byttet ennå. ${move} er kandidaten vi følger, men mer informasjon er verdt mer enn å handle tidlig.`:'Spar gratisbyttet. Ingen kandidat er sterk nok til å slå verdien av fleksibilitet nå.';
+ const box=document.getElementById('decisionBox');if(!box)return;const advanced=box.innerHTML,word=go?`GJØR ${move}`:wait?'VENT – IKKE BYTT':'SPAR GRATISBYTTET',badge=go?'GODKJENT':wait?'NY SJEKK':'IKKE GODKJENT',cls=go?'go':wait?'consider':'weak',gain=Number(row.three_gw_gain_after_bench);
+ const shownGain=Number.isFinite(gain)?`${gain>=0?'+':''}${gain.toFixed(1)} p`:'—',reason=go?'Trekket slår å spare FT også etter benk, usikkerhet og fremtidig handlingsrom.':wait?'Kandidaten ser lovende ut, men er ikke sikker nok til at du bør låse laget nå.':'Verdien av et ekstra gratisbytte og nye lagnyheter er høyere enn kandidatene nå.';
+ box.innerHTML=`<article class="decisionFocus"><div class="focusTop"><div><div class="eyebrow">Ditt valg nå</div><div class="focusWord">${e(word)}</div></div><span class="badge ${cls}">${e(badge)}</span></div><p>${e(reason)}</p><div class="focusMetrics"><div><b>${shownGain}</b><span>3 runder etter benk</span></div><div><b>${pct(row.reliability??gate.confidence)}</b><span>pålitelighet</span></div><div><b>${go?ft:next} FT</b><span>${go?'før trekket':'neste runde'}</span></div></div>${!go?`<div class="watchMove"><span>Kandidaten vi følger</span><b>${e(move)}</b></div>`:''}</article><details class="modelDetails"><summary>Se hvorfor modellen mener dette</summary>${advanced}</details>`;
+ }catch(_e){}}
+window.addEventListener('load',()=>setTimeout(run,700));
+})();
