@@ -2,14 +2,14 @@
 function e(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function cash(v){let n=Number(v);return Number.isFinite(n)?`£${n.toFixed(1)}m`:'—'}
 function hitCost(pairs,ft){return Math.max(0,(pairs||[]).length-Number(ft||0))*4}
-function selectedCandidate(d){const i=Number(d.candidate_selection?.selected_candidate_index);return Number.isInteger(i)&&i>=0?d.candidates?.[i]:d.candidates?.[0]}
-function topMove(d){if(d.candidate_selection?.selected_label)return d.candidate_selection.selected_label;const row=(d.final_transfer_duel?.rows||[]).find(x=>x.kind==='transfer');if(row?.label)return row.label;const pair=selectedCandidate(d)?.pairs?.[0];return pair?`${pair.out?.name||'—'} → ${pair.in?.name||'—'}`:'Ingen konkret kandidat'}
+function selectedCandidate(d){return d.action_package_selection?.selected||{kind:'bank',label:'SPAR GRATISBYTTET',pairs:[]}}
+function topMove(d){return selectedCandidate(d).label||'SPAR GRATISBYTTET'}
 function pairSignature(pairs){return (pairs||[]).map(x=>`${Number(x.out?.id||0)}>${Number(x.in?.id||0)}`).sort().join('|')}
 function finalVerdict(d){const lock=d.deadline_lock?.verdict;if(lock==='UNLOCKED / GO')return'GO';if(lock==='UNLOCKED ONLY AFTER RECHECK')return'WAIT / RECHECK';if(lock==='LOCKED / NO-GO')return'NO-GO';return d.final_transfer_gate?.verdict||'NO-GO'}
 function planIsConsistent(d){const chosen=pairSignature(selectedCandidate(d)?.pairs),planned=pairSignature(d.optimizer?.plan?.[0]?.pairs);return Boolean(chosen&&chosen===planned)}
 function decisionState(d){
-  const verdict=finalVerdict(d),ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),pairs=selectedCandidate(d)?.pairs||[],move=topMove(d),base=d.transfer_option_value?.baseline_bank_action||{},nextFt=Number(base.future_free_transfers||Math.min(5,ft+1));
-  if(verdict==='GO')return{word:`BYTT ${move}`,badge:'GJØR NÅ',cls:'go',cost:hitCost(pairs,ft),ft,nextFt,move,why:'Dette er det eneste byttet som er godkjent av den endelige vurderingen.'};
+  const verdict=finalVerdict(d),ft=Number(d.current_transfer_state?.free_transfers_remaining??d.free_transfers_assumed??0),selected=selectedCandidate(d),pairs=selected.pairs||[],move=topMove(d),base=d.transfer_option_value?.baseline_bank_action||{},nextFt=Number(selected.free_transfers_next_gw??base.future_free_transfers??Math.min(5,ft+1));
+  if(verdict==='GO'&&selected.kind!=='bank')return{word:`BYTT ${move}`,badge:'GJØR NÅ',cls:'go',cost:Number(selected.hit??hitCost(pairs,ft)),ft,nextFt,move,why:'Dette er den eneste pakken som er godkjent av den endelige vurderingen.'};
   if(verdict==='WAIT / RECHECK')return{word:'VENT – IKKE BYTT ENNÅ',badge:'AKTIVT VALG',cls:'consider',cost:0,ft,nextFt,move,why:`${move} er bare beste kandidat. Det er ikke godkjent som et bytte du skal gjøre nå.`};
   return{word:'SPAR GRATISBYTTET',badge:'AKTIVT VALG',cls:'weak',cost:0,ft,nextFt,move,why:'Ingen bytter har passert den endelige vurderingen.'};
 }
