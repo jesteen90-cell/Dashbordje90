@@ -31,7 +31,13 @@ def row(c,rank):
         'necessity':nec.get('label'),'necessity_score':nec.get('score'),'necessity_reasons':nec.get('reasons') or [],
         'status':c.get('status'),'gate_misses':c.get('gate_misses') or []}
 
-rows=[row(c,i+1) for i,c in enumerate(cands[:2])]
+selection=d.get('candidate_selection') or {}; ranked_selection=selection.get('rows') or []
+selected_candidates=[]
+for item in ranked_selection[:2]:
+    idx=item.get('candidate_index')
+    if idx is not None and 0<=int(idx)<len(cands):selected_candidates.append(cands[int(idx)])
+if not selected_candidates:selected_candidates=cands[:2]
+rows=[row(c,i+1) for i,c in enumerate(selected_candidates)]
 bank={'kind':'bank','rank':0,'label':'SPAR GRATISBYTTET','production_edge':0.0,'next_gw_gain_raw':0.0,'next_gw_gain_after_bench':0.0,
       'three_gw_gain_after_bench':0.0,'plan_gain_after_bench':0.0,'bank_after':(d.get('budget') or {}).get('bank'),
       'bench_cover':None,'bench_cover_expected':None,'bench_adjustment_applied':False,'robustness':'BASELINE',
