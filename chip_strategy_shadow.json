@@ -5,32 +5,32 @@
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 15.13,
+    "wildcard": 13.07,
     "free_hit": 0.0,
-    "bench_boost": 0.0,
-    "triple_captain": 0
+    "bench_boost": 0.42,
+    "triple_captain": 0.21
   },
   "tc_decision": "HOLD",
   "chip_roadmap": [
     {
-      "gw": 5,
+      "gw": 4,
       "chip": "wildcard",
-      "score": 15.13
+      "score": 13.07
     }
   ],
   "collisions": [
     {
-      "gw": 7,
+      "gw": 4,
       "chips": [
-        "triple_captain",
-        "bench_boost"
+        "free_hit",
+        "wildcard"
       ]
     }
   ],
   "evidence": {
-    "current_xi_xp": 43.45,
-    "bench_xp": 6.46,
-    "bench_reliable_xp": 4.63,
+    "current_xi_xp": 44.13,
+    "bench_xp": 6.71,
+    "bench_reliable_xp": 5.0,
     "best_captain": "Haaland",
     "best_captain_xp": 6.57,
     "captain_gap": 0.92,
@@ -68,40 +68,40 @@
     "tc_reservation_cost": 0.12,
     "tc_expiry_pressure": 0,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 17.93,
+    "optimizer_weighted_gain": 16.52,
     "planned_changes": 2,
     "free_hit_candidate_gw": 4,
-    "bench_boost_candidate_gw": 7,
-    "wildcard_candidate_gw": 5,
+    "bench_boost_candidate_gw": 6,
+    "wildcard_candidate_gw": 4,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
         "gw": 4,
-        "xi_xp": 43.46,
+        "xi_xp": 44.14,
         "captain_xp": 6.57,
-        "blank_stress": 3.02,
+        "blank_stress": 2.73,
         "double_upside": 0
       },
       {
         "gw": 5,
-        "xi_xp": 45.5,
+        "xi_xp": 46.18,
         "captain_xp": 6.42,
-        "blank_stress": 0.98,
+        "blank_stress": 0.69,
         "double_upside": 0
       },
       {
         "gw": 6,
-        "xi_xp": 48.46,
+        "xi_xp": 48.91,
         "captain_xp": 6.6,
         "blank_stress": 0,
-        "double_upside": 1.98
+        "double_upside": 2.04
       },
       {
         "gw": 7,
-        "xi_xp": 48.52,
+        "xi_xp": 48.25,
         "captain_xp": 6.71,
         "blank_stress": 0,
-        "double_upside": 2.04
+        "double_upside": 1.38
       }
     ],
     "exact_fixture_diagnostics": [
