@@ -5,7 +5,7 @@
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 14.33,
+    "wildcard": 15.52,
     "free_hit": 0.0,
     "bench_boost": 0.0,
     "triple_captain": 0
@@ -13,102 +13,95 @@
   "tc_decision": "HOLD",
   "chip_roadmap": [
     {
-      "gw": 4,
+      "gw": 5,
       "chip": "wildcard",
-      "score": 14.33
+      "score": 15.52
     }
   ],
   "collisions": [
     {
-      "gw": 6,
+      "gw": 7,
       "chips": [
         "triple_captain",
         "bench_boost"
       ]
-    },
-    {
-      "gw": 4,
-      "chips": [
-        "free_hit",
-        "wildcard"
-      ]
     }
   ],
   "evidence": {
-    "current_xi_xp": 42.09,
+    "current_xi_xp": 42.65,
     "bench_xp": 6.14,
     "bench_reliable_xp": 4.55,
     "best_captain": "Haaland",
-    "best_captain_xp": 6.16,
-    "captain_gap": 0.51,
+    "best_captain_xp": 6.41,
+    "captain_gap": 0.76,
     "tc_half": 1,
     "tc_cutoff_gw": 19,
     "tc_rounds_left": 15,
     "future_captain_spots": [
+      {
+        "gw": 7,
+        "xp": 6.53,
+        "name": "Haaland"
+      },
       {
         "gw": 6,
         "xp": 6.44,
         "name": "B.Fernandes"
       },
       {
-        "gw": 7,
-        "xp": 6.28,
-        "name": "Haaland"
-      },
-      {
         "gw": 4,
-        "xp": 6.16,
+        "xp": 6.41,
         "name": "Haaland"
       },
       {
         "gw": 5,
-        "xp": 6.02,
+        "xp": 6.26,
         "name": "Haaland"
       }
     ],
     "future_best_captain_spot": {
-      "gw": 6,
-      "xp": 6.44,
-      "name": "B.Fernandes"
+      "gw": 7,
+      "xp": 6.53,
+      "name": "Haaland"
     },
-    "tc_opportunity_cost": 0.28,
-    "tc_reservation_cost": 0.24,
+    "tc_opportunity_cost": 0.12,
+    "tc_reservation_cost": 0.1,
     "tc_expiry_pressure": 0,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 17.78,
+    "optimizer_weighted_gain": 18.32,
     "planned_changes": 2,
     "free_hit_candidate_gw": 4,
-    "bench_boost_candidate_gw": 6,
-    "wildcard_candidate_gw": 4,
+    "bench_boost_candidate_gw": 7,
+    "wildcard_candidate_gw": 5,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
         "gw": 4,
-        "xi_xp": 42.1,
-        "captain_xp": 6.16,
-        "blank_stress": 3.43,
+        "xi_xp": 42.65,
+        "captain_xp": 6.41,
+        "blank_stress": 3.48,
         "double_upside": 0
       },
       {
         "gw": 5,
-        "xi_xp": 44.72,
-        "captain_xp": 6.02,
-        "blank_stress": 0.81,
+        "xi_xp": 45.29,
+        "captain_xp": 6.26,
+        "blank_stress": 0.84,
         "double_upside": 0
       },
       {
         "gw": 6,
-        "xi_xp": 47.73,
+        "xi_xp": 48.29,
         "captain_xp": 6.44,
         "blank_stress": 0,
-        "double_upside": 2.2
+        "double_upside": 2.16
       },
       {
         "gw": 7,
-        "xi_xp": 47.58,
-        "captain_xp": 6.28,
+        "xi_xp": 48.31,
+        "captain_xp": 6.53,
         "blank_stress": 0,
-        "double_upside": 2.05
+        "double_upside": 2.18
       }
     ],
     "exact_fixture_diagnostics": [
