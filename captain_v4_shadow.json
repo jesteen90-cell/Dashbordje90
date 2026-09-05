@@ -161,6 +161,58 @@
       "prev_points": 177.0
     },
     {
+      "id": 68,
+      "name": "Tavernier",
+      "team": "Bournemouth",
+      "v3_score": 4.627,
+      "v4_score": 5.04,
+      "v41_score": 5.0873,
+      "elite_prior": 0.6354,
+      "haul_bonus": 0.0473,
+      "haul_probabilities": {
+        "goal_lambda": 0.2691,
+        "assist_lambda": 0.0772,
+        "p_goal_1": 0.2359,
+        "p_goal_2": 0.0303,
+        "p_goal_3": 0.0027,
+        "p_multi_return": 0.0478,
+        "p10": 0.0408,
+        "p15": 0.0132,
+        "history_weight": 0.7619
+      },
+      "xp": 4.06,
+      "ceiling": 8.5,
+      "expected_minutes": 68.0,
+      "prev_minutes": 2732.0,
+      "prev_points": 137.0
+    },
+    {
+      "id": 57,
+      "name": "Petrović",
+      "team": "Bournemouth",
+      "v3_score": 4.131,
+      "v4_score": 4.3287,
+      "v41_score": 4.3288,
+      "elite_prior": 0.3041,
+      "haul_bonus": 0.0001,
+      "haul_probabilities": {
+        "goal_lambda": 0.01,
+        "assist_lambda": 0.01,
+        "p_goal_1": 0.01,
+        "p_goal_2": 0.0,
+        "p_goal_3": 0.0,
+        "p_multi_return": 0.0002,
+        "p10": 0.0001,
+        "p15": 0.0,
+        "history_weight": 0.7619
+      },
+      "xp": 3.73,
+      "ceiling": 7.16,
+      "expected_minutes": 72.0,
+      "prev_minutes": 3420.0,
+      "prev_points": 124.0
+    },
+    {
       "id": 428,
       "name": "Cunha",
       "team": "Man Utd",
@@ -315,58 +367,6 @@
       "expected_minutes": 56.0,
       "prev_minutes": 0.0,
       "prev_points": 0.0
-    },
-    {
-      "id": 418,
-      "name": "Maguire",
-      "team": "Man Utd",
-      "v3_score": 2.619,
-      "v4_score": 2.878,
-      "v41_score": 2.8821,
-      "elite_prior": 0.3985,
-      "haul_bonus": 0.0041,
-      "haul_probabilities": {
-        "goal_lambda": 0.026,
-        "assist_lambda": 0.1031,
-        "p_goal_1": 0.0256,
-        "p_goal_2": 0.0003,
-        "p_goal_3": 0.0,
-        "p_multi_return": 0.0076,
-        "p10": 0.0037,
-        "p15": 0.0001,
-        "history_weight": 0.8
-      },
-      "xp": 2.1,
-      "ceiling": 5.36,
-      "expected_minutes": 55.0,
-      "prev_minutes": 1649.0,
-      "prev_points": 90.0
-    },
-    {
-      "id": 496,
-      "name": "Kinsky",
-      "team": "Spurs",
-      "v3_score": 2.272,
-      "v4_score": 2.4175,
-      "v41_score": 2.4176,
-      "elite_prior": 0.2238,
-      "haul_bonus": 0.0001,
-      "haul_probabilities": {
-        "goal_lambda": 0.01,
-        "assist_lambda": 0.01,
-        "p_goal_1": 0.01,
-        "p_goal_2": 0.0,
-        "p_goal_3": 0.0,
-        "p_multi_return": 0.0002,
-        "p10": 0.0001,
-        "p15": 0.0,
-        "history_weight": 0.8
-      },
-      "xp": 1.83,
-      "ceiling": 4.59,
-      "expected_minutes": 50.0,
-      "prev_minutes": 630.0,
-      "prev_points": 20.0
     }
   ],
   "guardrail": "Historical prior is bounded and fades as current-season evidence grows; production promotion still requires frozen regret evidence."
