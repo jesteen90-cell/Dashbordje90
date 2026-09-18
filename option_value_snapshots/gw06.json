@@ -1,0 +1,189 @@
+{
+  "snapshot_version": "1.0",
+  "frozen_at": "2026-09-18T17:31:08.658674Z",
+  "gw": 6,
+  "deadline_time": "2026-10-10T10:00:00Z",
+  "model_version": "3.8-availability-recovery-set-piece-projection",
+  "budget": {
+    "bank": 0.0,
+    "squad_market_value": 100.4,
+    "squad_selling_value": 100.4,
+    "market_budget_total": 100.4,
+    "selling_budget_total": 100.4,
+    "bank_raw": 0,
+    "squad_market_value_raw": 1004,
+    "squad_selling_value_raw": 1004,
+    "currency": "GBP",
+    "selling_value_live": false,
+    "selling_value_note": "Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris."
+  },
+  "free_transfers": 1,
+  "budget_intelligence_version": "1.2-shadow",
+  "transfer_option_value_version": "1.1-shadow",
+  "baseline_bank_action": {
+    "bank": 0.0,
+    "future_free_transfers": 2,
+    "option_value": 1.5,
+    "affordable_upgrade_paths": 10,
+    "top_upgrade_paths": [
+      {
+        "out_id": 557,
+        "out_name": "Tzolis",
+        "in_id": 94,
+        "in_name": "Schade",
+        "gain": 4.57,
+        "cost": 6.1
+      },
+      {
+        "out_id": 418,
+        "out_name": "Maguire",
+        "in_id": 330,
+        "in_name": "Bogle",
+        "gain": 4.31,
+        "cost": 4.6
+      },
+      {
+        "out_id": 428,
+        "out_name": "Cunha",
+        "in_id": 40,
+        "in_name": "Rogers",
+        "gain": 2.89,
+        "cost": 7.7
+      },
+      {
+        "out_id": 488,
+        "out_name": "I.Sangaré",
+        "in_id": 605,
+        "in_name": "Yalcouyé",
+        "gain": 2.77,
+        "cost": 4.5
+      },
+      {
+        "out_id": 277,
+        "out_name": "Egan",
+        "in_id": 305,
+        "in_name": "Davis",
+        "gain": 2.39,
+        "cost": 4.0
+      }
+    ]
+  },
+  "production_top_rank": 1,
+  "shadow_top_rank": 1,
+  "candidates": [
+    {
+      "rank": 1,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 94,
+        "name": "Schade"
+      },
+      "horizon_gain": 6.76,
+      "short_gain": 6.04,
+      "bank_after": 0.3,
+      "option_value": 1.098,
+      "option_vs_bank": -0.402,
+      "future_free_transfers": 1,
+      "upgrade_paths": 9,
+      "shadow_score": 6.358
+    },
+    {
+      "rank": 2,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 68,
+        "name": "Tavernier"
+      },
+      "horizon_gain": 5.7,
+      "short_gain": 5.37,
+      "bank_after": 0.3,
+      "option_value": 1.098,
+      "option_vs_bank": -0.402,
+      "future_free_transfers": 1,
+      "upgrade_paths": 9,
+      "shadow_score": 5.298
+    },
+    {
+      "rank": 3,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 124,
+        "name": "Groß"
+      },
+      "horizon_gain": 5.28,
+      "short_gain": 5.03,
+      "bank_after": 0.7,
+      "option_value": 1.162,
+      "option_vs_bank": -0.338,
+      "future_free_transfers": 1,
+      "upgrade_paths": 12,
+      "shadow_score": 4.942
+    },
+    {
+      "rank": 4,
+      "out": {
+        "id": 418,
+        "name": "Maguire"
+      },
+      "in": {
+        "id": 330,
+        "name": "Bogle"
+      },
+      "horizon_gain": 5.1,
+      "short_gain": 4.64,
+      "bank_after": 0.3,
+      "option_value": 1.098,
+      "option_vs_bank": -0.402,
+      "future_free_transfers": 1,
+      "upgrade_paths": 9,
+      "shadow_score": 4.698
+    },
+    {
+      "rank": 5,
+      "out": {
+        "id": 418,
+        "name": "Maguire"
+      },
+      "in": {
+        "id": 305,
+        "name": "Davis"
+      },
+      "horizon_gain": 4.5,
+      "short_gain": 4.01,
+      "bank_after": 0.9,
+      "option_value": 1.194,
+      "option_vs_bank": -0.306,
+      "future_free_transfers": 1,
+      "upgrade_paths": 12,
+      "shadow_score": 4.194
+    },
+    {
+      "rank": 6,
+      "out": {
+        "id": 418,
+        "name": "Maguire"
+      },
+      "in": {
+        "id": 115,
+        "name": "De Cuyper"
+      },
+      "horizon_gain": 4.44,
+      "short_gain": 4.16,
+      "bank_after": 0.0,
+      "option_value": 1.05,
+      "option_vs_bank": -0.45,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 3.99
+    }
+  ]
+}
