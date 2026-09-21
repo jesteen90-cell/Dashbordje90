@@ -2,7 +2,7 @@
   "evaluation_version": "2.0-component-diagnostics",
   "gw": 3,
   "frozen_at": "2026-08-29T10:26:37.548437Z",
-  "evaluated_at": "2026-09-21T07:15:52.435754Z",
+  "evaluated_at": "2026-09-21T14:20:23.458085Z",
   "model_version": "3.8-availability-recovery-set-piece-projection",
   "decision_layer_version": "4.6-input-quality-threshold",
   "decision": "BYTT",
@@ -219,5 +219,23 @@
       "expected_to_play_but_zero": false
     }
   ],
-  "three_gw_transfer": null
+  "three_gw_transfer": {
+    "actual_pair_gain": 22,
+    "pairs": [
+      {
+        "out": "Gabriel",
+        "in": "Guéhi",
+        "out_points": 12,
+        "in_points": 18,
+        "delta": 6
+      },
+      {
+        "out": "Tzolis",
+        "in": "Semenyo",
+        "out_points": 10,
+        "in_points": 26,
+        "delta": 16
+      }
+    ]
+  }
 }
