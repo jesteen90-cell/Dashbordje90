@@ -291,6 +291,32 @@
       "prev_points": 0.0
     },
     {
+      "id": 290,
+      "name": "Slater",
+      "team": "Hull City",
+      "v3_score": 3.734,
+      "v4_score": 3.9621,
+      "v41_score": 3.9665,
+      "elite_prior": 0.3509,
+      "haul_bonus": 0.0045,
+      "haul_probabilities": {
+        "goal_lambda": 0.01,
+        "assist_lambda": 0.1274,
+        "p_goal_1": 0.01,
+        "p_goal_2": 0.0,
+        "p_goal_3": 0.0,
+        "p_multi_return": 0.0086,
+        "p10": 0.0041,
+        "p15": 0.0,
+        "history_weight": 0.599
+      },
+      "xp": 3.27,
+      "ceiling": 6.78,
+      "expected_minutes": 73.0,
+      "prev_minutes": 0.0,
+      "prev_points": 0.0
+    },
+    {
       "id": 173,
       "name": "Thomas",
       "team": "Coventry City",
@@ -341,32 +367,6 @@
       "expected_minutes": 78.0,
       "prev_minutes": 630.0,
       "prev_points": 20.0
-    },
-    {
-      "id": 290,
-      "name": "Slater",
-      "team": "Hull City",
-      "v3_score": 3.386,
-      "v4_score": 3.6138,
-      "v41_score": 3.6186,
-      "elite_prior": 0.3505,
-      "haul_bonus": 0.0048,
-      "haul_probabilities": {
-        "goal_lambda": 0.01,
-        "assist_lambda": 0.1332,
-        "p_goal_1": 0.01,
-        "p_goal_2": 0.0,
-        "p_goal_3": 0.0,
-        "p_multi_return": 0.0093,
-        "p10": 0.0045,
-        "p15": 0.0,
-        "history_weight": 0.6223
-      },
-      "xp": 2.88,
-      "ceiling": 6.42,
-      "expected_minutes": 69.0,
-      "prev_minutes": 0.0,
-      "prev_points": 0.0
     }
   ],
   "guardrail": "Historical prior is bounded and fades as current-season evidence grows; production promotion still requires frozen regret evidence."
