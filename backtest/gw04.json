@@ -2,7 +2,7 @@
   "evaluation_version": "2.0-component-diagnostics",
   "gw": 4,
   "frozen_at": "2026-09-04T17:31:59.159357Z",
-  "evaluated_at": "2026-10-13T07:13:06.109601Z",
+  "evaluated_at": "2026-10-13T15:08:57.254171Z",
   "model_version": "3.8-availability-recovery-set-piece-projection",
   "decision_layer_version": "4.6-input-quality-threshold",
   "decision": "BYTT",
@@ -219,5 +219,23 @@
       "expected_to_play_but_zero": false
     }
   ],
-  "three_gw_transfer": null
+  "three_gw_transfer": {
+    "actual_pair_gain": 20,
+    "pairs": [
+      {
+        "out": "Gabriel",
+        "in": "Tarkowski",
+        "out_points": 12,
+        "in_points": 25,
+        "delta": 13
+      },
+      {
+        "out": "Tzolis",
+        "in": "Gibbs-White",
+        "out_points": 5,
+        "in_points": 12,
+        "delta": 7
+      }
+    ]
+  }
 }
