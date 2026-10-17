@@ -1,17 +1,17 @@
 {
   "version": "1.1-backtest-ready",
-  "gw": 7,
+  "gw": 8,
   "gws": [
-    7,
     8,
     9,
-    10
+    10,
+    11
   ],
   "weights": {
-    "7": 1.0,
-    "8": 0.9,
-    "9": 0.75,
-    "10": 0.6
+    "8": 1.0,
+    "9": 0.9,
+    "10": 0.75,
+    "11": 0.6
   },
   "current_squad_ids": [
     496,
@@ -30,16 +30,16 @@
     290,
     173
   ],
-  "current_horizon_value": 174.243,
+  "current_horizon_value": 153.584,
   "current_captains": [
     {
-      "gw": 7,
-      "weighted_value": 53.248,
+      "gw": 8,
+      "weighted_value": 49.047,
       "xi_ids": [
         496,
         4,
         8,
-        277,
+        418,
         173,
         426,
         428,
@@ -50,31 +50,11 @@
       ],
       "captain_id": 411,
       "captain": "Haaland",
-      "captain_xp": 7.651
-    },
-    {
-      "gw": 8,
-      "weighted_value": 49.822,
-      "xi_ids": [
-        496,
-        4,
-        8,
-        418,
-        277,
-        173,
-        426,
-        428,
-        290,
-        411,
-        165
-      ],
-      "captain_id": 411,
-      "captain": "Haaland",
-      "captain_xp": 7.227
+      "captain_xp": 6.418
     },
     {
       "gw": 9,
-      "weighted_value": 39.586,
+      "weighted_value": 42.008,
       "xi_ids": [
         496,
         4,
@@ -90,11 +70,11 @@
       ],
       "captain_id": 411,
       "captain": "Haaland",
-      "captain_xp": 6.656
+      "captain_xp": 5.911
     },
     {
       "gw": 10,
-      "weighted_value": 31.587,
+      "weighted_value": 34.971,
       "xi_ids": [
         496,
         4,
@@ -110,7 +90,27 @@
       ],
       "captain_id": 411,
       "captain": "Haaland",
-      "captain_xp": 6.46
+      "captain_xp": 5.737
+    },
+    {
+      "gw": 11,
+      "weighted_value": 27.557,
+      "xi_ids": [
+        496,
+        4,
+        8,
+        418,
+        173,
+        426,
+        428,
+        290,
+        411,
+        165,
+        569
+      ],
+      "captain_id": 411,
+      "captain": "Haaland",
+      "captain_xp": 6.081
     }
   ],
   "best_premium_forward": null,
@@ -147,32 +147,12 @@
     ],
     "cost": 154,
     "bank_after": 25,
-    "horizon_value": 175.355,
-    "delta_vs_current": 1.112,
+    "horizon_value": 153.731,
+    "delta_vs_current": 0.147,
     "captains": [
       {
-        "gw": 7,
-        "weighted_value": 53.495,
-        "xi_ids": [
-          496,
-          4,
-          8,
-          277,
-          173,
-          428,
-          290,
-          154,
-          411,
-          165,
-          138
-        ],
-        "captain_id": 411,
-        "captain": "Haaland",
-        "captain_xp": 7.651
-      },
-      {
         "gw": 8,
-        "weighted_value": 50.043,
+        "weighted_value": 48.909,
         "xi_ids": [
           496,
           4,
@@ -188,11 +168,11 @@
         ],
         "captain_id": 411,
         "captain": "Haaland",
-        "captain_xp": 7.227
+        "captain_xp": 6.418
       },
       {
         "gw": 9,
-        "weighted_value": 40.41,
+        "weighted_value": 42.593,
         "xi_ids": [
           496,
           4,
@@ -208,11 +188,11 @@
         ],
         "captain_id": 411,
         "captain": "Haaland",
-        "captain_xp": 6.656
+        "captain_xp": 5.911
       },
       {
         "gw": 10,
-        "weighted_value": 31.406,
+        "weighted_value": 34.509,
         "xi_ids": [
           496,
           4,
@@ -228,11 +208,31 @@
         ],
         "captain_id": 411,
         "captain": "Haaland",
-        "captain_xp": 6.46
+        "captain_xp": 5.737
+      },
+      {
+        "gw": 11,
+        "weighted_value": 27.719,
+        "xi_ids": [
+          496,
+          4,
+          8,
+          418,
+          173,
+          428,
+          290,
+          154,
+          411,
+          165,
+          138
+        ],
+        "captain_id": 411,
+        "captain": "Haaland",
+        "captain_xp": 6.081
       }
     ]
   },
-  "verdict": "premium_midfielder",
+  "verdict": "current_structure",
   "scenarios": [
     {
       "structure": "premium_midfielder",
@@ -267,32 +267,12 @@
       ],
       "cost": 154,
       "bank_after": 25,
-      "horizon_value": 175.355,
-      "delta_vs_current": 1.112,
+      "horizon_value": 153.731,
+      "delta_vs_current": 0.147,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 53.495,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            138
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
-        },
-        {
           "gw": 8,
-          "weighted_value": 50.043,
+          "weighted_value": 48.909,
           "xi_ids": [
             496,
             4,
@@ -308,11 +288,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 7.227
+          "captain_xp": 6.418
         },
         {
           "gw": 9,
-          "weighted_value": 40.41,
+          "weighted_value": 42.593,
           "xi_ids": [
             496,
             4,
@@ -328,11 +308,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.656
+          "captain_xp": 5.911
         },
         {
           "gw": 10,
-          "weighted_value": 31.406,
+          "weighted_value": 34.509,
           "xi_ids": [
             496,
             4,
@@ -348,69 +328,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.46
-        }
-      ]
-    },
-    {
-      "structure": "premium_midfielder",
-      "premium": "Palmer",
-      "premium_id": 154,
-      "support": "Barry",
-      "support_id": 249,
-      "out": [
-        "B.Fernandes",
-        "Gonzalo"
-      ],
-      "out_ids": [
-        426,
-        569
-      ],
-      "squad_ids": [
-        496,
-        4,
-        8,
-        418,
-        277,
-        428,
-        488,
-        411,
-        165,
-        497,
-        557,
-        290,
-        173,
-        154,
-        249
-      ],
-      "cost": 154,
-      "bank_after": 25,
-      "horizon_value": 175.159,
-      "delta_vs_current": 0.916,
-      "captains": [
-        {
-          "gw": 7,
-          "weighted_value": 53.823,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            249
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
+          "captain_xp": 5.737
         },
         {
-          "gw": 8,
-          "weighted_value": 49.663,
+          "gw": 11,
+          "weighted_value": 27.719,
           "xi_ids": [
             496,
             4,
@@ -422,287 +344,11 @@
             154,
             411,
             165,
-            249
+            138
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 7.227
-        },
-        {
-          "gw": 9,
-          "weighted_value": 40.351,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            249
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 6.656
-        },
-        {
-          "gw": 10,
-          "weighted_value": 31.322,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            249
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 6.46
-        }
-      ]
-    },
-    {
-      "structure": "premium_midfielder",
-      "premium": "Palmer",
-      "premium_id": 154,
-      "support": "Calvert-Lewin",
-      "support_id": 346,
-      "out": [
-        "B.Fernandes",
-        "Gonzalo"
-      ],
-      "out_ids": [
-        426,
-        569
-      ],
-      "squad_ids": [
-        496,
-        4,
-        8,
-        418,
-        277,
-        428,
-        488,
-        411,
-        165,
-        497,
-        557,
-        290,
-        173,
-        154,
-        346
-      ],
-      "cost": 157,
-      "bank_after": 22,
-      "horizon_value": 174.991,
-      "delta_vs_current": 0.748,
-      "captains": [
-        {
-          "gw": 7,
-          "weighted_value": 53.624,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            346
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
-        },
-        {
-          "gw": 8,
-          "weighted_value": 49.788,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            346
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.227
-        },
-        {
-          "gw": 9,
-          "weighted_value": 40.256,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            346
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 6.656
-        },
-        {
-          "gw": 10,
-          "weighted_value": 31.323,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            346
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 6.46
-        }
-      ]
-    },
-    {
-      "structure": "premium_midfielder",
-      "premium": "Palmer",
-      "premium_id": 154,
-      "support": "Evanilson",
-      "support_id": 79,
-      "out": [
-        "B.Fernandes",
-        "Gonzalo"
-      ],
-      "out_ids": [
-        426,
-        569
-      ],
-      "squad_ids": [
-        496,
-        4,
-        8,
-        418,
-        277,
-        428,
-        488,
-        411,
-        165,
-        497,
-        557,
-        290,
-        173,
-        154,
-        79
-      ],
-      "cost": 158,
-      "bank_after": 21,
-      "horizon_value": 174.9,
-      "delta_vs_current": 0.657,
-      "captains": [
-        {
-          "gw": 7,
-          "weighted_value": 53.623,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            79
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
-        },
-        {
-          "gw": 8,
-          "weighted_value": 49.798,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            79
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.227
-        },
-        {
-          "gw": 9,
-          "weighted_value": 40.232,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            79
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 6.656
-        },
-        {
-          "gw": 10,
-          "weighted_value": 31.247,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            79
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 6.46
+          "captain_xp": 6.081
         }
       ]
     },
@@ -739,32 +385,12 @@
       ],
       "cost": 175,
       "bank_after": 4,
-      "horizon_value": 174.543,
-      "delta_vs_current": 0.3,
+      "horizon_value": 153.353,
+      "delta_vs_current": -0.231,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 53.264,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            106
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
-        },
-        {
           "gw": 8,
-          "weighted_value": 49.645,
+          "weighted_value": 48.568,
           "xi_ids": [
             496,
             4,
@@ -780,11 +406,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 7.227
+          "captain_xp": 6.418
         },
         {
           "gw": 9,
-          "weighted_value": 40.613,
+          "weighted_value": 42.865,
           "xi_ids": [
             496,
             4,
@@ -800,11 +426,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.656
+          "captain_xp": 5.911
         },
         {
           "gw": 10,
-          "weighted_value": 31.02,
+          "weighted_value": 34.117,
           "xi_ids": [
             496,
             4,
@@ -820,7 +446,263 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.46
+          "captain_xp": 5.737
+        },
+        {
+          "gw": 11,
+          "weighted_value": 27.802,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            106
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.081
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Calvert-Lewin",
+      "support_id": 346,
+      "out": [
+        "B.Fernandes",
+        "Gonzalo"
+      ],
+      "out_ids": [
+        426,
+        569
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        277,
+        428,
+        488,
+        411,
+        165,
+        497,
+        557,
+        290,
+        173,
+        154,
+        346
+      ],
+      "cost": 157,
+      "bank_after": 22,
+      "horizon_value": 153.262,
+      "delta_vs_current": -0.321,
+      "captains": [
+        {
+          "gw": 8,
+          "weighted_value": 48.657,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            346
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.418
+        },
+        {
+          "gw": 9,
+          "weighted_value": 42.428,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            346
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 5.911
+        },
+        {
+          "gw": 10,
+          "weighted_value": 34.416,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            346
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 5.737
+        },
+        {
+          "gw": 11,
+          "weighted_value": 27.761,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            346
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.081
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Evanilson",
+      "support_id": 79,
+      "out": [
+        "B.Fernandes",
+        "Gonzalo"
+      ],
+      "out_ids": [
+        426,
+        569
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        277,
+        428,
+        488,
+        411,
+        165,
+        497,
+        557,
+        290,
+        173,
+        154,
+        79
+      ],
+      "cost": 158,
+      "bank_after": 21,
+      "horizon_value": 153.196,
+      "delta_vs_current": -0.388,
+      "captains": [
+        {
+          "gw": 8,
+          "weighted_value": 48.661,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            79
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.418
+        },
+        {
+          "gw": 9,
+          "weighted_value": 42.398,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            79
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 5.911
+        },
+        {
+          "gw": 10,
+          "weighted_value": 34.328,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            79
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 5.737
+        },
+        {
+          "gw": 11,
+          "weighted_value": 27.81,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            79
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.081
         }
       ]
     },
@@ -857,32 +739,12 @@
       ],
       "cost": 153,
       "bank_after": 26,
-      "horizon_value": 174.443,
-      "delta_vs_current": 0.2,
+      "horizon_value": 153.063,
+      "delta_vs_current": -0.52,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 53.251,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            316
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
-        },
-        {
           "gw": 8,
-          "weighted_value": 49.803,
+          "weighted_value": 48.686,
           "xi_ids": [
             496,
             4,
@@ -898,11 +760,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 7.227
+          "captain_xp": 6.418
         },
         {
           "gw": 9,
-          "weighted_value": 40.1,
+          "weighted_value": 42.275,
           "xi_ids": [
             496,
             4,
@@ -918,11 +780,11 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.656
+          "captain_xp": 5.911
         },
         {
           "gw": 10,
-          "weighted_value": 31.29,
+          "weighted_value": 34.391,
           "xi_ids": [
             496,
             4,
@@ -938,7 +800,27 @@
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.46
+          "captain_xp": 5.737
+        },
+        {
+          "gw": 11,
+          "weighted_value": 27.711,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            316
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.081
         }
       ]
     },
@@ -946,8 +828,8 @@
       "structure": "premium_midfielder",
       "premium": "Palmer",
       "premium_id": 154,
-      "support": "Wissa",
-      "support_id": 464,
+      "support": "Barry",
+      "support_id": 249,
       "out": [
         "B.Fernandes",
         "Gonzalo"
@@ -971,36 +853,16 @@
         290,
         173,
         154,
-        464
+        249
       ],
-      "cost": 159,
-      "bank_after": 20,
-      "horizon_value": 174.03,
-      "delta_vs_current": -0.213,
+      "cost": 154,
+      "bank_after": 25,
+      "horizon_value": 153.031,
+      "delta_vs_current": -0.553,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 53.275,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            428,
-            290,
-            154,
-            411,
-            165,
-            464
-          ],
-          "captain_id": 411,
-          "captain": "Haaland",
-          "captain_xp": 7.651
-        },
-        {
           "gw": 8,
-          "weighted_value": 49.609,
+          "weighted_value": 48.519,
           "xi_ids": [
             496,
             4,
@@ -1012,15 +874,15 @@
             154,
             411,
             165,
-            464
+            249
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 7.227
+          "captain_xp": 6.418
         },
         {
           "gw": 9,
-          "weighted_value": 40.054,
+          "weighted_value": 42.516,
           "xi_ids": [
             496,
             4,
@@ -1032,15 +894,15 @@
             154,
             411,
             165,
-            464
+            249
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.656
+          "captain_xp": 5.911
         },
         {
           "gw": 10,
-          "weighted_value": 31.091,
+          "weighted_value": 34.403,
           "xi_ids": [
             496,
             4,
@@ -1052,11 +914,31 @@
             154,
             411,
             165,
-            464
+            249
           ],
           "captain_id": 411,
           "captain": "Haaland",
-          "captain_xp": 6.46
+          "captain_xp": 5.737
+        },
+        {
+          "gw": 11,
+          "weighted_value": 27.592,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            428,
+            290,
+            154,
+            411,
+            165,
+            249
+          ],
+          "captain_id": 411,
+          "captain": "Haaland",
+          "captain_xp": 6.081
         }
       ]
     },
@@ -1093,32 +975,12 @@
       ],
       "cost": 153,
       "bank_after": 66,
-      "horizon_value": 164.191,
-      "delta_vs_current": -10.052,
+      "horizon_value": 147.818,
+      "delta_vs_current": -5.765,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 47.839,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            569,
-            138
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
           "gw": 8,
-          "weighted_value": 47.327,
+          "weighted_value": 46.845,
           "xi_ids": [
             496,
             4,
@@ -1134,11 +996,11 @@
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.879
+          "captain_xp": 5.52
         },
         {
           "gw": 9,
-          "weighted_value": 38.227,
+          "weighted_value": 40.562,
           "xi_ids": [
             496,
             4,
@@ -1154,11 +1016,11 @@
           ],
           "captain_id": 165,
           "captain": "João Pedro",
-          "captain_xp": 5.942
+          "captain_xp": 5.329
         },
         {
           "gw": 10,
-          "weighted_value": 30.798,
+          "weighted_value": 34.303,
           "xi_ids": [
             496,
             4,
@@ -1174,16 +1036,36 @@
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.602
+          "captain_xp": 5.259
+        },
+        {
+          "gw": 11,
+          "weighted_value": 26.108,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            138
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.106
         }
       ]
     },
     {
       "structure": "premium_midfielder",
-      "premium": "Saka",
-      "premium_id": 12,
-      "support": "Barry",
-      "support_id": 249,
+      "premium": "Palmer",
+      "premium_id": 154,
+      "support": "Havertz",
+      "support_id": 26,
       "out": [
         "Tzolis",
         "Haaland"
@@ -1206,37 +1088,17 @@
         497,
         290,
         173,
-        12,
-        249
+        154,
+        26
       ],
-      "cost": 153,
-      "bank_after": 66,
-      "horizon_value": 163.995,
-      "delta_vs_current": -10.248,
+      "cost": 172,
+      "bank_after": 47,
+      "horizon_value": 147.652,
+      "delta_vs_current": -5.932,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 48.167,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            569,
-            249
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
           "gw": 8,
-          "weighted_value": 46.947,
+          "weighted_value": 46.77,
           "xi_ids": [
             496,
             4,
@@ -1246,17 +1108,17 @@
             426,
             428,
             290,
-            12,
+            154,
             165,
-            249
+            26
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.879
+          "captain_xp": 5.52
         },
         {
           "gw": 9,
-          "weighted_value": 38.168,
+          "weighted_value": 40.733,
           "xi_ids": [
             496,
             4,
@@ -1266,17 +1128,17 @@
             426,
             428,
             290,
-            12,
+            154,
             165,
-            249
+            26
           ],
           "captain_id": 165,
           "captain": "João Pedro",
-          "captain_xp": 5.942
+          "captain_xp": 5.329
         },
         {
           "gw": 10,
-          "weighted_value": 30.714,
+          "weighted_value": 33.879,
           "xi_ids": [
             496,
             4,
@@ -1285,250 +1147,34 @@
             173,
             426,
             428,
-            12,
+            154,
             165,
             569,
-            249
+            26
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.602
-        }
-      ]
-    },
-    {
-      "structure": "premium_midfielder",
-      "premium": "Saka",
-      "premium_id": 12,
-      "support": "Calvert-Lewin",
-      "support_id": 346,
-      "out": [
-        "Tzolis",
-        "Haaland"
-      ],
-      "out_ids": [
-        557,
-        411
-      ],
-      "squad_ids": [
-        496,
-        4,
-        8,
-        418,
-        277,
-        426,
-        428,
-        488,
-        165,
-        569,
-        497,
-        290,
-        173,
-        12,
-        346
-      ],
-      "cost": 156,
-      "bank_after": 63,
-      "horizon_value": 163.827,
-      "delta_vs_current": -10.416,
-      "captains": [
+          "captain_xp": 5.259
+        },
         {
-          "gw": 7,
-          "weighted_value": 47.968,
+          "gw": 11,
+          "weighted_value": 26.27,
           "xi_ids": [
             496,
             4,
             8,
+            418,
             173,
             426,
             428,
             290,
-            12,
+            154,
             165,
-            569,
-            346
+            26
           ],
           "captain_id": 165,
           "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
-          "gw": 8,
-          "weighted_value": 47.072,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            346
-          ],
-          "captain_id": 426,
-          "captain": "B.Fernandes",
-          "captain_xp": 5.879
-        },
-        {
-          "gw": 9,
-          "weighted_value": 38.073,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            346
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 5.942
-        },
-        {
-          "gw": 10,
-          "weighted_value": 30.715,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            426,
-            428,
-            12,
-            165,
-            569,
-            346
-          ],
-          "captain_id": 426,
-          "captain": "B.Fernandes",
-          "captain_xp": 5.602
-        }
-      ]
-    },
-    {
-      "structure": "premium_midfielder",
-      "premium": "Saka",
-      "premium_id": 12,
-      "support": "Evanilson",
-      "support_id": 79,
-      "out": [
-        "Tzolis",
-        "Haaland"
-      ],
-      "out_ids": [
-        557,
-        411
-      ],
-      "squad_ids": [
-        496,
-        4,
-        8,
-        418,
-        277,
-        426,
-        428,
-        488,
-        165,
-        569,
-        497,
-        290,
-        173,
-        12,
-        79
-      ],
-      "cost": 157,
-      "bank_after": 62,
-      "horizon_value": 163.736,
-      "delta_vs_current": -10.507,
-      "captains": [
-        {
-          "gw": 7,
-          "weighted_value": 47.966,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            569,
-            79
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
-          "gw": 8,
-          "weighted_value": 47.082,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            79
-          ],
-          "captain_id": 426,
-          "captain": "B.Fernandes",
-          "captain_xp": 5.879
-        },
-        {
-          "gw": 9,
-          "weighted_value": 38.049,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            277,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            79
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 5.942
-        },
-        {
-          "gw": 10,
-          "weighted_value": 30.639,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            418,
-            173,
-            426,
-            428,
-            12,
-            165,
-            569,
-            79
-          ],
-          "captain_id": 426,
-          "captain": "B.Fernandes",
-          "captain_xp": 5.602
+          "captain_xp": 5.106
         }
       ]
     },
@@ -1565,32 +1211,12 @@
       ],
       "cost": 174,
       "bank_after": 45,
-      "horizon_value": 163.378,
-      "delta_vs_current": -10.865,
+      "horizon_value": 147.44,
+      "delta_vs_current": -6.143,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 47.608,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            569,
-            106
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
           "gw": 8,
-          "weighted_value": 46.929,
+          "weighted_value": 46.504,
           "xi_ids": [
             496,
             4,
@@ -1606,11 +1232,11 @@
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.879
+          "captain_xp": 5.52
         },
         {
           "gw": 9,
-          "weighted_value": 38.43,
+          "weighted_value": 40.834,
           "xi_ids": [
             496,
             4,
@@ -1626,11 +1252,11 @@
           ],
           "captain_id": 165,
           "captain": "João Pedro",
-          "captain_xp": 5.942
+          "captain_xp": 5.329
         },
         {
           "gw": 10,
-          "weighted_value": 30.412,
+          "weighted_value": 33.911,
           "xi_ids": [
             496,
             4,
@@ -1646,7 +1272,263 @@
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.602
+          "captain_xp": 5.259
+        },
+        {
+          "gw": 11,
+          "weighted_value": 26.19,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            106
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.106
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Calvert-Lewin",
+      "support_id": 346,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        277,
+        426,
+        428,
+        488,
+        165,
+        569,
+        497,
+        290,
+        173,
+        12,
+        346
+      ],
+      "cost": 156,
+      "bank_after": 63,
+      "horizon_value": 147.35,
+      "delta_vs_current": -6.234,
+      "captains": [
+        {
+          "gw": 8,
+          "weighted_value": 46.593,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            346
+          ],
+          "captain_id": 426,
+          "captain": "B.Fernandes",
+          "captain_xp": 5.52
+        },
+        {
+          "gw": 9,
+          "weighted_value": 40.397,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            346
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.329
+        },
+        {
+          "gw": 10,
+          "weighted_value": 34.21,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            12,
+            165,
+            569,
+            346
+          ],
+          "captain_id": 426,
+          "captain": "B.Fernandes",
+          "captain_xp": 5.259
+        },
+        {
+          "gw": 11,
+          "weighted_value": 26.15,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            346
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.106
+        }
+      ]
+    },
+    {
+      "structure": "premium_midfielder",
+      "premium": "Saka",
+      "premium_id": 12,
+      "support": "Evanilson",
+      "support_id": 79,
+      "out": [
+        "Tzolis",
+        "Haaland"
+      ],
+      "out_ids": [
+        557,
+        411
+      ],
+      "squad_ids": [
+        496,
+        4,
+        8,
+        418,
+        277,
+        426,
+        428,
+        488,
+        165,
+        569,
+        497,
+        290,
+        173,
+        12,
+        79
+      ],
+      "cost": 157,
+      "bank_after": 62,
+      "horizon_value": 147.284,
+      "delta_vs_current": -6.3,
+      "captains": [
+        {
+          "gw": 8,
+          "weighted_value": 46.597,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            79
+          ],
+          "captain_id": 426,
+          "captain": "B.Fernandes",
+          "captain_xp": 5.52
+        },
+        {
+          "gw": 9,
+          "weighted_value": 40.367,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            277,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            79
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.329
+        },
+        {
+          "gw": 10,
+          "weighted_value": 34.121,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            12,
+            165,
+            569,
+            79
+          ],
+          "captain_id": 426,
+          "captain": "B.Fernandes",
+          "captain_xp": 5.259
+        },
+        {
+          "gw": 11,
+          "weighted_value": 26.199,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            79
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.106
         }
       ]
     },
@@ -1683,32 +1565,12 @@
       ],
       "cost": 152,
       "bank_after": 67,
-      "horizon_value": 163.279,
-      "delta_vs_current": -10.964,
+      "horizon_value": 147.151,
+      "delta_vs_current": -6.433,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 47.595,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            569,
-            316
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
           "gw": 8,
-          "weighted_value": 47.086,
+          "weighted_value": 46.622,
           "xi_ids": [
             496,
             4,
@@ -1724,11 +1586,11 @@
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.879
+          "captain_xp": 5.52
         },
         {
           "gw": 9,
-          "weighted_value": 37.917,
+          "weighted_value": 40.244,
           "xi_ids": [
             496,
             4,
@@ -1744,11 +1606,11 @@
           ],
           "captain_id": 165,
           "captain": "João Pedro",
-          "captain_xp": 5.942
+          "captain_xp": 5.329
         },
         {
           "gw": 10,
-          "weighted_value": 30.681,
+          "weighted_value": 34.184,
           "xi_ids": [
             496,
             4,
@@ -1764,7 +1626,27 @@
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.602
+          "captain_xp": 5.259
+        },
+        {
+          "gw": 11,
+          "weighted_value": 26.1,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            316
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.106
         }
       ]
     },
@@ -1772,8 +1654,8 @@
       "structure": "premium_midfielder",
       "premium": "Saka",
       "premium_id": 12,
-      "support": "Wissa",
-      "support_id": 464,
+      "support": "Barry",
+      "support_id": 249,
       "out": [
         "Tzolis",
         "Haaland"
@@ -1797,36 +1679,16 @@
         290,
         173,
         12,
-        464
+        249
       ],
-      "cost": 158,
-      "bank_after": 61,
-      "horizon_value": 162.866,
-      "delta_vs_current": -11.377,
+      "cost": 153,
+      "bank_after": 66,
+      "horizon_value": 147.119,
+      "delta_vs_current": -6.465,
       "captains": [
         {
-          "gw": 7,
-          "weighted_value": 47.619,
-          "xi_ids": [
-            496,
-            4,
-            8,
-            173,
-            426,
-            428,
-            290,
-            12,
-            165,
-            569,
-            464
-          ],
-          "captain_id": 165,
-          "captain": "João Pedro",
-          "captain_xp": 4.679
-        },
-        {
           "gw": 8,
-          "weighted_value": 46.893,
+          "weighted_value": 46.455,
           "xi_ids": [
             496,
             4,
@@ -1838,15 +1700,15 @@
             290,
             12,
             165,
-            464
+            249
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.879
+          "captain_xp": 5.52
         },
         {
           "gw": 9,
-          "weighted_value": 37.871,
+          "weighted_value": 40.485,
           "xi_ids": [
             496,
             4,
@@ -1858,15 +1720,15 @@
             290,
             12,
             165,
-            464
+            249
           ],
           "captain_id": 165,
           "captain": "João Pedro",
-          "captain_xp": 5.942
+          "captain_xp": 5.329
         },
         {
           "gw": 10,
-          "weighted_value": 30.483,
+          "weighted_value": 34.197,
           "xi_ids": [
             496,
             4,
@@ -1878,11 +1740,31 @@
             12,
             165,
             569,
-            464
+            249
           ],
           "captain_id": 426,
           "captain": "B.Fernandes",
-          "captain_xp": 5.602
+          "captain_xp": 5.259
+        },
+        {
+          "gw": 11,
+          "weighted_value": 25.981,
+          "xi_ids": [
+            496,
+            4,
+            8,
+            418,
+            173,
+            426,
+            428,
+            290,
+            12,
+            165,
+            249
+          ],
+          "captain_id": 165,
+          "captain": "João Pedro",
+          "captain_xp": 5.106
         }
       ]
     }
