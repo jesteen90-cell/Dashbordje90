@@ -5,40 +5,35 @@
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 10.22,
+    "wildcard": 13.08,
     "free_hit": 0.0,
     "bench_boost": 0.42,
-    "triple_captain": 1.72
+    "triple_captain": 1.04
   },
-  "tc_decision": "CONSIDER",
+  "tc_decision": "HOLD",
   "chip_roadmap": [
     {
       "gw": 8,
-      "chip": "triple_captain",
-      "score": 1.72
-    },
-    {
-      "gw": 9,
       "chip": "wildcard",
-      "score": 10.22
+      "score": 13.08
     }
   ],
   "collisions": [
     {
-      "gw": 9,
+      "gw": 8,
       "chips": [
-        "free_hit",
+        "triple_captain",
         "wildcard"
       ]
     }
   ],
   "evidence": {
-    "current_xi_xp": 45.47,
-    "bench_xp": 4.43,
-    "bench_reliable_xp": 3.74,
+    "current_xi_xp": 50.18,
+    "bench_xp": 7.83,
+    "bench_reliable_xp": 7.14,
     "best_captain": "Haaland",
     "best_captain_xp": 7.8,
-    "captain_gap": 2.19,
+    "captain_gap": 2.11,
     "tc_half": 1,
     "tc_cutoff_gw": 19,
     "tc_rounds_left": 11,
@@ -73,40 +68,40 @@
     "tc_reservation_cost": 0.0,
     "tc_expiry_pressure": 0,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 13.67,
+    "optimizer_weighted_gain": 16.53,
     "planned_changes": 2,
     "free_hit_candidate_gw": 9,
-    "bench_boost_candidate_gw": 11,
-    "wildcard_candidate_gw": 9,
+    "bench_boost_candidate_gw": 10,
+    "wildcard_candidate_gw": 8,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
         "gw": 8,
-        "xi_xp": 48.9,
+        "xi_xp": 50.17,
         "captain_xp": 7.8,
-        "blank_stress": 0.41,
+        "blank_stress": 0.27,
         "double_upside": 0
       },
       {
         "gw": 9,
-        "xi_xp": 48.69,
+        "xi_xp": 49.71,
         "captain_xp": 7.18,
-        "blank_stress": 0.62,
+        "blank_stress": 0.73,
         "double_upside": 0
       },
       {
         "gw": 10,
-        "xi_xp": 49.75,
+        "xi_xp": 51.02,
         "captain_xp": 6.97,
         "blank_stress": 0,
-        "double_upside": 0.44
+        "double_upside": 0.58
       },
       {
         "gw": 11,
-        "xi_xp": 49.92,
+        "xi_xp": 50.88,
         "captain_xp": 7.39,
         "blank_stress": 0,
-        "double_upside": 0.61
+        "double_upside": 0.44
       }
     ],
     "exact_fixture_diagnostics": [
