@@ -5,22 +5,29 @@
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 11.86,
+    "wildcard": 11.22,
     "free_hit": 0.0,
-    "bench_boost": 0.42,
+    "bench_boost": 0.0,
     "triple_captain": 0
   },
   "tc_decision": "HOLD",
   "chip_roadmap": [
     {
-      "gw": 8,
+      "gw": 9,
       "chip": "wildcard",
-      "score": 11.86
+      "score": 11.22
     }
   ],
   "collisions": [
     {
-      "gw": 8,
+      "gw": 11,
+      "chips": [
+        "triple_captain",
+        "bench_boost"
+      ]
+    },
+    {
+      "gw": 9,
       "chips": [
         "free_hit",
         "wildcard"
@@ -28,7 +35,7 @@
     }
   ],
   "evidence": {
-    "current_xi_xp": 48.54,
+    "current_xi_xp": 49.47,
     "bench_xp": 7.85,
     "bench_reliable_xp": 7.14,
     "best_captain": "Groß",
@@ -68,40 +75,40 @@
     "tc_reservation_cost": 0.83,
     "tc_expiry_pressure": 0,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 15.31,
+    "optimizer_weighted_gain": 14.67,
     "planned_changes": 2,
-    "free_hit_candidate_gw": 8,
-    "bench_boost_candidate_gw": 10,
-    "wildcard_candidate_gw": 8,
+    "free_hit_candidate_gw": 9,
+    "bench_boost_candidate_gw": 11,
+    "wildcard_candidate_gw": 9,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
         "gw": 8,
-        "xi_xp": 48.53,
+        "xi_xp": 49.46,
         "captain_xp": 5.66,
-        "blank_stress": 1.06,
+        "blank_stress": 0.87,
         "double_upside": 0
       },
       {
         "gw": 9,
-        "xi_xp": 48.79,
+        "xi_xp": 49.34,
         "captain_xp": 5.77,
-        "blank_stress": 0.8,
+        "blank_stress": 0.99,
         "double_upside": 0
       },
       {
         "gw": 10,
-        "xi_xp": 50.55,
+        "xi_xp": 51.01,
         "captain_xp": 6.0,
         "blank_stress": 0,
-        "double_upside": 0.95
+        "double_upside": 0.68
       },
       {
         "gw": 11,
-        "xi_xp": 50.51,
+        "xi_xp": 51.51,
         "captain_xp": 6.67,
         "blank_stress": 0,
-        "double_upside": 0.91
+        "double_upside": 1.18
       }
     ],
     "exact_fixture_diagnostics": [
