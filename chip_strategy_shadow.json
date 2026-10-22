@@ -5,24 +5,29 @@
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 10.75,
+    "wildcard": 10.69,
     "free_hit": 0.0,
     "bench_boost": 0.42,
-    "triple_captain": 1.01
+    "triple_captain": 1.66
   },
-  "tc_decision": "HOLD",
+  "tc_decision": "CONSIDER",
   "chip_roadmap": [
     {
       "gw": 8,
+      "chip": "triple_captain",
+      "score": 1.66
+    },
+    {
+      "gw": 9,
       "chip": "wildcard",
-      "score": 10.75
+      "score": 10.69
     }
   ],
   "collisions": [
     {
-      "gw": 8,
+      "gw": 9,
       "chips": [
-        "triple_captain",
+        "free_hit",
         "wildcard"
       ]
     }
@@ -68,40 +73,40 @@
     "tc_reservation_cost": 0.0,
     "tc_expiry_pressure": 0,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 14.2,
+    "optimizer_weighted_gain": 14.14,
     "planned_changes": 2,
     "free_hit_candidate_gw": 9,
-    "bench_boost_candidate_gw": 10,
-    "wildcard_candidate_gw": 8,
+    "bench_boost_candidate_gw": 11,
+    "wildcard_candidate_gw": 9,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
         "gw": 8,
         "xi_xp": 51.45,
         "captain_xp": 7.77,
-        "blank_stress": 0.16,
+        "blank_stress": 0.34,
         "double_upside": 0
       },
       {
         "gw": 9,
         "xi_xp": 50.81,
         "captain_xp": 7.23,
-        "blank_stress": 0.8,
+        "blank_stress": 0.98,
         "double_upside": 0
       },
       {
         "gw": 10,
-        "xi_xp": 52.37,
+        "xi_xp": 52.11,
         "captain_xp": 7.01,
         "blank_stress": 0,
-        "double_upside": 0.76
+        "double_upside": 0.32
       },
       {
         "gw": 11,
-        "xi_xp": 51.81,
+        "xi_xp": 52.77,
         "captain_xp": 7.42,
         "blank_stress": 0,
-        "double_upside": 0.2
+        "double_upside": 0.98
       }
     ],
     "exact_fixture_diagnostics": [
