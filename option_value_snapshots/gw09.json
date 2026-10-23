@@ -1,0 +1,189 @@
+{
+  "snapshot_version": "1.0",
+  "frozen_at": "2026-10-23T20:38:39.737533Z",
+  "gw": 9,
+  "deadline_time": "2026-10-31T11:00:00Z",
+  "model_version": "3.8-availability-recovery-set-piece-projection",
+  "budget": {
+    "bank": 0.0,
+    "squad_market_value": 100.1,
+    "squad_selling_value": 100.1,
+    "market_budget_total": 100.1,
+    "selling_budget_total": 100.1,
+    "bank_raw": 0,
+    "squad_market_value_raw": 1001,
+    "squad_selling_value_raw": 1001,
+    "currency": "GBP",
+    "selling_value_live": false,
+    "selling_value_note": "Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris."
+  },
+  "free_transfers": 1,
+  "budget_intelligence_version": "1.2-shadow",
+  "transfer_option_value_version": "1.1-shadow",
+  "baseline_bank_action": {
+    "bank": 0.0,
+    "future_free_transfers": 2,
+    "option_value": 1.5,
+    "affordable_upgrade_paths": 10,
+    "top_upgrade_paths": [
+      {
+        "out_id": 557,
+        "out_name": "Tzolis",
+        "in_id": 124,
+        "in_name": "Groß",
+        "gain": 9.35,
+        "cost": 6.2
+      },
+      {
+        "out_id": 277,
+        "out_name": "Egan",
+        "in_id": 304,
+        "in_name": "O'Shea",
+        "gain": 3.29,
+        "cost": 4.0
+      },
+      {
+        "out_id": 488,
+        "out_name": "I.Sangaré",
+        "in_id": 184,
+        "in_name": "Grimes",
+        "gain": 2.83,
+        "cost": 4.8
+      },
+      {
+        "out_id": 428,
+        "out_name": "Cunha",
+        "in_id": 124,
+        "in_name": "Groß",
+        "gain": 2.7,
+        "cost": 6.2
+      },
+      {
+        "out_id": 4,
+        "out_name": "Gabriel",
+        "in_id": 115,
+        "in_name": "De Cuyper",
+        "gain": 2.69,
+        "cost": 5.3
+      }
+    ]
+  },
+  "production_top_rank": 1,
+  "shadow_top_rank": 1,
+  "candidates": [
+    {
+      "rank": 1,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 124,
+        "name": "Groß"
+      },
+      "horizon_gain": 14.26,
+      "short_gain": 13.08,
+      "bank_after": 0.0,
+      "option_value": 0.985,
+      "option_vs_bank": -0.515,
+      "future_free_transfers": 1,
+      "upgrade_paths": 9,
+      "shadow_score": 13.745
+    },
+    {
+      "rank": 2,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 68,
+        "name": "Tavernier"
+      },
+      "horizon_gain": 11.59,
+      "short_gain": 11.05,
+      "bank_after": 0.0,
+      "option_value": 1.021,
+      "option_vs_bank": -0.479,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 11.111
+    },
+    {
+      "rank": 3,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 94,
+        "name": "Schade"
+      },
+      "horizon_gain": 11.5,
+      "short_gain": 10.88,
+      "bank_after": 0.0,
+      "option_value": 1.021,
+      "option_vs_bank": -0.479,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 11.021
+    },
+    {
+      "rank": 4,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 127,
+        "name": "Gomez"
+      },
+      "horizon_gain": 10.4,
+      "short_gain": 9.66,
+      "bank_after": 1.2,
+      "option_value": 1.242,
+      "option_vs_bank": -0.258,
+      "future_free_transfers": 1,
+      "upgrade_paths": 12,
+      "shadow_score": 10.142
+    },
+    {
+      "rank": 5,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 591,
+        "name": "Enciso"
+      },
+      "horizon_gain": 10.26,
+      "short_gain": 9.78,
+      "bank_after": 0.7,
+      "option_value": 1.162,
+      "option_vs_bank": -0.338,
+      "future_free_transfers": 1,
+      "upgrade_paths": 12,
+      "shadow_score": 9.922
+    },
+    {
+      "rank": 6,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 453,
+        "name": "Barnes"
+      },
+      "horizon_gain": 9.89,
+      "short_gain": 9.56,
+      "bank_after": 0.1,
+      "option_value": 1.049,
+      "option_vs_bank": -0.451,
+      "future_free_transfers": 1,
+      "upgrade_paths": 10,
+      "shadow_score": 9.439
+    }
+  ]
+}
