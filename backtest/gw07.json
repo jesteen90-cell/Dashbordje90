@@ -2,7 +2,7 @@
   "evaluation_version": "2.0-component-diagnostics",
   "gw": 7,
   "frozen_at": "2026-10-10T14:49:39.557429Z",
-  "evaluated_at": "2026-11-03T09:59:25.140839Z",
+  "evaluated_at": "2026-11-03T17:45:22.105807Z",
   "model_version": "3.8-availability-recovery-set-piece-projection",
   "decision_layer_version": "4.6-input-quality-threshold",
   "decision": "BYTT",
@@ -219,5 +219,23 @@
       "expected_to_play_but_zero": false
     }
   ],
-  "three_gw_transfer": null
+  "three_gw_transfer": {
+    "actual_pair_gain": 8,
+    "pairs": [
+      {
+        "out": "Tzolis",
+        "in": "Groß",
+        "out_points": 3,
+        "in_points": 7,
+        "delta": 4
+      },
+      {
+        "out": "Maguire",
+        "in": "Bogle",
+        "out_points": 4,
+        "in_points": 8,
+        "delta": 4
+      }
+    ]
+  }
 }
