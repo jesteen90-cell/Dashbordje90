@@ -1,11 +1,11 @@
 {
   "version": "1.4-exact-fixtures",
-  "gw": 10,
+  "gw": 11,
   "mode": "shadow_only",
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 15.85,
+    "wildcard": 13.05,
     "free_hit": 0.0,
     "bench_boost": 0.0,
     "triple_captain": 0
@@ -15,7 +15,7 @@
     {
       "gw": 11,
       "chip": "wildcard",
-      "score": 15.85
+      "score": 13.05
     }
   ],
   "collisions": [
@@ -25,117 +25,94 @@
         "triple_captain",
         "bench_boost"
       ]
+    },
+    {
+      "gw": 11,
+      "chips": [
+        "free_hit",
+        "wildcard"
+      ]
     }
   ],
   "evidence": {
-    "current_xi_xp": 44.96,
-    "bench_xp": 5.51,
-    "bench_reliable_xp": 3.89,
+    "current_xi_xp": 40.64,
+    "bench_xp": 5.46,
+    "bench_reliable_xp": 3.73,
     "best_captain": "Haaland",
-    "best_captain_xp": 6.57,
-    "captain_gap": 1.32,
+    "best_captain_xp": 6.07,
+    "captain_gap": 1.3,
     "tc_half": 1,
     "tc_cutoff_gw": 19,
-    "tc_rounds_left": 9,
+    "tc_rounds_left": 8,
     "future_captain_spots": [
       {
         "gw": 13,
-        "xp": 6.83,
-        "name": "Haaland"
-      },
-      {
-        "gw": 10,
-        "xp": 6.57,
+        "xp": 6.35,
         "name": "Haaland"
       },
       {
         "gw": 11,
-        "xp": 6.53,
+        "xp": 6.07,
+        "name": "Haaland"
+      },
+      {
+        "gw": 14,
+        "xp": 5.79,
         "name": "Haaland"
       },
       {
         "gw": 12,
-        "xp": 6.16,
+        "xp": 5.72,
         "name": "Haaland"
       }
     ],
     "future_best_captain_spot": {
       "gw": 13,
-      "xp": 6.83,
+      "xp": 6.35,
       "name": "Haaland"
     },
-    "tc_opportunity_cost": 0.26,
-    "tc_reservation_cost": 0.22,
+    "tc_opportunity_cost": 0.28,
+    "tc_reservation_cost": 0.24,
     "tc_expiry_pressure": 0,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 18.65,
+    "optimizer_weighted_gain": 16.5,
     "planned_changes": 2,
-    "free_hit_candidate_gw": 10,
+    "free_hit_candidate_gw": 11,
     "bench_boost_candidate_gw": 13,
     "wildcard_candidate_gw": 11,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
-        "gw": 10,
-        "xi_xp": 44.96,
-        "captain_xp": 6.57,
-        "blank_stress": 2.05,
-        "double_upside": 0
-      },
-      {
         "gw": 11,
-        "xi_xp": 45.77,
-        "captain_xp": 6.53,
-        "blank_stress": 1.24,
+        "xi_xp": 40.65,
+        "captain_xp": 6.07,
+        "blank_stress": 2.18,
         "double_upside": 0
       },
       {
         "gw": 12,
-        "xi_xp": 48.42,
-        "captain_xp": 6.16,
-        "blank_stress": 0,
-        "double_upside": 1.41
+        "xi_xp": 42.55,
+        "captain_xp": 5.72,
+        "blank_stress": 0.28,
+        "double_upside": 0
       },
       {
         "gw": 13,
-        "xi_xp": 48.88,
-        "captain_xp": 6.83,
+        "xi_xp": 44.08,
+        "captain_xp": 6.35,
         "blank_stress": 0,
-        "double_upside": 1.87
+        "double_upside": 1.25
+      },
+      {
+        "gw": 14,
+        "xi_xp": 44.05,
+        "captain_xp": 5.79,
+        "blank_stress": 0,
+        "double_upside": 1.22
       }
     ],
     "exact_fixture_diagnostics": [
       {
-        "gw": 10,
-        "squad_blank_count": 0,
-        "squad_single_count": 15,
-        "squad_double_count": 0,
-        "blank_player_ids": [],
-        "double_player_ids": [],
-        "team_fixture_counts": {
-          "1": 1,
-          "2": 1,
-          "3": 1,
-          "4": 1,
-          "5": 1,
-          "6": 1,
-          "7": 1,
-          "8": 1,
-          "9": 1,
-          "10": 1,
-          "11": 1,
-          "12": 1,
-          "13": 1,
-          "14": 1,
-          "15": 1,
-          "16": 1,
-          "17": 1,
-          "18": 1,
-          "19": 1,
-          "20": 1
-        }
-      },
-      {
         "gw": 11,
         "squad_blank_count": 0,
         "squad_single_count": 15,
@@ -224,11 +201,41 @@
           "19": 1,
           "20": 1
         }
+      },
+      {
+        "gw": 14,
+        "squad_blank_count": 0,
+        "squad_single_count": 15,
+        "squad_double_count": 0,
+        "blank_player_ids": [],
+        "double_player_ids": [],
+        "team_fixture_counts": {
+          "1": 1,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 1,
+          "12": 1,
+          "13": 1,
+          "14": 1,
+          "15": 1,
+          "16": 1,
+          "17": 1,
+          "18": 1,
+          "19": 1,
+          "20": 1
+        }
       }
     ],
-    "exact_free_hit_candidate_gw": 10,
+    "exact_free_hit_candidate_gw": 11,
     "exact_free_hit_blank_players": 0,
-    "exact_bench_boost_candidate_gw": 10,
+    "exact_bench_boost_candidate_gw": 11,
     "exact_bench_boost_double_players": 0
   },
   "guardrail": "No chip is activated. v1.3 plans distinct chip windows, models WC→BB synergy, blank-like FH stress and TC reservation.",
@@ -236,10 +243,10 @@
     "version": "1.0-exact",
     "source": "FPL fixtures API",
     "gws": [
-      10,
       11,
       12,
-      13
+      13,
+      14
     ],
     "squad_players": 15
   }
