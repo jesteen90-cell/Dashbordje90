@@ -5,7 +5,7 @@
   "recommendation": "wildcard",
   "confidence": "HIGH",
   "scores": {
-    "wildcard": 15.46,
+    "wildcard": 14.49,
     "free_hit": 0.0,
     "bench_boost": 0.0,
     "triple_captain": 0
@@ -15,7 +15,7 @@
     {
       "gw": 13,
       "chip": "wildcard",
-      "score": 15.46
+      "score": 14.49
     }
   ],
   "collisions": [
@@ -25,12 +25,19 @@
         "triple_captain",
         "bench_boost"
       ]
+    },
+    {
+      "gw": 13,
+      "chips": [
+        "free_hit",
+        "wildcard"
+      ]
     }
   ],
   "evidence": {
-    "current_xi_xp": 45.38,
-    "bench_xp": 6.67,
-    "bench_reliable_xp": 5.84,
+    "current_xi_xp": 45.68,
+    "bench_xp": 6.77,
+    "bench_reliable_xp": 5.94,
     "best_captain": "Groß",
     "best_captain_xp": 5.63,
     "captain_gap": 0.16,
@@ -68,40 +75,40 @@
     "tc_reservation_cost": 0.63,
     "tc_expiry_pressure": 0.125,
     "tc_terminal_bonus": 0.0,
-    "optimizer_weighted_gain": 18.26,
+    "optimizer_weighted_gain": 17.94,
     "planned_changes": 2,
-    "free_hit_candidate_gw": 12,
+    "free_hit_candidate_gw": 13,
     "bench_boost_candidate_gw": 15,
     "wildcard_candidate_gw": 13,
     "wc_to_bb_synergy": 1.2,
     "round_diagnostics": [
       {
         "gw": 12,
-        "xi_xp": 45.38,
+        "xi_xp": 45.66,
         "captain_xp": 5.63,
-        "blank_stress": 0.99,
+        "blank_stress": 1.05,
         "double_upside": 0
       },
       {
         "gw": 13,
-        "xi_xp": 45.42,
+        "xi_xp": 44.63,
         "captain_xp": 6.27,
-        "blank_stress": 0.95,
+        "blank_stress": 2.07,
         "double_upside": 0
       },
       {
         "gw": 14,
-        "xi_xp": 45.64,
+        "xi_xp": 46.99,
         "captain_xp": 5.67,
-        "blank_stress": 0.73,
-        "double_upside": 0
+        "blank_stress": 0,
+        "double_upside": 0.29
       },
       {
         "gw": 15,
-        "xi_xp": 49.05,
+        "xi_xp": 49.54,
         "captain_xp": 6.42,
         "blank_stress": 0,
-        "double_upside": 2.68
+        "double_upside": 2.84
       }
     ],
     "exact_fixture_diagnostics": [
