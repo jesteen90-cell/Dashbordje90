@@ -1,0 +1,189 @@
+{
+  "snapshot_version": "1.0",
+  "frozen_at": "2026-11-27T23:36:30.743941Z",
+  "gw": 13,
+  "deadline_time": "2026-12-01T18:30:00Z",
+  "model_version": "3.8-availability-recovery-set-piece-projection",
+  "budget": {
+    "bank": 0.0,
+    "squad_market_value": 98.7,
+    "squad_selling_value": 98.7,
+    "market_budget_total": 98.7,
+    "selling_budget_total": 98.7,
+    "bank_raw": 0,
+    "squad_market_value_raw": 987,
+    "squad_selling_value_raw": 987,
+    "currency": "GBP",
+    "selling_value_live": false,
+    "selling_value_note": "Lagverdien er markedspris. Faktisk FPL-salgsverdi kan være lavere for spillere som har steget i pris."
+  },
+  "free_transfers": 1,
+  "budget_intelligence_version": "1.2-shadow",
+  "transfer_option_value_version": "1.1-shadow",
+  "baseline_bank_action": {
+    "bank": 0.0,
+    "future_free_transfers": 2,
+    "option_value": 1.5,
+    "affordable_upgrade_paths": 11,
+    "top_upgrade_paths": [
+      {
+        "out_id": 165,
+        "out_name": "João Pedro",
+        "in_id": 79,
+        "in_name": "Evanilson",
+        "gain": 6.88,
+        "cost": 6.6
+      },
+      {
+        "out_id": 557,
+        "out_name": "Tzolis",
+        "in_id": 86,
+        "in_name": "Lewis-Potter",
+        "gain": 5.09,
+        "cost": 5.5
+      },
+      {
+        "out_id": 428,
+        "out_name": "Cunha",
+        "in_id": 124,
+        "in_name": "Groß",
+        "gain": 3.36,
+        "cost": 6.3
+      },
+      {
+        "out_id": 418,
+        "out_name": "Maguire",
+        "in_id": 332,
+        "in_name": "Justin",
+        "gain": 2.96,
+        "cost": 4.5
+      },
+      {
+        "out_id": 8,
+        "out_name": "Calafiori",
+        "in_id": 115,
+        "in_name": "De Cuyper",
+        "gain": 2.8,
+        "cost": 5.6
+      }
+    ]
+  },
+  "production_top_rank": 1,
+  "shadow_top_rank": 1,
+  "candidates": [
+    {
+      "rank": 1,
+      "out": {
+        "id": 165,
+        "name": "João Pedro"
+      },
+      "in": {
+        "id": 79,
+        "name": "Evanilson"
+      },
+      "horizon_gain": 11.49,
+      "short_gain": 11.02,
+      "bank_after": 1.0,
+      "option_value": 1.21,
+      "option_vs_bank": -0.29,
+      "future_free_transfers": 1,
+      "upgrade_paths": 13,
+      "shadow_score": 11.2
+    },
+    {
+      "rank": 2,
+      "out": {
+        "id": 165,
+        "name": "João Pedro"
+      },
+      "in": {
+        "id": 166,
+        "name": "N.Jackson"
+      },
+      "horizon_gain": 9.39,
+      "short_gain": 9.32,
+      "bank_after": 0.3,
+      "option_value": 1.098,
+      "option_vs_bank": -0.402,
+      "future_free_transfers": 1,
+      "upgrade_paths": 12,
+      "shadow_score": 8.988
+    },
+    {
+      "rank": 3,
+      "out": {
+        "id": 165,
+        "name": "João Pedro"
+      },
+      "in": {
+        "id": 346,
+        "name": "Calvert-Lewin"
+      },
+      "horizon_gain": 8.7,
+      "short_gain": 8.88,
+      "bank_after": 1.6,
+      "option_value": 1.29,
+      "option_vs_bank": -0.21,
+      "future_free_transfers": 1,
+      "upgrade_paths": 14,
+      "shadow_score": 8.49
+    },
+    {
+      "rank": 4,
+      "out": {
+        "id": 165,
+        "name": "João Pedro"
+      },
+      "in": {
+        "id": 249,
+        "name": "Barry"
+      },
+      "horizon_gain": 8.25,
+      "short_gain": 8.38,
+      "bank_after": 1.9,
+      "option_value": 1.29,
+      "option_vs_bank": -0.21,
+      "future_free_transfers": 1,
+      "upgrade_paths": 14,
+      "shadow_score": 8.04
+    },
+    {
+      "rank": 5,
+      "out": {
+        "id": 165,
+        "name": "João Pedro"
+      },
+      "in": {
+        "id": 295,
+        "name": "McBurnie"
+      },
+      "horizon_gain": 8.13,
+      "short_gain": 8.33,
+      "bank_after": 2.1,
+      "option_value": 1.29,
+      "option_vs_bank": -0.21,
+      "future_free_transfers": 1,
+      "upgrade_paths": 14,
+      "shadow_score": 7.92
+    },
+    {
+      "rank": 6,
+      "out": {
+        "id": 557,
+        "name": "Tzolis"
+      },
+      "in": {
+        "id": 86,
+        "name": "Lewis-Potter"
+      },
+      "horizon_gain": 7.52,
+      "short_gain": 6.86,
+      "bank_after": 0.6,
+      "option_value": 1.146,
+      "option_vs_bank": -0.354,
+      "future_free_transfers": 1,
+      "upgrade_paths": 13,
+      "shadow_score": 7.166
+    }
+  ]
+}
